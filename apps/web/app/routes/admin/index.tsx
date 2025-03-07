@@ -25,7 +25,7 @@ export const loader = async function (args: Route.LoaderArgs) {
 export default function AdminPage(props: Route.ComponentProps) {
   return (
     <>
-      <PageHeader title={'Super Admin'} description={<AppBreadcrumbs />} />
+      <PageHeader description={<AppBreadcrumbs />} />
 
       <PageBody>
         <AdminDashboard data={props.loaderData} />

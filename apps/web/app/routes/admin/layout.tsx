@@ -3,6 +3,7 @@ import { Outlet, redirect } from 'react-router';
 import { getSuperAdminUser } from '@kit/admin';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
+import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
 
 import type { Route } from '~/types/app/routes/admin/+types/layout';
 
@@ -32,16 +33,18 @@ export const loader = async function ({ request }: Route.LoaderArgs) {
 
 export default function AdminLayout() {
   return (
-    <Page style={'sidebar'}>
-      <PageNavigation>
-        <AdminSidebar />
-      </PageNavigation>
+    <SidebarProvider defaultOpen={true}>
+      <Page style={'sidebar'}>
+        <PageNavigation>
+          <AdminSidebar />
+        </PageNavigation>
 
-      <PageMobileNavigation>
-        <AdminMobileNavigation />
-      </PageMobileNavigation>
+        <PageMobileNavigation>
+          <AdminMobileNavigation />
+        </PageMobileNavigation>
 
-      <Outlet />
-    </Page>
+        <Outlet />
+      </Page>
+    </SidebarProvider>
   );
 }

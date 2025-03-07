@@ -12,7 +12,6 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarProvider,
 } from '@kit/ui/shadcn-sidebar';
 
 import { AppLogo } from '~/components/app-logo';
@@ -22,46 +21,44 @@ export function AdminSidebar() {
   const currentPath = useLocation().pathname;
 
   return (
-    <SidebarProvider>
-      <Sidebar>
-        <SidebarHeader className={'m-2'}>
-          <AppLogo href={'/admin'} />
-        </SidebarHeader>
+    <Sidebar collapsible={'icon'}>
+      <SidebarHeader className={'m-2'}>
+        <AppLogo className={'max-w-full'} href={'/admin'} />
+      </SidebarHeader>
 
-        <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupLabel>Admin</SidebarGroupLabel>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Admin</SidebarGroupLabel>
 
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <SidebarMenuButton isActive={currentPath === '/admin'} asChild>
-                  <NavLink className={'flex gap-2.5'} to={'/admin'}>
-                    <LayoutDashboard className={'h-4'} />
-                    <span>Dashboard</span>
-                  </NavLink>
-                </SidebarMenuButton>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuButton isActive={currentPath === '/admin'} asChild>
+                <NavLink className={'flex gap-2.5'} to={'/admin'}>
+                  <LayoutDashboard className={'h-4'} />
+                  <span>Dashboard</span>
+                </NavLink>
+              </SidebarMenuButton>
 
-                <SidebarMenuButton
-                  isActive={currentPath.startsWith('/admin/accounts')}
-                  asChild
+              <SidebarMenuButton
+                isActive={currentPath.startsWith('/admin/accounts')}
+                asChild
+              >
+                <NavLink
+                  className={'flex size-full gap-2.5'}
+                  to={'/admin/accounts'}
                 >
-                  <NavLink
-                    className={'flex size-full gap-2.5'}
-                    to={'/admin/accounts'}
-                  >
-                    <Users className={'h-4'} />
-                    <span>Accounts</span>
-                  </NavLink>
-                </SidebarMenuButton>
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
+                  <Users className={'h-4'} />
+                  <span>Accounts</span>
+                </NavLink>
+              </SidebarMenuButton>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
 
-        <SidebarFooter>
-          <ProfileAccountDropdownContainer />
-        </SidebarFooter>
-      </Sidebar>
-    </SidebarProvider>
+      <SidebarFooter>
+        <ProfileAccountDropdownContainer />
+      </SidebarFooter>
+    </Sidebar>
   );
 }

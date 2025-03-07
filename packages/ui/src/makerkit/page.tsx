@@ -1,9 +1,8 @@
 import * as React from 'react';
 
+import { cn } from '../lib/utils';
 import { Separator } from '../shadcn/separator';
 import { SidebarTrigger } from '../shadcn/sidebar';
-
-import { cn } from '../lib/utils';
 import { If } from './if';
 
 export type PageLayoutStyle = 'sidebar' | 'header' | 'custom';
@@ -126,7 +125,7 @@ export function PageNavigation(props: React.PropsWithChildren) {
 
 export function PageDescription(props: React.PropsWithChildren) {
   return (
-    <div className={'h-6 flex items-center'}>
+    <div className={'flex h-6 items-center'}>
       <div className={'text-muted-foreground text-xs leading-none font-normal'}>
         {props.children}
       </div>

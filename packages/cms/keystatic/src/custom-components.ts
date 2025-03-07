@@ -13,10 +13,10 @@ import type { Schema } from '@markdoc/markdoc';
  * };
  */
 export const CustomMarkdocComponents: Record<
-    string,
-    React.ComponentType<never>
+  string,
+  React.ComponentType<never>
 > = {
-    // define your custom components here
+  // define your custom components here
 };
 
 /**
@@ -31,5 +31,5 @@ export const CustomMarkdocComponents: Record<
  * }
  */
 export const CustomMarkdocTags: Record<string, Schema> = {
-    // define your custom tags here
+  // define your custom tags here
 };

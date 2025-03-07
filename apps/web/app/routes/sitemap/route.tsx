@@ -60,6 +60,7 @@ async function getContentItems() {
     .getContentItems({
       collection: 'posts',
       limit: Infinity,
+      content: false,
     })
     .then((response) => response.items)
     .then((posts) => posts.map((post) => `/blog/${post.slug}`));

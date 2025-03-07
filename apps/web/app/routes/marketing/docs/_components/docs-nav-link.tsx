@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import { useLocation, Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
 import { SidebarMenuButton, SidebarMenuItem } from '@kit/ui/shadcn-sidebar';
 import { cn, isRouteActive } from '@kit/ui/utils';

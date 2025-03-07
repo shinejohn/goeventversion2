@@ -29,7 +29,9 @@ export const meta = ({ data }: Route.MetaArgs) => {
 
 export default function DocsPage(props: Route.ComponentProps) {
   const { title, description } = props.loaderData;
-  const data = useRouteLoaderData<typeof docsLoader>('routes/marketing/docs/layout');
+  const data = useRouteLoaderData<typeof docsLoader>(
+    'routes/marketing/docs/layout',
+  );
 
   // only top level cards
   const cards = (data?.pages ?? []).filter((item) => !item.parentId);

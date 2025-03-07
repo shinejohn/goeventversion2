@@ -367,7 +367,11 @@ function FactorNameForm(
           props.onSetFactorName(data.name);
         })}
       >
-        <div className={'dark:bg-secondary flex flex-col space-y-4 rounded-lg border p-4'}>
+        <div
+          className={
+            'dark:bg-secondary flex flex-col space-y-4 rounded-lg border p-4'
+          }
+        >
           <FormField
             name={'name'}
             render={({ field }) => {

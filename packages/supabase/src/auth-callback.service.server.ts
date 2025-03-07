@@ -1,4 +1,8 @@
-import {AuthError, type EmailOtpType, SupabaseClient} from '@supabase/supabase-js';
+import {
+  AuthError,
+  type EmailOtpType,
+  SupabaseClient,
+} from '@supabase/supabase-js';
 
 /**
  * @name createAuthCallbackService

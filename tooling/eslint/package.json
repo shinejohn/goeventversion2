@@ -13,9 +13,7 @@
     "format": "prettier --check \"**/*.{js,json}\""
   },
   "dependencies": {
-    "@next/eslint-plugin-next": "15.1.7",
     "@types/eslint": "9.6.1",
-    "eslint-config-next": "15.1.7",
     "eslint-config-turbo": "^2.4.4",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.2.0",

@@ -22,7 +22,6 @@ import {
 } from '@kit/admin/schema';
 import { verifyCsrfToken } from '@kit/csrf/server';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { PageBody } from '@kit/ui/page';
 
 import type { Route } from '~/types/app/routes/admin/accounts/+types/$account';
 
@@ -47,27 +46,23 @@ export default function AdminPage(props: Route.ComponentProps) {
   const data = props.loaderData;
 
   return data.is_personal_account ? (
-    <PageBody className={'py-4'}>
-      <AdminPersonalAccountPage
-        user={data.user as User}
-        account={{
-          picture_url: data.account.picture_url ?? '',
-          name: data.account.name ?? '',
-          id: data.account.id ?? '',
-          email: data.account.email ?? '',
-        }}
-        memberships={data.memberships}
-        subscription={data.subscription}
-      />
-    </PageBody>
+    <AdminPersonalAccountPage
+      user={data.user as User}
+      account={{
+        picture_url: data.account.picture_url ?? '',
+        name: data.account.name ?? '',
+        id: data.account.id ?? '',
+        email: data.account.email ?? '',
+      }}
+      memberships={data.memberships}
+      subscription={data.subscription}
+    />
   ) : (
-    <PageBody className={'py-4'}>
-      <AdminTeamAccountPage
-        account={data.account}
-        subscription={data.subscription}
-        members={data.members}
-      />
-    </PageBody>
+    <AdminTeamAccountPage
+      account={data.account}
+      subscription={data.subscription}
+      members={data.members}
+    />
   );
 }
 

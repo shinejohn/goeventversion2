@@ -86,7 +86,7 @@ export default function AdminAccountsPage(props: Route.ComponentProps) {
 
   return (
     <>
-      <PageHeader title="Accounts" description={<AppBreadcrumbs />} />
+      <PageHeader description={<AppBreadcrumbs />} />
 
       <PageBody>
         <AdminAccountsTable {...data} />

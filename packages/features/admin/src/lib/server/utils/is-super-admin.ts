@@ -1,7 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
-import { Database } from '@kit/supabase/database';
 import { checkRequiresMultiFactorAuthentication } from '@kit/supabase/check-requires-mfa';
+import { Database } from '@kit/supabase/database';
 
 /**
  * @name isSuperAdmin

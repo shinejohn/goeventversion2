@@ -63,7 +63,7 @@ export default tsEsLint.config(
       '**/database.types.ts',
       '**/public',
       '**/+types',
-      "**/.react-router",
+      '**/.react-router',
       'build',
       'dist',
       'pnpm-lock.yaml',

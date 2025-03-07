@@ -8,6 +8,7 @@ import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { Heading } from '@kit/ui/heading';
 import { If } from '@kit/ui/if';
+import { PageBody, PageHeader } from '@kit/ui/page';
 import { ProfileAvatar } from '@kit/ui/profile-avatar';
 
 import { AdminBanUserDialog } from './admin-ban-user-dialog';
@@ -46,32 +47,18 @@ export function AdminPersonalAccountPage(props: {
 
   return (
     <div className={'flex flex-col space-y-4'}>
-      <AppBreadcrumbs
-        values={{
-          [props.account.id]:
-            props.account.name ?? props.account.email ?? 'Account',
-        }}
-      />
-
-      <div className={'flex items-center justify-between'}>
-        <div className={'flex items-center space-x-4'}>
-          <div className={'flex items-center space-x-2.5'}>
-            <ProfileAvatar
-              pictureUrl={props.account.picture_url}
-              displayName={props.account.name}
-            />
-
-            <span>{props.account.name}</span>
-          </div>
-
-          <Badge variant={'outline'}>Personal Account</Badge>
-
-          <If condition={isBanned}>
-            <Badge variant={'destructive'}>Banned</Badge>
-          </If>
-        </div>
-
-        <div className={'flex space-x-1'}>
+      <PageHeader
+        className={'border-b'}
+        description={
+          <AppBreadcrumbs
+            values={{
+              [props.account.id]:
+                props.account.name ?? props.account.email ?? 'Account',
+            }}
+          />
+        }
+      >
+        <div className={'flex gap-x-1'}>
           <If condition={isBanned}>
             <AdminReactivateUserDialog userId={props.account.id}>
               <Button size={'sm'} variant={'ghost'}>
@@ -104,19 +91,40 @@ export function AdminPersonalAccountPage(props: {
             </Button>
           </AdminDeleteUserDialog>
         </div>
-      </div>
+      </PageHeader>
 
-      <div className={'flex flex-col space-y-8'}>
-        <AdminSubscriptionTable subscription={props.subscription} />
+      <PageBody className={'gap-y-8'}>
+        <div className={'flex items-center justify-between'}>
+          <div className={'flex items-center space-x-4'}>
+            <div className={'flex items-center gap-x-2.5'}>
+              <ProfileAvatar
+                pictureUrl={props.account.picture_url}
+                displayName={props.account.name}
+              />
 
-        <div className={'divider-divider-x flex flex-col space-y-2.5'}>
-          <Heading level={6}>Teams</Heading>
+              <span>{props.account.name}</span>
+            </div>
 
-          <div>
-            <AdminMembershipsTable memberships={props.memberships} />
+            <Badge variant={'outline'}>Personal Account</Badge>
+
+            <If condition={isBanned}>
+              <Badge variant={'destructive'}>Banned</Badge>
+            </If>
           </div>
         </div>
-      </div>
+
+        <div className={'flex flex-col space-y-8'}>
+          <AdminSubscriptionTable subscription={props.subscription} />
+
+          <div className={'divider-divider-x flex flex-col space-y-2.5'}>
+            <Heading level={6}>Teams</Heading>
+
+            <div>
+              <AdminMembershipsTable memberships={props.memberships} />
+            </div>
+          </div>
+        </div>
+      </PageBody>
     </div>
   );
 }

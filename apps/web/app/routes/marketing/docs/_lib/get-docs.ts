@@ -10,6 +10,7 @@ export const getDocs = async (language: string | undefined) => {
       collection: 'documentation',
       language,
       limit: 500,
+      content: false,
     });
 
     return data.items;

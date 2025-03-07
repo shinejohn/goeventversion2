@@ -8,8 +8,6 @@ export function TeamAccountLayoutPageHeader(
   }>,
 ) {
   return (
-    <PageHeader description={props.description}>
-      {props.children}
-    </PageHeader>
+    <PageHeader description={props.description}>{props.children}</PageHeader>
   );
 }
