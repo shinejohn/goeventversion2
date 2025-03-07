@@ -367,7 +367,7 @@ function FactorNameForm(
           props.onSetFactorName(data.name);
         })}
       >
-        <div className={'flex flex-col space-y-4'}>
+        <div className={'dark:bg-secondary flex flex-col space-y-4 rounded-lg border p-4'}>
           <FormField
             name={'name'}
             render={({ field }) => {
@@ -407,7 +407,15 @@ function FactorNameForm(
 }
 
 function QrImage({ src }: { src: string }) {
-  return <img alt={'QR Code'} src={src} width={160} height={160} />;
+  return (
+    <img
+      alt={'QR Code'}
+      src={src}
+      width={160}
+      height={160}
+      className={'bg-white p-2'}
+    />
+  );
 }
 
 function useEnrollFactor(props: { userId: string }) {
@@ -448,6 +456,7 @@ function useEnrollFactor(props: { userId: string }) {
 function useVerifyCodeMutation(props: { userId: string }) {
   const mutationKey = useFactorsMutationKey(props.userId);
   const client = useSupabase();
+  const queryClient = useQueryClient();
 
   const mutationFn = async (params: { factorId: string; code: string }) => {
     const challenge = await client.auth.mfa.challenge({
@@ -473,7 +482,13 @@ function useVerifyCodeMutation(props: { userId: string }) {
     return verify;
   };
 
-  return useMutation({ mutationKey, mutationFn });
+  return useMutation({
+    mutationKey,
+    mutationFn,
+    onSuccess: () => {
+      return queryClient.refetchQueries({ queryKey: mutationKey });
+    },
+  });
 }
 
 function ErrorAlert() {

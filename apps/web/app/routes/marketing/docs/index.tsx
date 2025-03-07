@@ -4,7 +4,7 @@ import { Cms } from '@kit/cms';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { SitePageHeader } from '~/routes/marketing/_components/site-page-header';
-import type { Route } from '~/types/app/routes/marketing/docs/+types/index';
+import type { Route } from '~/types/app/routes/marketing/docs/+types';
 
 import { DocsCards } from './_components/docs-cards';
 import type { loader as docsLoader } from './layout';
@@ -29,8 +29,7 @@ export const meta = ({ data }: Route.MetaArgs) => {
 
 export default function DocsPage(props: Route.ComponentProps) {
   const { title, description } = props.loaderData;
-
-  const data = useRouteLoaderData<typeof docsLoader>('routes/_marketing.docs');
+  const data = useRouteLoaderData<typeof docsLoader>('routes/marketing/docs/layout');
 
   // only top level cards
   const cards = (data?.pages ?? []).filter((item) => !item.parentId);

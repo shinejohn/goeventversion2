@@ -24,7 +24,7 @@
     "@opentelemetry/semantic-conventions": "^1.30.0",
     "@sentry/opentelemetry-node": "^7.114.0",
     "@sentry/remix": "8.42.0",
-    "react-router": "^7.2.0"
+    "react-router": "^7.3.0"
   },
   "devDependencies": {
     "@kit/eslint-config": "workspace:*",

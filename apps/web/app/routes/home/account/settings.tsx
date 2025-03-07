@@ -59,7 +59,7 @@ export async function loader(args: Route.LoaderArgs) {
 
 export default function TeamAccountSettingsPage() {
   const data = useRouteLoaderData(
-    'routes/home.$account',
+    'routes/home/account/layout',
   ) as AccountWorkspaceRoute.ComponentProps['loaderData'];
 
   const workspace = data.workspace;

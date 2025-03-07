@@ -235,6 +235,12 @@ const ProductSchema = z
         }),
       )
       .nonempty(),
+    hidden: z
+      .boolean({
+        description:
+          'Hide this product from the list of products in the checkout.',
+      })
+      .optional(),
     enableDiscountField: z
       .boolean({
         description: 'Enable discount field for the product in the checkout.',

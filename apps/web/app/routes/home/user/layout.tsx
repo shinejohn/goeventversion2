@@ -1,17 +1,15 @@
 import { Outlet } from 'react-router';
 
-import { If } from '@kit/ui/if';
 import {
   Page,
   PageLayoutStyle,
   PageMobileNavigation,
   PageNavigation,
 } from '@kit/ui/page';
+import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
 
-import { AppLogo } from '~/components/app-logo';
-import pathsConfig from '~/config/paths.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
-import { layoutStyleCookie } from '~/lib/cookies';
+import { layoutStyleCookie, sidebarStateCookie } from '~/lib/cookies';
 import { loadUserWorkspace } from '~/routes/home/user/_lib/load-user-workspace.server';
 import type { Route } from '~/types/app/routes/home/user/+types/layout';
 
@@ -22,48 +20,74 @@ import { HomeSidebar } from './_components/home-sidebar';
 
 export async function loader(args: Route.LoaderArgs) {
   const workspace = await loadUserWorkspace(args.request);
-  const style = await getLayoutStyle(args.request);
+  const layoutState = await getLayoutState(args.request);
 
   return {
     workspace,
-    style,
+    layoutState,
   };
 }
 
-export default function UserHomeLayout({ loaderData }: Route.ComponentProps) {
-  const { workspace, style } = loaderData;
+function SidebarLayout(props: Route.ComponentProps & React.PropsWithChildren) {
+  const { workspace, layoutState } = props.loaderData;
 
   return (
-    <Page style={style}>
-      <PageNavigation>
-        <If condition={style === 'header'}>
-          <HomeMenuNavigation workspace={workspace} />
-        </If>
-
-        <If condition={style === 'sidebar'}>
+    <SidebarProvider defaultOpen={layoutState.open}>
+      <Page style={'sidebar'}>
+        <PageNavigation>
           <HomeSidebar workspace={workspace} />
-        </If>
+        </PageNavigation>
+
+        <PageMobileNavigation className={'flex items-center justify-between'}>
+          <HomeMobileNavigation workspace={workspace} />
+        </PageMobileNavigation>
+
+        {props.children}
+      </Page>
+    </SidebarProvider>
+  );
+}
+
+function HeaderLayout(props: Route.ComponentProps & React.PropsWithChildren) {
+  const { workspace } = props.loaderData;
+
+  return (
+    <Page style={'header'}>
+      <PageNavigation>
+        <HomeMenuNavigation workspace={workspace} />
       </PageNavigation>
 
       <PageMobileNavigation className={'flex items-center justify-between'}>
-        <AppLogo href={pathsConfig.app.home} />
-
         <HomeMobileNavigation workspace={workspace} />
       </PageMobileNavigation>
 
-      <Outlet />
+      {props.children}
     </Page>
   );
 }
 
-async function getLayoutStyle(request: Request) {
-  const value = await layoutStyleCookie.parse(
-    request.headers.get('cookie') ?? '',
-  );
+export default function UserHomeLayout(props: Route.ComponentProps) {
+  const { layoutState } = props.loaderData;
 
-  if (typeof value === 'string') {
-    return value as PageLayoutStyle;
+  if (layoutState.style === 'sidebar') {
+    return <SidebarLayout {...props}>{<Outlet />}</SidebarLayout>;
   }
 
-  return personalAccountNavigationConfig.style;
+  return <HeaderLayout {...props}>{<Outlet />}</HeaderLayout>;
+}
+
+async function getLayoutState(request: Request) {
+  const cookieHeader = request.headers.get('Cookie');
+  const sidebarOpenCookie = await sidebarStateCookie.parse(cookieHeader);
+  const layoutCookie = await layoutStyleCookie.parse(cookieHeader);
+  const layoutStyle = layoutCookie as PageLayoutStyle;
+
+  const sidebarOpenCookieValue = sidebarOpenCookie
+    ? sidebarOpenCookie === 'false'
+    : !personalAccountNavigationConfig.sidebarCollapsed;
+
+  return {
+    open: sidebarOpenCookieValue,
+    style: layoutStyle ?? personalAccountNavigationConfig.style,
+  };
 }

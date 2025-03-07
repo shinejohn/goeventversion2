@@ -39,6 +39,10 @@ export type PostEntryProps = Entry<
   (typeof keyStaticConfig)['collections']['posts']
 >;
 
+export type DocumentationEntryProps = Entry<
+  (typeof keyStaticConfig)['collections']['documentation']
+>;
+
 function createKeyStaticConfig(path = '') {
   if (path && !path.endsWith('/')) {
     path += '/';
@@ -66,6 +70,10 @@ function getKeystaticCollections(path: string) {
       format: { contentField: 'content' },
       schema: {
         title: fields.slug({ name: { label: 'Title' } }),
+        label: fields.text({
+          label: 'Label',
+          validation: { isRequired: false },
+        }),
         image: fields.image({
           label: 'Image',
           directory: 'public/site/images',
@@ -101,6 +109,10 @@ function getKeystaticCollections(path: string) {
       format: { contentField: 'content' },
       schema: {
         title: fields.slug({ name: { label: 'Title' } }),
+        label: fields.text({
+          label: 'Label',
+          validation: { isRequired: false },
+        }),
         content: getContentField(),
         image: fields.image({
           label: 'Image',
@@ -126,6 +138,14 @@ function getKeystaticCollections(path: string) {
             { label: 'Review', value: 'review' },
             { label: 'Pending', value: 'pending' },
           ],
+        }),
+        collapsible: fields.checkbox({
+          label: 'Collapsible',
+          defaultValue: false,
+        }),
+        collapsed: fields.checkbox({
+          label: 'Collapsed',
+          defaultValue: false,
         }),
       },
     }),

@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CheckIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { ArrowRightIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import type { z } from 'zod';
 
 import { useUpdateUser } from '@kit/supabase/hooks/use-update-user-mutation';
@@ -37,9 +38,9 @@ export function UpdatePasswordForm(params: { redirectTo: string }) {
   });
 
   if (updateUser.error) {
-    return (
-      <ErrorState error={updateUser.error} onRetry={() => updateUser.reset()} />
-    );
+    const error = updateUser.error as unknown as { code: string };
+
+    return <ErrorState error={error} onRetry={() => updateUser.reset()} />;
   }
 
   if (updateUser.data && !updateUser.isPending) {
@@ -74,7 +75,12 @@ export function UpdatePasswordForm(params: { redirectTo: string }) {
                   </FormLabel>
 
                   <FormControl>
-                    <Input required type="password" {...field} />
+                    <Input
+                      required
+                      type="password"
+                      autoComplete={'new-password'}
+                      {...field}
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -141,7 +147,18 @@ function SuccessState(props: { redirectTo: string }) {
   );
 }
 
-function ErrorState(props: { onRetry: () => void; error: Error }) {
+function ErrorState(props: {
+  onRetry: () => void;
+  error: {
+    code: string;
+  };
+}) {
+  const { t } = useTranslation('auth');
+
+  const errorMessage = t(`errors.${props.error.code}`, {
+    defaultValue: t('errors.resetPasswordError'),
+  });
+
   return (
     <div className={'flex flex-col space-y-4'}>
       <Alert variant={'destructive'}>
@@ -151,14 +168,7 @@ function ErrorState(props: { onRetry: () => void; error: Error }) {
           <Trans i18nKey={'common:genericError'} />
         </AlertTitle>
 
-        <AlertDescription>
-          <Trans
-            i18nKey={[
-              `auth:errors.${props.error.message}`,
-              'auth:resetPasswordError',
-            ]}
-          />
-        </AlertDescription>
+        <AlertDescription>{errorMessage}</AlertDescription>
       </Alert>
 
       <Button onClick={props.onRetry} variant={'outline'}>

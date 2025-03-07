@@ -89,7 +89,7 @@ export default function TeamAccountMembersPage(props: Route.ComponentProps) {
   const data = props.loaderData;
 
   const { workspace } = useRouteLoaderData(
-    'routes/home.$account',
+    'routes/home/account/layout',
   ) as AccountWorkspaceRoute.ComponentProps['loaderData'];
 
   const account = workspace.account;

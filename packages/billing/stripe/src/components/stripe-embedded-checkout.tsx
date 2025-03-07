@@ -6,7 +6,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
-import { Dialog, DialogContent } from '@kit/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@kit/ui/dialog';
 
 import { StripeClientEnvSchema } from '../schema/stripe-client-env.schema';
 
@@ -61,6 +61,7 @@ function EmbeddedCheckoutPopup({
         onOpenAutoFocus={(e) => e.preventDefault()}
         onInteractOutside={(e) => e.preventDefault()}
       >
+        <DialogTitle className={'hidden'}>Checkout</DialogTitle>
         <div>{children}</div>
       </DialogContent>
     </Dialog>

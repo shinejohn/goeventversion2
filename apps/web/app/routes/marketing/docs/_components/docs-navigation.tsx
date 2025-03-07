@@ -1,189 +1,143 @@
-import { useEffect, useMemo, useState } from 'react';
-
-import { Link, useLocation } from 'react-router';
-
-import { Menu } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 import { Cms } from '@kit/cms';
-import { isBrowser } from '@kit/shared/utils';
-import { Button } from '@kit/ui/button';
-import { If } from '@kit/ui/if';
-import { cn, isRouteActive } from '@kit/ui/utils';
+import { CollapsibleContent, CollapsibleTrigger } from '@kit/ui/collapsible';
+import {
+  Sidebar,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+} from '@kit/ui/shadcn-sidebar';
 
-function DocsNavLink({
-  label,
-  url,
-  level,
-  activePath,
-}: {
-  label: string;
-  url: string;
-  level: number;
-  activePath: string;
-}) {
-  const isCurrent = isRouteActive(url, activePath, true);
-  const isFirstLevel = level === 0;
+import { FloatingDocumentationNavigation } from '~/routes/marketing/docs/_components/floating-docs-navigation';
 
-  return (
-    <Button
-      className={cn('w-full shadow-none', {
-        ['font-normal']: !isFirstLevel,
-      })}
-      variant={isCurrent ? 'secondary' : 'ghost'}
-    >
-      <Link
-        className="flex h-full max-w-full grow items-center space-x-2"
-        to={url}
-      >
-        <span className="block max-w-full truncate">{label}</span>
-      </Link>
-    </Button>
-  );
-}
+import { DocsNavLink } from './docs-nav-link';
+import { DocsNavigationCollapsible } from './docs-navigation-collapsible';
 
 function Node({
   node,
   level,
-  activePath,
+  prefix,
 }: {
   node: Cms.ContentItem;
   level: number;
-  activePath: string;
+  prefix: string;
 }) {
-  const pathPrefix = `/docs`;
-  const url = `${pathPrefix}/${node.url}`;
+  const url = `${prefix}/${node.slug}`;
+  const label = node.label ? node.label : node.title;
+
+  const Container = (props: React.PropsWithChildren) => {
+    if (node.collapsible) {
+      return (
+        <DocsNavigationCollapsible node={node} prefix={prefix}>
+          {props.children}
+        </DocsNavigationCollapsible>
+      );
+    }
+
+    return props.children;
+  };
+
+  const ContentContainer = (props: React.PropsWithChildren) => {
+    if (node.collapsible) {
+      return <CollapsibleContent>{props.children}</CollapsibleContent>;
+    }
+
+    return props.children;
+  };
+
+  const Trigger = () => {
+    if (node.collapsible) {
+      return (
+        <CollapsibleTrigger asChild>
+          <SidebarMenuItem>
+            <SidebarMenuButton>
+              {label}
+              <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </CollapsibleTrigger>
+      );
+    }
+
+    return <DocsNavLink label={label} url={url} />;
+  };
 
   return (
-    <>
-      <DocsNavLink
-        label={node.title}
-        url={url}
-        level={level}
-        activePath={activePath}
-      />
+    <Container>
+      <Trigger />
 
-      {(node.children ?? []).length > 0 && (
-        <Tree
-          pages={node.children ?? []}
-          level={level + 1}
-          activePath={activePath}
-        />
-      )}
-    </>
+      <ContentContainer>
+        <Tree pages={node.children ?? []} level={level + 1} prefix={prefix} />
+      </ContentContainer>
+    </Container>
   );
 }
 
 function Tree({
   pages,
   level,
-  activePath,
+  prefix,
 }: {
   pages: Cms.ContentItem[];
   level: number;
-  activePath: string;
+  prefix: string;
+}) {
+  if (level === 0) {
+    return pages.map((treeNode, index) => (
+      <Node key={index} node={treeNode} level={level} prefix={prefix} />
+    ));
+  }
+
+  if (pages.length === 0) {
+    return null;
+  }
+
+  return (
+    <SidebarMenuSub>
+      {pages.map((treeNode, index) => (
+        <Node key={index} node={treeNode} level={level} prefix={prefix} />
+      ))}
+    </SidebarMenuSub>
+  );
+}
+
+export function DocsNavigation({
+  pages,
+  prefix = '/docs',
+}: {
+  pages: Cms.ContentItem[];
+  prefix?: string;
 }) {
   return (
-    <div
-      className={cn('w-full space-y-1', {
-        ['pl-3']: level > 0,
-      })}
-    >
-      {pages.map((treeNode, index) => (
-        <Node
-          key={index}
-          node={treeNode}
-          level={level}
-          activePath={activePath}
-        />
-      ))}
-    </div>
-  );
-}
-
-export function DocsNavigation({ pages }: { pages: Cms.ContentItem[] }) {
-  const activePath = useLocation().pathname;
-
-  return (
     <>
-      <aside
-        style={{
-          height: `calc(100vh - 64px)`,
-        }}
-        className="sticky top-2 hidden w-80 shrink-0 overflow-y-auto border-r py-4 pr-4 lg:flex"
+      <Sidebar
+        variant={'ghost'}
+        className={'z-1 sticky mt-4 max-h-full overflow-y-auto'}
       >
-        <Tree pages={pages} level={0} activePath={activePath} />
-      </aside>
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <Tree pages={pages} level={0} prefix={prefix} />
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </Sidebar>
 
       <div className={'lg:hidden'}>
-        <FloatingDocumentationNavigation
-          pages={pages}
-          activePath={activePath}
-        />
+        <FloatingDocumentationNavigation>
+          <SidebarGroup>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <Tree pages={pages} level={0} prefix={prefix} />
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </FloatingDocumentationNavigation>
       </div>
-    </>
-  );
-}
-
-function FloatingDocumentationNavigation({
-  pages,
-  activePath,
-}: React.PropsWithChildren<{
-  pages: Cms.ContentItem[];
-  activePath: string;
-}>) {
-  const body = useMemo(() => {
-    return isBrowser() ? document.body : null;
-  }, []);
-
-  const [isVisible, setIsVisible] = useState(false);
-
-  const enableScrolling = (element: HTMLElement) =>
-    (element.style.overflowY = '');
-
-  const disableScrolling = (element: HTMLElement) =>
-    (element.style.overflowY = 'hidden');
-
-  // enable/disable body scrolling when the docs are toggled
-  useEffect(() => {
-    if (!body) {
-      return;
-    }
-
-    if (isVisible) {
-      disableScrolling(body);
-    } else {
-      enableScrolling(body);
-    }
-  }, [isVisible, body]);
-
-  // hide docs when navigating to another page
-  useEffect(() => {
-    setIsVisible(false);
-  }, [activePath]);
-
-  const onClick = () => {
-    setIsVisible(!isVisible);
-  };
-
-  return (
-    <>
-      <If condition={isVisible}>
-        <div
-          className={
-            'fixed left-0 top-0 z-10 h-screen w-full p-4' +
-            ' dark:bg-background flex flex-col space-y-4 overflow-auto bg-white'
-          }
-        >
-          <Tree pages={pages} level={0} activePath={activePath} />
-        </div>
-      </If>
-
-      <Button
-        className={'fixed bottom-5 right-5 z-10 h-16 w-16 rounded-full'}
-        onClick={onClick}
-      >
-        <Menu className={'h-8'} />
-      </Button>
     </>
   );
 }

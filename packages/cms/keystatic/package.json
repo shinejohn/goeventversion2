@@ -14,7 +14,7 @@
     "./renderer": "./src/content-renderer.tsx"
   },
   "dependencies": {
-    "@keystatic/core": "0.5.45",
+    "@keystatic/core": "0.5.46",
     "@markdoc/markdoc": "^0.5.1"
   },
   "devDependencies": {

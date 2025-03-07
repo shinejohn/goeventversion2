@@ -2,6 +2,7 @@ export interface ContentItem {
   id: string;
   title: string;
   url: string;
+  label?: string;
   description: string | undefined;
   content: unknown;
   publishedAt: string;
@@ -13,6 +14,8 @@ export interface ContentItem {
   order: number;
   children: ContentItem[];
   parentId: string | undefined;
+  collapsible?: boolean;
+  collapsed?: boolean;
 }
 
 export type ContentItemStatus = 'draft' | 'published' | 'review' | 'pending';
@@ -31,6 +34,7 @@ interface Tag {
 
 export interface GetContentItemsOptions {
   collection: string;
+  content?: boolean;
   limit?: number;
   offset?: number;
   categories?: string[];

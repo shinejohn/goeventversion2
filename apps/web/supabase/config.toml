@@ -71,6 +71,10 @@ redirect_uri = ""
 # or any other third-party OIDC providers.
 url = ""
 
+[auth.mfa.totp]
+verify_enabled = true
+enroll_enabled = true
+
 [auth.email.template.invite]
 subject = "You are invited to Makerkit"
 content_path = "./supabase/templates/invite-user.html"

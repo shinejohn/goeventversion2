@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 
 import { Link } from 'react-router';
@@ -14,15 +12,14 @@ import {
   getPlanIntervals,
   getPrimaryLineItem,
 } from '@kit/billing';
-import { formatCurrency } from '@kit/shared/utils';
 import { Badge } from '@kit/ui/badge';
 import { Button } from '@kit/ui/button';
 import { If } from '@kit/ui/if';
-import { Separator } from '@kit/ui/separator';
 import { Trans } from '@kit/ui/trans';
 import { cn } from '@kit/ui/utils';
 
 import { LineItemDetails } from './line-item-details';
+import { PlanCostDisplay } from './plan-cost-display';
 
 interface Paths {
   signUp: string;
@@ -54,6 +51,9 @@ export function PricingTable({
   const intervals = getPlanIntervals(config).filter(Boolean) as Interval[];
   const [interval, setInterval] = useState(intervals[0]!);
 
+  // Always filter out hidden products
+  const visibleProducts = config.products.filter((product) => !product.hidden);
+
   return (
     <div className={'flex flex-col space-y-8 xl:space-y-12'}>
       <div className={'flex justify-center'}>
@@ -72,7 +72,7 @@ export function PricingTable({
           ' justify-center lg:flex-row lg:space-x-4'
         }
       >
-        {config.products.map((product) => {
+        {visibleProducts.map((product) => {
           const plan = product.plans.find((plan) => {
             if (plan.paymentType === 'recurring') {
               return plan.interval === interval;
@@ -121,8 +121,9 @@ function PricingItem(
     selectable: boolean;
 
     primaryLineItem: z.infer<typeof LineItemSchema> | undefined;
-    alwaysDisplayMonthlyPrice?: boolean;
+
     redirectToCheckout?: boolean;
+    alwaysDisplayMonthlyPrice?: boolean;
 
     plan: {
       id: string;
@@ -131,6 +132,7 @@ function PricingItem(
       name?: string;
       href?: string;
       label?: string;
+      custom?: boolean;
     };
 
     CheckoutButton?: React.ComponentType<{
@@ -151,8 +153,8 @@ function PricingItem(
   }>,
 ) {
   const highlighted = props.product.highlighted ?? false;
-
-  const lineItem = props.primaryLineItem;
+  const lineItem = props.primaryLineItem!;
+  const isCustom = props.plan.custom ?? false;
 
   // we exclude flat line items from the details since
   // it doesn't need further explanation
@@ -167,7 +169,7 @@ function PricingItem(
       data-cy={'subscription-plan'}
       className={cn(
         props.className,
-        `s-full relative flex flex-1 grow flex-col items-stretch justify-between self-stretch rounded-xl border p-8 lg:w-4/12 xl:max-w-[20rem]`,
+        `s-full relative flex flex-1 grow flex-col items-stretch justify-between self-stretch rounded-lg border px-6 py-5 lg:w-4/12 xl:max-w-[20rem]`,
         {
           ['border-primary']: highlighted,
           ['border-border']: !highlighted,
@@ -190,12 +192,12 @@ function PricingItem(
         </div>
       </If>
 
-      <div className={'flex flex-col space-y-6'}>
-        <div className={'flex flex-col space-y-2.5'}>
+      <div className={'flex flex-col gap-y-5'}>
+        <div className={'flex flex-col gap-y-1'}>
           <div className={'flex items-center space-x-6'}>
             <b
               className={
-                'text-current-foreground font-heading font-semibold uppercase tracking-tight'
+                'text-secondary-foreground font-heading text-xl font-medium tracking-tight'
               }
             >
               <Trans
@@ -204,32 +206,32 @@ function PricingItem(
               />
             </b>
           </div>
-
-          <span className={cn(`text-muted-foreground h-6 text-sm`)}>
-            <Trans
-              i18nKey={props.product.description}
-              defaults={props.product.description}
-            />
-          </span>
         </div>
 
-        <Separator />
-
-        <div className={'flex flex-col space-y-2'}>
-          <Price isMonthlyPrice={props.alwaysDisplayMonthlyPrice}>
-            <LineItemPrice
-              plan={props.plan}
-              product={props.product}
-              interval={interval}
-              lineItem={lineItem}
-              alwaysDisplayMonthlyPrice={props.alwaysDisplayMonthlyPrice}
-            />
+        <div className={'mt-6 flex flex-col gap-y-1'}>
+          <Price
+            isMonthlyPrice={props.alwaysDisplayMonthlyPrice}
+            displayBillingPeriod={!props.plan.label}
+          >
+            <If
+              condition={!isCustom}
+              fallback={
+                <Trans i18nKey={props.plan.label} defaults={props.plan.label} />
+              }
+            >
+              <PlanCostDisplay
+                primaryLineItem={lineItem}
+                currencyCode={props.product.currency}
+                interval={interval}
+                alwaysDisplayMonthlyPrice={props.alwaysDisplayMonthlyPrice}
+              />
+            </If>
           </Price>
 
           <If condition={props.plan.name}>
             <span
               className={cn(
-                `animate-in slide-in-from-left-4 fade-in text-muted-foreground flex items-center space-x-0.5 text-sm capitalize`,
+                `animate-in slide-in-from-left-4 fade-in text-muted-foreground flex items-center gap-x-1 text-xs capitalize`,
               )}
             >
               <span>
@@ -292,7 +294,14 @@ function PricingItem(
           </If>
         </If>
 
-        <Separator />
+        <span className={cn(`text-muted-foreground text-base tracking-tight`)}>
+          <Trans
+            i18nKey={props.product.description}
+            defaults={props.product.description}
+          />
+        </span>
+
+        <div className={'h-px w-full border border-dashed'} />
 
         <div className={'flex flex-col'}>
           <FeaturesList
@@ -302,7 +311,7 @@ function PricingItem(
         </div>
 
         <If condition={props.displayPlanDetails && lineItemsToDisplay.length}>
-          <Separator />
+          <div className={'h-px w-full border border-dashed'} />
 
           <div className={'flex flex-col space-y-2'}>
             <h6 className={'text-sm font-semibold'}>
@@ -324,14 +333,14 @@ function PricingItem(
 function FeaturesList(
   props: React.PropsWithChildren<{
     features: string[];
-    highlighted?: boolean;
+    highlighted: boolean;
   }>,
 ) {
   return (
-    <ul className={'flex flex-col space-y-2'}>
+    <ul className={'flex flex-col gap-1'}>
       {props.features.map((feature) => {
         return (
-          <ListItem key={feature}>
+          <ListItem highlighted={props.highlighted} key={feature}>
             <Trans i18nKey={feature} defaults={feature} />
           </ListItem>
         );
@@ -342,24 +351,28 @@ function FeaturesList(
 
 function Price({
   children,
-  isMonthlyPrice,
+  isMonthlyPrice = true,
+  displayBillingPeriod = true,
 }: React.PropsWithChildren<{
   isMonthlyPrice?: boolean;
+  displayBillingPeriod?: boolean;
 }>) {
   return (
     <div
-      className={`animate-in slide-in-from-left-4 fade-in flex items-end gap-2 duration-500`}
+      className={`animate-in slide-in-from-left-4 fade-in flex items-end gap-1 duration-500`}
     >
       <span
         className={
-          'font-heading flex items-center text-3xl font-semibold tracking-tighter'
+          'font-heading flex items-center text-4xl font-medium tracking-tighter'
         }
       >
         {children}
       </span>
 
-      <If condition={isMonthlyPrice}>
+      <If condition={isMonthlyPrice && displayBillingPeriod}>
         <span className={'text-muted-foreground text-sm leading-loose'}>
+          <span>/</span>
+
           <Trans i18nKey={'billing:perMonth'} />
         </span>
       </If>
@@ -367,14 +380,25 @@ function Price({
   );
 }
 
-function ListItem({ children }: React.PropsWithChildren) {
+function ListItem({
+  children,
+  highlighted,
+}: React.PropsWithChildren<{
+  highlighted: boolean;
+}>) {
   return (
-    <li className={'flex items-center space-x-2.5'}>
-      <CheckCircle className={'text-primary h-4 min-h-4 w-4 min-w-4'} />
+    <li className={'flex items-center gap-x-2.5'}>
+      <CheckCircle
+        className={cn('h-4 min-h-4 w-4 min-w-4', {
+          'text-secondary-foreground': highlighted,
+          'text-muted-foreground': !highlighted,
+        })}
+      />
 
       <span
         className={cn('text-sm', {
-          ['text-secondary-foreground']: true,
+          'text-muted-foreground': !highlighted,
+          'text-secondary-foreground': highlighted,
         })}
       >
         {children}
@@ -396,7 +420,7 @@ function PlanIntervalSwitcher(
         const selected = plan === props.interval;
 
         const className = cn(
-          'animate-in fade-in rounded-full !outline-none transition-all focus:!ring-0',
+          'animate-in fade-in !outline-hidden rounded-full transition-all focus:!ring-0',
           {
             'border-r-transparent': index === 0,
             ['hover:text-primary text-muted-foreground']: !selected,
@@ -462,9 +486,8 @@ function DefaultCheckoutButton(
     redirectToCheckout: props.redirectToCheckout ? 'true' : 'false',
   });
 
-  const linkHref = props.plan.href
-    ? props.plan.href
-    : `${signUpPath}?${searchParams.toString()}`;
+  const linkHref =
+    props.plan.href ?? `${signUpPath}?${searchParams.toString()}`;
 
   const label = props.plan.buttonLabel ?? 'common:getStartedWithPlan';
 
@@ -472,10 +495,10 @@ function DefaultCheckoutButton(
     <Link className={'w-full'} to={linkHref}>
       <Button
         size={'lg'}
-        className={'border-primary w-full rounded-lg border'}
-        variant={props.highlighted ? 'default' : 'outline'}
+        className={'h-12 w-full rounded-lg'}
+        variant={props.highlighted ? 'default' : 'secondary'}
       >
-        <span>
+        <span className={'text-base font-medium tracking-tight'}>
           <Trans
             i18nKey={label}
             defaults={label}
@@ -491,47 +514,4 @@ function DefaultCheckoutButton(
       </Button>
     </Link>
   );
-}
-
-function LineItemPrice({
-  lineItem,
-  plan,
-  interval,
-  product,
-  alwaysDisplayMonthlyPrice = true,
-}: {
-  lineItem: z.infer<typeof LineItemSchema> | undefined;
-  plan: {
-    label?: string;
-  };
-  interval: Interval | undefined;
-  product: {
-    currency: string;
-  };
-  alwaysDisplayMonthlyPrice?: boolean;
-}) {
-  const { i18n } = useTranslation();
-  const isYearlyPricing = interval === 'year';
-
-  const cost = lineItem
-    ? isYearlyPricing
-      ? alwaysDisplayMonthlyPrice
-        ? Number(lineItem.cost / 12).toFixed(2)
-        : lineItem.cost
-      : lineItem?.cost
-    : 0;
-
-  const costString =
-    lineItem &&
-    formatCurrency({
-      currencyCode: product.currency,
-      locale: i18n.language,
-      value: cost,
-    });
-
-  const labelString = plan.label && (
-    <Trans i18nKey={plan.label} defaults={plan.label} />
-  );
-
-  return costString ?? labelString ?? <Trans i18nKey={'billing:custom'} />;
 }

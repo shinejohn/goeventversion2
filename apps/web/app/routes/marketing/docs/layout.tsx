@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router';
 
 import { Cms } from '@kit/cms';
+import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import type { Route } from '~/types/app/routes/marketing/docs/+types/layout';
@@ -23,11 +24,11 @@ export default function DocsLayout(props: Route.ComponentProps) {
   const { pages } = props.loaderData;
 
   return (
-    <div className={'container flex'}>
+    <SidebarProvider className={'container flex'}>
       <DocsNavigation pages={pages as Cms.ContentItem[]} />
 
       <Outlet />
-    </div>
+    </SidebarProvider>
   );
 }
 

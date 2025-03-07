@@ -6,7 +6,11 @@ import { z } from 'zod';
 import { getLogger } from '@kit/shared/logger';
 import { Database } from '@kit/supabase/database';
 
-import type { DeleteInvitationSchema, InviteMembersSchema } from '../../schema';
+import {
+  DeleteInvitationSchema,
+  InvitationsSchema,
+  InviteMembersSchema,
+} from '../../schema';
 import type { UpdateInvitationSchema } from '../../schema';
 
 export function createAccountInvitationsService(
@@ -135,6 +139,24 @@ class AccountInvitationsService {
       throw new Error('Account not found');
     }
 
+    try {
+      await Promise.all(
+        invitations.map((invitation) =>
+          this.validateInvitation(invitation, accountSlug),
+        ),
+      );
+    } catch (error) {
+      logger.error(
+        {
+          ...ctx,
+          error: (error as Error).message,
+        },
+        'Error validating invitations',
+      );
+
+      throw error;
+    }
+
     const response = await this.client.rpc('add_invitations_to_account', {
       invitations,
       account_slug: accountSlug,
@@ -247,5 +269,29 @@ class AccountInvitationsService {
     logger.info(ctx, 'Invitation successfully renewed');
 
     return data;
+  }
+
+  async validateInvitation(
+    invitation: z.infer<typeof InvitationsSchema>['invitations'][number],
+    accountSlug: string,
+  ) {
+    const { data: members, error } = await this.client.rpc(
+      'get_account_members',
+      {
+        account_slug: accountSlug,
+      },
+    );
+
+    if (error) {
+      throw error;
+    }
+
+    const isUserAlreadyMember = members.find((member) => {
+      return member.email === invitation.email;
+    });
+
+    if (isUserAlreadyMember) {
+      throw new Error('User already member of the team');
+    }
   }
 }

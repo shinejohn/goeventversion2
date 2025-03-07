@@ -1,3 +1,5 @@
+'use client';
+
 import { useContext } from 'react';
 
 import { useNavigate } from 'react-router';
@@ -13,23 +15,25 @@ const features = {
 };
 
 export function HomeAccountSelector(props: {
-  userId: string;
-
   accounts: Array<{
     label: string | null;
     value: string | null;
     image: string | null;
   }>;
+
+  userId: string;
+  collisionPadding?: number;
 }) {
   const navigate = useNavigate();
   const context = useContext(SidebarContext);
 
   return (
     <AccountSelector
-      userId={props.userId}
-      collapsed={context?.minimized}
+      collapsed={!context?.open}
+      collisionPadding={props.collisionPadding ?? 20}
       accounts={props.accounts}
       features={features}
+      userId={props.userId}
       onAccountChange={(value) => {
         if (value) {
           const path = pathsConfig.app.accountHome.replace('[account]', value);

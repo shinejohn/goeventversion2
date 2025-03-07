@@ -1,5 +1,3 @@
-import Markdoc from '@markdoc/markdoc';
-
 import {
   CmsClient,
   ContentItem,
@@ -8,8 +6,8 @@ import {
 } from '@kit/cms-types';
 
 import { createKeystaticReader } from './create-reader';
-import { CustomMarkdocTags } from './custom-components';
-import { PostEntryProps } from './keystatic.config';
+import { DocumentationEntryProps, PostEntryProps } from './keystatic.config';
+import { renderMarkdoc } from './markdoc';
 
 export function createKeystaticClient() {
   return new KeystaticClient();
@@ -26,10 +24,12 @@ class KeystaticClient implements CmsClient {
       throw new Error(`Collection ${collection} not found`);
     }
 
-    const docs = await reader.collections[collection].all();
+    const fetchContent = options.content ?? true;
 
     const startOffset = options?.offset ?? 0;
     const endOffset = startOffset + (options?.limit ?? 10);
+
+    const docs = await reader.collections[collection].all();
 
     const filtered = docs
       .filter((item) => {
@@ -69,8 +69,16 @@ class KeystaticClient implements CmsClient {
         const direction = options.sortDirection ?? 'asc';
         const sortBy = options.sortBy ?? 'publishedAt';
 
-        const left = transformDateToMs(a.entry[sortBy]);
-        const right = transformDateToMs(b.entry[sortBy]);
+        const transform = (value: string | number | undefined | null) => {
+          if (typeof value === 'string') {
+            return new Date(value).getTime();
+          }
+
+          return value ?? 0;
+        };
+
+        const left = transform(a.entry[sortBy]);
+        const right = transform(b.entry[sortBy]);
 
         if (direction === 'asc') {
           return left - right;
@@ -79,12 +87,130 @@ class KeystaticClient implements CmsClient {
         return right - left;
       });
 
-    const items = await Promise.all(
-      filtered.slice(startOffset, endOffset).map(async (item) => {
-        const children = docs.filter((item) => item.entry.parent === item.slug);
+    function processItems(items: typeof filtered) {
+      const slugSet = new Set(items.map((item) => item.slug));
+      const indexFileCache = new Map<string, boolean>();
+      const parentCache = new Map<string, string | null>();
 
-        return this.mapPost(item, children);
-      }),
+      const isIndexFile = (slug: string): boolean => {
+        if (indexFileCache.has(slug)) {
+          return indexFileCache.get(slug)!;
+        }
+
+        const parts = slug.split('/');
+
+        const result =
+          parts.length === 1 ||
+          (parts.length >= 2 &&
+            parts[parts.length - 1] === parts[parts.length - 2]);
+
+        indexFileCache.set(slug, result);
+        return result;
+      };
+
+      const findClosestValidParent = (pathParts: string[]): string | null => {
+        const path = pathParts.join('/');
+
+        if (parentCache.has(path)) {
+          return parentCache.get(path)!;
+        }
+
+        for (let i = pathParts.length - 1; i > 0; i--) {
+          const parentParts = pathParts.slice(0, i);
+          const lastPart = parentParts[parentParts.length - 1];
+
+          if (!lastPart) {
+            continue;
+          }
+
+          const possibleIndexParent = parentParts.concat(lastPart).join('/');
+
+          if (slugSet.has(possibleIndexParent)) {
+            parentCache.set(path, possibleIndexParent);
+            return possibleIndexParent;
+          }
+
+          const regularParent = parentParts.join('/');
+
+          if (slugSet.has(regularParent)) {
+            parentCache.set(path, regularParent);
+            return regularParent;
+          }
+        }
+
+        parentCache.set(path, null);
+        return null;
+      };
+
+      const results = new Array(items.length) as typeof items;
+
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+
+        if (!item) {
+          continue;
+        }
+
+        // If the parent is already set, we don't need to do anything
+        if (item.entry.parent !== null) {
+          continue;
+        }
+
+        if (isIndexFile(item.slug)) {
+          item.entry.parent = null;
+          results[i] = item;
+          continue;
+        }
+
+        const pathParts = item.slug.split('/');
+        const parentParts = pathParts.slice(0, -1);
+        const lastPart = parentParts[parentParts.length - 1]!;
+        const possibleIndexParent = parentParts.concat(lastPart).join('/');
+
+        if (slugSet.has(possibleIndexParent)) {
+          item.entry.parent = possibleIndexParent;
+        } else {
+          const regularParent = parentParts.join('/');
+          if (slugSet.has(regularParent)) {
+            item.entry.parent = regularParent;
+          } else {
+            item.entry.parent = findClosestValidParent(pathParts);
+          }
+        }
+
+        results[i] = item;
+      }
+
+      return results;
+    }
+
+    const itemsWithParents = processItems(filtered);
+
+    const items = await Promise.all(
+      itemsWithParents
+        .slice(startOffset, endOffset)
+        .sort((a, b) => {
+          return (a.entry.order ?? 0) - (b.entry.order ?? 0);
+        })
+        .map((item) => {
+          if (collection === 'documentation') {
+            return this.mapDocumentationPost(
+              item as {
+                entry: DocumentationEntryProps;
+                slug: string;
+              },
+              { fetchContent },
+            );
+          }
+
+          return this.mapPost(
+            item as {
+              entry: PostEntryProps;
+              slug: string;
+            },
+            { fetchContent },
+          );
+        }),
     );
 
     return {
@@ -120,13 +246,7 @@ class KeystaticClient implements CmsClient {
       return Promise.resolve(undefined);
     }
 
-    const allPosts = await reader.collections[collection].all();
-
-    const children = allPosts.filter(
-      (item) => item.entry.parent === params.slug,
-    );
-
-    return this.mapPost({ entry: doc, slug: params.slug }, children);
+    return this.mapPost({ entry: doc as PostEntryProps, slug: params.slug });
   }
 
   async getCategories() {
@@ -145,43 +265,48 @@ class KeystaticClient implements CmsClient {
     return Promise.resolve(undefined);
   }
 
-  private async mapPost<
+  private async mapDocumentationPost<
     Type extends {
-      entry: PostEntryProps;
+      entry: DocumentationEntryProps;
       slug: string;
     },
-  >(item: Type, children: Type[] = []): Promise<ContentItem> {
+  >(
+    item: Type,
+    params: {
+      fetchContent: boolean;
+    } = {
+      fetchContent: true,
+    },
+  ): Promise<ContentItem> {
     const publishedAt = item.entry.publishedAt
       ? new Date(item.entry.publishedAt)
       : new Date();
 
-    const markdoc = await item.entry.content();
-
-    const content = Markdoc.transform(markdoc.node, {
-      tags: CustomMarkdocTags,
-    });
-
-    const html = Markdoc.renderers.html(content);
+    const content = await item.entry.content();
+    const html = params.fetchContent ? await renderMarkdoc(content.node) : [];
 
     return {
       id: item.slug,
       title: item.entry.title,
+      label: item.entry.label,
       url: item.slug,
       slug: item.slug,
       description: item.entry.description,
       publishedAt: publishedAt.toISOString(),
-      content: html,
+      content: html as string,
       image: item.entry.image ?? undefined,
       status: item.entry.status,
+      collapsible: item.entry.collapsible,
+      collapsed: item.entry.collapsed,
       categories:
-        item.entry.categories.map((item) => {
+        (item.entry.categories ?? []).map((item) => {
           return {
             id: item,
             name: item,
             slug: item,
           };
         }) ?? [],
-      tags: item.entry.tags.map((item) => {
+      tags: (item.entry.tags ?? []).map((item) => {
         return {
           id: item,
           name: item,
@@ -190,17 +315,59 @@ class KeystaticClient implements CmsClient {
       }),
       parentId: item.entry.parent ?? undefined,
       order: item.entry.order ?? 1,
-      children: await Promise.all(
-        children.map(async (child) => this.mapPost(child, [])),
-      ),
+      children: [],
     };
   }
-}
 
-function transformDateToMs(value: string | number | undefined | null) {
-  if (typeof value === 'string') {
-    return new Date(value).getTime();
+  private async mapPost<
+    Type extends {
+      entry: PostEntryProps;
+      slug: string;
+    },
+  >(
+    item: Type,
+    params: {
+      fetchContent: boolean;
+    } = {
+      fetchContent: true,
+    },
+  ): Promise<ContentItem> {
+    const publishedAt = item.entry.publishedAt
+      ? new Date(item.entry.publishedAt)
+      : new Date();
+
+    const content = await item.entry.content();
+    const html = params.fetchContent ? await renderMarkdoc(content.node) : [];
+
+    return {
+      id: item.slug,
+      title: item.entry.title,
+      label: item.entry.label,
+      url: item.slug,
+      slug: item.slug,
+      description: item.entry.description,
+      publishedAt: publishedAt.toISOString(),
+      content: html as string,
+      image: item.entry.image ?? undefined,
+      status: item.entry.status,
+      categories:
+        (item.entry.categories ?? []).map((item) => {
+          return {
+            id: item,
+            name: item,
+            slug: item,
+          };
+        }) ?? [],
+      tags: (item.entry.tags ?? []).map((item) => {
+        return {
+          id: item,
+          name: item,
+          slug: item,
+        };
+      }),
+      parentId: item.entry.parent ?? undefined,
+      order: item.entry.order ?? 1,
+      children: [],
+    };
   }
-
-  return value ?? 0;
 }

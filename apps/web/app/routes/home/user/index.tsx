@@ -5,7 +5,7 @@ import { Trans } from '@kit/ui/trans';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { requireUserLoader } from '~/lib/require-user-loader';
-import type { Route } from '~/types/app/routes/home/user/+types/index';
+import type { Route } from '~/types/app/routes/home/user/+types';
 
 import { HomeAccountsList } from './_components/home-accounts-list';
 import { UserWorkspace } from './_lib/load-user-workspace.server';
@@ -31,7 +31,6 @@ export default function UserHomePage() {
   return (
     <>
       <PageHeader
-        title={<Trans i18nKey={'common:routes.home'} />}
         description={<Trans i18nKey={'common:homeTabDescription'} />}
       />
 

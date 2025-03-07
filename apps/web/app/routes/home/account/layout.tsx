@@ -1,20 +1,17 @@
 import { Outlet } from 'react-router';
 
-import { User } from '@supabase/supabase-js';
-
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { If } from '@kit/ui/if';
 import {
   Page,
   PageLayoutStyle,
   PageMobileNavigation,
   PageNavigation,
 } from '@kit/ui/page';
+import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
 
 import { AppLogo } from '~/components/app-logo';
-import pathsConfig from '~/config/paths.config';
 import { getTeamAccountSidebarConfig } from '~/config/team-account-navigation.config';
-import { layoutStyleCookie } from '~/lib/cookies';
+import { layoutStyleCookie, sidebarStateCookie } from '~/lib/cookies';
 import type { Route } from '~/types/app/routes/home/account/+types/layout';
 
 import { TeamAccountLayoutMobileNavigation } from './_components/team-account-layout-mobile-navigation';
@@ -26,7 +23,7 @@ export const loader = async (args: Route.LoaderArgs) => {
   const accountSlug = args.params.account as string;
 
   const client = getSupabaseServerClient(args.request);
-  const style = await getLayoutStyle(args.request, accountSlug);
+  const layoutState = await getLayoutState(args.request, accountSlug);
 
   const workspace = await loadTeamWorkspace({
     accountSlug,
@@ -35,12 +32,69 @@ export const loader = async (args: Route.LoaderArgs) => {
 
   return {
     workspace,
-    style,
+    layoutState,
+    accountSlug,
   };
 };
 
 export default function TeamWorkspaceLayout(props: Route.ComponentProps) {
-  const { workspace, style } = props.loaderData;
+  const { layoutState } = props.loaderData;
+
+  if (layoutState.style === 'sidebar') {
+    return (
+      <SidebarLayout {...props}>
+        <Outlet />
+      </SidebarLayout>
+    );
+  }
+
+  return <HeaderLayout {...props}>{<Outlet />}</HeaderLayout>;
+}
+
+function SidebarLayout(props: React.PropsWithChildren<Route.ComponentProps>) {
+  const { workspace, layoutState, accountSlug } = props.loaderData;
+
+  const accounts = workspace.accounts.map(({ name, slug, picture_url }) => ({
+    label: name,
+    value: slug,
+    image: picture_url,
+  }));
+
+  const account = workspace.account;
+  const user = workspace.user;
+
+  return (
+    <SidebarProvider defaultOpen={layoutState.open}>
+      <Page style={'sidebar'}>
+        <PageNavigation>
+          <TeamAccountLayoutSidebar
+            account={accountSlug}
+            accountId={account.id}
+            accounts={accounts}
+            user={user}
+          />
+        </PageNavigation>
+
+        <PageMobileNavigation className={'flex items-center justify-between'}>
+          <AppLogo />
+
+          <div className={'flex space-x-4'}>
+            <TeamAccountLayoutMobileNavigation
+              userId={user.id}
+              accounts={accounts}
+              account={accountSlug}
+            />
+          </div>
+        </PageMobileNavigation>
+
+        {props.children}
+      </Page>
+    </SidebarProvider>
+  );
+}
+
+function HeaderLayout(props: React.PropsWithChildren<Route.ComponentProps>) {
+  const { workspace, accountSlug } = props.loaderData;
 
   const accounts = workspace.accounts.map(({ name, slug, picture_url }) => ({
     label: name,
@@ -49,47 +103,41 @@ export default function TeamWorkspaceLayout(props: Route.ComponentProps) {
   }));
 
   return (
-    <Page style={style}>
+    <Page style={'header'}>
       <PageNavigation>
-        <If condition={style === 'sidebar'}>
-          <TeamAccountLayoutSidebar
-            account={workspace.account.slug}
-            accountId={workspace.account.id}
-            accounts={accounts}
-            user={workspace.user as User}
-          />
-        </If>
-
-        <If condition={style === 'header'}>
-          <TeamAccountNavigationMenu workspace={workspace} />
-        </If>
+        <TeamAccountNavigationMenu workspace={workspace} />
       </PageNavigation>
 
       <PageMobileNavigation className={'flex items-center justify-between'}>
-        <AppLogo href={pathsConfig.app.home} />
+        <AppLogo />
 
-        <div className={'flex space-x-4'}>
+        <div className={'group-data-[mobile:hidden]'}>
           <TeamAccountLayoutMobileNavigation
             userId={workspace.user.id}
             accounts={accounts}
-            account={workspace.account.slug}
+            account={accountSlug}
           />
         </div>
       </PageMobileNavigation>
 
-      <Outlet />
+      {props.children}
     </Page>
   );
 }
 
-async function getLayoutStyle(request: Request, account: string) {
-  const value = await layoutStyleCookie.parse(
-    request.headers.get('cookie') ?? '',
-  );
+async function getLayoutState(request: Request, account: string) {
+  const cookieHeader = request.headers.get('cookie');
+  const sidebarOpenCookie = await sidebarStateCookie.parse(cookieHeader);
+  const layoutCookie = await layoutStyleCookie.parse(cookieHeader);
+  const layoutStyle = layoutCookie as PageLayoutStyle;
+  const config = getTeamAccountSidebarConfig(account);
 
-  if (typeof value === 'string') {
-    return value as PageLayoutStyle;
-  }
+  const sidebarOpenCookieValue = sidebarOpenCookie
+    ? sidebarOpenCookie === 'false'
+    : !config.sidebarCollapsed;
 
-  return getTeamAccountSidebarConfig(account).style;
+  return {
+    open: sidebarOpenCookieValue,
+    style: layoutStyle ?? config.style,
+  };
 }

@@ -5,10 +5,7 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarProvider,
-  useSidebar,
 } from '@kit/ui/shadcn-sidebar';
-import { cn } from '@kit/ui/utils';
 
 import { ProfileAccountDropdownContainer } from '~/components/personal-account-dropdown-container';
 import { getTeamAccountSidebarConfig } from '~/config/team-account-navigation.config';
@@ -29,17 +26,13 @@ export function TeamAccountLayoutSidebar(props: {
   accounts: AccountModel[];
   user: User;
 }) {
-  const minimized = getTeamAccountSidebarConfig(props.account).sidebarCollapsed;
-
   return (
-    <SidebarProvider minimized={minimized}>
-      <SidebarContainer
-        account={props.account}
-        accountId={props.accountId}
-        accounts={props.accounts}
-        user={props.user}
-      />
-    </SidebarProvider>
+    <SidebarContainer
+      account={props.account}
+      accountId={props.accountId}
+      accounts={props.accounts}
+      user={props.user}
+    />
   );
 }
 
@@ -51,27 +44,21 @@ function SidebarContainer(props: {
 }) {
   const { account, accounts, user } = props;
   const userId = user.id;
-  const { minimized } = useSidebar();
 
-  const className = cn(
-    'flex max-w-full items-center justify-between space-x-4',
-    {
-      'w-full justify-start space-x-0': minimized,
-    },
-  );
+  const config = getTeamAccountSidebarConfig(account);
+  const collapsible = config.sidebarCollapsedStyle;
 
   return (
-    <Sidebar>
+    <Sidebar collapsible={collapsible}>
       <SidebarHeader className={'h-16 justify-center'}>
-        <div className={className}>
+        <div className={'flex items-center justify-between gap-x-3'}>
           <TeamAccountAccountsSelector
             userId={userId}
             selectedAccount={account}
             accounts={accounts}
-            collapsed={minimized}
           />
 
-          <div className="group-data-[minimized=true]:hidden">
+          <div className={'group-data-[minimized=true]:hidden'}>
             <TeamAccountNotifications
               userId={userId}
               accountId={props.accountId}
@@ -81,7 +68,7 @@ function SidebarContainer(props: {
       </SidebarHeader>
 
       <SidebarContent className={`mt-5 h-[calc(100%-160px)] overflow-y-auto`}>
-        <TeamAccountLayoutSidebarNavigation account={account} />
+        <TeamAccountLayoutSidebarNavigation config={config} />
       </SidebarContent>
 
       <SidebarFooter>
