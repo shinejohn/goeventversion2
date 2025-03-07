@@ -1,0 +1,44 @@
+import { useNavigate } from 'react-router';
+
+import { AccountSelector } from '@kit/accounts/account-selector';
+
+import featureFlagsConfig from '~/config/feature-flags.config';
+import pathsConfig from '~/config/paths.config';
+
+const features = {
+  enableTeamCreation: featureFlagsConfig.enableTeamCreation,
+};
+
+export function TeamAccountAccountsSelector(params: {
+  selectedAccount: string;
+  userId: string;
+
+  accounts: Array<{
+    label: string | null;
+    value: string | null;
+    image: string | null;
+  }>;
+
+  collapsed?: boolean;
+}) {
+  const navigate = useNavigate();
+
+  return (
+    <AccountSelector
+      userId={params.userId}
+      selectedAccount={params.selectedAccount}
+      accounts={params.accounts}
+      collapsed={params.collapsed}
+      features={features}
+      onAccountChange={(value) => {
+        const path = value
+          ? pathsConfig.app.accountHome.replace('[account]', value)
+          : pathsConfig.app.home;
+
+        navigate(path, {
+          replace: true,
+        });
+      }}
+    />
+  );
+}

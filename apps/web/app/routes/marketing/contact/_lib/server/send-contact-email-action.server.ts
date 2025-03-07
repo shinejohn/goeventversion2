@@ -1,0 +1,61 @@
+import process from 'node:process';
+import { z } from 'zod';
+
+import { getMailer } from '@kit/mailers';
+import { getLogger } from '@kit/shared/logger';
+
+import type { ContactEmailSchema } from '../contact-email.schema';
+
+const contactEmail = z
+  .string({
+    description: `The email where you want to receive the contact form submissions.`,
+    required_error:
+      'Contact email is required. Please use the environment variable CONTACT_EMAIL.',
+  })
+  .parse(process.env.CONTACT_EMAIL);
+
+const emailFrom = z
+  .string({
+    description: `The email sending address.`,
+    required_error:
+      'Sender email is required. Please use the environment variable EMAIL_SENDER.',
+  })
+  .parse(process.env.EMAIL_SENDER);
+
+export const sendContactEmailAction = async (
+  data: z.infer<typeof ContactEmailSchema>,
+) => {
+  const mailer = await getMailer();
+  const logger = await getLogger();
+
+  try {
+    logger.info({ data }, 'Sending contact email...');
+
+    await mailer.sendEmail({
+      to: contactEmail,
+      from: emailFrom,
+      subject: 'Contact Form Submission',
+      html: `
+        <p>
+          You have received a new contact form submission.
+        </p>
+
+        <p>Name: ${data.name}</p>
+        <p>Email: ${data.email}</p>
+        <p>Message: ${data.message}</p>
+      `,
+    });
+
+    logger.info({ data }, 'Contact email sent successfully');
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    logger.error({ data, error }, 'Failed to send contact email');
+
+    return {
+      success: false,
+    };
+  }
+};

@@ -1,0 +1,128 @@
+'use client';
+
+import { useFetcher } from 'react-router';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+import { useCsrfToken } from '@kit/csrf/client';
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@kit/ui/alert-dialog';
+import { Button } from '@kit/ui/button';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@kit/ui/form';
+import { Input } from '@kit/ui/input';
+
+export function AdminDeleteUserDialog(
+  props: React.PropsWithChildren<{
+    userId: string;
+  }>,
+) {
+  const fetcher = useFetcher();
+  const csrfToken = useCsrfToken();
+
+  const form = useForm({
+    resolver: zodResolver(
+      z.object({
+        userId: z.string(),
+        confirmation: z.string(),
+        csrfToken: z.string(),
+      }),
+    ),
+    defaultValues: {
+      userId: props.userId,
+      confirmation: '',
+      csrfToken,
+    },
+  });
+
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>{props.children}</AlertDialogTrigger>
+
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Delete User</AlertDialogTitle>
+
+          <AlertDialogDescription>
+            Are you sure you want to delete this user? All the data associated
+            with this user will be permanently deleted. Any active subscriptions
+            will be canceled.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+
+        <Form {...form}>
+          <form
+            className={'flex flex-col space-y-8'}
+            onSubmit={form.handleSubmit((data) => {
+              return fetcher.submit(
+                {
+                  intent: 'delete-user',
+                  payload: {
+                    ...data,
+                    csrfToken,
+                  },
+                },
+                {
+                  method: 'POST',
+                  encType: 'application/json',
+                },
+              );
+            })}
+          >
+            <FormField
+              name={'confirmation'}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Type <b>CONFIRM</b> to confirm
+                  </FormLabel>
+
+                  <FormControl>
+                    <Input
+                      required
+                      pattern={'CONFIRM'}
+                      placeholder={'Type CONFIRM to confirm'}
+                      {...field}
+                    />
+                  </FormControl>
+
+                  <FormDescription>
+                    Are you sure you want to do this? This action cannot be
+                    undone.
+                  </FormDescription>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+
+              <Button type={'submit'} variant={'destructive'}>
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </form>
+        </Form>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
