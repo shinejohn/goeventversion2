@@ -19,7 +19,7 @@ export const loader = async function (args: Route.LoaderArgs) {
   // admin protected route
   await getSuperAdminUser(client);
 
-  return loadAdminDashboard();
+  return loadAdminDashboard(client);
 };
 
 export default function AdminPage(props: Route.ComponentProps) {

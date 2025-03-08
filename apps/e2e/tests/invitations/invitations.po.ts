@@ -54,14 +54,19 @@ export class InvitationsPageObject {
     }
 
     await form.locator('button[type="submit"]').click();
+    await this.page.waitForTimeout(500);
   }
 
   navigateToMembers() {
-    return this.page
-      .locator('a', {
-        hasText: 'Members',
-      })
-      .click();
+    return expect(async () => {
+      await this.page
+          .locator('a', {
+            hasText: 'Members',
+          })
+          .click();
+
+      await this.page.waitForURL('**/home/*/members');
+    }).toPass()
   }
 
   async openInviteForm() {

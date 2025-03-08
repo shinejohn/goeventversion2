@@ -1,12 +1,12 @@
 import { Form, useNavigation } from 'react-router';
 
 import { CsrfTokenFormField, useCsrfToken } from '@kit/csrf/client';
+import { Button } from '@kit/ui/button';
 import { Heading } from '@kit/ui/heading';
 import { If } from '@kit/ui/if';
 import { Separator } from '@kit/ui/separator';
 import { Trans } from '@kit/ui/trans';
 
-import { InvitationSubmitButton } from './invitation-submit-button';
 import { SignOutInvitationButton } from './sign-out-invitation-button';
 
 export function AcceptInvitationContainer(props: {
@@ -77,11 +77,15 @@ export function AcceptInvitationContainer(props: {
             value={props.paths.accountHome}
           />
 
-          <InvitationSubmitButton
-            pending={pending}
-            email={props.email}
-            accountName={props.invitation.account.name}
-          />
+          <Button type={'submit'} className={'w-full'} disabled={pending}>
+            <Trans
+              i18nKey={pending ? 'teams:joiningTeam' : 'teams:continueAs'}
+              values={{
+                accountName: props.invitation.account.name,
+                email: props.email,
+              }}
+            />
+          </Button>
         </Form>
 
         <Separator />

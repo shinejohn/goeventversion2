@@ -32,11 +32,7 @@ export const createInvitationsAction = async (params: {
   const service = createAccountInvitationsService(params.client);
 
   // send invitations
-  await service.sendInvitations(data.payload);
-
-  return {
-    success: true,
-  };
+  return service.sendInvitations(data.payload);
 };
 
 /**
@@ -52,11 +48,7 @@ export const deleteInvitationAction = async (params: {
   const data = DeleteInvitationSchema.parse(params.data);
 
   // Delete the invitation
-  await service.deleteInvitation(data);
-
-  return {
-    success: true,
-  };
+  return service.deleteInvitation(data);
 };
 
 /**
@@ -71,11 +63,7 @@ export const updateInvitationAction = async (params: {
 
   const service = createAccountInvitationsService(params.client);
 
-  await service.updateInvitation(invitation);
-
-  return {
-    success: true,
-  };
+  return service.updateInvitation(invitation);
 };
 
 /**
@@ -134,9 +122,5 @@ export const renewInvitationAction = async (params: {
   const service = createAccountInvitationsService(params.client);
 
   // Renew the invitation
-  await service.renewInvitation(payload.invitationId);
-
-  return {
-    success: true,
-  };
+  return service.renewInvitation(payload.invitationId);
 };

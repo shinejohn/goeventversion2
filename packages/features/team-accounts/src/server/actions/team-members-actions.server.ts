@@ -2,7 +2,9 @@ import { SupabaseClient } from '@supabase/supabase-js';
 
 import { z } from 'zod';
 
+import { createOtpApi } from '@kit/otp';
 import { Database } from '@kit/supabase/database';
+import { requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 
 import {
@@ -24,11 +26,7 @@ export const removeMemberFromAccountAction = async (params: {
 
   const service = createAccountMembersService(params.client);
 
-  await service.removeMemberFromAccount(data);
-
-  return {
-    success: true,
-  };
+  return service.removeMemberFromAccount(data);
 };
 
 /**
@@ -46,11 +44,7 @@ export const updateMemberRoleAction = async (params: {
   const adminClient = getSupabaseServerAdminClient();
 
   // update the role of the member
-  await service.updateMemberRole(data, adminClient);
-
-  return {
-    success: true,
-  };
+  return service.updateMemberRole(data, adminClient);
 };
 
 /**
@@ -64,27 +58,46 @@ export const transferOwnershipAction = async (params: {
   const client = params.client;
   const data = TransferOwnershipSchema.parse(params.data);
 
+  const user = await requireUser(client);
+
+  if (!user.data) {
+    throw new Error('User not found');
+  }
+
+  // verify OTP
+  const otp = createOtpApi(client);
+
+  const otpResult = await otp.verifyToken({
+    purpose: `transfer-ownership-${data.payload.accountId}`,
+    userId: user.data.id,
+    token: data.payload.otp,
+  });
+
+  if (!otpResult.valid) {
+    throw new Error('Invalid OTP code');
+  }
+
+  if (otpResult.user_id !== user.data.id) {
+    throw new Error('Nonce User ID mismatch');
+  }
+
   // assert that the user is the owner of the account
   const { data: isOwner, error } = await client.rpc('is_account_owner', {
     account_id: data.payload.accountId,
   });
 
-  if (error ?? !isOwner) {
+  if (error || !isOwner) {
     throw new Error(
       `You must be the owner of the account to transfer ownership`,
     );
   }
-
-  const service = createAccountMembersService(client);
 
   // at this point, the user is authenticated and is the owner of the account
   // so we proceed with the transfer of ownership with admin privileges
   const adminClient = getSupabaseServerAdminClient();
 
   // transfer the ownership of the account
-  await service.transferOwnership(data, adminClient);
+  const service = createAccountMembersService(client);
 
-  return {
-    success: true,
-  };
+  return service.transferOwnership(data, adminClient);
 };

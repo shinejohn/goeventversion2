@@ -2,8 +2,9 @@ import { redirect } from 'react-router';
 
 import { SupabaseClient } from '@supabase/supabase-js';
 
-import { checkRequiresMultiFactorAuthentication } from '@kit/supabase/check-requires-mfa';
 import { Database } from '@kit/supabase/database';
+
+import { isSuperAdmin } from './is-super-admin';
 
 /**
  * @name getSuperAdminUser
@@ -11,6 +12,12 @@ import { Database } from '@kit/supabase/database';
  * @param client
  */
 export async function getSuperAdminUser(client: SupabaseClient<Database>) {
+  const isAuthedUserSuperAdmin = await isSuperAdmin(client);
+
+  if (!isAuthedUserSuperAdmin) {
+    throw redirect('/404');
+  }
+
   const { data, error } = await client.auth.getUser();
 
   if (error) {
@@ -21,27 +28,9 @@ export async function getSuperAdminUser(client: SupabaseClient<Database>) {
     throw redirectToSignIn();
   }
 
-  const requiresMFA = await checkRequiresMultiFactorAuthentication(client);
-
-  if (requiresMFA) {
-    throw redirectToVerifyRoute();
-  }
-
-  const appMetadata = data.user.app_metadata;
-
-  const isSuperAdmin = appMetadata?.role === 'super-admin';
-
-  if (!isSuperAdmin) {
-    throw redirectToSignIn();
-  }
-
   return data.user;
 }
 
 function redirectToSignIn() {
   return redirect('/auth/sign-in');
-}
-
-function redirectToVerifyRoute() {
-  return redirect('/auth/verify');
 }

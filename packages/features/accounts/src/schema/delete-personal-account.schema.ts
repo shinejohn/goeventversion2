@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const DeleteAccountFormSchema = z.object({
-  confirmation: z.string().refine((value) => value === 'DELETE'),
+  otp: z.string().min(6),
 });
 
 export const DeletePersonalAccountSchema = z.object({

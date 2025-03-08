@@ -18,7 +18,7 @@ const apiRoutes = [
   route('api/billing/checkout', 'routes/api/billing/checkout.ts'),
   route('api/billing/webhook', 'routes/api/billing/webhook.ts'),
   route('api/db/webhook', 'routes/api/db/webhook.ts'),
-  route('api/chats/:referenceId', 'routes/api/chats.$referenceId.tsx'),
+  route('api/otp/send', 'routes/api/otp/send.ts'),
 ];
 
 const marketingLayout = layout('routes/marketing/layout.tsx', [

@@ -4,6 +4,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 
 import { z } from 'zod';
 
+import { createOtpApi } from '@kit/otp';
 import { Database } from '@kit/supabase/database';
 import { requireUser } from '@kit/supabase/require-user';
 
@@ -23,6 +24,21 @@ export const deleteTeamAccountAction = async (params: {
   }
 
   const userId = auth.data.id;
+  const otpApi = createOtpApi(params.client);
+
+  const otpResult = await otpApi.verifyToken({
+    purpose: `delete-team-account-${accountId}`,
+    userId,
+    token: payload.otp,
+  });
+
+  if (!otpResult.valid) {
+    throw new Error('Invalid OTP code');
+  }
+
+  if (otpResult.user_id !== userId) {
+    throw new Error('Nonce User ID mismatch');
+  }
 
   await deleteTeamAccount(params.client, {
     accountId,

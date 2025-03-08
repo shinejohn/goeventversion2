@@ -77,6 +77,7 @@ export const loader = async function (args: Route.LoaderArgs) {
     total: count,
     filters: {
       type,
+      query,
     },
   };
 };

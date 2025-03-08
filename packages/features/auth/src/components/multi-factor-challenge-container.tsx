@@ -1,16 +1,12 @@
-'use client';
-
 import { useEffect } from 'react';
-
-import { useNavigate } from 'react-router';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { useMutation } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 
-import useFetchAuthFactors from '@kit/supabase/hooks/use-fetch-mfa-factors';
+import { useFetchAuthFactors } from '@kit/supabase/hooks/use-fetch-mfa-factors';
 import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
 import { useSupabase } from '@kit/supabase/hooks/use-supabase';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
@@ -23,6 +19,7 @@ import {
   FormItem,
   FormMessage,
 } from '@kit/ui/form';
+import { Heading } from '@kit/ui/heading';
 import { If } from '@kit/ui/if';
 import {
   InputOTP,
@@ -34,19 +31,17 @@ import { Spinner } from '@kit/ui/spinner';
 import { Trans } from '@kit/ui/trans';
 
 export function MultiFactorChallengeContainer({
-  userId,
   paths,
+  userId,
 }: React.PropsWithChildren<{
   userId: string;
   paths: {
     redirectPath: string;
   };
 }>) {
-  const navigate = useNavigate();
-
   const verifyMFAChallenge = useVerifyMFAChallenge({
-    onSuccess() {
-      void navigate(paths.redirectPath, { replace: true });
+    onSuccess: () => {
+      window.location.replace(paths.redirectPath);
     },
   });
 
@@ -63,7 +58,10 @@ export function MultiFactorChallengeContainer({
     },
   });
 
-  const factorId = verificationCodeForm.watch('factorId');
+  const factorId = useWatch({
+    name: 'factorId',
+    control: verificationCodeForm.control,
+  });
 
   if (!factorId) {
     return (
@@ -87,9 +85,15 @@ export function MultiFactorChallengeContainer({
           });
         })}
       >
-        <div className={'flex flex-col space-y-4'}>
-          <div className={'flex w-full flex-col space-y-2.5'}>
-            <div className={'flex flex-col space-y-4'}>
+        <div className={'flex flex-col items-center gap-y-6'}>
+          <div className="flex flex-col items-center gap-y-4">
+            <Heading level={5}>
+              <Trans i18nKey={'auth:verifyCodeHeading'} />
+            </Heading>
+          </div>
+
+          <div className={'flex w-full flex-col gap-y-2.5'}>
+            <div className={'flex flex-col gap-y-4'}>
               <If condition={verifyMFAChallenge.error}>
                 <Alert variant={'destructive'}>
                   <ExclamationTriangleIcon className={'h-5'} />
@@ -131,7 +135,7 @@ export function MultiFactorChallengeContainer({
                         </InputOTP>
                       </FormControl>
 
-                      <FormDescription>
+                      <FormDescription className="text-center">
                         <Trans
                           i18nKey={'account:verifyActivationCodeDescription'}
                         />
@@ -146,6 +150,8 @@ export function MultiFactorChallengeContainer({
           </div>
 
           <Button
+            className="w-full"
+            data-test={'submit-mfa-button'}
             disabled={
               verifyMFAChallenge.isPending ||
               !verificationCodeForm.formState.isValid
@@ -189,8 +195,8 @@ function useVerifyMFAChallenge({ onSuccess }: { onSuccess: () => void }) {
 }
 
 function FactorsListContainer({
-  userId,
   onSelect,
+  userId,
 }: React.PropsWithChildren<{
   userId: string;
   onSelect: (factor: string) => void;

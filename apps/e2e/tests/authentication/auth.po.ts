@@ -1,4 +1,6 @@
-import { expect, Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
+import { TOTP } from 'totp-generator';
+
 import { Mailbox } from '../utils/mailbox';
 
 export class AuthPageObject {
@@ -18,63 +20,59 @@ export class AuthPageObject {
     return this.page.goto('/auth/sign-up');
   }
 
-  signOut() {
-    return expect(async () => {
-      await this.page.click('[data-test="account-dropdown-trigger"]');
-      await this.page.click('[data-test="account-dropdown-sign-out"]');
-
-      await this.page.waitForURL('**/');
-    }).toPass();
+  async signOut() {
+    await this.page.click('[data-test="account-dropdown-trigger"]');
+    await this.page.click('[data-test="account-dropdown-sign-out"]');
   }
 
-  async signIn(params: {
-    email: string,
-    password: string
-  }) {
-    await expect(async() => {
-      await this.page.waitForTimeout(500);
+  async signIn(params: { email: string; password: string }) {
+    await this.page.waitForTimeout(500);
 
-      await this.page.fill('input[name="email"]', params.email);
-      await this.page.fill('input[name="password"]', params.password);
-      await this.page.click('button[type="submit"]');
-
-      await this.page.waitForURL('**/home');
-    }).toPass();
+    await this.page.fill('input[name="email"]', params.email);
+    await this.page.fill('input[name="password"]', params.password);
+    await this.page.click('button[type="submit"]');
   }
 
   async signUp(params: {
-    email: string,
-    password: string,
-    repeatPassword: string
+    email: string;
+    password: string;
+    repeatPassword: string;
   }) {
-    await expect(async() => {
-      await this.page.waitForTimeout(500);
+    await this.page.waitForTimeout(500);
 
-      await this.page.fill('input[name="email"]', params.email);
-      await this.page.fill('input[name="password"]', params.password);
-      await this.page.fill('input[name="repeatPassword"]', params.repeatPassword);
+    await this.page.fill('input[name="email"]', params.email);
+    await this.page.fill('input[name="password"]', params.password);
+    await this.page.fill('input[name="repeatPassword"]', params.repeatPassword);
 
-      const signUp = this.page.click('button[type="submit"]');
-
-      const response = this.page.waitForResponse((resp) => {
-        return resp.url().includes('auth');
-      });
-
-      await Promise.all([signUp, response]);
-    }).toPass();
+    await this.page.click('button[type="submit"]');
   }
 
-  async visitConfirmEmailLink(email: string, params: {
-    deleteAfter: boolean
-  } = {
-    deleteAfter: true
-  }) {
-    return expect(async() => {
-      const res = await this.mailbox.visitMailbox(email, params);
+  async submitMFAVerification(key: string) {
+    const period = 30;
 
-      if (res && !res.ok) {
-        console.error(res.statusText());
-      }
+    const { otp } = TOTP.generate(key, {
+      period,
+    });
+
+    console.log(`OTP ${otp} code`, {
+      period,
+    });
+
+    await this.page.fill('[data-input-otp]', otp);
+    await this.page.click('[data-test="submit-mfa-button"]');
+  }
+
+  async visitConfirmEmailLink(
+    email: string,
+    params: {
+      deleteAfter: boolean;
+      subject?: string;
+    } = {
+      deleteAfter: true,
+    },
+  ) {
+    return expect(async () => {
+      const res = await this.mailbox.visitMailbox(email, params);
 
       expect(res).not.toBeNull();
     }).toPass();
@@ -98,23 +96,17 @@ export class AuthPageObject {
     });
 
     await this.visitConfirmEmailLink(email);
+
+    return {
+      email,
+    };
   }
 
   async updatePassword(password: string) {
-    await expect(async () => {
-      await this.page.waitForTimeout(100);
-
-      await this.page.fill('[name="password"]', password);
-      await this.page.fill('[name="repeatPassword"]', password);
-      await this.page.click('[type="submit"]');
-
-      await this.page
-        .locator('a', {
-          hasText: 'Back to Home Page',
-        })
-        .click();
-
-      await this.page.waitForURL('/home');
-    }).toPass();
+    await this.page.fill('[name="password"]', password);
+    await this.page.waitForTimeout(100);
+    await this.page.fill('[name="repeatPassword"]', password);
+    await this.page.waitForTimeout(100);
+    await this.page.click('[type="submit"]');
   }
 }

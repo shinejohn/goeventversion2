@@ -11,8 +11,6 @@ select makerkit.set_identifier('custom', 'custom@makerkit.dev');
 INSERT INTO public.billing_customers(account_id, provider, customer_id)
 VALUES (tests.get_supabase_uid('primary_owner'), 'stripe', 'cus_test');
 
-set local role service_role;
-
 -- Call the upsert_order function
 SELECT public.upsert_order(tests.get_supabase_uid('primary_owner'), 'cus_test', 'order_test', 'pending', 'stripe', 100, 'usd', '[
     {"id":"order_item_1", "product_id": "prod_test", "variant_id": "var_test", "price_amount": 100, "quantity": 1},
@@ -62,7 +60,7 @@ select row_eq(
   'The order item should be deleted when the order is updated'
 );
 
-select tests.authenticate_as('primary_owner');
+select makerkit.authenticate_as('primary_owner');
 
 -- account can read their own subscription
 select isnt_empty(
@@ -77,7 +75,7 @@ select isnt_empty(
 
 -- foreigners
 select tests.create_supabase_user('foreigner');
-select tests.authenticate_as('foreigner');
+select makerkit.authenticate_as('foreigner');
 
 -- account cannot read other's subscription
 select is_empty(
@@ -94,3 +92,4 @@ select is_empty(
 select * from finish();
 
 rollback;
+

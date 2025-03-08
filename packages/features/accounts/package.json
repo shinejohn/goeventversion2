@@ -18,7 +18,7 @@
     "./actions": "./src/server/personal-account-actions.server.ts"
   },
   "dependencies": {
-    "nanoid": "^5.1.2",
+    "nanoid": "^5.1.3",
     "react-router": "^7.3.0"
   },
   "devDependencies": {
@@ -28,6 +28,7 @@
     "@kit/eslint-config": "workspace:*",
     "@kit/mailers": "workspace:*",
     "@kit/monitoring": "workspace:*",
+    "@kit/otp": "workspace:*",
     "@kit/prettier-config": "workspace:*",
     "@kit/shared": "workspace:*",
     "@kit/supabase": "workspace:*",
@@ -36,10 +37,10 @@
     "@kit/ui": "workspace:*",
     "@radix-ui/react-icons": "^1.3.2",
     "@supabase/supabase-js": "^2.49.1",
-    "@tanstack/react-query": "5.67.1",
+    "@tanstack/react-query": "5.67.2",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
-    "lucide-react": "^0.477.0",
+    "lucide-react": "^0.479.0",
     "next-themes": "0.4.4",
     "react": "19.0.0",
     "react-dom": "19.0.0",

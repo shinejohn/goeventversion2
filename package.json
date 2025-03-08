@@ -1,5 +1,6 @@
 {
   "name": "react-router-supabase-saas-kit-turbo",
+  "version": "1.0.0",
   "private": true,
   "sideEffects": false,
   "engines": {
@@ -29,6 +30,7 @@
     "supabase:web:typegen": "pnpm --filter web supabase:typegen",
     "supabase:web:reset": "pnpm --filter web supabase:reset",
     "stripe:listen": "pnpm --filter '@kit/stripe' start",
+    "supabase:web:test": "pnpm --filter web supabase:test",
     "env:generate": "turbo gen env",
     "env:validate": "turbo gen validate-env"
   },
@@ -41,7 +43,7 @@
   },
   "devDependencies": {
     "@manypkg/cli": "^0.23.0",
-    "@turbo/gen": "^2.4.2",
+    "@turbo/gen": "^2.4.4",
     "@types/node": "^22.12.0",
     "cross-env": "^7.0.3",
     "prettier": "^3.5.3",

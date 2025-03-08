@@ -3,11 +3,12 @@
 import { useFetcher } from 'react-router';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 
 import { useCsrfToken } from '@kit/csrf/client';
 import { ErrorBoundary } from '@kit/monitoring/components';
+import { VerifyOtpForm } from '@kit/otp/components';
 import { useUser } from '@kit/supabase/hooks/use-user';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import {
@@ -37,10 +38,15 @@ import { Trans } from '@kit/ui/trans';
 export function TeamAccountDangerZone({
   account,
   primaryOwnerUserId,
+  features,
 }: React.PropsWithChildren<{
   account: {
     name: string;
     id: string;
+  };
+
+  features: {
+    enableTeamDeletion: boolean;
   };
 
   primaryOwnerUserId: string;
@@ -55,7 +61,11 @@ export function TeamAccountDangerZone({
   const userIsPrimaryOwner = user.id === primaryOwnerUserId;
 
   if (userIsPrimaryOwner) {
-    return <DeleteTeamContainer account={account} />;
+    if (features.enableTeamDeletion) {
+      return <DeleteTeamContainer account={account} />;
+    } else {
+      return;
+    }
   }
 
   // A primary owner can't leave the team account
@@ -138,25 +148,45 @@ function DeleteTeamConfirmationForm({
     success: boolean;
   }>();
 
+  const { data: user } = useUser();
+
   const form = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
     resolver: zodResolver(
       z.object({
-        name: z.string().refine((value) => value === name, {
-          message: 'Name does not match',
-          path: ['name'],
-        }),
-        csrfToken: z.string(),
+        otp: z.string().min(6).max(6),
+        csrfToken: z.string().min(1),
       }),
     ),
     defaultValues: {
-      name: '',
+      otp: '',
       csrfToken,
     },
   });
 
+  const { otp } = useWatch({ control: form.control });
+
   const pending = fetcher.state === 'submitting';
+
+  if (!user?.email) {
+    return <LoadingOverlay fullPage={false} />;
+  }
+
+  if (!otp) {
+    return (
+      <VerifyOtpForm
+        purpose={`delete-team-account-${id}`}
+        email={user.email}
+        onSuccess={(otp) => form.setValue('otp', otp, { shouldValidate: true })}
+        CancelButton={
+          <AlertDialogCancel>
+            <Trans i18nKey={'common:cancel'} />
+          </AlertDialogCancel>
+        }
+      />
+    );
+  }
 
   return (
     <ErrorBoundary fallback={<DeleteTeamErrorAlert />}>
@@ -171,6 +201,7 @@ function DeleteTeamConfirmationForm({
                 payload: {
                   accountId: id,
                   csrfToken: payload.csrfToken,
+                  otp,
                 },
               },
               {
@@ -200,34 +231,6 @@ function DeleteTeamConfirmationForm({
                 <Trans i18nKey={'common:modalConfirmationQuestion'} />
               </div>
             </div>
-
-            <FormField
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    <Trans i18nKey={'teams:teamNameInputLabel'} />
-                  </FormLabel>
-
-                  <FormControl>
-                    <Input
-                      data-test={'delete-team-form-confirm-input'}
-                      required
-                      type={'text'}
-                      autoComplete={'off'}
-                      className={'w-full'}
-                      placeholder={''}
-                      pattern={name}
-                      {...field}
-                    />
-                  </FormControl>
-
-                  <FormDescription>
-                    <Trans i18nKey={'teams:deleteTeamInputField'} />
-                  </FormDescription>
-                </FormItem>
-              )}
-              name={'name'}
-            />
           </div>
 
           <AlertDialogFooter>

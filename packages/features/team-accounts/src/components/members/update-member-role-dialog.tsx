@@ -96,6 +96,7 @@ function UpdateMemberForm({
   const { t } = useTranslation('teams');
 
   const csrfToken = useCsrfToken();
+
   const fetcher = useFetcher<{
     success: boolean;
   }>();

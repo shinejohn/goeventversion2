@@ -5,13 +5,16 @@ import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client'
 
 type Membership = Tables<'accounts_memberships'>;
 
-export async function loadAdminAccountPage(accountId: string) {
-  const client = getSupabaseServerAdminClient();
+export async function loadAdminAccountPage(
+  client: SupabaseClient<Database>,
+  accountId: string,
+) {
   const account = await getAccount(client, accountId);
+  const adminClient = getSupabaseServerAdminClient();
 
   if (account.is_personal_account) {
     const [user, subscription, memberships] = await Promise.all([
-      client.auth.admin.getUserById(accountId).then((data) => {
+      adminClient.auth.admin.getUserById(accountId).then((data) => {
         if (data.error) {
           throw data.error;
         }

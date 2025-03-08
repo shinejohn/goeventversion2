@@ -65,12 +65,12 @@ function RenewInvitationForm({
   const [error, setError] = useState<boolean>();
 
   useEffect(() => {
-    if (fetcher.data?.success) {
-      setIsOpen(false);
-    }
-
-    if (fetcher.data?.success) {
-      setError(true);
+    if (fetcher.data) {
+      if (fetcher.data.success) {
+        setIsOpen(false);
+      } else {
+        setError(true);
+      }
     }
   }, [fetcher.data, setIsOpen]);
 

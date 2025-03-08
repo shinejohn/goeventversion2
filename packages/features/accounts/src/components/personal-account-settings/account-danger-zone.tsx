@@ -4,9 +4,11 @@ import { useFetcher } from 'react-router';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 
 import { ErrorBoundary } from '@kit/monitoring/components';
+import { VerifyOtpForm } from '@kit/otp/components';
+import { useUser } from '@kit/supabase/hooks/use-user';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import {
   AlertDialog,
@@ -18,14 +20,7 @@ import {
   AlertDialogTrigger,
 } from '@kit/ui/alert-dialog';
 import { Button } from '@kit/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from '@kit/ui/form';
-import { Input } from '@kit/ui/input';
+import { Form } from '@kit/ui/form';
 import { Trans } from '@kit/ui/trans';
 
 import { DeleteAccountFormSchema } from '../../schema/delete-personal-account.schema';
@@ -51,6 +46,12 @@ export function AccountDangerZone() {
 }
 
 function DeleteAccountModal() {
+  const { data: user } = useUser();
+
+  if (!user?.email) {
+    return null;
+  }
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -67,22 +68,39 @@ function DeleteAccountModal() {
         </AlertDialogHeader>
 
         <ErrorBoundary fallback={<DeleteAccountErrorAlert />}>
-          <DeleteAccountForm />
+          <DeleteAccountForm email={user.email} />
         </ErrorBoundary>
       </AlertDialogContent>
     </AlertDialog>
   );
 }
 
-function DeleteAccountForm() {
+function DeleteAccountForm(props: { email: string }) {
   const form = useForm({
     resolver: zodResolver(DeleteAccountFormSchema),
     defaultValues: {
-      confirmation: '' as 'DELETE',
+      otp: '',
     },
   });
 
+  const { otp } = useWatch({ control: form.control });
   const fetcher = useFetcher();
+
+  if (!otp) {
+    return (
+      <VerifyOtpForm
+        purpose={'delete-personal-account'}
+        email={props.email}
+        onSuccess={(otp) => form.setValue('otp', otp, { shouldValidate: true })}
+        CancelButton={
+          <AlertDialogCancel>
+            <Trans i18nKey={'common:cancel'} />
+          </AlertDialogCancel>
+        }
+      />
+    );
+  }
+
   const pending = fetcher.state === 'submitting';
 
   return (
@@ -117,32 +135,6 @@ function DeleteAccountForm() {
               </div>
             </div>
           </div>
-
-          <FormField
-            name={'confirmation'}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  <Trans
-                    i18nKey={'account:deleteProfileConfirmationInputLabel'}
-                  />
-                </FormLabel>
-
-                <FormControl>
-                  <Input
-                    autoComplete={'off'}
-                    data-test={'delete-account-input-field'}
-                    required
-                    type={'text'}
-                    className={'w-full'}
-                    placeholder={''}
-                    pattern={`DELETE`}
-                    {...field}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
         </div>
 
         <AlertDialogFooter>

@@ -61,7 +61,11 @@ export function AdminPersonalAccountPage(props: {
         <div className={'flex gap-x-1'}>
           <If condition={isBanned}>
             <AdminReactivateUserDialog userId={props.account.id}>
-              <Button size={'sm'} variant={'ghost'}>
+              <Button
+                size={'sm'}
+                variant={'ghost'}
+                data-test={'admin-reactivate-account-button'}
+              >
                 <ShieldPlus className={'mr-1 h-4'} />
                 Reactivate
               </Button>
@@ -70,14 +74,22 @@ export function AdminPersonalAccountPage(props: {
 
           <If condition={!isBanned}>
             <AdminBanUserDialog userId={props.account.id}>
-              <Button size={'sm'} variant={'ghost'}>
+              <Button
+                size={'sm'}
+                variant={'ghost'}
+                data-test={'admin-ban-account-button'}
+              >
                 <Ban className={'mr-1 h-4'} />
                 Ban
               </Button>
             </AdminBanUserDialog>
 
             <AdminImpersonateUserDialog userId={props.account.id}>
-              <Button size={'sm'} variant={'ghost'}>
+              <Button
+                size={'sm'}
+                variant={'ghost'}
+                data-test={'admin-impersonate-button'}
+              >
                 <VenetianMask className={'mr-1 h-4'} />
                 Impersonate
               </Button>
@@ -85,7 +97,11 @@ export function AdminPersonalAccountPage(props: {
           </If>
 
           <AdminDeleteUserDialog userId={props.account.id}>
-            <Button size={'sm'} variant={'destructive'}>
+            <Button
+              size={'sm'}
+              variant={'destructive'}
+              data-test={'admin-delete-account-button'}
+            >
               <BadgeX className={'mr-1 h-4'} />
               Delete
             </Button>

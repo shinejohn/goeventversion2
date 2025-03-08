@@ -77,29 +77,7 @@ export type Database = {
           updated_at?: string | null;
           updated_by?: string | null;
         };
-        Relationships: [
-          {
-            foreignKeyName: 'accounts_created_by_fkey';
-            columns: ['created_by'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'accounts_primary_owner_user_id_fkey';
-            columns: ['primary_owner_user_id'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'accounts_updated_by_fkey';
-            columns: ['updated_by'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-        ];
+        Relationships: [];
       };
       accounts_memberships: {
         Row: {
@@ -158,27 +136,6 @@ export type Database = {
             referencedRelation: 'roles';
             referencedColumns: ['name'];
           },
-          {
-            foreignKeyName: 'accounts_memberships_created_by_fkey';
-            columns: ['created_by'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'accounts_memberships_updated_by_fkey';
-            columns: ['updated_by'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'accounts_memberships_user_id_fkey';
-            columns: ['user_id'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
         ];
       };
       billing_customers: {
@@ -227,111 +184,6 @@ export type Database = {
           },
         ];
       };
-      chat_messages: {
-        Row: {
-          account_id: string;
-          chat_id: number;
-          content: string;
-          created_at: string | null;
-          id: string;
-          role: Database['public']['Enums']['chat_role'];
-        };
-        Insert: {
-          account_id: string;
-          chat_id?: number;
-          content: string;
-          created_at?: string | null;
-          id?: string;
-          role: Database['public']['Enums']['chat_role'];
-        };
-        Update: {
-          account_id?: string;
-          chat_id?: number;
-          content?: string;
-          created_at?: string | null;
-          id?: string;
-          role?: Database['public']['Enums']['chat_role'];
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'chat_messages_account_id_fkey';
-            columns: ['account_id'];
-            isOneToOne: false;
-            referencedRelation: 'accounts';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'chat_messages_account_id_fkey';
-            columns: ['account_id'];
-            isOneToOne: false;
-            referencedRelation: 'user_account_workspace';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'chat_messages_account_id_fkey';
-            columns: ['account_id'];
-            isOneToOne: false;
-            referencedRelation: 'user_accounts';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'chat_messages_chat_id_fkey';
-            columns: ['chat_id'];
-            isOneToOne: false;
-            referencedRelation: 'chats';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
-      chats: {
-        Row: {
-          account_id: string;
-          created_at: string | null;
-          id: number;
-          name: string;
-          reference_id: string;
-          settings: Json;
-        };
-        Insert: {
-          account_id: string;
-          created_at?: string | null;
-          id?: number;
-          name: string;
-          reference_id: string;
-          settings?: Json;
-        };
-        Update: {
-          account_id?: string;
-          created_at?: string | null;
-          id?: number;
-          name?: string;
-          reference_id?: string;
-          settings?: Json;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'chats_account_id_fkey';
-            columns: ['account_id'];
-            isOneToOne: false;
-            referencedRelation: 'accounts';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'chats_account_id_fkey';
-            columns: ['account_id'];
-            isOneToOne: false;
-            referencedRelation: 'user_account_workspace';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'chats_account_id_fkey';
-            columns: ['account_id'];
-            isOneToOne: false;
-            referencedRelation: 'user_accounts';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
       config: {
         Row: {
           billing_provider: Database['public']['Enums']['billing_provider'];
@@ -352,46 +204,6 @@ export type Database = {
           enable_team_accounts?: boolean;
         };
         Relationships: [];
-      };
-      credits_usage: {
-        Row: {
-          account_id: string;
-          id: number;
-          remaining_credits: number;
-        };
-        Insert: {
-          account_id: string;
-          id?: number;
-          remaining_credits?: number;
-        };
-        Update: {
-          account_id?: string;
-          id?: number;
-          remaining_credits?: number;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'credits_usage_account_id_fkey';
-            columns: ['account_id'];
-            isOneToOne: false;
-            referencedRelation: 'accounts';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'credits_usage_account_id_fkey';
-            columns: ['account_id'];
-            isOneToOne: false;
-            referencedRelation: 'user_account_workspace';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'credits_usage_account_id_fkey';
-            columns: ['account_id'];
-            isOneToOne: false;
-            referencedRelation: 'user_accounts';
-            referencedColumns: ['id'];
-          },
-        ];
       };
       invitations: {
         Row: {
@@ -450,13 +262,6 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
-            foreignKeyName: 'invitations_invited_by_fkey';
-            columns: ['invited_by'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-          {
             foreignKeyName: 'invitations_role_fkey';
             columns: ['role'];
             isOneToOne: false;
@@ -464,6 +269,63 @@ export type Database = {
             referencedColumns: ['name'];
           },
         ];
+      };
+      nonces: {
+        Row: {
+          client_token: string;
+          created_at: string;
+          expires_at: string;
+          id: string;
+          last_verification_at: string | null;
+          last_verification_ip: unknown | null;
+          last_verification_user_agent: string | null;
+          metadata: Json | null;
+          nonce: string;
+          purpose: string;
+          revoked: boolean;
+          revoked_reason: string | null;
+          scopes: string[] | null;
+          used_at: string | null;
+          user_id: string | null;
+          verification_attempts: number;
+        };
+        Insert: {
+          client_token: string;
+          created_at?: string;
+          expires_at: string;
+          id?: string;
+          last_verification_at?: string | null;
+          last_verification_ip?: unknown | null;
+          last_verification_user_agent?: string | null;
+          metadata?: Json | null;
+          nonce: string;
+          purpose: string;
+          revoked?: boolean;
+          revoked_reason?: string | null;
+          scopes?: string[] | null;
+          used_at?: string | null;
+          user_id?: string | null;
+          verification_attempts?: number;
+        };
+        Update: {
+          client_token?: string;
+          created_at?: string;
+          expires_at?: string;
+          id?: string;
+          last_verification_at?: string | null;
+          last_verification_ip?: unknown | null;
+          last_verification_user_agent?: string | null;
+          metadata?: Json | null;
+          nonce?: string;
+          purpose?: string;
+          revoked?: boolean;
+          revoked_reason?: string | null;
+          scopes?: string[] | null;
+          used_at?: string | null;
+          user_id?: string | null;
+          verification_attempts?: number;
+        };
+        Relationships: [];
       };
       notifications: {
         Row: {
@@ -628,24 +490,6 @@ export type Database = {
             referencedColumns: ['id'];
           },
         ];
-      };
-      plans: {
-        Row: {
-          name: string;
-          tokens_quota: number;
-          variant_id: string;
-        };
-        Insert: {
-          name: string;
-          tokens_quota: number;
-          variant_id: string;
-        };
-        Update: {
-          name?: string;
-          tokens_quota?: number;
-          variant_id?: string;
-        };
-        Relationships: [];
       };
       role_permissions: {
         Row: {
@@ -890,6 +734,17 @@ export type Database = {
           updated_at: string;
         };
       };
+      create_nonce: {
+        Args: {
+          p_user_id?: string;
+          p_purpose?: string;
+          p_expires_in_seconds?: number;
+          p_metadata?: Json;
+          p_scopes?: string[];
+          p_revoke_previous?: boolean;
+        };
+        Returns: Json;
+      };
       create_team_account: {
         Args: {
           account_name: string;
@@ -908,13 +763,6 @@ export type Database = {
           updated_at: string | null;
           updated_by: string | null;
         };
-      };
-      deduct_credits: {
-        Args: {
-          account_id: string;
-          amount: number;
-        };
-        Returns: undefined;
       };
       get_account_invitations: {
         Args: {
@@ -955,6 +803,12 @@ export type Database = {
         Args: Record<PropertyKey, never>;
         Returns: Json;
       };
+      get_nonce_status: {
+        Args: {
+          p_id: string;
+        };
+        Returns: Json;
+      };
       get_upper_system_role: {
         Args: Record<PropertyKey, never>;
         Returns: string;
@@ -962,12 +816,6 @@ export type Database = {
       has_active_subscription: {
         Args: {
           target_account_id: string;
-        };
-        Returns: boolean;
-      };
-      has_credits: {
-        Args: {
-          account_id: string;
         };
         Returns: boolean;
       };
@@ -1002,6 +850,10 @@ export type Database = {
         };
         Returns: boolean;
       };
+      is_aal2: {
+        Args: Record<PropertyKey, never>;
+        Returns: boolean;
+      };
       is_account_owner: {
         Args: {
           account_id: string;
@@ -1014,16 +866,31 @@ export type Database = {
         };
         Returns: boolean;
       };
+      is_mfa_compliant: {
+        Args: Record<PropertyKey, never>;
+        Returns: boolean;
+      };
       is_set: {
         Args: {
           field_name: string;
         };
         Returns: boolean;
       };
+      is_super_admin: {
+        Args: Record<PropertyKey, never>;
+        Returns: boolean;
+      };
       is_team_member: {
         Args: {
           account_id: string;
           user_id: string;
+        };
+        Returns: boolean;
+      };
+      revoke_nonce: {
+        Args: {
+          p_id: string;
+          p_reason?: string;
         };
         Returns: boolean;
       };
@@ -1106,6 +973,18 @@ export type Database = {
           updated_at: string;
         };
       };
+      verify_nonce: {
+        Args: {
+          p_token: string;
+          p_purpose: string;
+          p_user_id?: string;
+          p_required_scopes?: string[];
+          p_max_verification_attempts?: number;
+          p_ip?: unknown;
+          p_user_agent?: string;
+        };
+        Returns: Json;
+      };
     };
     Enums: {
       app_permissions:
@@ -1115,7 +994,6 @@ export type Database = {
         | 'members.manage'
         | 'invites.manage';
       billing_provider: 'stripe' | 'lemon-squeezy' | 'paddle';
-      chat_role: 'user' | 'assistant';
       notification_channel: 'in_app' | 'email';
       notification_type: 'info' | 'warning' | 'error';
       payment_status: 'pending' | 'succeeded' | 'failed';
@@ -1205,12 +1083,14 @@ export type Database = {
           created_at: string | null;
           id: string;
           last_accessed_at: string | null;
+          level: number | null;
           metadata: Json | null;
           name: string | null;
           owner: string | null;
           owner_id: string | null;
           path_tokens: string[] | null;
           updated_at: string | null;
+          user_metadata: Json | null;
           version: string | null;
         };
         Insert: {
@@ -1218,12 +1098,14 @@ export type Database = {
           created_at?: string | null;
           id?: string;
           last_accessed_at?: string | null;
+          level?: number | null;
           metadata?: Json | null;
           name?: string | null;
           owner?: string | null;
           owner_id?: string | null;
           path_tokens?: string[] | null;
           updated_at?: string | null;
+          user_metadata?: Json | null;
           version?: string | null;
         };
         Update: {
@@ -1231,17 +1113,51 @@ export type Database = {
           created_at?: string | null;
           id?: string;
           last_accessed_at?: string | null;
+          level?: number | null;
           metadata?: Json | null;
           name?: string | null;
           owner?: string | null;
           owner_id?: string | null;
           path_tokens?: string[] | null;
           updated_at?: string | null;
+          user_metadata?: Json | null;
           version?: string | null;
         };
         Relationships: [
           {
             foreignKeyName: 'objects_bucketId_fkey';
+            columns: ['bucket_id'];
+            isOneToOne: false;
+            referencedRelation: 'buckets';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      prefixes: {
+        Row: {
+          bucket_id: string;
+          created_at: string | null;
+          level: number;
+          name: string;
+          updated_at: string | null;
+        };
+        Insert: {
+          bucket_id: string;
+          created_at?: string | null;
+          level?: number;
+          name: string;
+          updated_at?: string | null;
+        };
+        Update: {
+          bucket_id?: string;
+          created_at?: string | null;
+          level?: number;
+          name?: string;
+          updated_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'prefixes_bucketId_fkey';
             columns: ['bucket_id'];
             isOneToOne: false;
             referencedRelation: 'buckets';
@@ -1258,6 +1174,7 @@ export type Database = {
           key: string;
           owner_id: string | null;
           upload_signature: string;
+          user_metadata: Json | null;
           version: string;
         };
         Insert: {
@@ -1268,6 +1185,7 @@ export type Database = {
           key: string;
           owner_id?: string | null;
           upload_signature: string;
+          user_metadata?: Json | null;
           version: string;
         };
         Update: {
@@ -1278,6 +1196,7 @@ export type Database = {
           key?: string;
           owner_id?: string | null;
           upload_signature?: string;
+          user_metadata?: Json | null;
           version?: string;
         };
         Relationships: [
@@ -1349,6 +1268,13 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      add_prefixes: {
+        Args: {
+          _bucket_id: string;
+          _name: string;
+        };
+        Returns: undefined;
+      };
       can_insert_object: {
         Args: {
           bucketid: string;
@@ -1357,6 +1283,13 @@ export type Database = {
           metadata: Json;
         };
         Returns: undefined;
+      };
+      delete_prefix: {
+        Args: {
+          _bucket_id: string;
+          _name: string;
+        };
+        Returns: boolean;
       };
       extension: {
         Args: {
@@ -1371,6 +1304,24 @@ export type Database = {
         Returns: string;
       };
       foldername: {
+        Args: {
+          name: string;
+        };
+        Returns: string[];
+      };
+      get_level: {
+        Args: {
+          name: string;
+        };
+        Returns: number;
+      };
+      get_prefix: {
+        Args: {
+          name: string;
+        };
+        Returns: string;
+      };
+      get_prefixes: {
         Args: {
           name: string;
         };
@@ -1414,6 +1365,10 @@ export type Database = {
           updated_at: string;
         }[];
       };
+      operation: {
+        Args: Record<PropertyKey, never>;
+        Returns: string;
+      };
       search: {
         Args: {
           prefix: string;
@@ -1431,6 +1386,63 @@ export type Database = {
           updated_at: string;
           created_at: string;
           last_accessed_at: string;
+          metadata: Json;
+        }[];
+      };
+      search_legacy_v1: {
+        Args: {
+          prefix: string;
+          bucketname: string;
+          limits?: number;
+          levels?: number;
+          offsets?: number;
+          search?: string;
+          sortcolumn?: string;
+          sortorder?: string;
+        };
+        Returns: {
+          name: string;
+          id: string;
+          updated_at: string;
+          created_at: string;
+          last_accessed_at: string;
+          metadata: Json;
+        }[];
+      };
+      search_v1_optimised: {
+        Args: {
+          prefix: string;
+          bucketname: string;
+          limits?: number;
+          levels?: number;
+          offsets?: number;
+          search?: string;
+          sortcolumn?: string;
+          sortorder?: string;
+        };
+        Returns: {
+          name: string;
+          id: string;
+          updated_at: string;
+          created_at: string;
+          last_accessed_at: string;
+          metadata: Json;
+        }[];
+      };
+      search_v2: {
+        Args: {
+          prefix: string;
+          bucket_name: string;
+          limits?: number;
+          levels?: number;
+          start_after?: string;
+        };
+        Returns: {
+          key: string;
+          name: string;
+          id: string;
+          updated_at: string;
+          created_at: string;
           metadata: Json;
         }[];
       };
@@ -1524,4 +1536,19 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
     ? PublicSchema['Enums'][PublicEnumNameOrOptions]
+    : never;
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof PublicSchema['CompositeTypes']
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database;
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema['CompositeTypes']
+    ? PublicSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
     : never;

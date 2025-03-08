@@ -5,10 +5,12 @@ import { useEffect, useState } from 'react';
 import { useFetcher } from 'react-router';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 
 import { useCsrfToken } from '@kit/csrf/client';
+import { VerifyOtpForm } from '@kit/otp/components';
+import { useUser } from '@kit/supabase/hooks/use-user';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import {
   AlertDialog,
@@ -20,17 +22,8 @@ import {
   AlertDialogTitle,
 } from '@kit/ui/alert-dialog';
 import { Button } from '@kit/ui/button';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@kit/ui/form';
+import { Form } from '@kit/ui/form';
 import { If } from '@kit/ui/if';
-import { Input } from '@kit/ui/input';
 import { Trans } from '@kit/ui/trans';
 
 import {
@@ -81,6 +74,7 @@ function TransferOrganizationOwnershipForm({
   setIsOpen: (isOpen: boolean) => void;
 }) {
   const [error, setError] = useState<boolean>();
+  const user = useUser();
   const csrfToken = useCsrfToken();
 
   const fetcher = useFetcher<{
@@ -90,7 +84,7 @@ function TransferOrganizationOwnershipForm({
   const form = useForm({
     resolver: zodResolver(TransferOwnershipConfirmationSchema),
     defaultValues: {
-      confirmation: '',
+      otp: '',
       accountId,
       userId,
       csrfToken,
@@ -98,6 +92,7 @@ function TransferOrganizationOwnershipForm({
   });
 
   const pending = fetcher.state === 'submitting';
+  const { otp } = useWatch({ control: form.control });
 
   useEffect(() => {
     if (fetcher.data) {
@@ -108,6 +103,21 @@ function TransferOrganizationOwnershipForm({
       }
     }
   }, [fetcher.data, setIsOpen]);
+
+  if (!otp) {
+    return (
+      <VerifyOtpForm
+        purpose={`transfer-ownership-${accountId}`}
+        email={user.data?.email as string}
+        onSuccess={(otp) => form.setValue('otp', otp, { shouldValidate: true })}
+        CancelButton={
+          <AlertDialogCancel>
+            <Trans i18nKey={'common:cancel'} />
+          </AlertDialogCancel>
+        }
+      />
+    );
+  }
 
   return (
     <Form {...form}>
@@ -139,34 +149,6 @@ function TransferOrganizationOwnershipForm({
             components={{ b: <b /> }}
           />
         </p>
-
-        <FormField
-          name={'confirmation'}
-          render={({ field }) => {
-            return (
-              <FormItem>
-                <FormLabel>
-                  <Trans i18nKey={'teams:transferOwnershipInputLabel'} />
-                </FormLabel>
-
-                <FormControl>
-                  <Input
-                    autoComplete={'off'}
-                    type={'text'}
-                    required
-                    {...field}
-                  />
-                </FormControl>
-
-                <FormDescription>
-                  <Trans i18nKey={'teams:transferOwnershipInputDescription'} />
-                </FormDescription>
-
-                <FormMessage />
-              </FormItem>
-            );
-          }}
-        />
 
         <div>
           <p className={'text-muted-foreground'}>

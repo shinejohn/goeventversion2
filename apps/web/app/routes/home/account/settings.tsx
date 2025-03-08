@@ -19,6 +19,7 @@ import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
+import featureFlagsConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { requireUserLoader } from '~/lib/require-user-loader';
@@ -82,7 +83,13 @@ export default function TeamAccountSettingsPage() {
 
       <PageBody>
         <div className={'flex max-w-2xl flex-1 flex-col'}>
-          <TeamAccountSettingsContainer account={account} paths={paths} />
+          <TeamAccountSettingsContainer
+            account={account}
+            paths={paths}
+            features={{
+              enableTeamDeletion: featureFlagsConfig.enableTeamDeletion,
+            }}
+          />
         </div>
       </PageBody>
     </>

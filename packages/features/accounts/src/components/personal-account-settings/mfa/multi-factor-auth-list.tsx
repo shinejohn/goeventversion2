@@ -10,7 +10,7 @@ import { ShieldCheck, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 
-import useFetchAuthFactors from '@kit/supabase/hooks/use-fetch-mfa-factors';
+import { useFetchAuthFactors } from '@kit/supabase/hooks/use-fetch-mfa-factors';
 import { useSupabase } from '@kit/supabase/hooks/use-supabase';
 import { useFactorsMutationKey } from '@kit/supabase/hooks/use-user-factors-mutation-key';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';

@@ -38,7 +38,7 @@ class AccountMembersService {
 
     logger.info(ctx, `Removing member from account...`);
 
-    const { data, error } = await this.client
+    const { error } = await this.client
       .from('accounts_memberships')
       .delete()
       .match({
@@ -55,7 +55,9 @@ class AccountMembersService {
         `Failed to remove member from account`,
       );
 
-      throw error;
+      return {
+        success: false,
+      };
     }
 
     logger.info(
@@ -67,7 +69,9 @@ class AccountMembersService {
 
     await service.decreaseSeats(payload.accountId);
 
-    return data;
+    return {
+      success: true,
+    };
   }
 
   /**
@@ -113,7 +117,7 @@ class AccountMembersService {
     // since we do not set any RLS policies on the accounts_memberships table
     // for updating accounts_memberships. Instead, we use the can_action_account_member
     // RPC to validate permissions to update the role
-    const { data, error } = await adminClient
+    const { error } = await adminClient
       .from('accounts_memberships')
       .update({
         account_role: payload.role,
@@ -132,12 +136,16 @@ class AccountMembersService {
         `Failed to update member role`,
       );
 
-      throw error;
+      return {
+        success: false,
+      };
     }
 
     logger.info(ctx, `Successfully updated member role`);
 
-    return data;
+    return {
+      success: true,
+    };
   }
 
   /**
@@ -159,13 +167,10 @@ class AccountMembersService {
 
     logger.info(ctx, `Transferring ownership of account...`);
 
-    const { data, error } = await adminClient.rpc(
-      'transfer_team_account_ownership',
-      {
-        target_account_id: payload.accountId,
-        new_owner_id: payload.userId,
-      },
-    );
+    const { error } = await adminClient.rpc('transfer_team_account_ownership', {
+      target_account_id: payload.accountId,
+      new_owner_id: payload.userId,
+    });
 
     if (error) {
       logger.error(
@@ -173,11 +178,15 @@ class AccountMembersService {
         `Failed to transfer ownership of account`,
       );
 
-      throw error;
+      return {
+        success: false,
+      };
     }
 
     logger.info(ctx, `Successfully transferred ownership of account`);
 
-    return data;
+    return {
+      success: true,
+    };
   }
 }

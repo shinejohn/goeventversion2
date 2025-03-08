@@ -1,14 +1,17 @@
 import { Page, expect } from '@playwright/test';
 
 import { AuthPageObject } from '../authentication/auth.po';
+import { OtpPo } from '../utils/otp.po';
 
 export class AccountPageObject {
   private readonly page: Page;
   public auth: AuthPageObject;
+  private otp: OtpPo;
 
   constructor(page: Page) {
     this.page = page;
     this.auth = new AuthPageObject(page);
+    this.otp = new OtpPo(page);
   }
 
   async setup() {
@@ -32,7 +35,17 @@ export class AccountPageObject {
         email,
       );
 
-      await this.page.click('[data-test="account-email-form"] button');
+      const click = this.page.click('[data-test="account-email-form"] button');
+
+      const req = await this.page
+        .waitForResponse((resp) => {
+          return resp.url().includes('auth/v1/user');
+        })
+        .then((response) => {
+          expect(response.status()).toBe(200);
+        });
+
+      return Promise.all([click, req]);
     }).toPass();
   }
 
@@ -41,38 +54,25 @@ export class AccountPageObject {
       '[data-test="account-password-form-password-input"]',
       password,
     );
+
     await this.page.fill(
       '[data-test="account-password-form-repeat-password-input"]',
       password,
     );
+
     await this.page.click('[data-test="account-password-form"] button');
   }
 
-  async deleteAccount() {
-    await expect(async () => {
-      await this.page.click('[data-test="delete-account-button"]');
-      await this.page.fill(
-        '[data-test="delete-account-input-field"]',
-        'DELETE',
-      );
+  async deleteAccount(email: string) {
+    // Click the delete account button to open the modal
+    await this.page.click('[data-test="delete-account-button"]');
 
-      const click = this.page.click(
-        '[data-test="confirm-delete-account-button"]',
-      );
+    // Complete the OTP verification process
+    await this.otp.completeOtpVerification(email);
 
-      const response = this.page
-        .waitForResponse((resp) => {
-          return (
-            resp.url().includes('home/settings') &&
-            resp.request().method() === 'POST'
-          );
-        })
-        .then((response) => {
-          expect(response.status()).toBe(202);
-        });
+    await this.page.waitForTimeout(500);
 
-      return Promise.all([click, response]);
-    }).toPass();
+    await this.page.click('[data-test="confirm-delete-account-button"]');
   }
 
   getProfileName() {

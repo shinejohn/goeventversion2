@@ -38,7 +38,11 @@ export function AdminTeamAccountPage(props: {
         }
       >
         <AdminDeleteAccountDialog accountId={props.account.id}>
-          <Button size={'sm'} variant={'destructive'}>
+          <Button
+            size={'sm'}
+            variant={'destructive'}
+            data-test={'admin-delete-account-button'}
+          >
             <BadgeX className={'mr-1 h-4'} />
             Delete
           </Button>
@@ -48,7 +52,7 @@ export function AdminTeamAccountPage(props: {
       <PageBody className={'gap-y-8'}>
         <div className={'flex justify-between'}>
           <div className={'flex items-center space-x-4'}>
-            <div className={'flex items-center space-x-2.5'}>
+            <div className={'flex items-center gap-x-2.5'}>
               <ProfileAvatar
                 pictureUrl={props.account.picture_url}
                 displayName={props.account.name}

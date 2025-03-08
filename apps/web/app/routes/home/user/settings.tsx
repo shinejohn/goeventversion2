@@ -78,7 +78,7 @@ export const action = async (args: Route.ActionArgs) => {
 
   switch (json.intent) {
     case 'delete-account':
-      return deletePersonalAccountAction({ client });
+      return deletePersonalAccountAction({ client, otp: json.payload.otp });
 
     default:
       return new Response('Invalid action', { status: 400 });

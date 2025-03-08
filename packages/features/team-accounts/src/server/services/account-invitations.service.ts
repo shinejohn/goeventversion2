@@ -43,22 +43,23 @@ class AccountInvitationsService {
 
     logger.info(ctx, 'Removing invitation...');
 
-    const { data, error } = await this.client
-      .from('invitations')
-      .delete()
-      .match({
-        id: params.payload.invitationId,
-      });
+    const { error } = await this.client.from('invitations').delete().match({
+      id: params.payload.invitationId,
+    });
 
     if (error) {
       logger.error(ctx, `Failed to remove invitation`);
 
-      throw error;
+      return {
+        success: false,
+      };
     }
 
     logger.info(ctx, 'Invitation successfully removed');
 
-    return data;
+    return {
+      success: true,
+    };
   }
 
   /**
@@ -76,7 +77,7 @@ class AccountInvitationsService {
 
     logger.info(ctx, 'Updating invitation...');
 
-    const { data, error } = await this.client
+    const { error } = await this.client
       .from('invitations')
       .update({
         role: payload.role,
@@ -94,12 +95,16 @@ class AccountInvitationsService {
         'Failed to update invitation',
       );
 
-      throw error;
+      return {
+        success: false,
+      };
     }
 
     logger.info(ctx, 'Invitation successfully updated');
 
-    return data;
+    return {
+      success: true,
+    };
   }
 
   /**
@@ -136,7 +141,9 @@ class AccountInvitationsService {
         'Account not found in database. Cannot send invitations.',
       );
 
-      throw new Error('Account not found');
+      return {
+        success: false,
+      };
     }
 
     try {
@@ -154,7 +161,9 @@ class AccountInvitationsService {
         'Error validating invitations',
       );
 
-      throw error;
+      return {
+        success: false,
+      };
     }
 
     const response = await this.client.rpc('add_invitations_to_account', {
@@ -171,7 +180,9 @@ class AccountInvitationsService {
         `Failed to add invitations to account ${accountSlug}`,
       );
 
-      throw response.error;
+      return {
+        success: false,
+      };
     }
 
     const responseInvitations = Array.isArray(response.data)
@@ -185,6 +196,10 @@ class AccountInvitationsService {
       },
       'Invitations added to account',
     );
+
+    return {
+      success: true,
+    };
   }
 
   /**
@@ -245,7 +260,7 @@ class AccountInvitationsService {
 
     const sevenDaysFromNow = formatISO(addDays(new Date(), 7));
 
-    const { data, error } = await this.client
+    const { error } = await this.client
       .from('invitations')
       .update({
         expires_at: sevenDaysFromNow,
@@ -263,12 +278,16 @@ class AccountInvitationsService {
         'Failed to renew invitation',
       );
 
-      throw error;
+      return {
+        success: false,
+      };
     }
 
     logger.info(ctx, 'Invitation successfully renewed');
 
-    return data;
+    return {
+      success: true,
+    };
   }
 
   async validateInvitation(

@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useSupabase } from './use-supabase';
 import { useFactorsMutationKey } from './use-user-factors-mutation-key';
 
-function useFetchAuthFactors({ userId }: { userId: string }) {
+export function useFetchAuthFactors({ userId }: { userId: string }) {
   const client = useSupabase();
   const queryKey = useFactorsMutationKey(userId);
 
@@ -23,5 +23,3 @@ function useFetchAuthFactors({ userId }: { userId: string }) {
     staleTime: 0,
   });
 }
-
-export default useFetchAuthFactors;

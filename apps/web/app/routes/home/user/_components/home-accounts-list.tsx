@@ -47,19 +47,17 @@ export function HomeAccountsList({
 
 function HomeAccountsListEmptyState() {
   return (
-    <div className={'flex flex-1'}>
-      <EmptyState>
-        <EmptyStateButton asChild>
-          <HomeAddAccountButton className={'mt-4'} />
-        </EmptyStateButton>
-        <EmptyStateHeading>
-          <Trans i18nKey={'account:noTeamsYet'} />
-        </EmptyStateHeading>
-        <EmptyStateText>
-          <Trans i18nKey={'account:createTeam'} />
-        </EmptyStateText>
-      </EmptyState>
-    </div>
+    <EmptyState className={'mb-4'}>
+      <EmptyStateButton asChild>
+        <HomeAddAccountButton className={'mt-4'} />
+      </EmptyStateButton>
+      <EmptyStateHeading>
+        <Trans i18nKey={'account:noTeamsYet'} />
+      </EmptyStateHeading>
+      <EmptyStateText>
+        <Trans i18nKey={'account:createTeam'} />
+      </EmptyStateText>
+    </EmptyState>
   );
 }
 

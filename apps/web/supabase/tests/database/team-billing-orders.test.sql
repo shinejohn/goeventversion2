@@ -11,8 +11,6 @@ select makerkit.set_identifier('custom', 'custom@makerkit.dev');
 INSERT INTO public.billing_customers(account_id, provider, customer_id)
 VALUES (makerkit.get_account_id_by_slug('makerkit'), 'stripe', 'cus_test');
 
-set local role service_role;
-
 -- Call the upsert_order function
 SELECT public.upsert_order(makerkit.get_account_id_by_slug('makerkit'), 'cus_test', 'order_test', 'pending', 'stripe', 100, 'usd', '[
     {"id":"order_item_1", "product_id": "prod_test", "variant_id": "var_test", "price_amount": 100, "quantity": 1},
@@ -79,7 +77,7 @@ SELECT row_eq(
     'The subscription items price_amount should be updated'
 );
 
-select tests.authenticate_as('member');
+select makerkit.authenticate_as('member');
 
 -- account can read their own subscription
 SELECT isnt_empty(
@@ -96,7 +94,7 @@ SELECT isnt_empty(
 
 -- foreigners
 select tests.create_supabase_user('foreigner');
-select tests.authenticate_as('foreigner');
+select makerkit.authenticate_as('foreigner');
 
 -- account cannot read other's subscription
 SELECT is_empty(
@@ -112,3 +110,4 @@ SELECT is_empty(
 -- Finish the tests and clean up
 SELECT * FROM finish();
 ROLLBACK;
+

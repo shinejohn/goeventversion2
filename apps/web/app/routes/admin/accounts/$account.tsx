@@ -39,7 +39,7 @@ export const loader = async function (args: Route.LoaderArgs) {
 
   const account = args.params.account as string;
 
-  return loadAdminAccountPage(account);
+  return loadAdminAccountPage(client, account);
 };
 
 export default function AdminPage(props: Route.ComponentProps) {

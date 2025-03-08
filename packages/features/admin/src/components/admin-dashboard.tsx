@@ -85,6 +85,10 @@ export function AdminDashboard({
           </div>
         </CardContent>
       </Card>
+
+      <p className={'text-muted-foreground w-max text-xs'}>
+        The above data is estimated and may not be 100% accurate.
+      </p>
     </div>
   );
 }

@@ -4,18 +4,15 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 import vitePlugin from '@kit/tailwind-config/vite';
 
+const ALLOWED_HOSTS =
+  process.env.NODE_ENV === 'development' ? ['host.docker.internal'] : [];
+
 export default defineConfig(({ command }) => ({
   ssr: {
     noExternal: command === 'build' ? true : undefined,
   },
   plugins: [reactRouter(), tsconfigPaths(), ...vitePlugin.plugins],
-  build: {
-    cssMinify: false,
-    rollupOptions: {
-      external: ['@sentry/remix'],
-    },
-    dynamicImportVarsOptions: {
-      exclude: ['@sentry/remix'],
-    },
+  server: {
+    allowedHosts: ALLOWED_HOSTS,
   },
 }));

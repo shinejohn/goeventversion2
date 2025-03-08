@@ -14,12 +14,7 @@ const defaultLanguage = import.meta.env.VITE_LOCALE ?? 'en';
  */
 export const languages: string[] = [
   defaultLanguage,
-  'de',
-  'it',
-  'fr',
-  'es',
-  'ja',
-  'zh',
+  // add more languages here
 ];
 
 /**

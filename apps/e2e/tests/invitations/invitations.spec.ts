@@ -57,8 +57,33 @@ test.describe('Invitations', () => {
     const row = invitations.getInvitationRow(email);
 
     await expect(row.locator('[data-test="member-role-badge"]')).toHaveText(
-        'Owner',
+      'Owner',
     );
+  });
+
+  test('user cannot invite a member of the team again', async ({ page }) => {
+    await invitations.navigateToMembers();
+
+    const email = invitations.auth.createRandomEmail();
+
+    const invites = [
+      {
+        email,
+        role: 'member',
+      },
+    ];
+
+    await invitations.openInviteForm();
+    await invitations.inviteMembers(invites);
+
+    await expect(invitations.getInvitations()).toHaveCount(1);
+
+    // Try to invite the same member again
+    // This should fail
+    await invitations.openInviteForm();
+    await invitations.inviteMembers(invites);
+
+    await expect(invitations.getInvitations()).toHaveCount(1);
   });
 });
 
@@ -95,7 +120,8 @@ test.describe('Full Invitation Flow', () => {
     await expect(invitations.getInvitations()).toHaveCount(2);
 
     // sign out and sign in with the first email
-    await invitations.auth.signOut();
+    await page.context().clearCookies();
+    await page.reload();
 
     console.log(`Finding email to ${firstEmail} ...`);
 

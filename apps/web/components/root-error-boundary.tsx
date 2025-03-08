@@ -39,7 +39,7 @@ export function RootErrorBoundary() {
         <Links />
       </head>
 
-      <body>
+      <body data-test={'root-error-boundary'}>
         <div className={'flex h-screen flex-1 flex-col'}>
           <SiteHeader />
 

@@ -1,8 +1,4 @@
-import { useEffect } from 'react';
-
-import { useLocation, useMatches } from 'react-router';
-
-import type { Event, User } from '@sentry/remix';
+import type { Event, User } from '@sentry/node';
 
 import { MonitoringService } from '@kit/monitoring-core';
 
@@ -43,7 +39,7 @@ export class SentryServerMonitoringService implements MonitoringService {
   async captureException(error: Error | null) {
     await this.initialize();
 
-    const { captureException } = await import('@sentry/remix').catch();
+    const { captureException } = await import('@sentry/node').catch();
 
     return captureException(error);
   }
@@ -51,7 +47,7 @@ export class SentryServerMonitoringService implements MonitoringService {
   async captureEvent<Extra extends Event>(event: string, extra?: Extra) {
     await this.initialize();
 
-    const { captureEvent } = await import('@sentry/remix').catch();
+    const { captureEvent } = await import('@sentry/node').catch();
 
     return captureEvent({
       message: event,
@@ -62,13 +58,13 @@ export class SentryServerMonitoringService implements MonitoringService {
   async identifyUser(user: User) {
     await this.initialize();
 
-    const { setUser } = await import('@sentry/remix').catch();
+    const { setUser } = await import('@sentry/node').catch();
 
     setUser(user);
   }
 
   private async initializeSentryServerClient() {
-    const { init } = await import('@sentry/remix').catch();
+    const { init } = await import('@sentry/node').catch();
 
     init({
       dsn: DSN,
@@ -76,20 +72,15 @@ export class SentryServerMonitoringService implements MonitoringService {
   }
 
   private async initializeSentryBrowserClient() {
-    const { init, browserTracingIntegration, replayIntegration } = await import(
-      '@sentry/remix'
+    const { init, browserTracingIntegration } = await import(
+      '@sentry/react-router'
     ).catch();
 
     init({
       dsn: DSN,
       integrations: [
-        browserTracingIntegration({
-          useEffect,
-          useLocation,
-          useMatches,
-        }),
-        // Replay is only available in the client
-        replayIntegration(),
+        browserTracingIntegration(),
+        // add integrations here
       ],
 
       // Set tracesSampleRate to 1.0 to capture 100%
