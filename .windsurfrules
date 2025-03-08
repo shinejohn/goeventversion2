@@ -1,0 +1,278 @@
+# Makerkit Guidelines
+
+## Project Stack
+- Framework: React Router 7, TypeScript, React, Node.js
+- Backend: Supabase with Postgres
+- UI: Shadcn UI, Tailwind CSS
+- Key libraries: React Hook Form, React Query, Zod, Lucide React
+- Focus: Code clarity, Readability, Best practices, Maintainability
+
+## Core Principles
+
+### Data Flow
+1. Server Side Data Fetching
+   - Use Supabase Client directly via `getSupabaseServerClient` in loaders
+   - Handle errors with proper boundaries
+
+2. Client Side Data Fetching
+   - Use React Query for data fetching
+   - Implement proper loading states
+   - Example:
+     ```tsx
+     function useNotes() {
+       const { data, isLoading } = useQuery({
+         queryKey: ['notes'],
+         queryFn: async () => {
+           const { data } = await fetch('/api/notes');
+           return data;
+         }
+       });
+       return { data, isLoading };
+     }
+     ```
+
+## Database & Security
+
+### RLS Policies
+- Strive to create a safe, robust, secure and consistent database schema
+- Always consider the compromises you need to make and explain them so I can make an educated decision. Follow up with the considerations make and explain them.
+- Enable RLS by default and propose the required RLS policies
+- `public.accounts` are the root tables for the application
+- Implement cascading deletes when appropriate
+- Ensure strong consistency considering triggers and constraints
+- Always use Postgres schemas explicitly (e.g., `public.accounts`)
+
+## Forms Pattern
+
+### 1. Schema Definition
+```tsx
+// schema/note.schema.ts
+import { z } from 'zod';
+
+export const NoteSchema = z.object({
+  title: z.string().min(1).max(100),
+  content: z.string().min(1),
+  category: z.enum(['work', 'personal']),
+});
+```
+
+### 2. Actions
+Actions in React Router Supabase Turbo provide a clean way to handle server-side operations directly from your client components.
+
+## What Are Actions?
+
+Actions are server-side functions for operations like:
+- Form submissions
+- Data mutations (create, update, delete)
+- Authentication flows
+- Server-side business logic
+
+#### Basic Structure
+
+```tsx
+export const action = async (args: Route.ActionArgs) => {
+  // Parse incoming data
+  const json = SomeSchema.parse(await args.request.json());
+
+  // Get Supabase client
+  const client = getSupabaseServerClient(args.request);
+
+  // Handle different operations based on intent
+  switch (json.intent) {
+    case 'some-action':
+      return doSomething({ client, data: json.payload });
+    default:
+      return new Response('Invalid action', { status: 400 });
+  }
+};
+```
+
+#### Using Actions with Forms
+
+Trigger actions using React Router's `useFetcher`:
+
+```tsx
+function MyForm() {
+  const form = useForm({
+    resolver: zodResolver(MyFormSchema),
+    defaultValues: { /* defaults */ }
+  });
+
+  const fetcher = useFetcher();
+  const pending = fetcher.state === 'submitting';
+
+  return (
+    <form
+      onSubmit={form.handleSubmit((data) => {
+        return fetcher.submit(
+          {
+            intent: 'my-action-intent',
+            payload: data,
+          },
+          {
+            encType: 'application/json',
+            method: 'POST',
+          },
+        );
+      })}
+    >
+      {/* Form fields */}
+      <Button type="submit" disabled={pending}>
+        {pending ? 'Processing...' : 'Submit'}
+      </Button>
+    </form>
+  );
+}
+```
+
+## Key Action Patterns
+
+### The Intent Pattern
+
+Handle multiple actions in a single route:
+
+```tsx
+export const action = async (args: Route.ActionArgs) => {
+  const json = ActionsSchema.parse(await args.request.json());
+
+  switch (json.intent) {
+    case 'delete-account':
+      return deletePersonalAccountAction({ client, otp: json.payload.otp });
+    case 'update-profile':
+      return updateProfileAction({ client, data: json.payload });
+    default:
+      return new Response('Invalid action', { status: 400 });
+  }
+};
+```
+
+### Reusable Action Functions
+
+Extract complex operations to separate functions:
+
+```tsx
+// In a separate file
+export const deletePersonalAccountAction = async ({
+  client,
+  otp
+}: {
+  client: SupabaseClient<Database>;
+  otp: string;
+}) => {
+  // Implementation
+};
+
+// In your route file
+import { deletePersonalAccountAction } from './actions';
+```
+
+## Best Practices
+
+1. **Validate data** with Zod schemas
+   ```tsx
+   const data = DeleteAccountFormSchema.parse(json.payload);
+   ```
+
+2. **Handle errors** gracefully
+   ```tsx
+   try {
+     // Action implementation
+     return redirectDocument('/success');
+   } catch (error) {
+     console.error('Action failed:', error);
+     return json({ error: 'Something went wrong' }, { status: 500 });
+   }
+   ```
+
+3. **Check authentication**
+   ```tsx
+   const auth = await requireUser(client);
+   if (!auth.data) {
+     return redirectDocument(auth.redirectTo);
+   }
+   ```
+
+4. **Keep actions focused** - Each should do one thing well
+5. **Check permissions** - Verify user authorization
+6. **Use service functions** for complex logic
+7. **Provide feedback** - Return status information for the UI
+
+By following these patterns, you'll create robust, type-safe server actions in your application.
+
+## Error Handling
+
+- Consider logging asynchronous requests in server code using the `@kit/shared/logger`
+- Handle promises and async/await gracefully
+- Consider the unhappy path and handle errors appropriately
+
+### Structured Logging
+```tsx
+const ctx = {
+  name: 'create-note',
+  userId: user.id,
+  noteId: note.id
+};
+
+logger.info(ctx, 'Creating new note...');
+
+try {
+  await createNote();
+  logger.info(ctx, 'Note created successfully');
+} catch (error) {
+  logger.error(ctx, 'Failed to create note', { error });
+  throw error;
+}
+```
+
+## Context Management
+
+In client components, we can use the `useUserWorkspace` hook to access the user's workspace data.
+
+### Personal Account
+```tsx
+'use client';
+
+function PersonalDashboard() {
+  const { workspace, user } = useUserWorkspace();
+
+  if (!workspace) return null;
+  
+  return (
+    <div>
+      <h1>Welcome, {user.email}</h1>
+      <SubscriptionStatus status={workspace.subscription_status} />
+    </div>
+  );
+}
+```
+
+### Team Account
+In client components, we can use the `useTeamAccountWorkspace` hook to access the team account's workspace data. It only works under the `/home/[account]` route.
+
+```tsx
+'use client';
+
+function TeamDashboard() {
+  const { account, user } = useTeamAccountWorkspace();
+  
+  return (
+    <div>
+      <h1>{account.name}</h1>
+      <RoleDisplay role={account.role} />
+      <PermissionsList permissions={account.permissions} />
+    </div>
+  );
+}
+```
+
+## UI Components
+
+- Reusable UI components are defined in the "packages/ui" package named "@kit/ui".
+- By exporting the component from the "exports" field, we can import it using the "@kit/ui/{component-name}" format.
+
+## Creating Pages
+
+When creating new pages ensure:
+- The page is exported using `withI18n(Page)` to enable i18n.
+- The page has the required and correct metadata using the `metadata` or `generateMetadata` function.
+- Don't worry about authentication, it's handled in the middleware.
