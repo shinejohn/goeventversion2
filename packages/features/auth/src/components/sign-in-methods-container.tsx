@@ -1,6 +1,4 @@
-'use client';
-
-import { useNavigate, useSearchParams } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import type { Provider } from '@supabase/supabase-js';
 
@@ -18,7 +16,7 @@ export function SignInMethodsContainer(props: {
 
   paths: {
     callback: string;
-    home: string;
+    returnPath: string;
     joinTeam: string;
   };
 
@@ -29,14 +27,13 @@ export function SignInMethodsContainer(props: {
   };
 }) {
   const navigate = useNavigate();
-  const [params] = useSearchParams();
-  const nextPath = params.get('next') ?? props.paths.home;
 
   const redirectUrl = isBrowser()
     ? new URL(props.paths.callback, window?.location.origin).toString()
     : '';
 
   const onSignIn = () => {
+    // if the user has an invite token, we should join the team
     if (props.inviteToken) {
       const searchParams = new URLSearchParams({
         invite_token: props.inviteToken,
@@ -46,7 +43,8 @@ export function SignInMethodsContainer(props: {
 
       return navigate(joinTeamPath, { replace: true });
     } else {
-      return navigate(nextPath, { replace: true });
+      // otherwise, we should redirect to the return path
+      return navigate(props.paths.returnPath, { replace: true });
     }
   };
 
@@ -81,10 +79,7 @@ export function SignInMethodsContainer(props: {
           enabledProviders={props.providers.oAuth}
           inviteToken={props.inviteToken}
           shouldCreateUser={false}
-          paths={{
-            callback: props.paths.callback,
-            returnPath: props.paths.home,
-          }}
+          paths={props.paths}
         />
       </If>
     </>

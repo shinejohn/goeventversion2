@@ -23,10 +23,12 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
   const searchParams = new URL(request.url).searchParams;
   const inviteToken = searchParams.get('invite_token') ?? undefined;
+  const returnPath = searchParams.get('next') ?? pathsConfig.app.home;
 
   return {
     title: i18n.t('auth:signIn'),
     inviteToken,
+    returnPath,
   };
 };
 
@@ -38,18 +40,18 @@ export const meta = ({ data }: Route.MetaArgs) => {
   ];
 };
 
-const paths = {
-  callback: pathsConfig.auth.callback,
-  home: pathsConfig.app.home,
-  joinTeam: pathsConfig.app.joinTeam,
-};
-
 export default function SignInPage(props: Route.ComponentProps) {
-  const { inviteToken } = props.loaderData;
+  const { inviteToken, returnPath } = props.loaderData;
 
   const signUpPath =
     pathsConfig.auth.signUp +
     (inviteToken ? `?invite_token=${inviteToken}` : '');
+
+  const paths = {
+    callback: pathsConfig.auth.callback,
+    joinTeam: pathsConfig.app.joinTeam,
+    returnPath,
+  };
 
   return (
     <>
