@@ -2,7 +2,10 @@
 
 import { useCallback } from 'react';
 
-import type { Provider } from '@supabase/supabase-js';
+import type {
+  Provider,
+  SignInWithOAuthCredentials,
+} from '@supabase/supabase-js';
 
 import { useSignInWithProvider } from '@kit/supabase/hooks/use-sign-in-with-provider';
 import { If } from '@kit/ui/if';
@@ -12,10 +15,26 @@ import { Trans } from '@kit/ui/trans';
 import { AuthErrorAlert } from './auth-error-alert';
 import { AuthProviderButton } from './auth-provider-button';
 
+/**
+ * @name OAUTH_SCOPES
+ * @description
+ * The OAuth scopes are used to specify the permissions that the application is requesting from the user.
+ *
+ * Please add your OAuth providers here and the scopes you want to use.
+ *
+ * @see https://supabase.com/docs/guides/auth/social-login
+ */
+const OAUTH_SCOPES: Partial<Record<Provider, string>> = {
+  azure: 'email',
+  keycloak: 'openid',
+  // add your OAuth providers here
+};
+
 export const OauthProviders: React.FC<{
   inviteToken?: string;
   shouldCreateUser: boolean;
   enabledProviders: Provider[];
+  queryParams?: Record<string, string>;
 
   paths: {
     callback: string;
@@ -75,14 +94,16 @@ export const OauthProviders: React.FC<{
                   ].join('?');
 
                   const redirectTo = [origin, redirectPath].join('');
+                  const scopes = OAUTH_SCOPES[provider] ?? undefined;
 
                   const credentials = {
                     provider,
                     options: {
                       redirectTo,
-                      shouldCreateUser: props.shouldCreateUser,
+                      queryParams: props.queryParams,
+                      scopes,
                     },
-                  };
+                  } satisfies SignInWithOAuthCredentials;
 
                   return onSignInWithProvider(() =>
                     signInWithProviderMutation.mutateAsync(credentials),
