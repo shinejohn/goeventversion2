@@ -15,4 +15,11 @@ export default defineConfig(({ command }) => ({
   server: {
     allowedHosts: ALLOWED_HOSTS,
   },
+  optimizeDeps: {
+    entries: [
+      './app/root.tsx',
+      './app/entry.server.tsx',
+      './app/routes/**/*.tsx',
+    ],
+  },
 }));
