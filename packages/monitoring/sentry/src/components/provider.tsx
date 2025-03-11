@@ -1,8 +1,8 @@
 import { MonitoringContext } from '@kit/monitoring-core';
 
-import { SentryServerMonitoringService } from '../services/sentry-server-monitoring.service';
+import { SentryClientMonitoringService } from '../services/sentry-client-monitoring.service';
 
-const sentry = new SentryServerMonitoringService();
+const sentry = new SentryClientMonitoringService();
 
 export function SentryProvider({ children }: React.PropsWithChildren) {
   return <MonitoringProvider>{children}</MonitoringProvider>;

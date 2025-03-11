@@ -11,11 +11,9 @@
   "prettier": "@kit/prettier-config",
   "exports": {
     ".": "./src/index.ts",
+    "./client": "./src/client.ts",
     "./server": "./src/server.ts",
-    "./provider": "./src/components/provider.tsx",
-    "./config/client": "./src/config/sentry.client.config.ts",
-    "./config/server": "./src/config/sentry.server.config.ts",
-    "./config/edge": "./src/config/sentry.edge.config.ts"
+    "./provider": "./src/components/provider.tsx"
   },
   "dependencies": {
     "@opentelemetry/exporter-jaeger": "1.30.1",

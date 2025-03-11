@@ -57,7 +57,7 @@ export function BillingSessionStatus({
 
         <form>
           <Button data-test={'checkout-success-back-link'} asChild>
-            <Link to={redirectPath}>
+            <Link to={redirectPath} relative={'path'}>
               <span>
                 <Trans i18nKey={'billing:checkoutSuccessBackButton'} />
               </span>

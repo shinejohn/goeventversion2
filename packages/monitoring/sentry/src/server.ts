@@ -1,1 +1,1 @@
-export * from './services/sentry-server-monitoring.service';
+export * from './services/sentry-server-monitoring.service.server';
