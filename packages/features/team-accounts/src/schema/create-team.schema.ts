@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-/*
+/**
  * @name RESERVED_NAMES_ARRAY
  * @description Array of reserved names for team accounts
  * This is a list of names that cannot be used for team accounts as they are reserved for other purposes.
@@ -12,10 +12,12 @@ const RESERVED_NAMES_ARRAY = [
   // please add more reserved names here
 ];
 
+const SPECIAL_CHARACTERS_REGEX = /[!@#$%^&*()+=[\]{};':"\\|,.<>/?]/;
+
 /**
  * @name TeamNameSchema
  */
-const TeamNameSchema = z
+export const TeamNameSchema = z
   .string({
     description: 'The name of the team account',
   })
@@ -23,7 +25,16 @@ const TeamNameSchema = z
   .max(50)
   .refine(
     (name) => {
-      return !RESERVED_NAMES_ARRAY.includes(name);
+      console.log(name);
+      return !SPECIAL_CHARACTERS_REGEX.test(name);
+    },
+    {
+      message: 'teams:specialCharactersError',
+    },
+  )
+  .refine(
+    (name) => {
+      return !RESERVED_NAMES_ARRAY.includes(name.toLowerCase());
     },
     {
       message: 'teams:reservedNameError',
@@ -36,5 +47,4 @@ const TeamNameSchema = z
  */
 export const CreateTeamSchema = z.object({
   name: TeamNameSchema,
-  csrfToken: z.string().min(1),
 });

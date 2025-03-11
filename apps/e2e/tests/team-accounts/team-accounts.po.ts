@@ -78,6 +78,16 @@ export class TeamAccountsPageObject {
     }).toPass();
   }
 
+  async tryCreateTeam(teamName: string) {
+    await this.page.locator('[data-test="create-team-form"] input').fill('');
+    await this.page.waitForTimeout(200);
+    await this.page.locator('[data-test="create-team-form"] input').fill(teamName);
+
+    return this.page.click(
+      '[data-test="create-team-form"] button:last-child',
+    );
+  }
+
   async createTeam({ teamName, slug } = this.createTeamName()) {
     await this.openAccountsSelector();
 
