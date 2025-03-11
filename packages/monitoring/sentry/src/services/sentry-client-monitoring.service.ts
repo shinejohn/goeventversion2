@@ -1,4 +1,4 @@
-import type { Event, User } from '@sentry/node';
+import type { Event, User } from '@sentry/react-router';
 
 import { MonitoringService } from '@kit/monitoring-core';
 
@@ -7,10 +7,10 @@ const DSN = import.meta.env.VITE_SENTRY_DSN;
 /**
  * @class
  * @implements {MonitoringService}
- * ServerSentryMonitoringService is responsible for capturing exceptions and
+ * SentryClientMonitoringService is responsible for capturing exceptions and
  * identifying users using the Sentry monitoring service.
  */
-export class SentryServerMonitoringService implements MonitoringService {
+export class SentryClientMonitoringService implements MonitoringService {
   private readonly readyPromise: Promise<unknown>;
   private readyResolver?: (value?: unknown) => void;
 
@@ -23,11 +23,7 @@ export class SentryServerMonitoringService implements MonitoringService {
   }
 
   async initialize() {
-    if (typeof document !== 'undefined') {
-      await this.initializeSentryBrowserClient();
-    } else {
-      await this.initializeSentryServerClient();
-    }
+    await this.initializeSentryBrowserClient();
 
     this.readyResolver?.();
   }
@@ -39,7 +35,7 @@ export class SentryServerMonitoringService implements MonitoringService {
   async captureException(error: Error | null) {
     await this.initialize();
 
-    const { captureException } = await import('@sentry/node').catch();
+    const { captureException } = await import('@sentry/react-router').catch();
 
     return captureException(error);
   }
@@ -47,7 +43,7 @@ export class SentryServerMonitoringService implements MonitoringService {
   async captureEvent<Extra extends Event>(event: string, extra?: Extra) {
     await this.initialize();
 
-    const { captureEvent } = await import('@sentry/node').catch();
+    const { captureEvent } = await import('@sentry/react-router').catch();
 
     return captureEvent({
       message: event,
@@ -58,17 +54,9 @@ export class SentryServerMonitoringService implements MonitoringService {
   async identifyUser(user: User) {
     await this.initialize();
 
-    const { setUser } = await import('@sentry/node').catch();
+    const { setUser } = await import('@sentry/react-router').catch();
 
     setUser(user);
-  }
-
-  private async initializeSentryServerClient() {
-    const { init } = await import('@sentry/node').catch();
-
-    init({
-      dsn: DSN,
-    });
   }
 
   private async initializeSentryBrowserClient() {

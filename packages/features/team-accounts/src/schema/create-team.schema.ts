@@ -47,4 +47,5 @@ export const TeamNameSchema = z
  */
 export const CreateTeamSchema = z.object({
   name: TeamNameSchema,
+  csrfToken: z.string().min(1),
 });
