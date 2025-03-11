@@ -30,7 +30,7 @@ export default createBillingSchema({
           interval: 'month',
           lineItems: [
             {
-              id: 'price_1PBZTjKgHmU99VeOMbvSb4pO',
+              id: 'price_1NNwYHI1i3VnbZTqI2UzaHIe',
               name: 'billing:plans.starter.base',
               cost: 9.99,
               type: 'flat' as const,
@@ -72,7 +72,7 @@ export default createBillingSchema({
           interval: 'month',
           lineItems: [
             {
-              id: 'price_1PBZWOKgHmU99VeOYvZAKi20',
+              id: 'price_1PGOAVI1i3VnbZTqc69xaypm',
               name: 'Base',
               cost: 19.99,
               type: 'flat',
