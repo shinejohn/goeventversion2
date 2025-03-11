@@ -75,7 +75,7 @@ export default function ReturnCheckoutSessionPage(props: Route.ComponentProps) {
     <>
       <div className={'fixed left-0 top-48 z-50 mx-auto w-full'}>
         <BillingSessionStatus
-          redirectPath={'../billing'}
+          redirectPath={'../'}
           customerEmail={customerEmail ?? ''}
         />
       </div>
