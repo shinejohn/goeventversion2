@@ -71,6 +71,9 @@ redirect_uri = ""
 # or any other third-party OIDC providers.
 url = ""
 
+[auth.rate_limit]
+email_sent = 1000
+
 [auth.mfa.totp]
 verify_enabled = true
 enroll_enabled = true

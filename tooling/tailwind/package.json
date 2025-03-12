@@ -13,8 +13,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@tailwindcss/vite": "4.0.12",
-    "tailwindcss": "4.0.12"
+    "@tailwindcss/vite": "4.0.13",
+    "tailwindcss": "4.0.13"
   },
   "devDependencies": {
     "@kit/prettier-config": "workspace:*",
