@@ -60,10 +60,14 @@ export class SentryServerMonitoringService implements MonitoringService {
   }
 
   private async initializeSentryServerClient() {
+    const environment =
+      import.meta.env.VITE_SENTRY_ENVIRONMENT ?? import.meta.env.VERCEL_ENV;
+
     const { init } = await import('@sentry/node').catch();
 
     init({
       dsn: DSN,
+      environment,
     });
   }
 }

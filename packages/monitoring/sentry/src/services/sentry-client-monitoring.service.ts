@@ -64,6 +64,9 @@ export class SentryClientMonitoringService implements MonitoringService {
       '@sentry/react-router'
     ).catch();
 
+    const environment =
+      import.meta.env.VITE_SENTRY_ENVIRONMENT ?? import.meta.env.VERCEL_ENV;
+
     init({
       dsn: DSN,
       integrations: [
@@ -80,6 +83,9 @@ export class SentryClientMonitoringService implements MonitoringService {
       // plus for 100% of sessions with an error
       replaysSessionSampleRate: 0.1,
       replaysOnErrorSampleRate: 1.0,
+
+      // the environment being used
+      environment
     });
   }
 }

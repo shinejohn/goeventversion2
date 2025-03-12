@@ -16,10 +16,26 @@ const emailSender = process.env.EMAIL_SENDER;
 
 const vars = z
   .object({
-    invitePath: z.string().min(1),
-    siteURL: z.string().min(1),
-    productName: z.string(),
-    emailSender: z.string().email(),
+    invitePath: z
+      .string({
+        required_error: 'The invite path is required',
+      })
+      .min(1),
+    siteURL: z
+      .string({
+        required_error: 'VITE_SITE_URL is required',
+      })
+      .min(1),
+    productName: z
+      .string({
+        required_error: 'VITE_PRODUCT_NAME is required',
+      })
+      .min(1),
+    emailSender: z
+      .string({
+        required_error: 'EMAIL_SENDER is required',
+      })
+      .min(1),
   })
   .parse({
     invitePath,

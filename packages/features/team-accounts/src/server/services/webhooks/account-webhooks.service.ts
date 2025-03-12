@@ -75,8 +75,14 @@ class AccountWebhooksService {
 
     return z
       .object({
-        productName: z.string(),
-        fromEmail: z.string().email(),
+        productName: z.string({
+          required_error: 'VITE_PRODUCT_NAME is required',
+        }),
+        fromEmail: z
+          .string({
+            required_error: 'EMAIL_SENDER is required',
+          })
+          .min(1),
       })
       .parse({
         productName,

@@ -72,7 +72,7 @@ function getEmailSettingsFromEnvironment() {
         .string({
           required_error: 'Provide the variable EMAIL_SENDER',
         })
-        .email(),
+        .min(1),
       productName: z
         .string({
           required_error: 'Provide the variable VITE_PRODUCT_NAME',
