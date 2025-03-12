@@ -61,11 +61,20 @@ export class Mailbox {
       throw new Error('Email body was not found');
     }
 
-    console.log(`Email found for ${email}`, {
+    console.log(`Email found for email: ${email}`, {
+      expectedEmail: email,
       id: json.ID,
       subject: json.Subject,
       date: json.Date,
+      to: json.To[0],
+      text: json.Text,
     });
+
+    if (email !== json.To[0]!.Address) {
+      throw new Error(
+        `Email address mismatch. Expected ${email}, got ${json.To[0]!.Address}`,
+      );
+    }
 
     const el = parse(json.HTML);
 
@@ -102,6 +111,12 @@ export class Mailbox {
       throw new Error('Email body was not found');
     }
 
+    if (email !== json.To[0]!.Address) {
+      throw new Error(
+        `Email address mismatch. Expected ${email}, got ${json.To[0]!.Address}`,
+      );
+    }
+
     const text = json.HTML.match(
       new RegExp(`Your one-time password is: (\\d{6})`),
     )?.[1];
@@ -115,14 +130,15 @@ export class Mailbox {
   }
 
   async getEmail(
-    mailbox: string,
+    email: string,
     params: {
       deleteAfter: boolean;
       subject?: string;
     },
   ) {
-    const url = `${Mailbox.URL}/api/v1/messages?limit=1&query=to:"${mailbox}"`;
+    console.log(`Retrieving email from mailbox ${email}...`);
 
+    const url = `${Mailbox.URL}/api/v1/search?query=to:${email}`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -132,7 +148,7 @@ export class Mailbox {
     const messagesResponse = (await response.json()) as MessagesResponse;
 
     if (!messagesResponse || !messagesResponse.messages?.length) {
-      console.log(`No emails found for mailbox ${mailbox}`);
+      console.log(`No emails found for mailbox ${email}`);
 
       return;
     }
