@@ -1,4 +1,5 @@
 import {
+  CookieMethodsServer,
   CookieOptions,
   createServerClient,
   parseCookieHeader,
@@ -19,17 +20,14 @@ export function getSupabaseServerClient<GenericSchema = Database>(
 ) {
   const headers = request.headers || new Headers();
 
-  const cookies: Record<string, string> = parseCookieHeader(
-    request.headers.get('Cookie') ?? '',
-  ).reduce(
-    (acc, { name, value }) => {
-      acc[name] = value;
-      return acc;
-    },
-    {} as Record<string, string>,
-  );
+  const cookies = parseCookieHeader(request.headers.get('Cookie') ?? '').reduce<
+    Record<string, string>
+  >((acc, { name, value }) => {
+    acc[name] = value as string;
+    return acc;
+  }, {});
 
-  const cookiesAdapter = {
+  const cookiesAdapter: CookieMethodsServer = {
     getAll() {
       return Object.entries(cookies).map(([name, value]) => ({ name, value }));
     },
