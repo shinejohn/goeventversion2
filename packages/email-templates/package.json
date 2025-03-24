@@ -20,7 +20,7 @@
     "@kit/i18n": "workspace:*",
     "@kit/prettier-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
-    "@types/react": "^19.0.11"
+    "@types/react": "^19.0.12"
   },
   "typesVersions": {
     "*": {
