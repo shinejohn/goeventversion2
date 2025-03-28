@@ -180,7 +180,7 @@ function DeleteTeamConfirmationForm({
         email={user.email}
         onSuccess={(otp) => form.setValue('otp', otp, { shouldValidate: true })}
         CancelButton={
-          <AlertDialogCancel>
+          <AlertDialogCancel className={'m-0'}>
             <Trans i18nKey={'common:cancel'} />
           </AlertDialogCancel>
         }
