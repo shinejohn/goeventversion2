@@ -22,7 +22,6 @@ import { Trans } from '@kit/ui/trans';
 import featureFlagsConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import { requireUserLoader } from '~/lib/require-user-loader';
 import type { Route as AccountWorkspaceRoute } from '~/types/app/routes/home/account/+types/layout';
 import type { Route } from '~/types/app/routes/home/account/+types/settings';
 
@@ -48,8 +47,6 @@ export const meta = ({ data }: Route.MetaArgs) => {
 };
 
 export async function loader(args: Route.LoaderArgs) {
-  await requireUserLoader(args.request);
-
   const i18n = await createI18nServerInstance(args.request);
   const title = i18n.t('teams:settings.pageTitle');
 
