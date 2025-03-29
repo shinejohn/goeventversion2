@@ -69,7 +69,7 @@ export default function SignInPage(props: Route.ComponentProps) {
 
       <div className={'flex justify-center'}>
         <Button asChild variant={'link'} size={'sm'}>
-          <Link to={signUpPath}>
+          <Link to={signUpPath} prefetch={'render'}>
             <Trans i18nKey={'auth:doNotHaveAccountYet'} />
           </Link>
         </Button>

@@ -27,8 +27,8 @@ type Theme = 'light' | 'dark' | 'system';
 
 export function RootProviders(
   props: React.PropsWithChildren<{
-    theme: Theme;
-    language: string;
+    theme?: Theme;
+    language?: string;
   }>,
 ) {
   const settings = useMemo(

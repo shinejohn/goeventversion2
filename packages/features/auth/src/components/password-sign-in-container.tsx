@@ -17,6 +17,7 @@ export const PasswordSignInContainer: React.FC<{
   const { captchaToken, resetCaptchaToken } = useCaptchaToken();
   const signInMutation = useSignInWithEmailPassword();
   const isLoading = signInMutation.isPending;
+  const isRedirecting = signInMutation.isSuccess;
 
   const onSubmit = useCallback(
     async (credentials: z.infer<typeof PasswordSignInSchema>) => {
@@ -44,7 +45,11 @@ export const PasswordSignInContainer: React.FC<{
     <>
       <AuthErrorAlert error={signInMutation.error} />
 
-      <PasswordSignInForm onSubmit={onSubmit} loading={isLoading} />
+      <PasswordSignInForm
+        onSubmit={onSubmit}
+        loading={isLoading}
+        redirecting={isRedirecting}
+      />
     </>
   );
 };
