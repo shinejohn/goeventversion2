@@ -6,7 +6,6 @@ import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import { requireUserLoader } from '~/lib/require-user-loader';
 import type { Route } from '~/types/app/routes/home/account/+types';
 
 import { TeamAccountLayoutPageHeader } from './_components/team-account-layout-page-header';
@@ -17,9 +16,6 @@ const DashboardDemo = lazy(
 
 export const loader = async (args: Route.LoaderArgs) => {
   const i18n = await createI18nServerInstance(args.request);
-
-  // require user
-  await requireUserLoader(args.request);
 
   const account = args.params.account as string;
   const title = i18n.t('teams:home.pageTitle');

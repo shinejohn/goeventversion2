@@ -8,10 +8,7 @@ import featureFlagsConfig from '~/config/feature-flags.config';
 const shouldLoadAccounts = featureFlagsConfig.enableTeamAccounts;
 
 export type UserWorkspace = Awaited<ReturnType<typeof loadUserWorkspace>> & {
-  user: User & {
-    app_metadata: unknown;
-    user_metadata: unknown;
-  };
+  user: User;
 };
 
 /**

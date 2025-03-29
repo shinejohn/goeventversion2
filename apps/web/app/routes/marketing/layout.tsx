@@ -2,7 +2,7 @@ import { Outlet } from 'react-router';
 
 import type { User } from '@supabase/supabase-js';
 
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import { getSupabaseBrowserClient } from '@kit/supabase/browser-client';
 
 import type { Route } from '~/types/app/routes/marketing/+types/layout';
 
@@ -10,15 +10,15 @@ import type { Route } from '~/types/app/routes/marketing/+types/layout';
 import { SiteFooter } from './_components/site-footer';
 import { SiteHeader } from './_components/site-header';
 
-export async function loader({ request }: Route.LoaderArgs) {
-  const client = getSupabaseServerClient(request);
+export async function clientLoader() {
+  const client = getSupabaseBrowserClient();
 
   const {
-    data: { user },
-  } = await client.auth.getUser();
+    data: { session },
+  } = await client.auth.getSession();
 
   return {
-    user,
+    user: session?.user,
   };
 }
 

@@ -17,6 +17,8 @@ import {
 } from '@kit/ui/empty-state';
 import { Trans } from '@kit/ui/trans';
 
+import pathsConfig from '~/config/paths.config';
+
 import { UserWorkspace } from '../_lib/load-user-workspace.server';
 
 export function HomeAccountsList({
@@ -33,7 +35,13 @@ export function HomeAccountsList({
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {accounts.map((account) => (
           <CardButton key={account.value} asChild>
-            <Link to={`/home/${account.value}`}>
+            <Link
+              prefetch={'intent'}
+              to={`${pathsConfig.app.accountHome.replace(
+                '[account]',
+                account.value!,
+              )}`}
+            >
               <CardButtonHeader>
                 <CardButtonTitle>{account.label}</CardButtonTitle>
               </CardButtonHeader>

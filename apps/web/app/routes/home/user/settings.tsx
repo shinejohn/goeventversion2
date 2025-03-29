@@ -1,6 +1,9 @@
+import { getI18n } from 'react-i18next';
+
 import { deletePersonalAccountAction } from '@kit/accounts/actions';
 import { PersonalAccountSettingsContainer } from '@kit/accounts/personal-account-settings';
 import { DeletePersonalAccountSchema } from '@kit/accounts/schema';
+import { getSupabaseBrowserClient } from '@kit/supabase/browser-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { PageBody } from '@kit/ui/page';
@@ -46,6 +49,24 @@ export const loader = async (args: Route.LoaderArgs) => {
     userId: user.id,
   };
 };
+
+export async function clientLoader() {
+  const client = getSupabaseBrowserClient();
+  const { data, error } = await client.auth.getUser();
+
+  if (error) {
+    throw error;
+  }
+
+  const userId = data.user.id;
+  const i18n = getI18n();
+  const title = i18n.t('account:settingsTab');
+
+  return {
+    title,
+    userId,
+  };
+}
 
 export default function PersonalAccountSettingsPage(
   props: Route.ComponentProps,

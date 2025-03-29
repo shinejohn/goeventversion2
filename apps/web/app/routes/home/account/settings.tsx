@@ -27,6 +27,7 @@ import type { Route as AccountWorkspaceRoute } from '~/types/app/routes/home/acc
 import type { Route } from '~/types/app/routes/home/account/+types/settings';
 
 import { TeamAccountLayoutPageHeader } from './_components/team-account-layout-page-header';
+import { getI18n } from 'react-i18next';
 
 const paths = {
   teamAccountSettings: pathsConfig.app.accountSettings,
@@ -47,10 +48,18 @@ export const meta = ({ data }: Route.MetaArgs) => {
 };
 
 export async function loader(args: Route.LoaderArgs) {
-  // require user
   await requireUserLoader(args.request);
 
   const i18n = await createI18nServerInstance(args.request);
+  const title = i18n.t('teams:settings.pageTitle');
+
+  return {
+    title,
+  };
+}
+
+export async function clientLoader() {
+  const i18n = getI18n();
   const title = i18n.t('teams:settings.pageTitle');
 
   return {

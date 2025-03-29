@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@lemonsqueezy/lemonsqueezy.js": "4.0.0",
-    "react-router": "^7.4.0"
+    "react-router": "^7.4.1"
   },
   "devDependencies": {
     "@kit/billing": "workspace:*",
@@ -27,7 +27,7 @@
     "@kit/tsconfig": "workspace:*",
     "@kit/ui": "workspace:*",
     "@types/react": "^19.0.12",
-    "react": "19.0.0",
+    "react": "19.1.0",
     "zod": "^3.24.2"
   },
   "typesVersions": {

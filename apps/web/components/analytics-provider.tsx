@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useLocation } from 'react-router';
 
@@ -71,7 +71,7 @@ export function AnalyticsProvider(props: React.PropsWithChildren) {
   useAnalyticsMapping(analyticsMapping);
 
   // Report page views to the analytics service
-  useReportPageView((url) => analytics.trackPageView(url));
+  useReportPageView(useCallback((url) => analytics.trackPageView(url), []));
 
   // Render children
   return props.children;
