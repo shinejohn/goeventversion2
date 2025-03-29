@@ -14,11 +14,11 @@ export async function loader({ request }: Route.LoaderArgs) {
   const client = getSupabaseServerClient(request);
 
   const {
-    data: { session },
-  } = await client.auth.getSession();
+    data: { user },
+  } = await client.auth.getUser();
 
   return {
-    user: session?.user,
+    user,
   };
 }
 
