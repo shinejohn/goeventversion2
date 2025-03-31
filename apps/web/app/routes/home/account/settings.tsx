@@ -1,5 +1,6 @@
 import { useRouteLoaderData } from 'react-router';
 
+import { getI18n } from 'react-i18next';
 import { z } from 'zod';
 
 import { verifyCsrfToken } from '@kit/csrf/server';
@@ -26,7 +27,6 @@ import type { Route as AccountWorkspaceRoute } from '~/types/app/routes/home/acc
 import type { Route } from '~/types/app/routes/home/account/+types/settings';
 
 import { TeamAccountLayoutPageHeader } from './_components/team-account-layout-page-header';
-import { getI18n } from 'react-i18next';
 
 const paths = {
   teamAccountSettings: pathsConfig.app.accountSettings,
