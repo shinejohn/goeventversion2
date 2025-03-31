@@ -18,7 +18,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from '@kit/ui/form';
 import { Input } from '@kit/ui/input';
 import { Trans } from '@kit/ui/trans';

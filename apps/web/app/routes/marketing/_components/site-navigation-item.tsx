@@ -22,6 +22,7 @@ export function SiteNavigationItem({
   return (
     <NavigationMenuItem key={path}>
       <NavLink
+        prefetch={'viewport'}
         className={({ isActive }) => {
           return getClassName(isActive);
         }}

@@ -4,14 +4,12 @@ import { createAccountsApi } from '@kit/accounts/api';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import featureFlagsConfig from '~/config/feature-flags.config';
+import { requireUserLoader } from '~/lib/require-user-loader';
 
 const shouldLoadAccounts = featureFlagsConfig.enableTeamAccounts;
 
 export type UserWorkspace = Awaited<ReturnType<typeof loadUserWorkspace>> & {
-  user: User & {
-    app_metadata: unknown;
-    user_metadata: unknown;
-  };
+  user: User;
 };
 
 /**
@@ -29,19 +27,13 @@ export const loadUserWorkspace = async (request: Request) => {
     : () => Promise.resolve([]);
 
   const workspacePromise = api.getAccountWorkspace();
-  const userPromise = client.auth.getUser();
+  const userPromise = requireUserLoader(request);
 
-  const [accounts, workspace, userResult] = await Promise.all([
+  const [accounts, workspace, user] = await Promise.all([
     accountsPromise(),
     workspacePromise,
     userPromise,
   ]);
-
-  const user = userResult.data.user;
-
-  if (!user) {
-    throw new Error('User is not logged in');
-  }
 
   return {
     accounts,

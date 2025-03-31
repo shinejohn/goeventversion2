@@ -30,7 +30,6 @@ export function createI18nSettings({
         options,
       );
     },
-    load: 'languageOnly' as const,
     preload: false as const,
     lowerCaseLng: true as const,
     fallbackNS: ns,

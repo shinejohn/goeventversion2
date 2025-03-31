@@ -26,7 +26,8 @@ import { PasswordSignInSchema } from '../schemas/password-sign-in.schema';
 export const PasswordSignInForm: React.FC<{
   onSubmit: (params: z.infer<typeof PasswordSignInSchema>) => unknown;
   loading: boolean;
-}> = ({ onSubmit, loading }) => {
+  redirecting: boolean;
+}> = ({ onSubmit, loading = false, redirecting = false }) => {
   const { t } = useTranslation('auth');
 
   const form = useForm<z.infer<typeof PasswordSignInSchema>>({
@@ -109,23 +110,30 @@ export const PasswordSignInForm: React.FC<{
           data-test="auth-submit-button"
           className={'group w-full'}
           type="submit"
-          disabled={loading}
+          disabled={loading || redirecting}
         >
-          <If
-            condition={loading}
-            fallback={
-              <>
-                <Trans i18nKey={'auth:signInWithEmail'} />
+          <If condition={redirecting}>
+            <span className={'animate-in fade-in slide-in-from-bottom-24'}>
+              <Trans i18nKey={'auth:redirecting'} />
+            </span>
+          </If>
 
-                <ArrowRight
-                  className={
-                    'zoom-in animate-in slide-in-from-left-2 fill-mode-both h-4 delay-500 duration-500'
-                  }
-                />
-              </>
-            }
-          >
-            <Trans i18nKey={'auth:signingIn'} />
+          <If condition={loading}>
+            <span className={'animate-in fade-in slide-in-from-bottom-24'}>
+              <Trans i18nKey={'auth:signingIn'} />
+            </span>
+          </If>
+
+          <If condition={!redirecting && !loading}>
+            <span className={'animate-out fade-out flex items-center'}>
+              <Trans i18nKey={'auth:signInWithEmail'} />
+
+              <ArrowRight
+                className={
+                  'zoom-in animate-in slide-in-from-left-2 fill-mode-both h-4 delay-500 duration-500'
+                }
+              />
+            </span>
           </If>
         </Button>
       </form>

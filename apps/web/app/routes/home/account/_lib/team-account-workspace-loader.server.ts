@@ -7,10 +7,6 @@ import { createTeamAccountsApi } from '@kit/team-accounts/api';
 import pathsConfig from '~/config/paths.config';
 import { Database } from '~/lib/database.types';
 
-export type TeamAccountWorkspace = Awaited<
-  ReturnType<typeof loadTeamWorkspace>
->;
-
 export const loadTeamWorkspace = async (params: {
   accountSlug: string;
   client: SupabaseClient<Database>;

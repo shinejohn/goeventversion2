@@ -899,6 +899,7 @@ export function SidebarNavigation({
                               tooltip={child.label}
                             >
                               <Link
+                                prefetch={'intent'}
                                 className={cn('flex items-center', {
                                   'mx-auto w-full gap-0! [&>svg]:flex-1': !open,
                                 })}
@@ -965,6 +966,7 @@ export function SidebarNavigation({
                                               asChild
                                             >
                                               <Link
+                                                prefetch={'intent'}
                                                 className={linkClassName}
                                                 to={child.path}
                                               >

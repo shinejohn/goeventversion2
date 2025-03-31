@@ -85,7 +85,7 @@ export class SentryClientMonitoringService implements MonitoringService {
       replaysOnErrorSampleRate: 1.0,
 
       // the environment being used
-      environment
+      environment,
     });
   }
 }

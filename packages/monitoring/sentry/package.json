@@ -20,10 +20,10 @@
     "@opentelemetry/resources": "2.0.0",
     "@opentelemetry/sdk-node": "0.200.0",
     "@opentelemetry/semantic-conventions": "^1.30.0",
-    "@sentry/node": "9.10.0",
+    "@sentry/node": "9.10.1",
     "@sentry/opentelemetry-node": "^7.114.0",
-    "@sentry/react-router": "9.10.0",
-    "react-router": "^7.4.0"
+    "@sentry/react-router": "9.10.1",
+    "react-router": "^7.4.1"
   },
   "devDependencies": {
     "@kit/eslint-config": "workspace:*",
@@ -32,7 +32,7 @@
     "@kit/tailwind-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@types/react": "^19.0.12",
-    "react": "19.0.0"
+    "react": "19.1.0"
   },
   "typesVersions": {
     "*": {

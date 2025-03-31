@@ -14,6 +14,7 @@ export async function requireUserLoader(request: Request) {
 
   if (!auth.data || auth.error) {
     const nextPath = new URL(request.url).pathname;
+
     const redirectPath =
       auth.redirectTo + (nextPath ? `?next=${nextPath}` : '');
 

@@ -2,10 +2,14 @@ import { useMemo } from 'react';
 
 import { useRouteLoaderData } from 'react-router';
 
+import { SupabaseClient } from '@supabase/supabase-js';
+
 import { PlusCircle } from 'lucide-react';
+import { getI18n } from 'react-i18next';
 import { z } from 'zod';
 
 import { verifyCsrfToken } from '@kit/csrf/server';
+import { getSupabaseBrowserClient } from '@kit/supabase/browser-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import {
   AccountInvitationsTable,
@@ -34,13 +38,13 @@ import { If } from '@kit/ui/if';
 import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
+import { Database } from '~/lib/database.types';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import { requireUserLoader } from '~/lib/require-user-loader';
 import { TeamAccountLayoutPageHeader } from '~/routes/home/account/_components/team-account-layout-page-header';
 import type { Route as AccountWorkspaceRoute } from '~/types/app/routes/home/account/+types/layout';
 import type { Route } from '~/types/app/routes/home/account/+types/members';
 
-import { loadMembersPageData } from './_lib/members-page-loader.server';
+import { loadMembersPageData } from './_lib/members-page-loader';
 
 const MembersActionsSchema = z.union([
   InviteMembersSchema,
@@ -60,28 +64,49 @@ export const meta = ({ data }: Route.MetaArgs) => {
   ];
 };
 
-export async function loader(args: Route.LoaderArgs) {
-  // require user
-  await requireUserLoader(args.request);
-
-  const client = getSupabaseServerClient(args.request);
-  const i18n = await createI18nServerInstance(args.request);
-  const title = i18n.t('teams:members.pageTitle');
-
-  const accountSlug = args.params.account as string;
-
+async function membersLoader(
+  client: SupabaseClient<Database>,
+  accountSlug: string,
+) {
   const [members, invitations, user, canAddMember] = await loadMembersPageData(
     client,
     accountSlug,
   );
 
   return {
-    title,
     accountSlug,
     members,
     invitations,
     user,
     canAddMember,
+  };
+}
+
+export async function loader(args: Route.LoaderArgs) {
+  const client = getSupabaseServerClient(args.request);
+  const i18n = await createI18nServerInstance(args.request);
+  const title = i18n.t('teams:members.pageTitle');
+  const accountSlug = args.params.account as string;
+
+  const data = await membersLoader(client, accountSlug);
+
+  return {
+    title,
+    ...data,
+  };
+}
+
+export async function clientLoader(args: Route.LoaderArgs) {
+  const client = getSupabaseBrowserClient();
+  const accountSlug = args.params.account as string;
+
+  const i18n = getI18n();
+  const title = i18n.t('teams:members.pageTitle');
+  const data = await membersLoader(client, accountSlug);
+
+  return {
+    title,
+    ...data,
   };
 }
 

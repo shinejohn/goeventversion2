@@ -88,11 +88,9 @@ test.describe('Admin', () => {
       // based on your URL structure
       await page.goto(`/admin/accounts`);
 
-      const filterText = testUserEmail.split('@')[0]!;
+      await filterAccounts(page, testUserEmail);
 
-      await filterAccounts(page, filterText);
-
-      await selectAccount(page, filterText);
+      await selectAccount(page, testUserEmail);
     });
 
     test('displays personal account details', async ({ page }) => {

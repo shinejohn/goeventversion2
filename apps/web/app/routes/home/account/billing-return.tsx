@@ -12,7 +12,6 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import billingConfig from '~/config/billing.config';
 import { Database } from '~/lib/database.types';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import { requireUserLoader } from '~/lib/require-user-loader';
 import type { Route } from '~/types/app/routes/home/account/+types/billing-return';
 
 export const meta = ({ data }: Route.MetaArgs) => {
@@ -24,9 +23,6 @@ export const meta = ({ data }: Route.MetaArgs) => {
 };
 
 export async function loader(args: Route.LoaderArgs) {
-  // require user
-  await requireUserLoader(args.request);
-
   const client = getSupabaseServerClient(args.request);
   const i18n = await createI18nServerInstance(args.request);
 

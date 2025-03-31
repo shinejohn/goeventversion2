@@ -1,10 +1,10 @@
 import { Link } from 'react-router';
 
-import type { User } from '@supabase/supabase-js';
+import { useQuery } from '@tanstack/react-query';
 
 import { PersonalAccountDropdown } from '@kit/accounts/personal-account-dropdown';
 import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
-import { useUser } from '@kit/supabase/hooks/use-user';
+import { useSupabase } from '@kit/supabase/hooks/use-supabase';
 import { Button } from '@kit/ui/button';
 import { If } from '@kit/ui/if';
 import { ModeToggle } from '@kit/ui/mode-toggle';
@@ -21,30 +21,17 @@ const features = {
   enableThemeToggle: featuresFlagConfig.enableThemeToggle,
 };
 
-export function SiteHeaderAccountSection({
-  user,
-}: React.PropsWithChildren<{
-  user: User | null;
-}>) {
-  if (!user) {
-    return <AuthButtons />;
-  }
-
-  return <SuspendedPersonalAccountDropdown user={user} />;
-}
-
-function SuspendedPersonalAccountDropdown(props: { user: User | null }) {
+export function SiteHeaderAccountSection() {
+  const session = useSession();
   const signOut = useSignOut();
-  const user = useUser(props.user);
-  const userData = user.data ?? props.user ?? null;
 
-  if (userData) {
+  if (session.data) {
     return (
       <PersonalAccountDropdown
         showProfileName={false}
         paths={paths}
         features={features}
-        user={userData}
+        user={session.data.user}
         signOutRequested={() => signOut.mutateAsync()}
       />
     );
@@ -55,24 +42,39 @@ function SuspendedPersonalAccountDropdown(props: { user: User | null }) {
 
 function AuthButtons() {
   return (
-    <div className={'flex space-x-2'}>
-      <div className={'hidden space-x-0.5 md:flex'}>
+    <div className={'animate-in fade-in flex gap-x-2.5 duration-500'}>
+      <div className={'hidden md:flex'}>
         <If condition={features.enableThemeToggle}>
           <ModeToggle />
         </If>
+      </div>
 
-        <Button asChild variant={'ghost'}>
-          <Link to={pathsConfig.auth.signIn}>
+      <div className={'flex gap-x-2.5'}>
+        <Button className={'hidden md:block'} asChild variant={'ghost'}>
+          <Link to={pathsConfig.auth.signIn} prefetch={'intent'}>
             <Trans i18nKey={'auth:signIn'} />
           </Link>
         </Button>
-      </div>
 
-      <Button asChild className="group" variant={'default'}>
-        <Link to={pathsConfig.auth.signUp}>
-          <Trans i18nKey={'auth:signUp'} />
-        </Link>
-      </Button>
+        <Button asChild className="text-xs md:text-sm" variant={'default'}>
+          <Link to={pathsConfig.auth.signUp} prefetch={'intent'}>
+            <Trans i18nKey={'auth:signUp'} />
+          </Link>
+        </Button>
+      </div>
     </div>
   );
+}
+
+function useSession() {
+  const client = useSupabase();
+
+  return useQuery({
+    queryKey: ['session'],
+    queryFn: async () => {
+      const { data } = await client.auth.getSession();
+
+      return data.session;
+    },
+  });
 }

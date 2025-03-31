@@ -154,14 +154,29 @@ export function MultiFactorChallengeContainer({
             data-test={'submit-mfa-button'}
             disabled={
               verifyMFAChallenge.isPending ||
+              verifyMFAChallenge.isSuccess ||
               !verificationCodeForm.formState.isValid
             }
           >
-            {verifyMFAChallenge.isPending ? (
-              <Trans i18nKey={'account:verifyingCode'} />
-            ) : (
+            <If condition={verifyMFAChallenge.isPending}>
+              <span className={'animate-in fade-in slide-in-from-bottom-24'}>
+                <Trans i18nKey={'account:verifyingCode'} />
+              </span>
+            </If>
+
+            <If condition={verifyMFAChallenge.isSuccess}>
+              <span className={'animate-in fade-in slide-in-from-bottom-24'}>
+                <Trans i18nKey={'auth:redirecting'} />
+              </span>
+            </If>
+
+            <If
+              condition={
+                !verifyMFAChallenge.isPending && !verifyMFAChallenge.isSuccess
+              }
+            >
               <Trans i18nKey={'account:submitVerificationCode'} />
-            )}
+            </If>
           </Button>
         </div>
       </form>
