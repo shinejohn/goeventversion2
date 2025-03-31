@@ -54,7 +54,7 @@ export const loader = async function (args: Route.LoaderArgs) {
     .order('created_at', { ascending: false });
 
   if (query) {
-    filter = filter.textSearch('name', `%${query}%`);
+    filter = filter.or(`name.ilike.%${query}%,email.ilike.%${query}%`);
   }
 
   if (type && type !== 'all') {
