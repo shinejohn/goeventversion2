@@ -6,6 +6,6 @@
     "base.json"
   ],
   "devDependencies": {
-    "vite": "^6.2.3"
+    "vite": "^6.2.5"
   }
 }
