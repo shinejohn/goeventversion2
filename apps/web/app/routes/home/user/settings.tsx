@@ -38,15 +38,15 @@ export const meta = ({ data }: Route.MetaArgs) => {
 };
 
 export const loader = async (args: Route.LoaderArgs) => {
-  // require user
   const user = await requireUserLoader(args.request);
+  const userId = user.id;
 
   const i18n = await createI18nServerInstance(args.request);
   const title = i18n.t('account:settingsTab');
 
   return {
     title,
-    userId: user.id,
+    userId,
   };
 };
 

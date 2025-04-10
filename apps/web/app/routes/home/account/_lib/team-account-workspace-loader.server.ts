@@ -1,10 +1,6 @@
-import { redirect } from 'react-router';
-
 import { SupabaseClient } from '@supabase/supabase-js';
 
 import { createTeamAccountsApi } from '@kit/team-accounts/api';
-
-import pathsConfig from '~/config/paths.config';
 import { Database } from '~/lib/database.types';
 
 export const loadTeamWorkspace = async (params: {
@@ -17,14 +13,6 @@ export const loadTeamWorkspace = async (params: {
 
   if (workspace.error) {
     throw workspace.error;
-  }
-
-  const account = workspace.data.account;
-
-  // we cannot find any record for the selected account
-  // so we redirect the user to the home page
-  if (!account) {
-    throw redirect(pathsConfig.app.home);
   }
 
   return workspace.data;

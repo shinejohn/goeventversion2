@@ -15,7 +15,7 @@ export async function getSuperAdminUser(client: SupabaseClient<Database>) {
   const isAuthedUserSuperAdmin = await isSuperAdmin(client);
 
   if (!isAuthedUserSuperAdmin) {
-    throw redirect('/404');
+    throw redirect('/');
   }
 
   const { data, error } = await client.auth.getUser();

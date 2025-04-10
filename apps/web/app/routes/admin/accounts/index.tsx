@@ -9,7 +9,6 @@ import {
 import { AdminAccountsTable } from '@kit/admin/components/admin-accounts-table';
 import { AdminActionsSchema } from '@kit/admin/schema';
 import { verifyCsrfToken } from '@kit/csrf/server';
-import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { PageBody, PageHeader } from '@kit/ui/page';
@@ -42,9 +41,7 @@ export const loader = async function (args: Route.LoaderArgs) {
   const startOffset = (page - 1) * perPage;
   const endOffset = page * perPage;
 
-  const adminClient = getSupabaseServerAdminClient();
-
-  let filter = adminClient
+  let filter = client
     .from('accounts')
     .select('*', {
       count: 'estimated',
