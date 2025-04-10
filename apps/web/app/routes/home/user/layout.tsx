@@ -17,13 +17,22 @@ import type { Route } from '~/types/app/routes/home/user/+types/layout';
 import { HomeMenuNavigation } from './_components/home-menu-navigation';
 import { HomeMobileNavigation } from './_components/home-mobile-navigation';
 import { HomeSidebar } from './_components/home-sidebar';
+import { requireUserLoader } from '~/lib/require-user-loader';
 
 export async function loader(args: Route.LoaderArgs) {
-  const workspace = await loadUserWorkspace(args.request);
-  const layoutState = await getLayoutState(args.request);
+  const request = args.request;
+  const user = await requireUserLoader(request);
+
+  const [workspace, layoutState] = await Promise.all([
+    loadUserWorkspace(request),
+    getLayoutState(request),
+  ]);
 
   return {
-    workspace,
+    workspace: {
+      ...workspace,
+      user,
+    },
     layoutState,
   };
 }

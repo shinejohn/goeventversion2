@@ -37,7 +37,6 @@ export const meta = ({ data }: Route.MetaArgs) => {
 };
 
 export async function loader(args: Route.LoaderArgs) {
-  // require user
   await requireUserLoader(args.request);
 
   const client = getSupabaseServerClient(args.request);

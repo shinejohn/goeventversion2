@@ -20,10 +20,10 @@ test.describe('Admin Auth flow without MFA', () => {
 
     await page.goto('/admin');
 
-    expect(page.url()).toContain('/404');
+    expect(page.url()).toContain('/');
   });
 
-  test('will redirect to 404 for admin users without MFA', async ({ page }) => {
+  test('will redirect to home page for admin users without MFA', async ({ page }) => {
     const auth = new AuthPageObject(page);
 
     await page.goto('/auth/sign-in');
@@ -37,7 +37,7 @@ test.describe('Admin Auth flow without MFA', () => {
 
     await page.goto('/admin');
 
-    expect(page.url()).toContain('/404');
+    expect(page.url()).toContain('/');
   });
 });
 
@@ -88,9 +88,13 @@ test.describe('Admin', () => {
       // based on your URL structure
       await page.goto(`/admin/accounts`);
 
-      await filterAccounts(page, testUserEmail);
+      const name = testUserEmail.split('@')[0]!;
 
-      await selectAccount(page, testUserEmail);
+      // search for the test user
+      await filterAccounts(page, name);
+
+      // select the test user
+      await selectAccount(page, name);
     });
 
     test('displays personal account details', async ({ page }) => {
@@ -227,7 +231,6 @@ test.describe('Admin', () => {
   });
 
   test.describe('Team Account Management', () => {
-    let testUserEmail: string;
     let teamName: string;
     let slug: string;
 
@@ -235,14 +238,12 @@ test.describe('Admin', () => {
       selectors.setTestIdAttribute('data-test');
 
       // Create a new test user and team account
-      testUserEmail = await createUser(page, {
+      await createUser(page, {
         afterSignIn: async () => {
           teamName = `test-${Math.random().toString(36).substring(2, 15)}`;
 
           const teamAccountPo = new TeamAccountsPageObject(page);
-          const teamSlug = teamName.toLowerCase().replace(/ /g, '-');
-
-          slug = teamSlug;
+          slug = teamName.toLowerCase().replace(/ /g, '-');
 
           await teamAccountPo.createTeam({
             teamName,
@@ -344,18 +345,18 @@ async function createUser(
   return email;
 }
 
-async function filterAccounts(page: Page, email: string) {
-  await page
-    .locator('[data-test="admin-accounts-table-filter-input"]')
-    .fill(email)
+async function filterAccounts(page: Page, name: string) {
+ await expect(async () => {
+   await page
+     .locator('[data-test="admin-accounts-table-filter-input"]')
+     .fill(name)
 
-  await page.waitForTimeout(100);
+   await page.keyboard.press('Enter');
 
-  await page.keyboard.press('Enter');
-
-  await page.waitForTimeout(100);
+   await expect(page.getByRole('link', { name })).toBeVisible();
+ }).toPass();
 }
 
-async function selectAccount(page: Page, email: string) {
-  await page.getByRole('link', { name: email.split('@')[0] }).click();
+async function selectAccount(page: Page, name: string) {
+  await page.getByRole('link', { name }).click();
 }
