@@ -227,7 +227,6 @@ test.describe('Admin', () => {
   });
 
   test.describe('Team Account Management', () => {
-    let testUserEmail: string;
     let teamName: string;
     let slug: string;
 
@@ -235,14 +234,12 @@ test.describe('Admin', () => {
       selectors.setTestIdAttribute('data-test');
 
       // Create a new test user and team account
-      testUserEmail = await createUser(page, {
+      await createUser(page, {
         afterSignIn: async () => {
           teamName = `test-${Math.random().toString(36).substring(2, 15)}`;
 
           const teamAccountPo = new TeamAccountsPageObject(page);
-          const teamSlug = teamName.toLowerCase().replace(/ /g, '-');
-
-          slug = teamSlug;
+          slug = teamName.toLowerCase().replace(/ /g, '-');
 
           await teamAccountPo.createTeam({
             teamName,
@@ -344,10 +341,10 @@ async function createUser(
   return email;
 }
 
-async function filterAccounts(page: Page, email: string) {
+async function filterAccounts(page: Page, name: string) {
   await page
     .locator('[data-test="admin-accounts-table-filter-input"]')
-    .fill(email)
+    .fill(name)
 
   await page.waitForTimeout(100);
 
@@ -356,6 +353,6 @@ async function filterAccounts(page: Page, email: string) {
   await page.waitForTimeout(100);
 }
 
-async function selectAccount(page: Page, email: string) {
-  await page.getByRole('link', { name: email.split('@')[0] }).click();
+async function selectAccount(page: Page, name: string) {
+  await page.getByRole('link', { name }).click();
 }
