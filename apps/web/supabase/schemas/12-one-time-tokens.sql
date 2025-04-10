@@ -1,3 +1,10 @@
+/*
+ * -------------------------------------------------------
+ * Section: Nonces
+ * We create the schema for the nonces. Nonces are used to create one-time tokens for authentication purposes.
+ * -------------------------------------------------------
+ */
+
 create extension if not exists pg_cron;
 
 -- Create a table to store one-time tokens (nonces)
@@ -41,6 +48,8 @@ CREATE POLICY "Users can read their own nonces"
   USING (
     user_id = (select auth.uid())
   );
+
+-- Create a function to create a nonce
 -- Create a function to create a nonce
 create or replace function public.create_nonce (
     p_user_id UUID default null,
@@ -122,11 +131,9 @@ BEGIN
 END;
 $$;
 
-grant
-    execute on function public.create_nonce to service_role;
+grant execute on function public.create_nonce to service_role;
 
 -- Create a function to verify a nonce
---
 create or replace function public.verify_nonce (
     p_token TEXT,
     p_purpose TEXT,
@@ -229,7 +236,9 @@ BEGIN
 END;
 $$;
 
-grant execute on function public.verify_nonce to authenticated,service_role;
+grant
+    execute on function public.verify_nonce to authenticated,
+    service_role;
 
 -- Create a function to revoke a nonce
 CREATE OR REPLACE FUNCTION public.revoke_nonce(
@@ -239,7 +248,7 @@ CREATE OR REPLACE FUNCTION public.revoke_nonce(
 RETURNS BOOLEAN
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = ''
+SET search_path TO ''
 AS $$
 DECLARE
   v_affected_rows INTEGER;
@@ -269,7 +278,7 @@ CREATE OR REPLACE FUNCTION kit.cleanup_expired_nonces(
 RETURNS INTEGER
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = ''
+SET search_path TO ''
 AS $$
 DECLARE
   v_count INTEGER;
@@ -303,7 +312,7 @@ CREATE OR REPLACE FUNCTION public.get_nonce_status(
 RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = ''
+SET search_path TO ''
 AS $$
 DECLARE
   v_nonce public.nonces;
