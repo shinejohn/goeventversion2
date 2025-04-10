@@ -88,9 +88,13 @@ test.describe('Admin', () => {
       // based on your URL structure
       await page.goto(`/admin/accounts`);
 
-      await filterAccounts(page, testUserEmail);
+      const name = testUserEmail.split('@')[0]!;
 
-      await selectAccount(page, testUserEmail);
+      // search for the test user
+      await filterAccounts(page, name);
+
+      // select the test user
+      await selectAccount(page, name);
     });
 
     test('displays personal account details', async ({ page }) => {
@@ -347,11 +351,7 @@ async function filterAccounts(page: Page, name: string) {
      .locator('[data-test="admin-accounts-table-filter-input"]')
      .fill(name)
 
-   await page.waitForTimeout(100);
-
    await page.keyboard.press('Enter');
-
-   await page.waitForTimeout(100);
 
    await expect(page.getByRole('link', { name })).toBeVisible();
  }).toPass();
