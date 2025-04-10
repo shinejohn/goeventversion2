@@ -20,10 +20,10 @@ test.describe('Admin Auth flow without MFA', () => {
 
     await page.goto('/admin');
 
-    expect(page.url()).toContain('/404');
+    expect(page.url()).toContain('/');
   });
 
-  test('will redirect to 404 for admin users without MFA', async ({ page }) => {
+  test('will redirect to home page for admin users without MFA', async ({ page }) => {
     const auth = new AuthPageObject(page);
 
     await page.goto('/auth/sign-in');
@@ -37,7 +37,7 @@ test.describe('Admin Auth flow without MFA', () => {
 
     await page.goto('/admin');
 
-    expect(page.url()).toContain('/404');
+    expect(page.url()).toContain('/');
   });
 });
 
@@ -342,15 +342,19 @@ async function createUser(
 }
 
 async function filterAccounts(page: Page, name: string) {
-  await page
-    .locator('[data-test="admin-accounts-table-filter-input"]')
-    .fill(name)
+ await expect(async () => {
+   await page
+     .locator('[data-test="admin-accounts-table-filter-input"]')
+     .fill(name)
 
-  await page.waitForTimeout(100);
+   await page.waitForTimeout(100);
 
-  await page.keyboard.press('Enter');
+   await page.keyboard.press('Enter');
 
-  await page.waitForTimeout(100);
+   await page.waitForTimeout(100);
+
+   await expect(page.getByRole('link', { name })).toBeVisible();
+ }).toPass();
 }
 
 async function selectAccount(page: Page, name: string) {

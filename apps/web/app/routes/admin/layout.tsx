@@ -1,4 +1,4 @@
-import { Outlet, redirect } from 'react-router';
+import { Outlet } from 'react-router';
 
 import { getSuperAdminUser } from '@kit/admin';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -20,15 +20,7 @@ export const loader = async function ({ request }: Route.LoaderArgs) {
   const client = getSupabaseServerClient(request);
 
   // admin protected route
-  const user = await getSuperAdminUser(client);
-
-  if (!user) {
-    return redirect('/404');
-  }
-
-  return {
-    user,
-  };
+  await getSuperAdminUser(client);
 };
 
 export default function AdminLayout() {
