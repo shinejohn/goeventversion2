@@ -4,7 +4,6 @@ import { createAccountsApi } from '@kit/accounts/api';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import featureFlagsConfig from '~/config/feature-flags.config';
-import { requireUserLoader } from '~/lib/require-user-loader';
 
 const shouldLoadAccounts = featureFlagsConfig.enableTeamAccounts;
 
@@ -27,17 +26,14 @@ export const loadUserWorkspace = async (request: Request) => {
     : () => Promise.resolve([]);
 
   const workspacePromise = api.getAccountWorkspace();
-  const userPromise = requireUserLoader(request);
 
-  const [accounts, workspace, user] = await Promise.all([
+  const [accounts, workspace] = await Promise.all([
     accountsPromise(),
     workspacePromise,
-    userPromise,
   ]);
 
   return {
     accounts,
     workspace,
-    user,
   };
 };
