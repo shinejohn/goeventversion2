@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 import { parseAcceptLanguageHeader } from '@kit/i18n';
 import { initializeServerI18n } from '@kit/i18n/server';
 
@@ -22,17 +24,17 @@ const priority = featuresFlagConfig.languagePriority;
  * Initialize the i18n instance for every RSC server request (eg. each page/layout)
  */
 async function createInstance(request: Request) {
-  let cookie = await languageCookie.parse(request.headers.get('Cookie'));
+  let cookieValue = await languageCookie.parse(request.headers.get('Cookie'));
 
-  if (Object.keys(cookie ?? {}).length === 0) {
-    cookie = undefined;
+  if (Object.keys(cookieValue ?? {}).length === 0) {
+    cookieValue = undefined;
   }
 
   let selectedLanguage: string | undefined = undefined;
 
   // if the cookie is set, use the language from the cookie
-  if (cookie) {
-    selectedLanguage = getLanguageOrFallback(cookie);
+  if (cookieValue) {
+    selectedLanguage = getLanguageOrFallback(cookieValue);
   }
 
   // if not, check if the language priority is set to user and
@@ -60,16 +62,18 @@ function getPreferredLanguageFromBrowser(request: Request) {
   return parseAcceptLanguageHeader(acceptLanguage, languages)[0];
 }
 
-function getLanguageOrFallback(language: string | undefined) {
-  let selectedLanguage = language;
+function getLanguageOrFallback(selectedLanguage: string | undefined) {
+  const language = z
+    .enum(languages as [string, ...string[]])
+    .safeParse(selectedLanguage);
 
-  if (!languages.includes(language ?? '')) {
-    console.warn(
-      `Language "${language}" is not supported. Falling back to "${languages[0]}"`,
-    );
-
-    selectedLanguage = languages[0];
+  if (language.success) {
+    return language.data;
   }
 
-  return selectedLanguage;
+  console.warn(
+    `The language passed is invalid. Defaulted back to "${languages[0]}"`,
+  );
+
+  return languages[0];
 }
