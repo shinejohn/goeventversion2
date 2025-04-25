@@ -1,21 +1,21 @@
 import { z } from 'zod';
 
 import {
-  BillingConfig,
   type BillingProviderSchema,
   BillingWebhookHandlerService,
+  PlanTypeMap,
 } from '@kit/billing';
 
 export class BillingEventHandlerFactoryService {
   static async GetProviderStrategy(
     provider: z.infer<typeof BillingProviderSchema>,
-    config: BillingConfig,
+    planTypesMap: PlanTypeMap,
   ): Promise<BillingWebhookHandlerService> {
     switch (provider) {
       case 'stripe': {
         const { StripeWebhookHandlerService } = await import('@kit/stripe');
 
-        return new StripeWebhookHandlerService(config);
+        return new StripeWebhookHandlerService(planTypesMap);
       }
 
       case 'lemon-squeezy': {
@@ -23,7 +23,7 @@ export class BillingEventHandlerFactoryService {
           '@kit/lemon-squeezy'
         );
 
-        return new LemonSqueezyWebhookHandlerService(config);
+        return new LemonSqueezyWebhookHandlerService(planTypesMap);
       }
 
       case 'paddle': {

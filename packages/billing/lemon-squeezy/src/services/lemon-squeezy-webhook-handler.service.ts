@@ -4,7 +4,7 @@ import {
   getVariant,
 } from '@lemonsqueezy/lemonsqueezy.js';
 
-import { BillingConfig, BillingWebhookHandlerService } from '@kit/billing';
+import { BillingWebhookHandlerService, PlanTypeMap } from '@kit/billing';
 import { getLogger } from '@kit/shared/logger';
 import { Database, Enums } from '@kit/supabase/database';
 
@@ -48,7 +48,7 @@ export class LemonSqueezyWebhookHandlerService
 
   private readonly namespace = 'billing.lemon-squeezy';
 
-  constructor(private readonly config: BillingConfig) {}
+  constructor(private readonly planTypesMap: PlanTypeMap) {}
 
   /**
    * @description Verifies the webhook signature - should throw an error if the signature is invalid
@@ -116,38 +116,68 @@ export class LemonSqueezyWebhookHandlerService
 
     switch (eventName) {
       case 'order_created': {
-        return this.handleOrderCompleted(
+        const result = this.handleOrderCompleted(
           event as OrderWebhook,
           params.onCheckoutSessionCompleted,
         );
+
+        if (params.onEvent) {
+          await params.onEvent(event);
+        }
+
+        return result;
       }
 
       case 'subscription_created': {
-        return this.handleSubscriptionCreatedEvent(
+        const result = this.handleSubscriptionCreatedEvent(
           event as SubscriptionWebhook,
           params.onSubscriptionUpdated,
         );
+
+        if (params.onEvent) {
+          await params.onEvent(event);
+        }
+
+        return result;
       }
 
       case 'subscription_updated': {
-        return this.handleSubscriptionUpdatedEvent(
+        const result = this.handleSubscriptionUpdatedEvent(
           event as SubscriptionWebhook,
           params.onSubscriptionUpdated,
         );
+
+        if (params.onEvent) {
+          await params.onEvent(event);
+        }
+
+        return result;
       }
 
       case 'subscription_expired': {
-        return this.handleSubscriptionDeletedEvent(
+        const result = this.handleSubscriptionDeletedEvent(
           event as SubscriptionWebhook,
           params.onSubscriptionDeleted,
         );
+
+        if (params.onEvent) {
+          await params.onEvent(event);
+        }
+
+        return result;
       }
 
       case 'subscription_payment_success': {
-        return this.handleInvoicePaid(
+        const result = this.handleInvoicePaid(
           event as SubscriptionInvoiceWebhook,
           params.onInvoicePaid,
         );
+
+        if (params.onEvent) {
+          await params.onEvent(event);
+        }
+
+        return result;
       }
 
       default: {
@@ -284,6 +314,7 @@ export class LemonSqueezyWebhookHandlerService
         variant: variantId.toString(),
         quantity: firstSubscriptionItem.quantity,
         priceAmount,
+        type: this.getLineItemType(variantId),
       },
     ];
 
@@ -292,7 +323,7 @@ export class LemonSqueezyWebhookHandlerService
     const payloadBuilderService =
       createLemonSqueezySubscriptionPayloadBuilderService();
 
-    const payload = payloadBuilderService.withBillingConfig(this.config).build({
+    const payload = payloadBuilderService.build({
       customerId,
       id: subscriptionId,
       accountId,
@@ -349,6 +380,7 @@ export class LemonSqueezyWebhookHandlerService
 
     const { data: subscriptionResponse } =
       await getSubscription(subscriptionId);
+
     const subscription = subscriptionResponse?.data.attributes;
 
     if (!subscription) {
@@ -384,10 +416,11 @@ export class LemonSqueezyWebhookHandlerService
         variant: variantId.toString(),
         quantity: subscription.first_subscription_item?.quantity ?? 1,
         priceAmount: attrs.total,
+        type: this.getLineItemType(variantId),
       },
     ];
 
-    const payload = payloadBuilderService.withBillingConfig(this.config).build({
+    const payload = payloadBuilderService.build({
       customerId,
       id: subscriptionId,
       accountId,
@@ -404,6 +437,23 @@ export class LemonSqueezyWebhookHandlerService
     });
 
     return onInvoicePaidCallback(payload);
+  }
+
+  private getLineItemType(variantId: number) {
+    const type = this.planTypesMap.get(variantId.toString());
+
+    if (!type) {
+      console.warn(
+        {
+          variantId,
+        },
+        'Line item type not found. Will be defaulted to "flat"',
+      );
+
+      return 'flat' as const;
+    }
+
+    return type;
   }
 
   private getOrderStatus(status: OrderStatus) {
