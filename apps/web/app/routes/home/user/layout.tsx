@@ -10,6 +10,7 @@ import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
 
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
 import { layoutStyleCookie, sidebarStateCookie } from '~/lib/cookies';
+import { requireUserLoader } from '~/lib/require-user-loader';
 import { loadUserWorkspace } from '~/routes/home/user/_lib/load-user-workspace.server';
 import type { Route } from '~/types/app/routes/home/user/+types/layout';
 
@@ -17,7 +18,6 @@ import type { Route } from '~/types/app/routes/home/user/+types/layout';
 import { HomeMenuNavigation } from './_components/home-menu-navigation';
 import { HomeMobileNavigation } from './_components/home-mobile-navigation';
 import { HomeSidebar } from './_components/home-sidebar';
-import { requireUserLoader } from '~/lib/require-user-loader';
 
 export async function loader(args: Route.LoaderArgs) {
   const request = args.request;
