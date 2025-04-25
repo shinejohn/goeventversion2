@@ -1,11 +1,8 @@
 import { Outlet } from 'react-router';
 
-import {
-  Page,
-  PageLayoutStyle,
-  PageMobileNavigation,
-  PageNavigation,
-} from '@kit/ui/page';
+import { z } from 'zod';
+
+import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
 
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
@@ -89,7 +86,10 @@ async function getLayoutState(request: Request) {
   const cookieHeader = request.headers.get('Cookie');
   const sidebarOpenCookie = await sidebarStateCookie.parse(cookieHeader);
   const layoutCookie = await layoutStyleCookie.parse(cookieHeader);
-  const layoutStyle = layoutCookie as PageLayoutStyle;
+
+  const layoutStyle = z
+    .enum(['header', 'sidebar', 'custom'])
+    .safeParse(layoutCookie);
 
   const sidebarOpenCookieValue = sidebarOpenCookie
     ? sidebarOpenCookie === 'false'
@@ -97,6 +97,8 @@ async function getLayoutState(request: Request) {
 
   return {
     open: sidebarOpenCookieValue,
-    style: layoutStyle ?? personalAccountNavigationConfig.style,
+    style: layoutStyle.success
+      ? layoutStyle.data
+      : personalAccountNavigationConfig.style,
   };
 }
