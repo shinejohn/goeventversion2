@@ -2,12 +2,7 @@ import { Outlet } from 'react-router';
 
 import { z } from 'zod';
 
-import {
-  Page,
-  PageLayoutStyle,
-  PageMobileNavigation,
-  PageNavigation,
-} from '@kit/ui/page';
+import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
 
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
