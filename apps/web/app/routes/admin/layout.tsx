@@ -1,11 +1,6 @@
 import { Outlet } from 'react-router';
-
-import { getSuperAdminUser } from '@kit/admin';
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
-
-import type { Route } from '~/types/app/routes/admin/+types/layout';
 
 import { AdminSidebar } from './_components/admin-sidebar';
 import { AdminMobileNavigation } from './_components/mobile-navigation';
@@ -15,13 +10,6 @@ export const meta = () => [
     title: `Super Admin`,
   },
 ];
-
-export const loader = async function ({ request }: Route.LoaderArgs) {
-  const client = getSupabaseServerClient(request);
-
-  // admin protected route
-  await getSuperAdminUser(client);
-};
 
 export default function AdminLayout() {
   return (

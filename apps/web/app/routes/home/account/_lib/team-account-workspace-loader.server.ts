@@ -1,6 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
 import { createTeamAccountsApi } from '@kit/team-accounts/api';
+
 import { Database } from '~/lib/database.types';
 
 export const loadTeamWorkspace = async (params: {
