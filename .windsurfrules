@@ -289,13 +289,11 @@ function PersonalDashboard() {
 
 ### Team Account
 
-In React components, we can use the `useRouteLoaderData('routes/home/user/account/layout')` hook to access the team account's workspace data. It only works under the `/home/[account]` route.
+In React components, we can use the `useRouteLoaderData('routes/home/account/layout')` hook to access the team account's workspace data. It only works under the `/home/[account]` route.
 
 ```tsx
 function TeamDashboard() {
-  const { account, user } = useRouteLoaderData(
-    'routes/home/user/account/layout',
-  );
+  const { account, user } = useRouteLoaderData('routes/home/account/layout');
 
   return (
     <div>
