@@ -20,6 +20,7 @@ import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import type { Route } from '~/types/app/+types/root';
 
 import styles from '../styles/global.css?url';
+import { z } from 'zod';
 
 // error boundary
 export const ErrorBoundary = RootErrorBoundary;
@@ -98,5 +99,11 @@ async function getTheme(request: Request) {
     return appConfig.theme;
   }
 
-  return theme as typeof appConfig.theme;
+  const parsed = z.enum(['light', 'dark', 'system']).safeParse(theme);
+
+  if (parsed.success) {
+    return parsed.data;
+  }
+
+  return appConfig.theme;
 }

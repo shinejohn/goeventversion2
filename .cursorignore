@@ -1,5 +1,6 @@
 database.types.ts
 playwright-report
+test-results
 web/supabase/migrations
 pnpm-lock.yaml
 .env

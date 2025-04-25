@@ -1,15 +1,13 @@
 import { Outlet } from 'react-router';
 
-import {
-  Page,
-  PageLayoutStyle,
-  PageMobileNavigation,
-  PageNavigation,
-} from '@kit/ui/page';
+import { z } from 'zod';
+
+import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
 
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
 import { layoutStyleCookie, sidebarStateCookie } from '~/lib/cookies';
+import { requireUserLoader } from '~/lib/require-user-loader';
 import { loadUserWorkspace } from '~/routes/home/user/_lib/load-user-workspace.server';
 import type { Route } from '~/types/app/routes/home/user/+types/layout';
 
@@ -17,7 +15,6 @@ import type { Route } from '~/types/app/routes/home/user/+types/layout';
 import { HomeMenuNavigation } from './_components/home-menu-navigation';
 import { HomeMobileNavigation } from './_components/home-mobile-navigation';
 import { HomeSidebar } from './_components/home-sidebar';
-import { requireUserLoader } from '~/lib/require-user-loader';
 
 export async function loader(args: Route.LoaderArgs) {
   const request = args.request;
@@ -89,7 +86,10 @@ async function getLayoutState(request: Request) {
   const cookieHeader = request.headers.get('Cookie');
   const sidebarOpenCookie = await sidebarStateCookie.parse(cookieHeader);
   const layoutCookie = await layoutStyleCookie.parse(cookieHeader);
-  const layoutStyle = layoutCookie as PageLayoutStyle;
+
+  const layoutStyle = z
+    .enum(['header', 'sidebar', 'custom'])
+    .safeParse(layoutCookie);
 
   const sidebarOpenCookieValue = sidebarOpenCookie
     ? sidebarOpenCookie === 'false'
@@ -97,6 +97,8 @@ async function getLayoutState(request: Request) {
 
   return {
     open: sidebarOpenCookieValue,
-    style: layoutStyle ?? personalAccountNavigationConfig.style,
+    style: layoutStyle.success
+      ? layoutStyle.data
+      : personalAccountNavigationConfig.style,
   };
 }
