@@ -1,3 +1,4 @@
+import { getPlanTypesMap } from '@kit/billing';
 import { getBillingEventHandlerService } from '@kit/billing-gateway';
 import { getLogger } from '@kit/shared/logger';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
@@ -25,7 +26,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const service = await getBillingEventHandlerService(
     supabaseClientProvider,
     provider,
-    billingConfig,
+    getPlanTypesMap(billingConfig),
   );
 
   try {

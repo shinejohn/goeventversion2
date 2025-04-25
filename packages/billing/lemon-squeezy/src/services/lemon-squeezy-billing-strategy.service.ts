@@ -407,6 +407,8 @@ export class LemonSqueezyBillingStrategyService
         quantity: subscription.first_subscription_item?.quantity ?? 1,
         // not anywhere in the API
         priceAmount: 0,
+        // we cannot retrieve this from the API, user should retrieve from the billing configuration if needed
+        type: '' as never,
       },
     ];
 
