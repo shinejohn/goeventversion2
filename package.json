@@ -43,11 +43,11 @@
   },
   "devDependencies": {
     "@manypkg/cli": "^0.23.0",
-    "@turbo/gen": "^2.5.0",
-    "@types/node": "^22.14.0",
+    "@turbo/gen": "^2.5.1",
+    "@types/node": "^22.15.2",
     "cross-env": "^7.0.3",
     "prettier": "^3.5.3",
-    "turbo": "^2.5.0",
+    "turbo": "^2.5.1",
     "typescript": "^5.8.3"
   }
 }

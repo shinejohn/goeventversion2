@@ -18,7 +18,7 @@ export async function requireUserLoader(request: Request) {
     const redirectPath =
       auth.redirectTo + (nextPath ? `?next=${nextPath}` : '');
 
-    throw redirect(redirectPath)
+    throw redirect(redirectPath);
   }
 
   return auth.data;

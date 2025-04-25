@@ -18,6 +18,7 @@ import { TeamAccountLayoutMobileNavigation } from './_components/team-account-la
 import { TeamAccountLayoutSidebar } from './_components/team-account-layout-sidebar';
 import { TeamAccountNavigationMenu } from './_components/team-account-navigation-menu';
 import { loadTeamWorkspace } from './_lib/team-account-workspace-loader.server';
+import { z } from 'zod';
 
 export const loader = async (args: Route.LoaderArgs) => {
   const accountSlug = args.params.account as string;
@@ -136,8 +137,16 @@ async function getLayoutState(request: Request, account: string) {
     ? sidebarOpenCookie === 'false'
     : !config.sidebarCollapsed;
 
+  const parsed = z.enum([
+    'header',
+    'sidebar',
+    'custom',
+  ]).safeParse(layoutStyle);
+
+  const style = parsed.success ? parsed.data : config.style;
+
   return {
     open: sidebarOpenCookieValue,
-    style: layoutStyle ?? config.style,
+    style,
   };
 }
