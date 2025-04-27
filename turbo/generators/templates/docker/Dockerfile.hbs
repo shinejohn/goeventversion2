@@ -2,33 +2,22 @@
 FROM node:20-alpine AS base
 
 # Install dependencies only when needed
-FROM base AS pruner
-WORKDIR /app
-RUN npm install -g turbo
-COPY . .
-# Create a pruned Vercel-style output for the 'web' app
-RUN turbo prune --scope=web --docker
-
-# Install dependencies in the pruned monorepo
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Install global dependencies needed for install
+# Install global dependencies
 RUN corepack enable pnpm
+RUN npm install -g turbo
 
-# First copy only the pruned package.json files and lockfile
-COPY --from=pruner /app/out/json/ .
-COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+# Copy the entire project for dependency installation
+# This ensures all packages are available for resolution
+COPY . .
 
-# Install dependencies using the pruned lockfile
+# Install dependencies using lockfile
+RUN echo "node-linker=hoisted" >> .npmrc
 RUN pnpm install --frozen-lockfile
-
-# Copy the pruned source code
-COPY --from=pruner /app/out/full/ .
-
-# Rebuild native dependencies if necessary (example)
 RUN npm rebuild lightingcss --build-from-source --verbose
 
 # Rebuild the source code only when needed
@@ -39,10 +28,10 @@ WORKDIR /app
 RUN corepack enable pnpm
 RUN npm install -g turbo
 
-# Copy over the pruned dependencies and source code
+# Copy over everything including dependencies
 COPY --from=deps /app ./
 
-# Build the specific project (already filtered by prune)
+# Build the project
 RUN turbo run build --filter=web...
 
 # Production image, copy all the files and run next
@@ -55,12 +44,13 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 rr
 
-# Copy package.json from the web app within the built pruned structure
+# Copy package.json and server.js from web app
 COPY --from=builder /app/apps/web/package.json ./package.json
 
-# Copy the build output and pruned node_modules
+# Copy the build output and node_modules
 COPY --from=builder /app/apps/web/build ./build
-COPY --from=builder /app/node_modules ./node_modules # Copy from root as prune structures it
+COPY --from=builder /app/node_modules ./node_modules
+RUN npm -g install cross-env @react-router/serve
 
 # Switch to non-root user
 USER rr
@@ -70,5 +60,5 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# Start the server using the package.json copied earlier
+# Start the server
 CMD ["npm", "start"]
