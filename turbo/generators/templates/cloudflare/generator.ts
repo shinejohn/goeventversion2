@@ -70,6 +70,8 @@ export function createCloudflareGenerator(plop: PlopTypes.NodePlopAPI) {
             'plugins: [cloudflare({ viteEnvironment: { name: "ssr" } }),',
           );
 
+          content = `import { cloudflare } from '@cloudflare/vite-plugin'\n` + content;
+
           return content;
         },
       },
