@@ -60,5 +60,8 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
+HEALTHCHECK --interval=90s --timeout=5s --retries=3 \
+CMD curl -f http://localhost:3000/healthcheck || exit 1
+
 # Start the server
 CMD ["npm", "start"]
