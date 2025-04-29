@@ -1,5 +1,6 @@
 import type { PlopTypes } from '@turbo/gen';
 import { execSync } from 'node:child_process';
+import { writeFileSync } from 'node:fs';
 
 export function createSetupGenerator(plop: PlopTypes.NodePlopAPI) {
   plop.setGenerator('setup', {
@@ -50,6 +51,11 @@ export function createSetupGenerator(plop: PlopTypes.NodePlopAPI) {
       },
       async (answers: any) => {
         try {
+          createMakerkitConfig({
+            projectName: answers.projectName,
+            username: answers.username,
+          });
+
           setupRemote();
           setupPreCommit({ setupHealthCheck: answers.setupHealthCheck });
 
@@ -61,6 +67,22 @@ export function createSetupGenerator(plop: PlopTypes.NodePlopAPI) {
       },
     ],
   });
+}
+
+function createMakerkitConfig(params: {
+  projectName: string;
+  username: string;
+}) {
+  const config = `{
+  "projectName": "${params.projectName}",
+  "username": "${params.username}"
+}`
+
+  writeFileSync('.makerkitrc', config, {
+    encoding: 'utf-8',
+  });
+
+  execSync('git add .makerkitrc');
 }
 
 function setupPreCommit(params: { setupHealthCheck: boolean }) {
@@ -92,9 +114,7 @@ function setupPreCommit(params: { setupHealthCheck: boolean }) {
 function setupRemote() {
   try {
     // Setup remote upstream
-    const currentRemote = execSync('git remote get-url origin', {
-      stdio: 'inherit',
-    }).toString();
+    const currentRemote = execSync('git remote get-url origin').toString();
 
     console.log(`Setting upstream remote to ${currentRemote} ...`);
 
@@ -103,7 +123,7 @@ function setupRemote() {
         stdio: 'inherit',
       });
 
-      execSync(`git remote set-url upstream ${currentRemote}`, {
+      execSync(`git remote add upstream ${currentRemote}`, {
         stdio: 'inherit',
       });
     } else {

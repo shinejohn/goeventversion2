@@ -35,7 +35,7 @@ function checkMakerkitVersion() {
   }
 
   const count = parseInt(behindCount, 10);
-  const { severity } = getSeveriyLevel(count);
+  const { severity } = getSeverityLevel(count);
 
   if (severity === 'critical') {
     // error emoji: ❌
@@ -71,7 +71,7 @@ function logInstructions(count) {
   console.log('\x1b[36m%s\x1b[0m', 'To update, run: git pull upstream main');
 }
 
-function getSeveriyLevel(count) {
+function getSeverityLevel(count) {
   if (count > 5) {
     return {
       severity: 'critical',
