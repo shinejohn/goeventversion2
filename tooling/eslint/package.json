@@ -14,10 +14,10 @@
   },
   "dependencies": {
     "@types/eslint": "9.6.1",
-    "eslint-config-turbo": "^2.5.1",
+    "eslint-config-turbo": "^2.5.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
-    "typescript-eslint": "8.31.0"
+    "typescript-eslint": "8.31.1"
   },
   "devDependencies": {
     "@kit/prettier-config": "workspace:*",
