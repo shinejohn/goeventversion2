@@ -22,8 +22,32 @@ export function createCloudflareGenerator(plop: PlopTypes.NodePlopAPI) {
       },
       {
         type: 'add',
+        templateFile: 'templates/cloudflare/entry.server.tsx.hbs',
+        path: 'apps/web/app/entry.server.tsx',
+      },
+      {
+        type: 'add',
         templateFile: 'templates/cloudflare/worker-configuration.d.ts.hbs',
-        path: 'apps/web/worker-configuration.d.ts',
+        path: 'apps/web/lib/worker-configuration.d.ts',
+      },
+      {
+        type: 'add',
+        templateFile: 'templates/cloudflare/worker.ts.hbs',
+        path: 'apps/web/worker.ts',
+      },
+      {
+        type: 'modify',
+        path: 'apps/web/tsconfig.json',
+        transform(content) {
+          const tsconfig = JSON.parse(content);
+
+          tsconfig.compilerOptions.types = tsconfig.compilerOptions.types || [];
+
+          tsconfig.compilerOptions.types.push('@cloudflare/workers-types');
+
+          return JSON.stringify(tsconfig, null, 2);
+        },
+        force: true,
       },
       {
         type: 'modify',
