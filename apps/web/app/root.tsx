@@ -7,6 +7,8 @@ import {
   data,
 } from 'react-router';
 
+import { z } from 'zod';
+
 import { CsrfTokenMeta } from '@kit/csrf/client';
 import { createCsrfProtect } from '@kit/csrf/server';
 import { cn } from '@kit/ui/utils';
@@ -20,7 +22,6 @@ import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import type { Route } from '~/types/app/+types/root';
 
 import styles from '../styles/global.css?url';
-import { z } from 'zod';
 
 // error boundary
 export const ErrorBoundary = RootErrorBoundary;

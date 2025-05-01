@@ -1,5 +1,6 @@
 import type { PlopTypes } from '@turbo/gen';
 import { execSync } from 'node:child_process';
+import { getPackageVersion } from '../../utils';
 
 export function createPackageGenerator(plop: PlopTypes.NodePlopAPI) {
   plop.setGenerator('package', {
@@ -39,6 +40,11 @@ export function createPackageGenerator(plop: PlopTypes.NodePlopAPI) {
       },
       {
         type: 'add',
+        path: 'packages/{{ name }}/eslint.config.mjs',
+        templateFile: 'templates/package/eslint.config.mjs.hbs',
+      },
+      {
+        type: 'add',
         path: 'packages/{{ name }}/index.ts',
         template: "export * from './src';",
       },
@@ -54,29 +60,25 @@ export function createPackageGenerator(plop: PlopTypes.NodePlopAPI) {
           const pkg = JSON.parse(content);
 
           for (const dep of answers.deps.split(' ').filter(Boolean)) {
-            const version = await fetch(
-              `https://registry.npmjs.org/-/package/${dep}/dist-tags`,
-            )
-              .then((res) => res.json())
-              .then((json) => json.latest);
+            const version = await getPackageVersion(dep);
 
             pkg.dependencies![dep] = `^${version}`;
           }
           return JSON.stringify(pkg, null, 2);
         },
       },
-      async (answers) => {
+      async () => {
         /**
          * Install deps and format everything
          */
-        execSync('pnpm manypkg fix', {
+        execSync('pnpm i', {
           stdio: 'inherit',
         });
+
         execSync(
-          `pnpm prettier --write packages/${
-            (answers as { name: string }).name
-          }/** --list-different`,
+          `pnpm run format:fix`,
         );
+
         return 'Package scaffolded';
       },
     ],

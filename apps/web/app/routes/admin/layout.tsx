@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router';
+
 import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
 

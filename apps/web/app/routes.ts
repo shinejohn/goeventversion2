@@ -9,6 +9,7 @@ const rootRoutes = [
   route('robots.txt', 'routes/robots/route.tsx'),
   route('sitemap.xml', 'routes/sitemap/route.tsx'),
   route('version', 'routes/version.ts'),
+  route('healthcheck', 'routes/healthcheck.ts'),
   route('update-password', 'routes/update-password.tsx'),
   route('join', 'routes/join.tsx'),
 ];

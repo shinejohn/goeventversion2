@@ -15,7 +15,13 @@ export default defineConfig(({ command }) => ({
   server: {
     allowedHosts: ALLOWED_HOSTS,
   },
+  build: {
+    rollupOptions: {
+      external: ['fsevents'],
+    },
+  },
   optimizeDeps: {
+    exclude: ['fsevents'],
     entries: [
       './app/root.tsx',
       './app/entry.server.tsx',
