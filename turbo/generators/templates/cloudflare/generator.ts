@@ -16,14 +16,24 @@ export function createCloudflareGenerator(plop: PlopTypes.NodePlopAPI) {
         },
       },
       {
+        type: 'modify',
+        path: 'apps/web/.env.template',
+        transform(content) {
+          content += '\nLOGGER=console\n';
+
+          return content;
+        }
+      },
+      {
         type: 'add',
-        templateFile: 'templates/cloudflare/dev.vars.hbs',
+        templateFile: '../../apps/web/.env.template',
         path: 'apps/web/.dev.vars',
       },
       {
         type: 'add',
         templateFile: 'templates/cloudflare/entry.server.tsx.hbs',
         path: 'apps/web/app/entry.server.tsx',
+        force: true,
       },
       {
         type: 'add',
@@ -46,8 +56,7 @@ export function createCloudflareGenerator(plop: PlopTypes.NodePlopAPI) {
           tsconfig.compilerOptions.types.push('@cloudflare/workers-types');
 
           return JSON.stringify(tsconfig, null, 2);
-        },
-        force: true,
+        }
       },
       {
         type: 'modify',
@@ -106,9 +115,9 @@ export function createCloudflareGenerator(plop: PlopTypes.NodePlopAPI) {
           content = content.replace(
             'ssr: true,',
             'ssr: true,\n' +
-              '            future: {\n' +
-              '              unstable_viteEnvironmentApi: true,\n' +
-              '            },',
+            '            future: {\n' +
+            '              unstable_viteEnvironmentApi: true,\n' +
+            '            },',
           );
 
           return content;
