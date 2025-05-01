@@ -11,9 +11,9 @@ export function createDockerGenerator(plop: PlopTypes.NodePlopAPI) {
       {
         type: 'modify',
         path: 'apps/web/package.json',
-        async transform(content) {
+        async transform(content, answers: any) {
           const pkg = JSON.parse(content);
-          const deps = getDevDeps();
+          const deps = getDevDeps(answers.buildForLinux);
 
           for (const dep of deps) {
             const version = await getPackageVersion(dep);
@@ -40,13 +40,47 @@ export function createDockerGenerator(plop: PlopTypes.NodePlopAPI) {
         return 'Dockerfile generated';
       },
     ],
-    prompts: [],
+    prompts: [
+      {
+        type: 'confirm',
+        name: 'buildForLinux',
+        message: 'Do you want to build an image for Linux?',
+        default: true,
+      },
+    ],
   });
 }
 
-function getDevDeps() {
+function getDevDeps(buildForLinux: boolean = false) {
   const arch = os.arch();
+  const platform = os.platform();
 
+  // For ARM64 architecture (M-series Macs), always include darwin-arm64 dependency
+  if (arch === 'arm64' && platform === 'darwin') {
+    // If building for Linux, include Linux-specific dependencies as well
+    if (buildForLinux) {
+      return [
+        'lightningcss-linux-x64-musl',
+        '@tailwindcss/oxide-linux-x64-musl',
+        '@rollup/rollup-linux-x64-musl',
+        '@esbuild/linux-x64',
+      ];
+    } else {
+      return [
+        'lightningcss-linux-arm64-musl',
+        '@tailwindcss/oxide-linux-arm64-musl',
+        '@rollup/rollup-linux-arm64-musl',
+        '@esbuild/darwin-arm64',
+      ];
+    }
+  }
+
+  // If not building for Linux and not on ARM64 macOS, return an empty array
+  if (!buildForLinux) {
+    return [];
+  }
+
+  // For ARM64 on other platforms (like Linux)
   if (arch === 'arm64') {
     return [
       'lightningcss-linux-arm64-musl',

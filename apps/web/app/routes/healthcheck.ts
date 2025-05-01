@@ -1,4 +1,5 @@
 import { data } from 'react-router';
+
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 
 /**
