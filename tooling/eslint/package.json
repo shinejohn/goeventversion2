@@ -17,11 +17,11 @@
     "eslint-config-turbo": "^2.5.3",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
-    "typescript-eslint": "8.32.0"
+    "typescript-eslint": "8.32.1"
   },
   "devDependencies": {
     "@kit/prettier-config": "workspace:*",
-    "eslint": "^9.26.0"
+    "eslint": "^9.27.0"
   },
   "prettier": "@kit/prettier-config"
 }
