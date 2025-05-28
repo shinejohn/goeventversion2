@@ -16,6 +16,10 @@ const getPageBySlug = async (slug: string) => {
 };
 
 export const meta = (args: Route.MetaArgs) => {
+  if (!args.data) {
+    return [];
+  }
+
   const { title, description } = args.data.page;
 
   return [
