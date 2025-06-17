@@ -49,7 +49,11 @@ class DeletePersonalAccountService {
 
     // execute the deletion of the user
     try {
-      await params.adminClient.auth.admin.deleteUser(userId);
+      const response = await params.adminClient.auth.admin.deleteUser(userId);
+
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
     } catch (error) {
       logger.error(
         {

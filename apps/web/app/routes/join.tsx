@@ -4,7 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 
 import { AuthLayoutShell } from '@kit/auth/shared';
 import { verifyCsrfToken } from '@kit/csrf/server';
-import { requireUser } from '@kit/supabase/require-user';
+import { MultiFactorAuthError, requireUser } from '@kit/supabase/require-user';
 import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { acceptInvitationAction } from '@kit/team-accounts/actions';
@@ -42,9 +42,20 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   // redirect to the sign up page with the invite token
   // so that they will get back to this page after signing up
   if (auth.error ?? !auth.data) {
-    const path = `${pathsConfig.auth.signUp}?invite_token=${token}`;
+    if (auth.error instanceof MultiFactorAuthError) {
+      const urlParams = new URLSearchParams({
+        next: `${pathsConfig.app.joinTeam}?invite_token=${token}`,
+      })
 
-    throw redirect(path);
+      const verifyMfaUrl = `${pathsConfig.auth.verifyMfa}?${urlParams.toString()}`;
+
+      // if the user needs to verify MFA, redirect them to the MFA verification page
+      throw redirect(verifyMfaUrl);
+    } else {
+      const path = `${pathsConfig.auth.signUp}?invite_token=${token}`;
+
+      throw redirect(path);
+    }
   }
 
   // get api to interact with team accounts
