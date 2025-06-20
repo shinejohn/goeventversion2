@@ -19,8 +19,8 @@
     "@kit/prettier-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@kit/wordpress": "workspace:*",
-    "@types/node": "^22.15.23",
-    "@types/react": "^19.1.6",
+    "@types/node": "^24.0.3",
+    "@types/react": "^19.1.8",
     "react": "19.1.0"
   },
   "typesVersions": {

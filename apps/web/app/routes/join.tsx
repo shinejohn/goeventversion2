@@ -45,7 +45,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     if (auth.error instanceof MultiFactorAuthError) {
       const urlParams = new URLSearchParams({
         next: `${pathsConfig.app.joinTeam}?invite_token=${token}`,
-      })
+      });
 
       const verifyMfaUrl = `${pathsConfig.auth.verifyMfa}?${urlParams.toString()}`;
 
