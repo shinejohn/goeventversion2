@@ -1,5 +1,3 @@
-import { User } from '@supabase/supabase-js';
-
 import {
   BorderedNavigationMenu,
   BorderedNavigationMenuItem,
@@ -66,10 +64,7 @@ export function TeamAccountNavigationMenu(props: {
 
         <TeamAccountNotifications accountId={account.id} userId={user.id} />
 
-        <ProfileAccountDropdownContainer
-          user={user as User}
-          account={account}
-        />
+        <ProfileAccountDropdownContainer user={user} account={account} />
       </div>
     </div>
   );

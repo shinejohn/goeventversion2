@@ -1,5 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
+import { requireUser } from '@kit/supabase/require-user';
+
 import { Database } from '~/lib/database.types';
 
 /**
@@ -14,7 +16,7 @@ export async function loadMembersPageData(
   return Promise.all([
     loadAccountMembers(client, slug),
     loadInvitations(client, slug),
-    loadUser(client),
+    requireUser(client),
     canAddMember(),
   ]);
 }
@@ -31,16 +33,6 @@ export async function loadMembersPageData(
  */
 async function canAddMember() {
   return Promise.resolve(true);
-}
-
-async function loadUser(client: SupabaseClient<Database>) {
-  const { data, error } = await client.auth.getUser();
-
-  if (error) {
-    throw error;
-  }
-
-  return data.user;
 }
 
 /**

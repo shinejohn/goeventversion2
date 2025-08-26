@@ -97,6 +97,8 @@ export class AuthPageObject {
 
     await this.visitConfirmEmailLink(email);
 
+    await this.page.waitForURL(path);
+
     return {
       email,
     };

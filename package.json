@@ -36,19 +36,19 @@
     "env:validate": "turbo gen validate-env"
   },
   "prettier": "@kit/prettier-config",
-  "packageManager": "pnpm@9.12.0",
+  "packageManager": "pnpm@10.15.0",
   "pnpm": {
     "overrides": {
       "react-is": "19.0.0"
     }
   },
   "devDependencies": {
-    "@manypkg/cli": "^0.24.0",
+    "@manypkg/cli": "^0.25.0",
     "@turbo/gen": "^2.5.4",
-    "@types/node": "^24.0.3",
-    "cross-env": "^7.0.3",
-    "prettier": "^3.5.3",
+    "@types/node": "^24.3.0",
+    "cross-env": "^10.0.0",
+    "prettier": "^3.6.2",
     "turbo": "^2.5.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   }
 }

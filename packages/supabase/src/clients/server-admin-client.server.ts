@@ -2,12 +2,12 @@ import { createClient } from '@supabase/supabase-js';
 
 import { Database } from '../database.types';
 import {
-  getServiceRoleKey,
-  warnServiceRoleKeyUsage,
+  getSupabaseSecretKey,
+  warnSupabaseSecretKeyUsage,
 } from '../get-service-role-key';
 import { getSupabaseClientKeys } from '../get-supabase-client-keys';
 
-const serviceRoleKey = getServiceRoleKey();
+const supabaseSecretKey = getSupabaseSecretKey();
 const keys = getSupabaseClientKeys();
 
 /**
@@ -15,9 +15,9 @@ const keys = getSupabaseClientKeys();
  * @description Get a Supabase client for use in server-side functions as an admin.
  */
 export function getSupabaseServerAdminClient<GenericSchema = Database>() {
-  warnServiceRoleKeyUsage();
+  warnSupabaseSecretKeyUsage();
 
-  return createClient<GenericSchema>(keys.url, serviceRoleKey, {
+  return createClient<GenericSchema>(keys.url, supabaseSecretKey, {
     auth: {
       persistSession: false,
       detectSessionInUrl: false,

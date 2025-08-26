@@ -1,21 +1,22 @@
 import { redirect } from 'react-router';
 
 import { MultiFactorChallengeContainer } from '@kit/auth/mfa';
-import { checkRequiresMultiFactorAuthentication } from '@kit/supabase/check-requires-mfa';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import type { Route } from '~/types/app/routes/auth/+types/verify';
+import { checkRequiresMultiFactorAuthentication } from '@kit/supabase/check-requires-mfa';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
 
   const {
-    data: { user },
-  } = await client.auth.getUser();
+    data,
+    error,
+  } = await client.auth.getClaims();
 
-  if (!user) {
+  if (error || !data?.claims) {
     throw redirect(pathsConfig.auth.signIn);
   }
 
@@ -32,7 +33,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   return {
     title: i18n.t('auth:signIn'),
     redirectPath,
-    userId: user.id,
+    userId: data.claims.sub,
   };
 };
 

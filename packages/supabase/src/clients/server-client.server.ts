@@ -47,7 +47,7 @@ export function getSupabaseServerClient<GenericSchema = Database>(
     },
   };
 
-  return createServerClient<GenericSchema>(keys.url, keys.anonKey, {
+  return createServerClient<GenericSchema>(keys.url, keys.publicKey, {
     cookies: cookiesAdapter,
   });
 }

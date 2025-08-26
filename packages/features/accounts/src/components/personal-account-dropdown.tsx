@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 
 import { Link } from 'react-router';
 
-import type { User } from '@supabase/supabase-js';
+import { JwtPayload } from '@supabase/supabase-js';
 
 import {
   ChevronsUpDown,
@@ -39,7 +39,7 @@ export function PersonalAccountDropdown({
   account,
 }: {
   className?: string;
-  user: User;
+  user: JwtPayload;
 
   account?: {
     id: string | null;
@@ -74,14 +74,10 @@ export function PersonalAccountDropdown({
     personalAccountData?.name ?? account?.name ?? user?.email ?? '';
 
   const isSuperAdmin = useMemo(() => {
-    const factors = user?.factors ?? [];
     const hasAdminRole = user?.app_metadata.role === 'super-admin';
+    const isAal2 = user?.aal === 'aal2';
 
-    const hasTotpFactor = factors.some(
-      (factor) => factor.factor_type === 'totp' && factor.status === 'verified',
-    );
-
-    return hasAdminRole && hasTotpFactor;
+    return hasAdminRole && isAal2;
   }, [user]);
 
   return (

@@ -1,10 +1,9 @@
 import { Link } from 'react-router';
 
-import { useQuery } from '@tanstack/react-query';
+import { JwtPayload } from '@supabase/supabase-js';
 
 import { PersonalAccountDropdown } from '@kit/accounts/personal-account-dropdown';
 import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
-import { useSupabase } from '@kit/supabase/hooks/use-supabase';
 import { Button } from '@kit/ui/button';
 import { If } from '@kit/ui/if';
 import { ModeToggle } from '@kit/ui/mode-toggle';
@@ -21,17 +20,20 @@ const features = {
   enableThemeToggle: featuresFlagConfig.enableThemeToggle,
 };
 
-export function SiteHeaderAccountSection() {
-  const session = useSession();
+export function SiteHeaderAccountSection({
+  user,
+}: {
+  user: JwtPayload | null;
+}) {
   const signOut = useSignOut();
 
-  if (session.data) {
+  if (user) {
     return (
       <PersonalAccountDropdown
         showProfileName={false}
         paths={paths}
         features={features}
-        user={session.data.user}
+        user={user}
         signOutRequested={() => signOut.mutateAsync()}
       />
     );
@@ -64,17 +66,4 @@ function AuthButtons() {
       </div>
     </div>
   );
-}
-
-function useSession() {
-  const client = useSupabase();
-
-  return useQuery({
-    queryKey: ['session'],
-    queryFn: async () => {
-      const { data } = await client.auth.getSession();
-
-      return data.session;
-    },
-  });
 }

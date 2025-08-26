@@ -1,4 +1,4 @@
-import type { User } from '@supabase/supabase-js';
+import { JwtPayload } from '@supabase/supabase-js';
 
 import {
   Sidebar,
@@ -24,7 +24,7 @@ export function TeamAccountLayoutSidebar(props: {
   account: string;
   accountId: string;
   accounts: AccountModel[];
-  user: User;
+  user: JwtPayload;
 }) {
   return (
     <SidebarContainer
@@ -40,7 +40,7 @@ function SidebarContainer(props: {
   account: string;
   accountId: string;
   accounts: AccountModel[];
-  user: User;
+  user: JwtPayload;
 }) {
   const { account, accounts, user } = props;
   const userId = user.id;

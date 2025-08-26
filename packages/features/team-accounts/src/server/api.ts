@@ -101,17 +101,12 @@ class TeamAccountsApi {
 
     const accountsPromise = this.client.from('user_accounts').select('*');
 
-    const [
-      accountResult,
-      accountsResult,
-      {
-        data: { user },
-      },
-    ] = await Promise.all([
-      accountPromise,
-      accountsPromise,
-      this.client.auth.getUser(),
-    ]);
+    const [accountResult, accountsResult, { data: claimsResult }] =
+      await Promise.all([
+        accountPromise,
+        accountsPromise,
+        this.client.auth.getClaims(),
+      ]);
 
     if (accountResult.error) {
       return {
@@ -127,7 +122,7 @@ class TeamAccountsApi {
       };
     }
 
-    if (!user) {
+    if (!claimsResult || !claimsResult.claims) {
       return {
         error: new Error('User is not logged in'),
         data: null,
@@ -142,6 +137,9 @@ class TeamAccountsApi {
         data: null,
       };
     }
+
+    const user = claimsResult.claims;
+    user.id = user.sub;
 
     return {
       data: {

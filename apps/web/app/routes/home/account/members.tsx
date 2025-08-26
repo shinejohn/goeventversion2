@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { useRouteLoaderData } from 'react-router';
+import { redirect, useRouteLoaderData } from 'react-router';
 
 import { SupabaseClient } from '@supabase/supabase-js';
 
@@ -68,16 +68,18 @@ async function membersLoader(
   client: SupabaseClient<Database>,
   accountSlug: string,
 ) {
-  const [members, invitations, user, canAddMember] = await loadMembersPageData(
-    client,
-    accountSlug,
-  );
+  const [members, invitations, userResponse, canAddMember] =
+    await loadMembersPageData(client, accountSlug);
+
+  if ('redirectTo' in userResponse) {
+    throw redirect(userResponse.redirectTo);
+  }
 
   return {
     accountSlug,
     members,
     invitations,
-    user,
+    user: userResponse.data,
     canAddMember,
   };
 }
