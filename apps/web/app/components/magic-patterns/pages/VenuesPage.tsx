@@ -107,7 +107,7 @@ export const VenuesPage = () => {
   }, {
     id: 'event-2',
     name: 'Local Craft Beer Tasting',
-    venue: mockVenues[1],
+    venue: venues && venues[1] || null,
     date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
     image: 'https://images.unsplash.com/photo-1575444758702-4a6b9222336e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     ticketPrice: '$35',
@@ -115,7 +115,7 @@ export const VenuesPage = () => {
   }, {
     id: 'event-3',
     name: 'Comedy Night Showcase',
-    venue: mockVenues[2],
+    venue: venues && venues[2] || null,
     date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     image: 'https://images.unsplash.com/photo-1527224538127-2104bb71c51b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     ticketPrice: '$20',
@@ -123,7 +123,7 @@ export const VenuesPage = () => {
   }, {
     id: 'event-4',
     name: 'Art Exhibition Opening',
-    venue: mockVenues[3],
+    venue: venues && venues[3] || null,
     date: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
     image: 'https://images.unsplash.com/photo-1531058020387-3be344556be6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     ticketPrice: 'Free',
