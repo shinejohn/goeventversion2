@@ -53,9 +53,8 @@
         "^build"
       ],
       "outputs": [
-        ".next/**",
-        "!.next/cache/**",
-        "next-env.d.ts"
+        "build/**",
+        "!build/cache/**"
       ]
     },
     "dev": {
