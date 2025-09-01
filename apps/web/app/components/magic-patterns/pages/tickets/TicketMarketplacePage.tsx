@@ -1,0 +1,503 @@
+import React, { useEffect, useState } from 'react';
+import { SearchIcon, FilterIcon, CalendarIcon, MapPinIcon, ClockIcon, ChevronDownIcon, GridIcon, ListIcon, TagIcon, StarIcon, XIcon, CheckIcon, HomeIcon, ChevronRightIcon } from 'lucide-react';
+import { useNavigationContext } from '../../context/NavigationContext';
+// Types
+type ViewMode = 'grid' | 'list';
+type SortOption = 'recommended' | 'price_low' | 'price_high' | 'date' | 'popularity';
+type PriceRange = {
+  min: number;
+  max: number;
+};
+export const TicketMarketplacePage = () => {
+  const {
+    navigateTo
+  } = useNavigationContext();
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [sortOption, setSortOption] = useState<SortOption>('recommended');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [priceRange, setPriceRange] = useState<PriceRange>({
+    min: 0,
+    max: 200
+  });
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [showFilters, setShowFilters] = useState(false);
+  const [filteredTickets, setFilteredTickets] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [ticketListings, setTicketListings] = useState([]);
+  const [allTags, setAllTags] = useState<string[]>([]);
+  // Fetch ticket listings
+  useEffect(() => {
+    const fetchTickets = async () => {
+      setIsLoading(true);
+      try {
+        // API call would go here
+        await new Promise(resolve => setTimeout(resolve, 500));
+        // Empty array instead of mock data
+        setTicketListings([]);
+        // Extract all unique tags
+        const tags = Array.from(new Set([])).sort();
+        setAllTags(tags);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching tickets:', error);
+        setIsLoading(false);
+      }
+    };
+    fetchTickets();
+  }, []);
+  // Filter tickets based on search, price, date, and tags
+  useEffect(() => {
+    setIsLoading(true);
+    // Simulate API call delay
+    const timer = setTimeout(() => {
+      let results = [...ticketListings];
+      // Apply search filter if exists
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        results = results.filter((ticket: any) => ticket.eventName.toLowerCase().includes(query) || ticket.venue.name.toLowerCase().includes(query) || ticket.tags.some((tag: string) => tag.toLowerCase().includes(query)));
+      }
+      // Apply price filter
+      results = results.filter((ticket: any) => {
+        const lowestPrice = Math.min(...ticket.ticketTypes.map((t: any) => t.price));
+        return lowestPrice >= priceRange.min && lowestPrice <= priceRange.max;
+      });
+      // Apply date filter
+      if (selectedDate) {
+        const selectedDateStr = selectedDate.toDateString();
+        results = results.filter((ticket: any) => ticket.date.toDateString() === selectedDateStr);
+      }
+      // Apply tag filter
+      if (selectedTags.length > 0) {
+        results = results.filter((ticket: any) => selectedTags.some(tag => ticket.tags.includes(tag)));
+      }
+      // Apply sort
+      switch (sortOption) {
+        case 'price_low':
+          results.sort((a: any, b: any) => Math.min(...a.ticketTypes.map((t: any) => t.price)) - Math.min(...b.ticketTypes.map((t: any) => t.price)));
+          break;
+        case 'price_high':
+          results.sort((a: any, b: any) => Math.min(...b.ticketTypes.map((t: any) => t.price)) - Math.min(...a.ticketTypes.map((t: any) => t.price)));
+          break;
+        case 'date':
+          results.sort((a: any, b: any) => a.date.getTime() - b.date.getTime());
+          break;
+        case 'popularity':
+          results.sort((a: any, b: any) => b.rating - a.rating);
+          break;
+        default:
+          // Recommended - combination of featured status, rating and date
+          results.sort((a: any, b: any) => {
+            if (a.featured && !b.featured) return -1;
+            if (!a.featured && b.featured) return 1;
+            return b.rating - a.rating;
+          });
+      }
+      setFilteredTickets(results);
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchQuery, priceRange, selectedDate, selectedTags, sortOption, ticketListings]);
+  // Format date for display
+  const formatEventDate = (date: Date) => {
+    return date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  };
+  const formatEventTime = (date: Date) => {
+    return date.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit'
+    });
+  };
+  // Reset all filters
+  const resetFilters = () => {
+    setSearchQuery('');
+    setPriceRange({
+      min: 0,
+      max: 200
+    });
+    setSelectedDate(null);
+    setSelectedTags([]);
+    setSortOption('recommended');
+  };
+  // Toggle tag selection
+  const toggleTag = (tag: string) => {
+    setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
+  };
+  return <div className="min-h-screen bg-gray-50">
+      {/* Header Section */}
+      <div className="bg-indigo-700 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="text-4xl font-extrabold sm:text-5xl">
+              Ticket Marketplace
+            </h1>
+            <p className="mt-3 text-xl">
+              Find and purchase tickets for the best local events
+            </p>
+            {/* Search Bar */}
+            <div className="mt-8 max-w-3xl mx-auto">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <SearchIcon className="h-5 w-5 text-gray-400" />
+                </div>
+                <input type="text" className="block w-full pl-10 pr-3 py-4 border border-transparent rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white focus:border-white text-gray-900" placeholder="Search by event name, venue, or category..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                  <button onClick={() => setShowFilters(!showFilters)} className="p-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white">
+                    <FilterIcon className="h-5 w-5 text-gray-400" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Quick Stats Bar */}
+      <div className="border-b border-gray-200 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-gray-600">
+            <div className="flex items-center">
+              <span className="font-semibold text-indigo-600 mr-2">
+                {ticketListings.length}
+              </span>
+              Events Available
+            </div>
+            <div className="flex items-center">
+              <span className="font-semibold text-indigo-600 mr-2">
+                {ticketListings.reduce((acc: number, ticket: any) => acc + ticket.ticketTypes.reduce((sum: number, type: any) => sum + type.available, 0), 0)}
+              </span>
+              Tickets For Sale
+            </div>
+            <div className="flex items-center">
+              <span className="font-semibold text-indigo-600 mr-2">
+                {ticketListings.filter((t: any) => t.featured).length}
+              </span>
+              Featured Events
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Breadcrumbs */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <nav className="flex text-sm text-gray-500">
+          <button onClick={() => navigateTo('/')} className="hover:text-gray-700 flex items-center">
+            <HomeIcon className="h-4 w-4 mr-1" />
+            Home
+          </button>
+          <ChevronRightIcon className="h-4 w-4 mx-2" />
+          <button onClick={() => navigateTo('/tickets')} className="hover:text-gray-700">
+            Tickets
+          </button>
+          <ChevronRightIcon className="h-4 w-4 mx-2" />
+          <span className="text-gray-900 font-medium">Marketplace</span>
+        </nav>
+      </div>
+      {/* Main Content Area */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Filter Sidebar - Mobile Toggle */}
+          <div className="lg:hidden flex justify-between items-center mb-4">
+            <button onClick={() => setShowFilters(!showFilters)} className="flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50">
+              {showFilters ? <XIcon className="h-5 w-5 mr-2" /> : <FilterIcon className="h-5 w-5 mr-2" />}
+              {showFilters ? 'Hide Filters' : 'Show Filters'}
+            </button>
+            <div className="flex items-center text-sm text-gray-500">
+              <span className="mr-2">
+                Showing {filteredTickets.length} of {ticketListings.length}{' '}
+                events
+              </span>
+            </div>
+          </div>
+          {/* Filter Sidebar */}
+          {(showFilters || !window.matchMedia('(max-width: 1024px)').matches) && <div className="lg:w-1/4 w-full">
+              <div className="bg-white p-5 rounded-lg shadow-sm space-y-6">
+                <div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-4">
+                    Filters
+                  </h3>
+                  <button onClick={resetFilters} className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                    Reset all filters
+                  </button>
+                </div>
+                {/* Price Range Filter */}
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-2">
+                    Price Range
+                  </h4>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-gray-600">
+                      ${priceRange.min}
+                    </span>
+                    <span className="text-sm text-gray-600">
+                      ${priceRange.max}
+                    </span>
+                  </div>
+                  <input type="range" min="0" max="200" step="10" value={priceRange.max} onChange={e => setPriceRange(prev => ({
+                ...prev,
+                max: parseInt(e.target.value)
+              }))} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" />
+                  <div className="mt-4 flex items-center space-x-2">
+                    <input type="number" min="0" max={priceRange.max} value={priceRange.min} onChange={e => setPriceRange(prev => ({
+                  ...prev,
+                  min: Math.min(parseInt(e.target.value), prev.max)
+                }))} className="w-20 px-2 py-1 border border-gray-300 rounded text-sm" />
+                    <span className="text-gray-500">to</span>
+                    <input type="number" min={priceRange.min} max="200" value={priceRange.max} onChange={e => setPriceRange(prev => ({
+                  ...prev,
+                  max: Math.max(parseInt(e.target.value), prev.min)
+                }))} className="w-20 px-2 py-1 border border-gray-300 rounded text-sm" />
+                  </div>
+                </div>
+                {/* Date Filter */}
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-2">Date</h4>
+                  <input type="date" value={selectedDate ? selectedDate.toISOString().split('T')[0] : ''} onChange={e => setSelectedDate(e.target.value ? new Date(e.target.value) : null)} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
+                  {selectedDate && <button onClick={() => setSelectedDate(null)} className="mt-2 text-sm text-indigo-600 hover:text-indigo-800 font-medium flex items-center">
+                      <XIcon className="h-3 w-3 mr-1" />
+                      Clear date
+                    </button>}
+                </div>
+                {/* Category Tags */}
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-2">Categories</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {allTags.map(tag => <button key={tag} onClick={() => toggleTag(tag)} className={`px-3 py-1 rounded-full text-sm ${selectedTags.includes(tag) ? 'bg-indigo-100 text-indigo-800 border border-indigo-300' : 'bg-gray-100 text-gray-800 border border-gray-200 hover:bg-gray-200'}`}>
+                        {tag}
+                      </button>)}
+                  </div>
+                </div>
+              </div>
+            </div>}
+          {/* Main Content */}
+          <div className="lg:w-3/4 w-full">
+            {/* Sort and View Controls */}
+            <div className="bg-white p-4 rounded-lg shadow-sm mb-6 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center">
+                <span className="text-sm text-gray-500 mr-2">Sort by:</span>
+                <div className="relative">
+                  <select className="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-8 py-1.5 text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" value={sortOption} onChange={e => setSortOption(e.target.value as SortOption)}>
+                    <option value="recommended">Recommended</option>
+                    <option value="price_low">Price: Low to High</option>
+                    <option value="price_high">Price: High to Low</option>
+                    <option value="date">Date: Soonest First</option>
+                    <option value="popularity">Popularity</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                    <ChevronDownIcon className="h-4 w-4 text-gray-500" />
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="hidden lg:flex items-center text-sm text-gray-500 mr-4">
+                  <span>
+                    Showing {filteredTickets.length} of {ticketListings.length}{' '}
+                    events
+                  </span>
+                </div>
+                <div className="flex border border-gray-300 rounded-md overflow-hidden">
+                  <button className={`p-2 ${viewMode === 'grid' ? 'bg-indigo-100 text-indigo-700' : 'bg-white text-gray-500 hover:bg-gray-50'}`} onClick={() => setViewMode('grid')} title="Grid View">
+                    <GridIcon className="h-5 w-5" />
+                  </button>
+                  <button className={`p-2 ${viewMode === 'list' ? 'bg-indigo-100 text-indigo-700' : 'bg-white text-gray-500 hover:bg-gray-50'}`} onClick={() => setViewMode('list')} title="List View">
+                    <ListIcon className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+            {/* Ticket Listings */}
+            {isLoading ?
+          // Skeleton loading state
+          <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 gap-6' : 'space-y-6'}>
+                {[1, 2, 3, 4, 5, 6].map(i => <div key={i} className="bg-white rounded-lg shadow-sm overflow-hidden h-80 animate-pulse">
+                    <div className="h-40 bg-gray-200"></div>
+                    <div className="p-4 space-y-3">
+                      <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+                      <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                      <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                      <div className="h-8 bg-gray-200 rounded w-1/3"></div>
+                    </div>
+                  </div>)}
+              </div> : filteredTickets.length > 0 ? viewMode === 'grid' ? <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {filteredTickets.map((ticket: any) => <div key={ticket.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer border border-gray-200" onClick={() => navigateTo(`/tickets/${ticket.id}/select`)}>
+                      <div className="relative h-48 overflow-hidden">
+                        <img src={ticket.image} alt={ticket.eventName} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+                        {ticket.featured && <div className="absolute top-0 left-0 m-2">
+                            <span className="bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded">
+                              Featured
+                            </span>
+                          </div>}
+                        <div className="absolute bottom-0 right-0 m-2">
+                          <div className="flex items-center bg-white bg-opacity-90 px-2 py-1 rounded-full">
+                            <StarIcon className="h-3 w-3 text-yellow-500 mr-1" />
+                            <span className="text-xs font-medium">
+                              {ticket.rating}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-4">
+                        <h3 className="font-bold text-lg text-gray-900 mb-2">
+                          {ticket.eventName}
+                        </h3>
+                        <div className="flex items-center text-sm text-gray-600 mb-1">
+                          <CalendarIcon className="h-4 w-4 mr-1 flex-shrink-0" />
+                          {formatEventDate(ticket.date)}
+                        </div>
+                        <div className="flex items-center text-sm text-gray-600 mb-1">
+                          <ClockIcon className="h-4 w-4 mr-1 flex-shrink-0" />
+                          {formatEventTime(ticket.date)}
+                        </div>
+                        <div className="flex items-center text-sm text-gray-600 mb-3">
+                          <MapPinIcon className="h-4 w-4 mr-1 flex-shrink-0" />
+                          {ticket.venue.name}
+                        </div>
+                        <div className="flex flex-wrap gap-1 mb-3">
+                          {ticket.tags.map((tag: string) => <span key={tag} className="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-0.5 rounded">
+                              {tag}
+                            </span>)}
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <span className="text-gray-500 text-sm">From</span>
+                            <div className="font-bold text-lg text-gray-900">
+                              $
+                              {Math.min(...ticket.ticketTypes.map((t: any) => t.price))}
+                            </div>
+                          </div>
+                          <button onClick={e => {
+                    e.stopPropagation();
+                    navigateTo(`/tickets/${ticket.id}/select`);
+                  }} className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                            Get Tickets
+                          </button>
+                        </div>
+                      </div>
+                    </div>)}
+                </div> : <div className="space-y-4">
+                  {filteredTickets.map((ticket: any) => <div key={ticket.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer border border-gray-200" onClick={() => navigateTo(`/tickets/${ticket.id}/select`)}>
+                      <div className="p-4 sm:p-6 flex flex-col sm:flex-row">
+                        {/* Event Image */}
+                        <div className="sm:w-1/4 mb-4 sm:mb-0 sm:mr-6">
+                          <div className="h-32 sm:h-full w-full rounded-md overflow-hidden bg-gray-200 relative">
+                            <img src={ticket.image} alt={ticket.eventName} className="h-full w-full object-cover" />
+                            {ticket.featured && <div className="absolute top-0 left-0 m-2">
+                                <span className="bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded">
+                                  Featured
+                                </span>
+                              </div>}
+                          </div>
+                        </div>
+                        {/* Ticket Details */}
+                        <div className="flex-1">
+                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4">
+                            <div>
+                              <h3 className="text-lg font-bold text-gray-900 mb-1">
+                                {ticket.eventName}
+                              </h3>
+                              <div className="flex items-center text-sm text-gray-600 mb-1">
+                                <CalendarIcon className="h-4 w-4 mr-1 flex-shrink-0" />
+                                <span>{formatEventDate(ticket.date)}</span>
+                              </div>
+                              <div className="flex items-center text-sm text-gray-600 mb-1">
+                                <ClockIcon className="h-4 w-4 mr-1 flex-shrink-0" />
+                                <span>{formatEventTime(ticket.date)}</span>
+                              </div>
+                              <div className="flex items-center text-sm text-gray-600">
+                                <MapPinIcon className="h-4 w-4 mr-1 flex-shrink-0" />
+                                <span>{ticket.venue.name}</span>
+                              </div>
+                              <div className="flex flex-wrap gap-1 mt-2">
+                                {ticket.tags.map((tag: string) => <span key={tag} className="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-0.5 rounded">
+                                    {tag}
+                                  </span>)}
+                              </div>
+                            </div>
+                            <div className="mt-4 sm:mt-0 flex flex-col items-start sm:items-end">
+                              <div className="flex items-center mb-2">
+                                <StarIcon className="h-4 w-4 text-yellow-500 mr-1" />
+                                <span className="font-medium">
+                                  {ticket.rating}
+                                </span>
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {ticket.ticketTypes.reduce((sum: number, type: any) => sum + type.available, 0)}{' '}
+                                tickets available
+                              </div>
+                            </div>
+                          </div>
+                          {/* Ticket Types and Pricing */}
+                          <div className="border-t border-gray-100 pt-4 mt-2">
+                            <div className="flex flex-wrap justify-between items-center">
+                              <div className="space-y-1">
+                                {ticket.ticketTypes.slice(0, 2).map((type: any, index: number) => <div key={index} className="flex items-center text-sm">
+                                      <TagIcon className="h-3 w-3 text-gray-400 mr-1" />
+                                      <span className="text-gray-600">
+                                        {type.name}:
+                                      </span>
+                                      <span className="font-medium ml-1">
+                                        ${type.price}
+                                      </span>
+                                      <span className="text-gray-500 text-xs ml-2">
+                                        ({type.available} left)
+                                      </span>
+                                    </div>)}
+                                {ticket.ticketTypes.length > 2 && <div className="text-xs text-gray-500">
+                                    + {ticket.ticketTypes.length - 2} more
+                                    ticket types
+                                  </div>}
+                              </div>
+                              <button onClick={e => {
+                        e.stopPropagation();
+                        navigateTo(`/tickets/${ticket.id}/select`);
+                      }} className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                                Get Tickets
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>)}
+                </div> :
+          // Empty state
+          <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+                <div className="mx-auto h-24 w-24 text-gray-400">
+                  <TicketIcon className="h-24 w-24" />
+                </div>
+                <h3 className="mt-4 text-lg font-medium text-gray-900">
+                  No tickets found
+                </h3>
+                <p className="mt-2 text-gray-500">
+                  Try adjusting your filters or search query to find more
+                  tickets.
+                </p>
+                <div className="mt-6">
+                  <button onClick={resetFilters} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Reset all filters
+                  </button>
+                </div>
+              </div>}
+            {/* Pagination */}
+            {filteredTickets.length > 0 && <div className="mt-8 flex justify-center">
+                <button className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                  Load more events
+                </button>
+              </div>}
+          </div>
+        </div>
+      </div>
+      {/* Back to top button */}
+      <button onClick={() => window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })} className="fixed bottom-6 right-6 p-2 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </button>
+    </div>;
+};
+export default TicketMarketplacePage;

@@ -1,0 +1,565 @@
+import React, { useState } from 'react';
+import { ArrowLeftIcon, CalendarIcon, ClockIcon, UsersIcon, MapPinIcon, DollarSignIcon, CheckIcon, InfoIcon, HomeIcon, ChevronRightIcon } from 'lucide-react';
+import { useNavigationContext } from '../../../context/NavigationContext';
+import { mockVenues } from '../../../mockdata/venues';
+export const BookingRequestPage = () => {
+  const {
+    navigateTo,
+    currentPath
+  } = useNavigationContext();
+  // In a real app, we would extract the venueId from the URL
+  // For this example, we'll assume it's venue-1
+  const venueId = currentPath.split('/')[3] || 'venue-1';
+  const venue = mockVenues.find(v => v.id === venueId) || mockVenues[0];
+  const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [startTime, setStartTime] = useState('18:00');
+  const [endTime, setEndTime] = useState('23:00');
+  const [formData, setFormData] = useState({
+    eventType: '',
+    guestCount: 50,
+    additionalInfo: '',
+    name: '',
+    email: '',
+    phone: '',
+    agreeToTerms: false,
+    needCatering: false,
+    needEquipment: false,
+    needStaff: false
+  });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const {
+      name,
+      value,
+      type
+    } = e.target as HTMLInputElement;
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+    });
+  };
+  const handleDateChange = (date: Date) => {
+    setSelectedDate(date);
+  };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (step < 3) {
+      setStep(step + 1);
+      window.scrollTo(0, 0);
+    } else {
+      setIsSubmitting(true);
+      // Simulate API call
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+      }, 1500);
+    }
+  };
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(step - 1);
+      window.scrollTo(0, 0);
+    } else {
+      navigateTo(`/book-it/venues/${venueId}`);
+    }
+  };
+  const handleViewBookings = () => {
+    navigateTo('/bookings/confirmed');
+  };
+  const handleBackToVenue = () => {
+    navigateTo(`/book-it/venues/${venueId}`);
+  };
+  // Calculate estimated cost
+  const calculateEstimatedCost = () => {
+    const hours = parseInt(endTime.split(':')[0]) - parseInt(startTime.split(':')[0]);
+    const basePrice = venue.pricePerHour * hours;
+    const additionalServices = (formData.needCatering ? 500 : 0) + (formData.needEquipment ? 300 : 0) + (formData.needStaff ? 200 : 0);
+    return {
+      basePrice,
+      additionalServices,
+      total: basePrice + additionalServices
+    };
+  };
+  const estimatedCost = calculateEstimatedCost();
+  return <div className="min-h-screen bg-gray-50">
+      {/* Breadcrumbs */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <nav className="flex text-sm text-gray-500">
+            <button onClick={() => navigateTo('/')} className="hover:text-gray-700 flex items-center">
+              <HomeIcon className="h-4 w-4 mr-1" />
+              Home
+            </button>
+            <ChevronRightIcon className="h-4 w-4 mx-2" />
+            <button onClick={() => navigateTo('/book-it/venues')} className="hover:text-gray-700">
+              Venues
+            </button>
+            <ChevronRightIcon className="h-4 w-4 mx-2" />
+            <button onClick={() => navigateTo(`/book-it/venues/${venueId}`)} className="hover:text-gray-700">
+              {venue.name}
+            </button>
+            <ChevronRightIcon className="h-4 w-4 mx-2" />
+            <span className="text-gray-900 font-medium">Book Now</span>
+          </nav>
+        </div>
+      </div>
+
+      <div className="max-w-3xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        {/* Back button */}
+        <button onClick={handleBack} className="mb-6 flex items-center text-indigo-600 hover:text-indigo-800">
+          <ArrowLeftIcon className="h-4 w-4 mr-1" />
+          {step === 1 ? 'Back to Venue' : 'Back to Previous Step'}
+        </button>
+
+        {!isSubmitted ? <>
+            {/* Form Header */}
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-gray-900">
+                Book {venue.name}
+              </h1>
+              <p className="mt-2 text-gray-600">
+                Complete your booking request in just a few steps
+              </p>
+            </div>
+
+            {/* Progress Steps */}
+            <div className="mb-8">
+              <div className="flex items-center justify-between">
+                {[1, 2, 3].map(stepNumber => <div key={stepNumber} className="flex-1 flex flex-col items-center">
+                    <div className={`h-10 w-10 rounded-full flex items-center justify-center ${stepNumber < step ? 'bg-indigo-600 text-white' : stepNumber === step ? 'bg-indigo-100 text-indigo-600 border-2 border-indigo-600' : 'bg-gray-200 text-gray-500'}`}>
+                      {stepNumber < step ? <CheckIcon className="h-5 w-5" /> : stepNumber}
+                    </div>
+                    <div className="text-xs mt-2 text-gray-500">
+                      {stepNumber === 1 ? 'Event Details' : stepNumber === 2 ? 'Add-ons & Services' : 'Confirm & Submit'}
+                    </div>
+                  </div>)}
+              </div>
+              <div className="relative mt-2">
+                <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                  <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-between">
+                  {[1, 2, 3].map(stepNumber => <div key={stepNumber} className={`h-5 w-5 rounded-full ${stepNumber <= step ? 'bg-indigo-600' : 'bg-gray-200'}`}></div>)}
+                </div>
+              </div>
+            </div>
+
+            {/* Form Content */}
+            <div className="bg-white shadow rounded-lg overflow-hidden">
+              <form onSubmit={handleSubmit}>
+                {step === 1 && <div className="p-6 space-y-6">
+                    <h2 className="text-xl font-semibold text-gray-900">
+                      Event Details
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="eventDate" className="block text-sm font-medium text-gray-700 mb-1">
+                          Event Date *
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <CalendarIcon className="h-5 w-5 text-gray-400" />
+                          </div>
+                          <input type="date" id="eventDate" name="eventDate" required value={selectedDate.toISOString().split('T')[0]} onChange={e => handleDateChange(new Date(e.target.value))} className="pl-10 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                        </div>
+                      </div>
+                      <div>
+                        <label htmlFor="eventType" className="block text-sm font-medium text-gray-700 mb-1">
+                          Event Type *
+                        </label>
+                        <select id="eventType" name="eventType" required value={formData.eventType} onChange={handleInputChange} className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                          <option value="">Select event type</option>
+                          <option value="Wedding">Wedding</option>
+                          <option value="Corporate Event">
+                            Corporate Event
+                          </option>
+                          <option value="Birthday Party">Birthday Party</option>
+                          <option value="Concert">Concert</option>
+                          <option value="Conference">Conference</option>
+                          <option value="Photoshoot">Photoshoot</option>
+                          <option value="Private Party">Private Party</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="startTime" className="block text-sm font-medium text-gray-700 mb-1">
+                          Start Time *
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <ClockIcon className="h-5 w-5 text-gray-400" />
+                          </div>
+                          <select id="startTime" name="startTime" required value={startTime} onChange={e => setStartTime(e.target.value)} className="pl-10 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            {Array.from({
+                        length: 24
+                      }).map((_, i) => <option key={i} value={`${i.toString().padStart(2, '0')}:00`}>
+                                {i.toString().padStart(2, '0')}:00
+                              </option>)}
+                          </select>
+                        </div>
+                      </div>
+                      <div>
+                        <label htmlFor="endTime" className="block text-sm font-medium text-gray-700 mb-1">
+                          End Time *
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <ClockIcon className="h-5 w-5 text-gray-400" />
+                          </div>
+                          <select id="endTime" name="endTime" required value={endTime} onChange={e => setEndTime(e.target.value)} className="pl-10 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            {Array.from({
+                        length: 24
+                      }).map((_, i) => <option key={i} value={`${i.toString().padStart(2, '0')}:00`}>
+                                {i.toString().padStart(2, '0')}:00
+                              </option>)}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <label htmlFor="guestCount" className="block text-sm font-medium text-gray-700 mb-1">
+                        Number of Guests *
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <UsersIcon className="h-5 w-5 text-gray-400" />
+                        </div>
+                        <input type="number" id="guestCount" name="guestCount" min="1" max={venue.capacity} required value={formData.guestCount} onChange={handleInputChange} className="pl-10 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                      </div>
+                      <p className="mt-1 text-sm text-gray-500">
+                        This venue can accommodate up to {venue.capacity} guests
+                      </p>
+                    </div>
+                    <div>
+                      <label htmlFor="additionalInfo" className="block text-sm font-medium text-gray-700 mb-1">
+                        Additional Information
+                      </label>
+                      <textarea id="additionalInfo" name="additionalInfo" rows={4} value={formData.additionalInfo} onChange={handleInputChange} placeholder="Tell us more about your event, special requirements, or questions..." className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+                    </div>
+                  </div>}
+                {step === 2 && <div className="p-6 space-y-6">
+                    <h2 className="text-xl font-semibold text-gray-900">
+                      Additional Services
+                    </h2>
+                    <div className="bg-indigo-50 p-4 rounded-md mb-6">
+                      <div className="flex items-center mb-2">
+                        <InfoIcon className="h-5 w-5 text-indigo-600 mr-2" />
+                        <p className="text-sm text-indigo-800 font-medium">
+                          Enhance your event with these optional services
+                        </p>
+                      </div>
+                      <p className="text-sm text-indigo-700">
+                        Prices shown are estimates and may vary based on your
+                        specific requirements.
+                      </p>
+                    </div>
+                    <div className="space-y-4">
+                      <div className="border border-gray-200 rounded-md p-4 hover:border-indigo-200 hover:bg-indigo-50/30 transition-colors">
+                        <div className="flex items-start">
+                          <div className="flex items-center h-5">
+                            <input id="needCatering" name="needCatering" type="checkbox" checked={formData.needCatering} onChange={handleInputChange} className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
+                          </div>
+                          <div className="ml-3 flex-1">
+                            <label htmlFor="needCatering" className="font-medium text-gray-900">
+                              Catering Services
+                            </label>
+                            <p className="text-gray-500 text-sm">
+                              Professional catering with customizable menu
+                              options
+                            </p>
+                            <p className="text-indigo-600 text-sm mt-1">
+                              Starting at $500
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="border border-gray-200 rounded-md p-4 hover:border-indigo-200 hover:bg-indigo-50/30 transition-colors">
+                        <div className="flex items-start">
+                          <div className="flex items-center h-5">
+                            <input id="needEquipment" name="needEquipment" type="checkbox" checked={formData.needEquipment} onChange={handleInputChange} className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
+                          </div>
+                          <div className="ml-3 flex-1">
+                            <label htmlFor="needEquipment" className="font-medium text-gray-900">
+                              AV Equipment
+                            </label>
+                            <p className="text-gray-500 text-sm">
+                              Sound system, projector, microphones, and lighting
+                              setup
+                            </p>
+                            <p className="text-indigo-600 text-sm mt-1">
+                              Starting at $300
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="border border-gray-200 rounded-md p-4 hover:border-indigo-200 hover:bg-indigo-50/30 transition-colors">
+                        <div className="flex items-start">
+                          <div className="flex items-center h-5">
+                            <input id="needStaff" name="needStaff" type="checkbox" checked={formData.needStaff} onChange={handleInputChange} className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
+                          </div>
+                          <div className="ml-3 flex-1">
+                            <label htmlFor="needStaff" className="font-medium text-gray-900">
+                              Event Staff
+                            </label>
+                            <p className="text-gray-500 text-sm">
+                              Professional staff including servers, bartenders,
+                              and security
+                            </p>
+                            <p className="text-indigo-600 text-sm mt-1">
+                              Starting at $200
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-8 bg-gray-50 p-4 rounded-md">
+                      <h3 className="font-medium text-gray-900 mb-3">
+                        Estimated Cost
+                      </h3>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">
+                            Venue Rental (
+                            {calculateEstimatedCost().basePrice / venue.pricePerHour}{' '}
+                            hours)
+                          </span>
+                          <span className="font-medium">
+                            ${calculateEstimatedCost().basePrice}
+                          </span>
+                        </div>
+                        {formData.needCatering && <div className="flex justify-between">
+                            <span className="text-gray-600">
+                              Catering Services
+                            </span>
+                            <span className="font-medium">$500</span>
+                          </div>}
+                        {formData.needEquipment && <div className="flex justify-between">
+                            <span className="text-gray-600">AV Equipment</span>
+                            <span className="font-medium">$300</span>
+                          </div>}
+                        {formData.needStaff && <div className="flex justify-between">
+                            <span className="text-gray-600">Event Staff</span>
+                            <span className="font-medium">$200</span>
+                          </div>}
+                        <div className="border-t border-gray-200 pt-2 flex justify-between font-medium">
+                          <span>Estimated Total</span>
+                          <span className="text-indigo-600">
+                            ${calculateEstimatedCost().total}
+                          </span>
+                        </div>
+                      </div>
+                      <p className="mt-2 text-xs text-gray-500">
+                        Final pricing will be confirmed by the venue after
+                        reviewing your request.
+                      </p>
+                    </div>
+                  </div>}
+                {step === 3 && <div className="p-6 space-y-6">
+                    <h2 className="text-xl font-semibold text-gray-900">
+                      Contact Information
+                    </h2>
+                    <div className="bg-gray-50 p-4 rounded-md mb-6">
+                      <h3 className="font-medium text-gray-900 mb-3">
+                        Booking Summary
+                      </h3>
+                      <div className="space-y-2">
+                        <div className="flex items-start">
+                          <div className="flex-shrink-0">
+                            <CalendarIcon className="h-5 w-5 text-gray-400" />
+                          </div>
+                          <div className="ml-3">
+                            <p className="text-sm font-medium text-gray-900">
+                              {selectedDate.toLocaleDateString('en-US', {
+                          weekday: 'long',
+                          month: 'long',
+                          day: 'numeric',
+                          year: 'numeric'
+                        })}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              {startTime} - {endTime}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-start">
+                          <div className="flex-shrink-0">
+                            <MapPinIcon className="h-5 w-5 text-gray-400" />
+                          </div>
+                          <div className="ml-3">
+                            <p className="text-sm font-medium text-gray-900">
+                              {venue.name}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              {venue.location.address}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-start">
+                          <div className="flex-shrink-0">
+                            <UsersIcon className="h-5 w-5 text-gray-400" />
+                          </div>
+                          <div className="ml-3">
+                            <p className="text-sm font-medium text-gray-900">
+                              {formData.guestCount} Guests
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              {formData.eventType}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-start">
+                          <div className="flex-shrink-0">
+                            <DollarSignIcon className="h-5 w-5 text-gray-400" />
+                          </div>
+                          <div className="ml-3">
+                            <p className="text-sm font-medium text-gray-900">
+                              Estimated Total: ${calculateEstimatedCost().total}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              {formData.needCatering || formData.needEquipment || formData.needStaff ? 'Including selected add-ons' : 'Base venue rental only'}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                          Full Name *
+                        </label>
+                        <input type="text" id="name" name="name" required value={formData.name} onChange={handleInputChange} className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                      </div>
+                      <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                          Email Address *
+                        </label>
+                        <input type="email" id="email" name="email" required value={formData.email} onChange={handleInputChange} className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                      </div>
+                      <div>
+                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                          Phone Number *
+                        </label>
+                        <input type="tel" id="phone" name="phone" required value={formData.phone} onChange={handleInputChange} className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                      </div>
+                    </div>
+                    <div className="mt-4">
+                      <div className="flex items-start">
+                        <div className="flex items-center h-5">
+                          <input id="agreeToTerms" name="agreeToTerms" type="checkbox" required checked={formData.agreeToTerms} onChange={handleInputChange} className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
+                        </div>
+                        <div className="ml-3 text-sm">
+                          <label htmlFor="agreeToTerms" className="text-gray-700">
+                            I agree to the{' '}
+                            <a href="#" className="text-indigo-600 hover:text-indigo-500">
+                              Terms of Service
+                            </a>{' '}
+                            and{' '}
+                            <a href="#" className="text-indigo-600 hover:text-indigo-500">
+                              Privacy Policy
+                            </a>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>}
+                <div className="px-6 py-4 bg-gray-50 flex justify-between">
+                  <button type="button" onClick={handleBack} className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    {step === 1 ? 'Cancel' : 'Back'}
+                  </button>
+                  <button type="submit" disabled={isSubmitting} className={`px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}>
+                    {step < 3 ? 'Continue' : isSubmitting ? 'Submitting...' : 'Submit Booking Request'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </> : <div className="bg-white shadow rounded-lg overflow-hidden">
+            <div className="p-6 text-center">
+              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+                <CheckIcon className="h-8 w-8 text-green-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                Booking Request Submitted!
+              </h2>
+              <p className="text-gray-600 mb-6">
+                Thank you for your booking request for {venue.name}. We've sent
+                a confirmation email to {formData.email}. The venue will respond
+                to your request within 24 hours.
+              </p>
+              <div className="bg-gray-50 p-4 rounded-md mb-6 text-left">
+                <h3 className="font-medium text-gray-900 mb-3">
+                  Booking Details
+                </h3>
+                <div className="space-y-2">
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0">
+                      <CalendarIcon className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium text-gray-900">
+                        {selectedDate.toLocaleDateString('en-US', {
+                      weekday: 'long',
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric'
+                    })}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {startTime} - {endTime}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0">
+                      <MapPinIcon className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium text-gray-900">
+                        {venue.name}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {venue.location.address}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0">
+                      <UsersIcon className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium text-gray-900">
+                        {formData.guestCount} Guests
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {formData.eventType}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0">
+                      <DollarSignIcon className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium text-gray-900">
+                        Estimated Total: ${calculateEstimatedCost().total}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button onClick={handleViewBookings} className="w-full sm:w-auto px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  View My Bookings
+                </button>
+                <button onClick={handleBackToVenue} className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                  Return to Venue
+                </button>
+              </div>
+            </div>
+          </div>}
+      </div>
+    </div>;
+};

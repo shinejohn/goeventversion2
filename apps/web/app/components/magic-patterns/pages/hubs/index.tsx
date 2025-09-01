@@ -1,0 +1,108 @@
+import React from 'react';
+import { Search, MapPin, Users } from 'lucide-react';
+import { useNavigationContext } from '../../context/NavigationContext';
+const HubsDiscoveryPage = () => {
+  const {
+    navigateTo
+  } = useNavigationContext();
+  // Mock communities data
+  const communities = [{
+    id: 'jazz-lovers',
+    name: 'Jazz Lovers Collective',
+    description: 'A community for jazz enthusiasts, musicians, and venue owners',
+    members: 3427,
+    image: 'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    location: 'Clearwater, FL'
+  }, {
+    id: 'urban-gardeners',
+    name: 'Urban Gardeners Network',
+    description: 'Growing community through urban agriculture and sustainable practices',
+    members: 2156,
+    image: 'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    location: 'Tampa, FL'
+  }, {
+    id: 'beach-volleyball',
+    name: 'Beach Volleyball League',
+    description: 'Casual and competitive beach volleyball games and tournaments',
+    members: 1845,
+    image: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    location: 'Clearwater, FL'
+  }, {
+    id: 'tech-innovators',
+    name: 'Tech Innovators Hub',
+    description: 'Connecting local tech talent, startups, and established companies',
+    members: 2967,
+    image: 'https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    location: 'St. Petersburg, FL'
+  }];
+  const handleCommunityClick = communityId => {
+    navigateTo(`/hub/${communityId}/community`);
+  };
+  return <div className="min-h-screen bg-gray-50">
+      <main className="flex-grow">
+        {/* Hero Section */}
+        <div className="bg-indigo-700 text-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+            <div className="max-w-3xl">
+              <h1 className="text-3xl md:text-4xl font-bold mb-4">
+                Discover Local Communities
+              </h1>
+              <p className="text-lg text-indigo-100 mb-8">
+                Connect with people who share your interests, join local groups,
+                and never miss what's happening in your area.
+              </p>
+              <div className="bg-white rounded-lg p-2 flex items-center shadow-md">
+                <div className="flex-grow flex items-center">
+                  <Search className="h-5 w-5 text-gray-400 ml-2 mr-2" />
+                  <input type="text" placeholder="Search communities..." className="w-full border-none focus:ring-0 text-gray-800" />
+                </div>
+                <div className="border-l border-gray-200 pl-4 flex items-center">
+                  <MapPin className="h-5 w-5 text-gray-400 mr-2" />
+                  <span className="text-gray-800">Clearwater, FL</span>
+                </div>
+                <button className="ml-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors">
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Communities List */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+            Popular Communities
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {communities.map(community => <div key={community.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer" onClick={() => handleCommunityClick(community.id)}>
+                <div className="h-40 bg-gray-100 relative">
+                  <img src={community.image} alt={community.name} className="w-full h-full object-cover" />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-lg font-bold text-gray-900 mb-1">
+                    {community.name}
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                    {community.description}
+                  </p>
+                  <div className="flex items-center text-sm text-gray-500 mb-3">
+                    <MapPin className="h-4 w-4 mr-1" />
+                    <span>{community.location}</span>
+                  </div>
+                  <div className="flex justify-between items-center pt-3 border-t border-gray-100">
+                    <div className="flex items-center text-sm">
+                      <Users className="h-4 w-4 text-indigo-500 mr-1" />
+                      <span>{community.members.toLocaleString()} members</span>
+                    </div>
+                    <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                      Join
+                    </button>
+                  </div>
+                </div>
+              </div>)}
+          </div>
+        </div>
+      </main>
+    </div>;
+};
+export default HubsDiscoveryPage;

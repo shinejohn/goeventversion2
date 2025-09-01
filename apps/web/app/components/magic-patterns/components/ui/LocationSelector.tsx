@@ -1,0 +1,83 @@
+import React, { useState, Component } from 'react';
+/**
+ * Component: Location Selector
+ * Type: CSR
+ * Mockdata: OFF
+ * Description: Interactive location selector with event count
+ * Components: None
+ */
+import { MapPinIcon, ChevronDownIcon } from 'lucide-react';
+import { useNavigationContext } from '../../context/NavigationContext';
+type LocationSelectorProps = {
+  currentLocation: string;
+  eventCount: number;
+  isMobile?: boolean;
+};
+export const LocationSelector = ({
+  currentLocation,
+  eventCount,
+  isMobile = false
+}: LocationSelectorProps) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(currentLocation);
+  const [searchLocation, setSearchLocation] = useState('');
+  const {
+    navigateTo
+  } = useNavigationContext();
+  const popularLocations = ['Tampa, FL', 'St. Petersburg, FL', 'Dunedin, FL', 'Safety Harbor, FL', 'Palm Harbor, FL', 'Tarpon Springs, FL'];
+  const filteredLocations = searchLocation.trim() === '' ? popularLocations : popularLocations.filter(loc => loc.toLowerCase().includes(searchLocation.toLowerCase()));
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+  const handleLocationSelect = (location: string) => {
+    setSelectedLocation(location);
+    setIsDropdownOpen(false);
+    // In a real app, this would update the global location state and refetch events
+    console.log(`Location changed to: ${location}`);
+  };
+  const handleUseCurrentLocation = () => {
+    // In a real app, this would use the browser's geolocation API
+    navigator.geolocation.getCurrentPosition(position => {
+      console.log('Using current location', position.coords);
+      // This would normally make an API call to reverse geocode the coordinates
+      setSelectedLocation('Current Location');
+      setIsDropdownOpen(false);
+    }, error => {
+      console.error('Error getting location:', error);
+      alert('Unable to get your current location. Please check your browser permissions.');
+    });
+  };
+  return <div className="relative">
+      <button className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none" onClick={toggleDropdown} aria-expanded={isDropdownOpen} aria-haspopup="true">
+        <MapPinIcon className="h-5 w-5 text-indigo-600 mr-1" />
+        <span className={`${isMobile ? 'text-base' : 'text-sm'} font-medium`}>
+          {selectedLocation}
+        </span>
+        <ChevronDownIcon className="ml-1 h-4 w-4 text-gray-500" />
+      </button>
+      {!isMobile && <span className="ml-2 text-xs bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full">
+          {eventCount} events
+        </span>}
+      {isDropdownOpen && <div className="origin-top-left absolute left-0 mt-2 w-60 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+          <div className="py-1" role="menu" aria-orientation="vertical">
+            <div className="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider">
+              Popular Locations
+            </div>
+            {filteredLocations.map((location, index) => <button key={index} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" onClick={() => handleLocationSelect(location)}>
+                {location}
+              </button>)}
+            <div className="border-t border-gray-100 my-1"></div>
+            <div className="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider">
+              Search Location
+            </div>
+            <div className="px-4 py-2">
+              <input type="text" className="w-full px-2 py-1 text-sm border border-gray-300 rounded" placeholder="Enter city, state or zip" value={searchLocation} onChange={e => setSearchLocation(e.target.value)} />
+            </div>
+            <div className="border-t border-gray-100 my-1"></div>
+            <button className="block w-full text-left px-4 py-2 text-sm text-indigo-600 hover:bg-gray-100" role="menuitem" onClick={handleUseCurrentLocation}>
+              Use Current Location
+            </button>
+          </div>
+        </div>}
+    </div>;
+};

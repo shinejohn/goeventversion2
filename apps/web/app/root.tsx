@@ -68,6 +68,15 @@ export default function App(props: Route.ComponentProps) {
         <Meta />
         <Links />
         <CsrfTokenMeta csrf={loaderData.csrfToken} />
+        
+        {/* Cloudflare Web Analytics */}
+        {import.meta.env.VITE_CF_ANALYTICS_TOKEN && (
+          <script
+            defer
+            src='https://static.cloudflareinsights.com/beacon.min.js'
+            data-cf-beacon={`{"token": "${import.meta.env.VITE_CF_ANALYTICS_TOKEN}"}`}
+          />
+        )}
       </head>
 
       <body>

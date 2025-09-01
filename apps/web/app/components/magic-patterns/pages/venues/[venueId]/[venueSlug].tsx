@@ -1,0 +1,1069 @@
+import React, { useEffect, useState, Children, Component } from 'react';
+import { CheckCircleIcon, MapPinIcon, CalendarIcon, ClockIcon, StarIcon, UsersIcon, HeartIcon, ShareIcon, BellIcon, MessageCircleIcon, CheckIcon, XIcon, InfoIcon, HomeIcon, ChevronRightIcon, ExternalLinkIcon, DollarSignIcon, PhoneIcon, BuildingIcon, TicketIcon, ImageIcon, LayoutIcon, WifiIcon, HelpCircleIcon, ZapIcon, MicIcon, UtensilsIcon, ShieldIcon, TruckIcon, CameraIcon, AwardIcon, ThumbsUpIcon, BarChartIcon, CalendarDaysIcon, RepeatIcon, UserPlusIcon } from 'lucide-react';
+import { useNavigationContext } from '../../../context/NavigationContext';
+import { useCheckIn } from '../../../context/CheckInContext';
+import { mockVenues } from '../../../mockdata/venues';
+import { VenueImageGallery } from '../../../components/venue-profile/VenueImageGallery';
+import { VenueBookingWidget } from '../../../components/venue-profile/VenueBookingWidget';
+import { VenueAmenities } from '../../../components/venue-profile/VenueAmenities';
+import { VenuePricing } from '../../../components/venue-profile/VenuePricing';
+import { VenueAvailabilityCalendar } from '../../../components/venue-profile/VenueAvailabilityCalendar';
+import { VenueSpaceDetails } from '../../../components/venue-profile/VenueSpaceDetails';
+import { VenueLocation } from '../../../components/venue-profile/VenueLocation';
+import { VenueReviews } from '../../../components/venue-profile/VenueReviews';
+import { VenueEvents } from '../../../components/venue-profile/VenueEvents';
+import { VenueFAQ } from '../../../components/venue-profile/VenueFAQ';
+import { VenuePhotoGallery } from '../../../components/venue-profile/VenuePhotoGallery';
+import { VenueSimilar } from '../../../components/venue-profile/VenueSimilar';
+import { CheckInButton } from '../../../components/check-in/CheckInButton';
+import { CheckInModal } from '../../../components/check-in/CheckInModal';
+import { CheckInFeed } from '../../../components/check-in/CheckInFeed';
+type Tab = 'overview' | 'spaces' | 'events' | 'calendar' | 'reviews' | 'photos' | 'amenities' | 'location' | 'faq';
+export default function VenueProfilePage() {
+  // In a real app, we would fetch the venue by ID and slug from the URL
+  // For this example, we'll use the first venue from our mock data and enhance it
+  const venue = {
+    ...mockVenues[0],
+    // Add additional fields needed for this detailed view
+    verifiedDate: 'May 2023',
+    responseRate: 98,
+    bookingApprovalRate: 95,
+    squareFootage: 5200,
+    ceilingHeight: 18,
+    parkingDetails: '200 spaces in attached garage, $10 per vehicle',
+    publicTransit: [{
+      type: 'Bus',
+      lines: ['Route 52', 'Route 60'],
+      distance: '0.2 miles'
+    }, {
+      type: 'Train',
+      lines: ['Blue Line'],
+      distance: '0.5 miles'
+    }],
+    loadInDetails: 'Loading dock available at rear entrance. Service elevator to main floor.',
+    floorPlan: 'https://images.unsplash.com/photo-1532094349884-543019a69b2f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    internetSpeed: '1 Gbps fiber, business-grade WiFi',
+    powerDetails: '20 standard outlets, 4 high-capacity outlets for equipment',
+    lightingOptions: 'Adjustable LED lighting system with dimmer controls',
+    soundLimitations: 'No sound restrictions until 11 PM. After 11 PM, sound must be kept below 85 decibels.',
+    capacityBreakdown: {
+      standing: 500,
+      seated: 350,
+      theaterStyle: 400,
+      banquetStyle: 300,
+      classroom: 250,
+      boardroom: 50
+    },
+    packageOptions: [{
+      name: 'Basic Package',
+      description: 'Venue rental only',
+      price: 5000,
+      included: ['Space rental', 'Basic cleaning', 'Standard lighting']
+    }, {
+      name: 'Premium Package',
+      description: 'Venue rental with additional services',
+      price: 8000,
+      included: ['Space rental', 'Enhanced cleaning', 'Full lighting package', 'Sound system', 'Event coordinator', 'Security staff']
+    }, {
+      name: 'Deluxe Package',
+      description: 'All-inclusive experience',
+      price: 12000,
+      included: ['Space rental', 'Enhanced cleaning', 'Full lighting package', 'Premium sound system', 'Event coordinator', 'Security staff', 'Catering for up to 200 guests', 'Bar service', 'Decor package']
+    }],
+    additionalFees: [{
+      name: 'Cleaning Fee',
+      amount: 350,
+      description: 'Standard post-event cleaning'
+    }, {
+      name: 'Security Deposit',
+      amount: 1000,
+      description: 'Refundable if no damages'
+    }, {
+      name: 'Extended Hours',
+      amount: 250,
+      description: 'Per hour beyond standard booking'
+    }, {
+      name: 'Security Staff',
+      amount: 45,
+      description: 'Per security guard per hour'
+    }],
+    additionalServices: [{
+      name: 'Catering',
+      description: 'In-house and approved external options available',
+      priceRange: '$45-85 per person'
+    }, {
+      name: 'Bar Service',
+      description: 'Full bar packages, bartender included',
+      priceRange: '$25-50 per person'
+    }, {
+      name: 'Equipment Rental',
+      description: 'AV equipment, staging, furniture',
+      priceRange: 'Varies by selection'
+    }, {
+      name: 'Event Staff',
+      description: 'Servers, coat check, greeters',
+      priceRange: '$35 per staff member per hour'
+    }],
+    houseRules: ['No smoking inside the venue', 'No confetti or glitter', 'All decorations must be approved', 'Music must end by 11:00 PM on weekdays', 'Outside alcohol is not permitted without proper licensing'],
+    uniqueFeatures: ['Grand staircase entrance perfect for dramatic entrances', 'Private bridal suite and green room', 'State-of-the-art lighting system with customizable presets', 'Indoor/outdoor flow with access to private garden', 'Historic architectural details throughout'],
+    bestFor: ['Weddings', 'Corporate Galas', 'Fundraisers', 'Award Ceremonies', 'Upscale Social Events'],
+    neighborhoodDescription: 'Located in the heart of downtown, surrounded by hotels, restaurants, and nightlife. Walking distance to the waterfront and cultural attractions.',
+    reviews: [{
+      id: 'review-1',
+      reviewer: {
+        name: 'Jennifer K.',
+        image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=100&h=100&q=80'
+      },
+      rating: 5,
+      date: 'June 15, 2023',
+      eventType: 'Wedding Reception',
+      comment: 'The Grand Ballroom was absolutely perfect for our wedding! The space is stunning with those crystal chandeliers, and the staff was incredibly attentive throughout the planning process and on our big day. The grand staircase made for amazing photo opportunities. Highly recommend!',
+      venueResponse: "Thank you for your kind words, Jennifer! It was our pleasure to host your special day, and we're thrilled that everything exceeded your expectations."
+    }, {
+      id: 'review-2',
+      reviewer: {
+        name: 'Michael T.',
+        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=100&h=100&q=80'
+      },
+      rating: 4,
+      date: 'May 3, 2023',
+      eventType: 'Corporate Gala',
+      comment: 'We hosted our annual company gala here and were very pleased with the venue. The space accommodated our 300 guests comfortably, and the sound system was excellent for our presentations. Only giving 4 stars because the parking situation was a bit challenging for some of our attendees.'
+    }, {
+      id: 'review-3',
+      reviewer: {
+        name: 'Sarah L.',
+        image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=100&h=100&q=80'
+      },
+      rating: 5,
+      date: 'April 22, 2023',
+      eventType: 'Charity Fundraiser',
+      comment: 'The Grand Ballroom provided the perfect elegant backdrop for our annual charity fundraiser. The flexible space allowed us to have a silent auction area, seated dinner, and dance floor. The venue manager was exceptionally helpful with coordinating our various vendors. Will definitely book again next year!'
+    }, {
+      id: 'review-4',
+      reviewer: {
+        name: 'David R.',
+        image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=100&h=100&q=80'
+      },
+      rating: 5,
+      date: 'March 10, 2023',
+      eventType: 'Corporate Conference',
+      comment: 'Excellent venue for our three-day conference. The technical capabilities were impressive, and the staff was very accommodating with our complex setup requirements. The central location made it convenient for our out-of-town attendees who were staying at nearby hotels.'
+    }],
+    availabilityByDate: {
+      // Simplified availability data
+      '2024-06-01': 'fully-available',
+      '2024-06-02': 'fully-available',
+      '2024-06-03': 'fully-available',
+      '2024-06-04': 'partially-available',
+      '2024-06-05': 'unavailable',
+      '2024-06-06': 'unavailable',
+      '2024-06-07': 'partially-available',
+      '2024-06-08': 'fully-available',
+      '2024-06-09': 'fully-available',
+      '2024-06-10': 'fully-available',
+      '2024-06-11': 'fully-available',
+      '2024-06-12': 'fully-available',
+      '2024-06-13': 'fully-available',
+      '2024-06-14': 'fully-available',
+      '2024-06-15': 'unavailable',
+      '2024-06-16': 'unavailable',
+      '2024-06-17': 'fully-available',
+      '2024-06-18': 'fully-available',
+      '2024-06-19': 'fully-available',
+      '2024-06-20': 'fully-available',
+      '2024-06-21': 'fully-available',
+      '2024-06-22': 'unavailable',
+      '2024-06-23': 'unavailable',
+      '2024-06-24': 'fully-available',
+      '2024-06-25': 'fully-available',
+      '2024-06-26': 'fully-available',
+      '2024-06-27': 'fully-available',
+      '2024-06-28': 'fully-available',
+      '2024-06-29': 'partially-available',
+      '2024-06-30': 'partially-available'
+    },
+    spaces: [{
+      id: 'space-1',
+      name: 'Main Ballroom',
+      description: 'Our signature space with crystal chandeliers and grand staircase entrance.',
+      images: ['https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', 'https://images.unsplash.com/photo-1515169067868-5387ec356754?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'],
+      capacity: {
+        standing: 500,
+        seated: 350,
+        theaterStyle: 400,
+        banquetStyle: 300
+      },
+      squareFootage: 4000,
+      features: ['Built-in stage', 'Dance floor', 'Full sound system', 'Adjustable lighting', 'Private entrance'],
+      pricePerHour: 600
+    }, {
+      id: 'space-2',
+      name: 'VIP Lounge',
+      description: 'Intimate space perfect for smaller gatherings or as an addition to the main ballroom.',
+      images: ['https://images.unsplash.com/photo-1517638851339-a711cfcf3279?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', 'https://images.unsplash.com/photo-1574108233109-2a28c32e4a87?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'],
+      capacity: {
+        standing: 100,
+        seated: 60,
+        theaterStyle: 80,
+        banquetStyle: 50
+      },
+      squareFootage: 1200,
+      features: ['Private bar', 'Lounge seating', 'Smart TV', 'Sound system', 'Mood lighting'],
+      pricePerHour: 250
+    }],
+    upcomingEvents: [{
+      id: 'event-1',
+      name: 'Summer Gala Fundraiser',
+      date: '2024-06-18',
+      time: '19:00-23:00',
+      image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+      organizer: "City Children's Foundation",
+      ticketPrice: '$75-150',
+      ticketStatus: 'Available',
+      ageRestriction: '21+',
+      description: 'Annual fundraising gala with live music, silent auction, and gourmet dinner.'
+    }, {
+      id: 'event-2',
+      name: 'Jazz Night with The Modern Quartet',
+      date: '2024-06-24',
+      time: '20:00-22:30',
+      image: 'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+      organizer: 'Downtown Jazz Series',
+      ticketPrice: '$35-45',
+      ticketStatus: 'Selling Fast',
+      ageRestriction: 'All Ages',
+      description: 'An evening of contemporary jazz featuring the acclaimed Modern Quartet.'
+    }, {
+      id: 'event-3',
+      name: 'Corporate Innovation Summit',
+      date: '2024-07-02',
+      time: '09:00-17:00',
+      image: 'https://images.unsplash.com/photo-1540317580384-e5d43867caa6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+      organizer: 'Business Leaders Association',
+      ticketPrice: '$250',
+      ticketStatus: 'Limited',
+      ageRestriction: '18+',
+      description: 'Full-day conference featuring keynote speakers, workshops, and networking opportunities.'
+    }],
+    faqs: [{
+      question: 'What is your cancellation policy?',
+      answer: 'Cancellations made 30+ days before your event receive a full refund minus a $100 administrative fee. Cancellations 15-29 days before receive a 50% refund. Cancellations less than 15 days before the event are non-refundable.'
+    }, {
+      question: 'Can we bring our own catering?',
+      answer: 'We offer in-house catering services but also work with a list of approved caterers. Outside catering is permitted with a $500 kitchen use fee and proof of proper licensing and insurance.'
+    }, {
+      question: 'What time can we access the venue for setup?',
+      answer: 'Standard rental includes 2 hours of setup time before your event. Additional setup time can be purchased at $200 per hour if the venue is available.'
+    }, {
+      question: 'Is parking available for guests?',
+      answer: 'Yes, we have an attached garage with 200 parking spaces available at $10 per vehicle. Valet parking services can be arranged for an additional fee.'
+    }, {
+      question: 'Do you have AV equipment available?',
+      answer: 'Yes, we offer comprehensive AV packages including projectors, screens, microphones, and sound systems. Basic AV is included in our Premium and Deluxe packages, or can be added to the Basic package for an additional fee.'
+    }],
+    photoCategories: [{
+      name: 'Interior',
+      images: ['https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', 'https://images.unsplash.com/photo-1515169067868-5387ec356754?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', 'https://images.unsplash.com/photo-1505236858219-8359eb29e329?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80']
+    }, {
+      name: 'Exterior',
+      images: ['https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', 'https://images.unsplash.com/photo-1464998857633-50e59fbf2fe6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80']
+    }, {
+      name: 'Events',
+      images: ['https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80']
+    }, {
+      name: 'Setup Examples',
+      images: ['https://images.unsplash.com/photo-1505761671935-60b3a7427bad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80']
+    }],
+    videos: [{
+      title: 'Virtual Tour',
+      thumbnail: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+      url: 'https://example.com/video1',
+      duration: '3:45'
+    }, {
+      title: 'Wedding Highlight',
+      thumbnail: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+      url: 'https://example.com/video2',
+      duration: '2:30'
+    }],
+    established: 2010,
+    ownership: 'Independent',
+    totalEventsHosted: 2500,
+    eventsThisMonth: 15,
+    repeatClients: 65,
+    yearsInBusiness: 14,
+    awards: ['Best Wedding Venue 2023 - City Awards', 'Top Event Space 2022 - Events Magazine', 'Excellence in Service 2021 - Hospitality Association'],
+    priceRange: 3,
+    businessHours: {
+      monday: '9:00 AM - 5:00 PM',
+      tuesday: '9:00 AM - 5:00 PM',
+      wednesday: '9:00 AM - 5:00 PM',
+      thursday: '9:00 AM - 5:00 PM',
+      friday: '9:00 AM - 5:00 PM',
+      saturday: '10:00 AM - 2:00 PM',
+      sunday: 'Closed'
+    },
+    languages: ['English', 'Spanish'],
+    paymentMethods: ['Credit Card', 'Bank Transfer', 'Check'],
+    virtualTourUrl: 'https://example.com/virtual-tour',
+    contactPerson: {
+      name: 'Sarah Johnson',
+      title: 'Events Director',
+      phone: '(555) 123-4567',
+      email: 'sarah@grandballroom.com'
+    }
+  };
+  const {
+    navigateTo
+  } = useNavigationContext();
+  const {
+    activeCheckIn
+  } = useCheckIn();
+  const [activeTab, setActiveTab] = useState<Tab>('overview');
+  const [isSaved, setIsSaved] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [showMobileBooking, setShowMobileBooking] = useState(false);
+  const [activeSpace, setActiveSpace] = useState(venue.spaces[0].id);
+  const [showCheckInModal, setShowCheckInModal] = useState(false);
+  // Check if user is already checked in to this venue
+  const isCheckedIn = activeCheckIn?.venueId === venue.id;
+  // Handle save to favorites
+  const handleSave = () => {
+    setIsSaved(!isSaved);
+  };
+  // Handle follow venue
+  const handleFollow = () => {
+    setIsFollowing(!isFollowing);
+  };
+  // Handle share functionality
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: venue.name,
+        text: `Check out ${venue.name} on When's The Fun`,
+        url: window.location.href
+      }).catch(error => {
+        console.log('Error sharing:', error);
+      });
+    } else {
+      alert(`Share functionality: ${venue.name}`);
+    }
+  };
+  // Handle messaging the venue
+  const handleMessage = () => {
+    alert(`Opening message thread with ${venue.name}`);
+  };
+  // Handle check availability
+  const handleCheckAvailability = () => {
+    if (!selectedDate) {
+      alert('Please select a date for your event');
+      return;
+    }
+    navigateTo(`/book-it/venues/${venue.id}/request`);
+  };
+  // Handle mobile booking panel
+  const toggleMobileBooking = () => {
+    setShowMobileBooking(!showMobileBooking);
+  };
+  // Handle space selection
+  const handleSpaceSelect = (spaceId: string) => {
+    setActiveSpace(spaceId);
+  };
+  // Calculate average rating by category
+  const categoryRatings = {
+    venueQuality: 4.8,
+    staffService: 4.7,
+    value: 4.5,
+    locationParking: 4.2,
+    amenities: 4.9
+  };
+  return <div className="min-h-screen bg-white">
+      {/* Breadcrumbs */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <nav className="flex text-sm text-gray-500">
+            <button onClick={() => navigateTo('/')} className="hover:text-gray-700 flex items-center">
+              <HomeIcon className="h-4 w-4 mr-1" />
+              Home
+            </button>
+            <ChevronRightIcon className="h-4 w-4 mx-2" />
+            <button onClick={() => navigateTo('/venues')} className="hover:text-gray-700">
+              Venues
+            </button>
+            <ChevronRightIcon className="h-4 w-4 mx-2" />
+            <button onClick={() => navigateTo('/venues/search?type=' + encodeURIComponent(venue.venueType))} className="hover:text-gray-700">
+              {venue.venueType}
+            </button>
+            <ChevronRightIcon className="h-4 w-4 mx-2" />
+            <span className="text-gray-900 font-medium">{venue.name}</span>
+          </nav>
+        </div>
+      </div>
+      {/* Image Gallery */}
+      <VenueImageGallery images={venue.images} venueName={venue.name} virtualTourUrl={venue.virtualTourUrl} />
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Column - Main Content */}
+          <div className="lg:col-span-2">
+            {/* Venue Header */}
+            <div className="mb-6">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h1 className="text-3xl font-bold text-gray-900 flex items-center">
+                    {venue.name}
+                    {venue.verified && <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        <CheckCircleIcon className="h-3.5 w-3.5 mr-1" />
+                        Verified Venue
+                      </span>}
+                  </h1>
+                  <div className="mt-1 text-lg text-gray-600">
+                    {venue.venueType}
+                  </div>
+                  <div className="flex items-center mt-1 text-gray-600">
+                    <MapPinIcon className="h-5 w-5 text-gray-400 flex-shrink-0" />
+                    <span className="ml-1">{venue.location.address}</span>
+                    <a href={`https://maps.google.com/?q=${venue.location.coordinates.lat},${venue.location.coordinates.lng}`} target="_blank" rel="noopener noreferrer" className="ml-2 text-indigo-600 hover:text-indigo-800 text-sm">
+                      Get Directions
+                    </a>
+                  </div>
+                </div>
+                <div className="flex space-x-2">
+                  <CheckInButton venueId={venue.id} venueName={venue.name} variant="icon" size="md" onCheckInComplete={() => setShowCheckInModal(true)} />
+                  <button onClick={handleSave} className={`p-2 rounded-full ${isSaved ? 'bg-pink-100 text-pink-600' : 'bg-gray-100 hover:bg-gray-200 text-gray-600'}`} aria-label="Save venue">
+                    <HeartIcon className={`h-5 w-5 ${isSaved ? 'fill-current' : ''}`} />
+                  </button>
+                  <button onClick={handleShare} className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600" aria-label="Share venue">
+                    <ShareIcon className="h-5 w-5" />
+                  </button>
+                  <button onClick={handleFollow} className={`p-2 rounded-full ${isFollowing ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 hover:bg-gray-200 text-gray-600'}`} aria-label="Follow venue">
+                    <BellIcon className={`h-5 w-5 ${isFollowing ? 'fill-current' : ''}`} />
+                  </button>
+                </div>
+              </div>
+            </div>
+            {/* Check-in Status Banner (if checked in) */}
+            {isCheckedIn && <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3">
+                    <MapPinIcon className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-green-800">
+                      You're checked in at {venue.name}
+                    </p>
+                    <p className="text-sm text-green-600">
+                      Share your experience with friends
+                    </p>
+                  </div>
+                </div>
+                <div className="flex space-x-2">
+                  <button className="px-3 py-1.5 text-xs bg-white border border-green-300 rounded-md text-green-700 hover:bg-green-50" onClick={() => setShowCheckInModal(true)}>
+                    Update
+                  </button>
+                  <button className="px-3 py-1.5 text-xs bg-white border border-green-300 rounded-md text-green-700 hover:bg-green-50" onClick={() => activeCheckIn && endCheckIn(activeCheckIn.id)}>
+                    End Check-in
+                  </button>
+                </div>
+              </div>}
+            {/* Quick Stats Bar */}
+            <div className="bg-gray-50 rounded-lg p-4 mb-8 grid grid-cols-2 md:grid-cols-5 gap-4">
+              <div className="flex flex-col items-center text-center">
+                <div className="flex items-center text-amber-500">
+                  <StarIcon className="h-5 w-5 fill-current" />
+                  <span className="ml-1 font-semibold">{venue.rating}</span>
+                </div>
+                <span className="text-sm text-gray-600">
+                  {venue.reviewCount} reviews
+                </span>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <div className="flex items-center text-gray-700">
+                  <UsersIcon className="h-5 w-5" />
+                  <span className="ml-1 font-semibold">
+                    Up to {venue.capacity}
+                  </span>
+                </div>
+                <span className="text-sm text-gray-600">guests</span>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <div className="flex items-center text-gray-700">
+                  <DollarSignIcon className="h-5 w-5" />
+                  <span className="ml-1 font-semibold">
+                    {'$'.repeat(venue.priceRange)}
+                  </span>
+                </div>
+                <span className="text-sm text-gray-600">price range</span>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <div className="flex items-center text-gray-700">
+                  <ClockIcon className="h-5 w-5" />
+                  <span className="ml-1 font-semibold">
+                    {venue.responseTimeHours}h
+                  </span>
+                </div>
+                <span className="text-sm text-gray-600">response time</span>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <div className="flex items-center text-gray-700">
+                  <CheckIcon className="h-5 w-5 text-green-500" />
+                  <span className="ml-1 font-semibold">
+                    {venue.bookingApprovalRate}%
+                  </span>
+                </div>
+                <span className="text-sm text-gray-600">approval rate</span>
+              </div>
+            </div>
+            {/* Tab Navigation */}
+            <div className="mb-8 border-b border-gray-200 overflow-x-auto">
+              <div className="flex space-x-8">
+                {[{
+                id: 'overview',
+                label: 'Overview',
+                icon: <HomeIcon className="h-4 w-4 mr-1" />
+              }, {
+                id: 'spaces',
+                label: 'Spaces',
+                icon: <LayoutIcon className="h-4 w-4 mr-1" />,
+                count: venue.spaces.length
+              }, {
+                id: 'events',
+                label: 'Upcoming Events',
+                icon: <CalendarIcon className="h-4 w-4 mr-1" />,
+                count: venue.upcomingEvents.length
+              }, {
+                id: 'calendar',
+                label: 'Calendar & Availability',
+                icon: <CalendarDaysIcon className="h-4 w-4 mr-1" />
+              }, {
+                id: 'reviews',
+                label: 'Reviews',
+                icon: <StarIcon className="h-4 w-4 mr-1" />,
+                count: venue.reviewCount
+              }, {
+                id: 'photos',
+                label: 'Photos & Videos',
+                icon: <ImageIcon className="h-4 w-4 mr-1" />
+              }, {
+                id: 'amenities',
+                label: 'Amenities & Services',
+                icon: <WifiIcon className="h-4 w-4 mr-1" />
+              }, {
+                id: 'location',
+                label: 'Location & Parking',
+                icon: <div className="h-4 w-4 mr-1" />
+              }, {
+                id: 'faq',
+                label: 'FAQ',
+                icon: <HelpCircleIcon className="h-4 w-4 mr-1" />
+              }].map(tab => <button key={tab.id} className={`py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap flex items-center ${activeTab === tab.id ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`} onClick={() => setActiveTab(tab.id as Tab)}>
+                    {tab.icon}
+                    {tab.label}
+                    {tab.count && <span className="ml-1.5 px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full text-xs">
+                        {tab.count}
+                      </span>}
+                  </button>)}
+              </div>
+            </div>
+            {/* Tab Content */}
+            {activeTab === 'overview' && <div>
+                {/* About This Venue */}
+                <section className="mb-12">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    About This Venue
+                  </h2>
+                  <div className="prose max-w-none mb-6">
+                    <p className="text-gray-700">{venue.description}</p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <div>
+                      <h3 className="text-lg font-medium text-gray-900 mb-3">
+                        Perfect For
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {venue.bestFor.map((type, index) => <span key={index} className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                            {type}
+                          </span>)}
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-medium text-gray-900 mb-3">
+                        Venue Type
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                          {venue.venueType}
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                          Established {venue.established}
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                          {venue.ownership}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mb-8">
+                    <h3 className="text-lg font-medium text-gray-900 mb-3">
+                      Unique Features
+                    </h3>
+                    <ul className="space-y-2">
+                      {venue.uniqueFeatures.map((feature, index) => <li key={index} className="flex items-start">
+                          <CheckIcon className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                          <span className="text-gray-700">{feature}</span>
+                        </li>)}
+                    </ul>
+                  </div>
+                  <div className="mb-8">
+                    <h3 className="text-lg font-medium text-gray-900 mb-3">
+                      House Rules
+                    </h3>
+                    <ul className="space-y-2">
+                      {venue.houseRules.map((rule, index) => <li key={index} className="flex items-start">
+                          <InfoIcon className="h-5 w-5 text-amber-500 mr-2 flex-shrink-0 mt-0.5" />
+                          <span className="text-gray-700">{rule}</span>
+                        </li>)}
+                    </ul>
+                  </div>
+                </section>
+                {/* Recent Check-ins Section (New) */}
+                <section className="mb-12">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    Recent Check-ins
+                  </h2>
+                  <CheckInFeed type="nearby" limit={3} />
+                </section>
+                {/* Quick Stats Dashboard */}
+                <section className="mb-12 bg-indigo-50 rounded-lg p-6">
+                  <h2 className="text-xl font-bold text-gray-900 mb-4">
+                    Venue Highlights
+                  </h2>
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+                    <div className="bg-white rounded-lg p-4 shadow-sm text-center">
+                      <div className="text-indigo-600 mb-1">
+                        <CalendarIcon className="h-6 w-6 mx-auto" />
+                      </div>
+                      <div className="text-2xl font-bold text-gray-900">
+                        {venue.totalEventsHosted.toLocaleString()}
+                      </div>
+                      <div className="text-sm text-gray-500">Events Hosted</div>
+                    </div>
+                    <div className="bg-white rounded-lg p-4 shadow-sm text-center">
+                      <div className="text-indigo-600 mb-1">
+                        <BarChartIcon className="h-6 w-6 mx-auto" />
+                      </div>
+                      <div className="text-2xl font-bold text-gray-900">
+                        {venue.eventsThisMonth}
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        Events This Month
+                      </div>
+                    </div>
+                    <div className="bg-white rounded-lg p-4 shadow-sm text-center">
+                      <div className="text-indigo-600 mb-1">
+                        <RepeatIcon className="h-6 w-6 mx-auto" />
+                      </div>
+                      <div className="text-2xl font-bold text-gray-900">
+                        {venue.repeatClients}%
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        Repeat Clients
+                      </div>
+                    </div>
+                    <div className="bg-white rounded-lg p-4 shadow-sm text-center">
+                      <div className="text-indigo-600 mb-1">
+                        <StarIcon className="h-6 w-6 mx-auto" />
+                      </div>
+                      <div className="text-2xl font-bold text-gray-900">
+                        {venue.rating}
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        Average Rating
+                      </div>
+                    </div>
+                    <div className="bg-white rounded-lg p-4 shadow-sm text-center">
+                      <div className="text-indigo-600 mb-1">
+                        <BuildingIcon className="h-6 w-6 mx-auto" />
+                      </div>
+                      <div className="text-2xl font-bold text-gray-900">
+                        {venue.yearsInBusiness}
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        Years in Business
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                {/* Featured Spaces Preview */}
+                {venue.spaces.length > 0 && <section className="mb-12">
+                    <div className="flex justify-between items-center mb-4">
+                      <h2 className="text-2xl font-bold text-gray-900">
+                        Featured Spaces
+                      </h2>
+                      <button onClick={() => setActiveTab('spaces')} className="text-indigo-600 hover:text-indigo-800 flex items-center text-sm font-medium">
+                        View all spaces
+                        <ChevronRightIcon className="ml-1 h-4 w-4" />
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {venue.spaces.map(space => <div key={space.id} className="border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                          <div className="h-48 overflow-hidden">
+                            <img src={space.images[0]} alt={space.name} className="w-full h-full object-cover" />
+                          </div>
+                          <div className="p-4">
+                            <h3 className="font-bold text-lg text-gray-900">
+                              {space.name}
+                            </h3>
+                            <div className="flex items-center mt-2 text-sm text-gray-600">
+                              <UsersIcon className="h-4 w-4 mr-1" />
+                              <span>
+                                Up to {space.capacity.standing} standing,{' '}
+                                {space.capacity.seated} seated
+                              </span>
+                            </div>
+                            <div className="mt-2 text-sm text-gray-600 line-clamp-2">
+                              {space.description}
+                            </div>
+                            <div className="mt-3 flex flex-wrap gap-1">
+                              {space.features.slice(0, 3).map((feature, i) => <span key={i} className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-800">
+                                  {feature}
+                                </span>)}
+                              {space.features.length > 3 && <span className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-800">
+                                  +{space.features.length - 3} more
+                                </span>}
+                            </div>
+                            <div className="mt-4 flex justify-between items-center">
+                              <div className="font-medium text-gray-900">
+                                ${space.pricePerHour}/hour
+                              </div>
+                              <button onClick={() => {
+                        setActiveTab('spaces');
+                        setActiveSpace(space.id);
+                      }} className="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                                View Details
+                              </button>
+                            </div>
+                          </div>
+                        </div>)}
+                    </div>
+                  </section>}
+                {/* Upcoming Public Events */}
+                {venue.upcomingEvents.length > 0 && <section className="mb-12">
+                    <div className="flex justify-between items-center mb-4">
+                      <h2 className="text-2xl font-bold text-gray-900">
+                        Upcoming Events
+                      </h2>
+                      <button onClick={() => setActiveTab('events')} className="text-indigo-600 hover:text-indigo-800 flex items-center text-sm font-medium">
+                        View full calendar
+                        <ChevronRightIcon className="ml-1 h-4 w-4" />
+                      </button>
+                    </div>
+                    <div className="space-y-4">
+                      {venue.upcomingEvents.map(event => <div key={event.id} className="flex flex-col sm:flex-row border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                          <div className="sm:w-48 h-32 sm:h-auto overflow-hidden bg-gray-200 flex-shrink-0">
+                            <img src={event.image} alt={event.name} className="w-full h-full object-cover" />
+                          </div>
+                          <div className="flex-1 p-4 flex flex-col">
+                            <div className="flex-1">
+                              <div className="flex flex-wrap justify-between items-start gap-2">
+                                <div>
+                                  <div className="flex items-center">
+                                    <CalendarIcon className="h-4 w-4 text-gray-400 mr-1" />
+                                    <span className="text-sm font-medium text-gray-900">
+                                      {new Date(event.date).toLocaleDateString('en-US', {
+                                weekday: 'short',
+                                month: 'short',
+                                day: 'numeric'
+                              })}
+                                    </span>
+                                    <span className="mx-2 text-gray-400">
+                                      |
+                                    </span>
+                                    <ClockIcon className="h-4 w-4 text-gray-400 mr-1" />
+                                    <span className="text-sm text-gray-600">
+                                      {event.time}
+                                    </span>
+                                  </div>
+                                  <h3 className="mt-1 font-bold text-lg text-gray-900">
+                                    {event.name}
+                                  </h3>
+                                  <div className="mt-1 text-sm text-gray-600">
+                                    {event.organizer}
+                                  </div>
+                                </div>
+                                <div className="text-right">
+                                  <div className="text-sm font-medium text-gray-900">
+                                    {event.ticketPrice}
+                                  </div>
+                                  <div className={`mt-1 text-xs px-2 py-0.5 rounded-full inline-block ${event.ticketStatus === 'Available' ? 'bg-green-100 text-green-800' : event.ticketStatus === 'Selling Fast' ? 'bg-amber-100 text-amber-800' : 'bg-red-100 text-red-800'}`}>
+                                    {event.ticketStatus}
+                                  </div>
+                                  <div className="mt-1 text-xs text-gray-500">
+                                    {event.ageRestriction}
+                                  </div>
+                                </div>
+                              </div>
+                              <p className="mt-2 text-sm text-gray-600 line-clamp-2">
+                                {event.description}
+                              </p>
+                            </div>
+                            <div className="mt-4 flex justify-end">
+                              <button className="mr-2 text-xs bg-gray-100 text-gray-700 px-3 py-1.5 rounded hover:bg-gray-200">
+                                Learn More
+                              </button>
+                              <button className="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded hover:bg-indigo-700">
+                                Get Tickets
+                              </button>
+                            </div>
+                          </div>
+                        </div>)}
+                    </div>
+                  </section>}
+                {/* Why Choose This Venue */}
+                <section className="mb-12">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    Why Choose This Venue
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                      <h3 className="text-lg font-medium text-gray-900 mb-3">
+                        Highlighted Features
+                      </h3>
+                      <ul className="space-y-3">
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mr-3">
+                            <UserPlusIcon className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <span className="font-medium">
+                              Professional staff
+                            </span>
+                            <p className="mt-1 text-sm text-gray-600">
+                              Dedicated event coordinators and support team
+                            </p>
+                          </div>
+                        </li>
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mr-3">
+                            <LayoutIcon className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <span className="font-medium">
+                              Flexible layouts
+                            </span>
+                            <p className="mt-1 text-sm text-gray-600">
+                              Multiple configuration options for any event type
+                            </p>
+                          </div>
+                        </li>
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mr-3">
+                            <MicIcon className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <span className="font-medium">
+                              Premium sound & lighting
+                            </span>
+                            <p className="mt-1 text-sm text-gray-600">
+                              State-of-the-art audiovisual equipment
+                            </p>
+                          </div>
+                        </li>
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mr-3">
+                            <UtensilsIcon className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <span className="font-medium">
+                              Catering options
+                            </span>
+                            <p className="mt-1 text-sm text-gray-600">
+                              In-house and approved external catering services
+                            </p>
+                          </div>
+                        </li>
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mr-3">
+                            <TruckIcon className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <span className="font-medium">Easy load-in</span>
+                            <p className="mt-1 text-sm text-gray-600">
+                              Dedicated loading dock and service elevator
+                            </p>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div>
+                      {venue.awards.length > 0 && <div className="mb-6">
+                          <h3 className="text-lg font-medium text-gray-900 mb-3">
+                            Awards & Recognition
+                          </h3>
+                          <ul className="space-y-3">
+                            {venue.awards.map((award, index) => <li key={index} className="flex items-start">
+                                <AwardIcon className="h-5 w-5 text-amber-500 mr-2 flex-shrink-0 mt-0.5" />
+                                <span className="text-gray-700">{award}</span>
+                              </li>)}
+                          </ul>
+                        </div>}
+                      <div>
+                        <h3 className="text-lg font-medium text-gray-900 mb-3">
+                          What People Are Saying
+                        </h3>
+                        <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                          <div className="flex items-center mb-2">
+                            <StarIcon className="h-5 w-5 text-yellow-400 fill-current" />
+                            <StarIcon className="h-5 w-5 text-yellow-400 fill-current" />
+                            <StarIcon className="h-5 w-5 text-yellow-400 fill-current" />
+                            <StarIcon className="h-5 w-5 text-yellow-400 fill-current" />
+                            <StarIcon className="h-5 w-5 text-yellow-400 fill-current" />
+                            <span className="ml-2 text-sm font-medium text-gray-900">
+                              "{venue.reviews[0].comment.substring(0, 100)}..."
+                            </span>
+                          </div>
+                          <div className="text-right text-sm text-gray-500">
+                            — {venue.reviews[0].reviewer.name},{' '}
+                            {venue.reviews[0].eventType}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>}
+            {activeTab === 'spaces' && <VenueSpaceDetails spaces={venue.spaces} activeSpace={activeSpace} onSpaceSelect={handleSpaceSelect} />}
+            {activeTab === 'events' && <VenueEvents events={venue.upcomingEvents} venue={venue} />}
+            {activeTab === 'calendar' && <VenueAvailabilityCalendar availabilityByDate={venue.availabilityByDate} selectedDate={selectedDate} onSelectDate={setSelectedDate} venue={venue} />}
+            {activeTab === 'reviews' && <VenueReviews reviews={venue.reviews} rating={venue.rating} reviewCount={venue.reviewCount} categoryRatings={categoryRatings} />}
+            {activeTab === 'photos' && <VenuePhotoGallery photoCategories={venue.photoCategories} videos={venue.videos} venueName={venue.name} />}
+            {activeTab === 'amenities' && <VenueAmenities amenities={venue.amenities} additionalServices={venue.additionalServices} internetSpeed={venue.internetSpeed} powerDetails={venue.powerDetails} lightingOptions={venue.lightingOptions} soundLimitations={venue.soundLimitations} />}
+            {activeTab === 'location' && <VenueLocation venue={venue} />}
+            {activeTab === 'faq' && <VenueFAQ faqs={venue.faqs} venueName={venue.name} />}
+          </div>
+          {/* Right Column - Booking Widget (Desktop) */}
+          <div className="hidden lg:block">
+            <div className="sticky top-4">
+              {/* Check-in Button (Desktop) */}
+              {!isCheckedIn && <div className="mb-6 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                  <div className="p-6 text-center">
+                    <MapPinIcon className="h-8 w-8 text-indigo-600 mx-auto mb-3" />
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">
+                      Check in at {venue.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Let your friends know you're here and see who else has
+                      checked in.
+                    </p>
+                    <CheckInButton venueId={venue.id} venueName={venue.name} variant="primary" size="lg" className="w-full" onCheckInComplete={() => setShowCheckInModal(true)} />
+                  </div>
+                </div>}
+              <VenueBookingWidget venue={venue} selectedDate={selectedDate} setSelectedDate={setSelectedDate} onCheckAvailability={handleCheckAvailability} onSendMessage={handleMessage} />
+              <div className="mt-6 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                  <h2 className="text-lg font-medium text-gray-900">
+                    Contact Information
+                  </h2>
+                </div>
+                <div className="p-6">
+                  <div className="mb-4">
+                    <h3 className="text-sm font-medium text-gray-900">
+                      {venue.contactPerson.name}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {venue.contactPerson.title}
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <button className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                      <PhoneIcon className="h-4 w-4 mr-2 text-gray-500" />
+                      {venue.contactPerson.phone}
+                    </button>
+                    <button className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                      <MessageCircleIcon className="h-4 w-4 mr-2 text-gray-500" />
+                      Send Email
+                    </button>
+                  </div>
+                  <div className="mt-4 text-sm text-gray-600">
+                    <h3 className="font-medium text-gray-900 mb-1">
+                      Business Hours
+                    </h3>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                      <div>Monday - Friday:</div>
+                      <div>9:00 AM - 5:00 PM</div>
+                      <div>Saturday:</div>
+                      <div>10:00 AM - 2:00 PM</div>
+                      <div>Sunday:</div>
+                      <div>Closed</div>
+                    </div>
+                  </div>
+                  <div className="mt-4 text-sm">
+                    <h3 className="font-medium text-gray-900 mb-1">
+                      Languages
+                    </h3>
+                    <div className="flex gap-2">
+                      {venue.languages.map((language, index) => <span key={index} className="px-2 py-1 bg-gray-100 rounded-md text-gray-700">
+                          {language}
+                        </span>)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-6">
+                <h2 className="text-lg font-medium text-gray-900 mb-3">
+                  Similar Venues
+                </h2>
+                <VenueSimilar venues={mockVenues.filter(v => v.id !== venue.id).slice(0, 3)} onVenueClick={venueId => navigateTo(`/venues/${venueId}/venue-name`)} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Check-in Modal */}
+      <CheckInModal venueId={venue.id} venueName={venue.name} isOpen={showCheckInModal} onClose={() => setShowCheckInModal(false)} />
+      {/* Mobile Booking Bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="font-semibold text-gray-900">
+              ${venue.pricePerHour}/hour
+            </div>
+            <div className="text-sm text-gray-500">Base rate</div>
+          </div>
+          <button onClick={toggleMobileBooking} className="bg-indigo-600 text-white px-6 py-2 rounded-md font-medium hover:bg-indigo-700">
+            Check Availability
+          </button>
+        </div>
+      </div>
+      {/* Mobile Booking Overlay */}
+      {showMobileBooking && <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end lg:hidden">
+          <div className="bg-white rounded-t-xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+              <h3 className="font-bold text-lg">Request to Book</h3>
+              <button onClick={toggleMobileBooking} className="p-1 rounded-full bg-gray-100 text-gray-600">
+                <XIcon className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="p-4">
+              <VenueBookingWidget venue={venue} selectedDate={selectedDate} setSelectedDate={setSelectedDate} onCheckAvailability={() => {
+            handleCheckAvailability();
+            toggleMobileBooking();
+          }} onSendMessage={() => {
+            handleMessage();
+            toggleMobileBooking();
+          }} isMobile={true} />
+            </div>
+          </div>
+        </div>}
+      {/* Back to top button */}
+      <button onClick={() => window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })} className="fixed bottom-20 right-6 p-2 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </button>
+    </div>;
+}
