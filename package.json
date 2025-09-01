@@ -14,6 +14,7 @@
     "turbo": "turbo",
     "postinstall": "manypkg fix",
     "build": "turbo build --cache-dir=.turbo",
+    "start": "pnpm --filter web start",
     "clean": "git clean -xdf node_modules dist",
     "clean:workspaces": "turbo clean",
     "dev": "cross-env FORCE_COLOR=1 turbo dev --parallel",
