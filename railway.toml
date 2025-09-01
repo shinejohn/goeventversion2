@@ -4,7 +4,7 @@ buildCommand = "pnpm install && pnpm build"
 
 [deploy]
 startCommand = "pnpm start"
-healthcheckPath = "/health"
+healthcheckPath = "/healthcheck"
 healthcheckTimeout = 300
 
 [environment]
