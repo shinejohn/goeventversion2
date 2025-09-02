@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon, ClockIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+
 type DateSelectorProps = {
   onDateChange: (date: Date) => void;
   currentView: 'daily' | 'weekly' | 'monthly';
@@ -11,9 +11,6 @@ export const DateSelector = ({
   currentView,
   setCurrentView
 }: DateSelectorProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   useEffect(() => {

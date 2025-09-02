@@ -1,14 +1,15 @@
 import React, { useState, createElement } from 'react';
 import { CalendarIcon, MapPinIcon, SearchIcon, ArrowRightIcon, ClockIcon, StarIcon, MicIcon, BuildingIcon, TagIcon, MusicIcon, UtensilsIcon, PaletteIcon, UserIcon, HeartIcon, GlassWaterIcon, SunIcon, CheckIcon, ShareIcon } from 'lucide-react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useSupabase } from '@kit/supabase/hooks/use-supabase';
+import { useNavigate } from 'react-router';
 import { mockVenues } from '../mockdata/venues';
 import { mockPerformers } from '../mockdata/performers';
 import { DateSelector } from '../components/home/DateSelector';
 import { SharePopup } from '../components/ui/SharePopup';
+
 export const HomePage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
+  const navigateTo = (path: string) => navigate(path);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [currentView, setCurrentView] = useState<'daily' | 'weekly' | 'monthly'>('daily');
