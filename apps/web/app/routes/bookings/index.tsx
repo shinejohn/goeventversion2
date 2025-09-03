@@ -1,7 +1,7 @@
 import { BookingMarketplacePage } from '~/components/magic-patterns/pages/BookingMarketplacePage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/bookings/+types';
-import { json, redirect } from 'react-router';
+import { redirect } from 'react-router';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   // Future: Add data fetching logic here

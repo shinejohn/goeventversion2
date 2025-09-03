@@ -1,7 +1,7 @@
 import { BookingRequestPage } from '~/components/magic-patterns/pages/book-it/venues/BookingRequestPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/book-it/venues/$id/book/+types';
-import { json, redirect } from 'react-router';
+import { redirect } from 'react-router';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   // Future: Add data fetching logic here

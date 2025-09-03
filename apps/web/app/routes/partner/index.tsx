@@ -1,7 +1,7 @@
 import { PartnerWithUsPage } from '~/components/magic-patterns/pages/PartnerWithUsPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/partner/+types';
-import { json, redirect } from 'react-router';
+import { redirect } from 'react-router';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   // Future: Add data fetching logic here
@@ -30,7 +30,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
   
   // TODO: Implement form processing logic
   
-  return json({ success: true });
+  return { success: true };
 };
 
 export default function PartnerWithUsRoute(props: Route.ComponentProps) {

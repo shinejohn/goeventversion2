@@ -1,4 +1,4 @@
-import { json, type LoaderFunctionArgs } from 'react-router';
+import { type LoaderFunctionArgs } from 'react-router';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { GeolocationService } from '~/lib/services/geolocation.service';
 import { createDataService } from '~/lib/services/data-service';
@@ -37,12 +37,12 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   // Tag-based cache invalidation
   headers.set('Cache-Tag', `community-${community.slug},events-${community.id}`);
   
-  return json({
+  return {
     community,
     events,
     nearbyCommunities,
     user
-  }, { headers });
+  }, { headers };
 }
 
 export default function CommunityCalendarPage() {

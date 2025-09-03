@@ -1,7 +1,7 @@
 import { ContactUsPage } from '~/components/magic-patterns/pages/ContactUsPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/contact/+types';
-import { json, redirect } from 'react-router';
+import { redirect } from 'react-router';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   // Future: Add data fetching logic here
@@ -33,7 +33,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
   // TODO: Implement contact form submission
   // Send email or save to database
   
-  return json({ success: true, message: 'Thank you for contacting us!' });
+  return { success: true, message: 'Thank you for contacting us!' };
 };
 
 export default function ContactUsRoute(props: Route.ComponentProps) {
