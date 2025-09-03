@@ -34,6 +34,7 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('advertise/homepage-showcase', 'routes/advertise/homepage-showcase/index.tsx'),
   route('advertising-solutions', 'routes/advertising-solutions/index.tsx'),
   route('book', 'routes/book.tsx'), // Book It page
+  route('book/performer', 'routes/book/performer.tsx'), // Book performer
   route('book-it', 'routes/book-it/index.tsx'),
   route('book-it/gigs', 'routes/book-it/gigs/index.tsx'),
   route('book-it/venues', 'routes/book-it/venues/index.tsx'),
@@ -43,6 +44,7 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('bookings/confirmation', 'routes/bookings/confirmation/index.tsx'),
   route('c/:communitySlug', 'routes/c.$communitySlug.tsx'),
   route('calendars', 'routes/calendars/index.tsx'),
+  route('calendars/marketplace', 'routes/calendars/marketplace.tsx'),
   route('careers', 'routes/careers/index.tsx'),
   route('community-impact', 'routes/community-impact/index.tsx'),
   route('contact', 'routes/contact/index.tsx'),
@@ -68,6 +70,7 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('venues/:id', 'routes/venues.$id.tsx'),
   route('events/:id', 'routes/events.$id.tsx'),
   route('performers/:id', 'routes/performers.$id.tsx'),
+  route('*', 'routes/$.tsx'), // Catch-all 404 route
 ]);
 
 // Makerkit marketing routes with layout
