@@ -1,5 +1,5 @@
 import { useParams } from 'react-router';
-import VenueDetailPage from '~/components/magic-patterns/pages/VenueDetailPage';
+import { VenueDetailPage } from '~/components/magic-patterns/pages/VenueDetailPage';
 
 export default function VenueDetailRoute() {
   const params = useParams();
