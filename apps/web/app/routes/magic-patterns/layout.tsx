@@ -1,17 +1,17 @@
 import { Outlet } from 'react-router';
 
-// Magic Patterns components
-import { MainHeader } from '~/components/magic-patterns/components/layout/MainHeader';
-import { Footer } from '~/components/magic-patterns/components/layout/Footer';
+// Simple, working components
+import { SimpleHeader } from '~/components/magic-patterns/components/layout/SimpleHeader';
+import { SimpleFooter } from '~/components/magic-patterns/components/layout/SimpleFooter';
 
 export default function MagicPatternsLayout() {
   return (
     <div className={'flex min-h-[100vh] flex-col'}>
-      <MainHeader />
+      <SimpleHeader />
       <main className="flex-1">
         <Outlet />
       </main>
-      <Footer />
+      <SimpleFooter />
     </div>
   );
 }
