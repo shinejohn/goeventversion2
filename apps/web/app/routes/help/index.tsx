@@ -1,4 +1,4 @@
-import { help } from '~/components/magic-patterns/pages/help';
+import { HelpPage } from '~/components/magic-patterns/pages/help';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/help/+types';
 
@@ -25,5 +25,5 @@ export const meta = ({ data }: Route.MetaArgs) => {
 export default function helpRoute(props: Route.ComponentProps) {
   const data = props.loaderData;
   
-  return <help />;
+  return <HelpPage />;
 }

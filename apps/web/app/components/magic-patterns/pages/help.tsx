@@ -309,3 +309,4 @@ function ShieldIcon() {
     </svg>;
 }
 export default HelpPage;
+export { HelpPage };
