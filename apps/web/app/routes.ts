@@ -33,6 +33,7 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('advertise/featured-listings', 'routes/advertise/featured-listings/index.tsx'),
   route('advertise/homepage-showcase', 'routes/advertise/homepage-showcase/index.tsx'),
   route('advertising-solutions', 'routes/advertising-solutions/index.tsx'),
+  route('book', 'routes/book.tsx'), // Book It page
   route('book-it', 'routes/book-it/index.tsx'),
   route('book-it/gigs', 'routes/book-it/gigs/index.tsx'),
   route('book-it/venues', 'routes/book-it/venues/index.tsx'),
@@ -42,6 +43,7 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('bookings/confirmation', 'routes/bookings/confirmation/index.tsx'),
   route('c/:communitySlug', 'routes/c.$communitySlug.tsx'),
   route('calendars', 'routes/calendars/index.tsx'),
+  route('calendars/marketplace', 'routes/calendars/index.tsx'), // Redirect marketplace to calendars main
   route('careers', 'routes/careers/index.tsx'),
   route('community-impact', 'routes/community-impact/index.tsx'),
   route('contact', 'routes/contact/index.tsx'),
@@ -49,14 +51,19 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('gear', 'routes/gear/index.tsx'),
   route('help', 'routes/help/index.tsx'),
   route('how-it-works', 'routes/how-it-works/index.tsx'),
+  route('hubs', 'routes/hubs.tsx'), // Communities (hubs)
   route('messages', 'routes/messages/index.tsx'),
   route('notifications', 'routes/notifications/index.tsx'),
   route('partner', 'routes/partner/index.tsx'),
   route('performers', 'routes/performers.tsx'),
   route('press', 'routes/press/index.tsx'),
+  route('social', 'routes/social.tsx'), // Social feed
+  route('social/notifications', 'routes/social/notifications.tsx'),
+  route('social/messages', 'routes/social/messages.tsx'),
   route('success-stories', 'routes/success-stories/index.tsx'),
   route('tickets', 'routes/tickets/index.tsx'),
   route('tickets/:id', 'routes/tickets/$id/index.tsx'),
+  route('tickets/buy', 'routes/tickets/buy.tsx'), // Ticket buying
   route('tickets/marketplace', 'routes/tickets/marketplace/index.tsx'),
   route('venues', 'routes/venues.tsx'),
   route('venues/:id', 'routes/venues.$id.tsx'),
