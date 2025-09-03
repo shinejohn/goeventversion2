@@ -43,7 +43,6 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('bookings/confirmation', 'routes/bookings/confirmation/index.tsx'),
   route('c/:communitySlug', 'routes/c.$communitySlug.tsx'),
   route('calendars', 'routes/calendars/index.tsx'),
-  route('calendars/marketplace', 'routes/calendars/index.tsx'), // Redirect marketplace to calendars main
   route('careers', 'routes/careers/index.tsx'),
   route('community-impact', 'routes/community-impact/index.tsx'),
   route('contact', 'routes/contact/index.tsx'),
