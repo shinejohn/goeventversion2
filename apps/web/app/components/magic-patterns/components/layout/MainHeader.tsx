@@ -82,7 +82,7 @@ export const MainHeader = () => {
     highlight: true
   }, {
     title: 'Calendars',
-    href: '/calendars/marketplace',
+    href: '/calendars',
     icon: <CalendarIcon className="h-4 w-4" />
   }, {
     title: 'Social',
@@ -148,10 +148,10 @@ export const MainHeader = () => {
                   </span>}
               </button>}
             {isLoggedIn ? <ProfileDropdown avatar={userProfile.avatar} /> : <div className="flex items-center space-x-3">
-                <button className="text-indigo-600 hover:text-indigo-800 font-medium text-sm px-3 py-2 rounded-md hover:bg-indigo-50 transition-colors duration-150" onClick={() => navigate('/login')}>
+                <button className="text-indigo-600 hover:text-indigo-800 font-medium text-sm px-3 py-2 rounded-md hover:bg-indigo-50 transition-colors duration-150" onClick={() => navigate('/auth/sign-in')}>
                   Log In
                 </button>
-                <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md font-medium text-sm shadow-sm transition-colors duration-150" onClick={() => navigate('/signup')}>
+                <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md font-medium text-sm shadow-sm transition-colors duration-150" onClick={() => navigate('/auth/sign-up')}>
                   Sign Up
                 </button>
               </div>}
@@ -190,7 +190,7 @@ export const MainHeader = () => {
               {userProfile.avatar ? <img src={userProfile.avatar} alt="User profile" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-gray-200 flex items-center justify-center">
                   <UserIcon className="h-4 w-4 text-gray-500" />
                 </div>}
-            </div> : <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-md text-sm font-medium shadow-sm transition-colors duration-150" onClick={() => navigate('/login')}>
+            </div> : <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-md text-sm font-medium shadow-sm transition-colors duration-150" onClick={() => navigate('/auth/sign-in')}>
               Login
             </button>}
         </div>
@@ -256,10 +256,10 @@ export const MainHeader = () => {
                   </button>
                 </div>
               </> : <div className="border-t border-gray-100 mt-3 pt-3 px-4 py-2">
-                <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-md font-medium text-base mb-3 shadow-sm transition-colors duration-150" onClick={() => handleNavigation('/signup')}>
+                <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-md font-medium text-base mb-3 shadow-sm transition-colors duration-150" onClick={() => handleNavigation('/auth/sign-up')}>
                   Sign Up
                 </button>
-                <button className="w-full border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2.5 rounded-md font-medium text-base transition-colors duration-150" onClick={() => handleNavigation('/login')}>
+                <button className="w-full border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2.5 rounded-md font-medium text-base transition-colors duration-150" onClick={() => handleNavigation('/auth/sign-in')}>
                   Login
                 </button>
               </div>}
