@@ -1,7 +1,7 @@
 import type { Route } from '~/types/app/routes/misc/riendspage';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { FriendsPage } from '~/components/magic-patterns/pages/social/FriendsPage';
+import FriendsPage from '~/components/magic-patterns/pages/social/FriendsPage';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);

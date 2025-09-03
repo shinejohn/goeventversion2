@@ -1,5 +1,4 @@
 // apps/web/app/routes/venues/$id.tsx  
-import type { Route } from '~/types/app/routes/venues/$id/+types';
 import { VenueDetailPage } from '~/components/magic-patterns/pages/venues/VenueDetailPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 

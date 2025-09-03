@@ -36,7 +36,7 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   
   // NEWLY IMPLEMENTED MAGIC PATTERNS ROUTES
   route('auth/social-login', 'routes/auth/social-login.tsx'), // Social media login options (Google, Facebook, Apple)
-  route('auth/password-reset', 'routes/auth/password-reset.tsx'), // Password reset form with security features
+  route('auth/password-reset-security', 'routes/auth/password-reset-security.tsx'), // Password reset form with security features
   route('auth/password-security', 'routes/auth/password-security.tsx'), // Password security settings and requirements
   route('auth/login', 'routes/auth/login.tsx'), // Main login page with email/password and social options
   route('auth/signup', 'routes/auth/signup.tsx'), // User registration with email verification

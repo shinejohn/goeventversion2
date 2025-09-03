@@ -29,8 +29,10 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@kit/ui/chart';
-import {
+
 import { dashboard } from '~/components/magic-patterns/pages/my/dashboard';
+
+import {
   Table,
   TableBody,
   TableCell,

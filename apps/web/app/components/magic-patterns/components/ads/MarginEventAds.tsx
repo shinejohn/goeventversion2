@@ -29,9 +29,9 @@ export const MarginEventAds = () => {
   const currentAd = ads[currentAdIndex];
   return <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-40 max-w-xs">
       <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
-        {!isMinimized ? <>
+        {!isMinimized && currentAd ? <>
             <div className="relative">
-              <img src={currentAd.image} alt={currentAd.title} className="w-full h-32 object-cover" />
+              <img src={currentAd?.image} alt={currentAd?.title} className="w-full h-32 object-cover" />
               <div className="absolute top-2 right-2 flex space-x-1">
                 <button onClick={() => setIsMinimized(true)} className="bg-black bg-opacity-50 text-white p-1 rounded-full hover:bg-opacity-70" title="Minimize">
                   <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
@@ -45,12 +45,12 @@ export const MarginEventAds = () => {
             </div>
             <div className="p-3">
               <h4 className="font-medium text-sm text-gray-900 mb-1">
-                {currentAd.title}
+                {currentAd?.title}
               </h4>
               <p className="text-xs text-gray-600 mb-2">
-                {currentAd.description}
+                {currentAd?.description}
               </p>
-              <a href={currentAd.link} className="inline-block bg-indigo-600 text-white px-3 py-1 rounded text-xs font-medium hover:bg-indigo-700">
+              <a href={currentAd?.link} className="inline-block bg-indigo-600 text-white px-3 py-1 rounded text-xs font-medium hover:bg-indigo-700">
                 Learn More
               </a>
             </div>

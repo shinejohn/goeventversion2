@@ -37,8 +37,9 @@ import { NewVenuesPage } from '~/components/magic-patterns/pages/venues/NewVenue
 import { SubmitVenuePage } from '~/components/magic-patterns/pages/venues/SubmitVenuePage';
 import { TrendingVenuesPage } from '~/components/magic-patterns/pages/venues/TrendingVenuesPage';
 import { VenueManagementPage } from '~/components/magic-patterns/pages/venues/VenueManagementPage';
-import { [venueSlug] } from '~/components/magic-patterns/pages/venues/[venueId]/[venueSlug]';
-import { book } from '~/components/magic-patterns/pages/venues/[venueId]/book';
+// Note: Components with bracket notation in paths need proper mapping
+// import { VenueSlugPage } from '~/components/magic-patterns/pages/venues/[venueId]/[venueSlug]';
+// import { BookVenuePage } from '~/components/magic-patterns/pages/venues/[venueId]/book';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   // Future: Add data fetching logic here
