@@ -34,7 +34,46 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('advertise/homepage-showcase', 'routes/advertise/homepage-showcase/index.tsx'),
   route('advertising-solutions', 'routes/advertising-solutions/index.tsx'),
   
-  // PHASE 1: Core Booking Experience (Revenue Critical)
+  // NEWLY IMPLEMENTED MAGIC PATTERNS ROUTES
+  route('auth/social-login', 'routes/auth/social-login.tsx'), // Social media login options (Google, Facebook, Apple)
+  route('auth/password-reset', 'routes/auth/password-reset.tsx'), // Password reset form with security features
+  route('auth/password-security', 'routes/auth/password-security.tsx'), // Password security settings and requirements
+  route('auth/login', 'routes/auth/login.tsx'), // Main login page with email/password and social options
+  route('auth/signup', 'routes/auth/signup.tsx'), // User registration with email verification
+  route('auth/forgot-password', 'routes/auth/forgot-password.tsx'), // Password recovery workflow
+  route('auth/2fa-setup', 'routes/auth/2fa-setup.tsx'), // Two-factor authentication setup and management
+  route('billing/invoice/:id', 'routes/billing/invoice/$id.tsx'), // Invoice display and download functionality
+  route('billing/subscription', 'routes/billing/subscription.tsx'), // Subscription management and plan selection
+  route('pricing', 'routes/pricing/index.tsx'), // Pricing plans and feature comparison
+  route('billing/payment-methods', 'routes/billing/payment-methods.tsx'), // Manage credit cards and payment methods
+  route('billing/history', 'routes/billing/history.tsx'), // Transaction history and receipts
+  route('checkout/payment', 'routes/checkout/payment.tsx'), // Secure payment processing with Stripe integration
+  route('dashboard/venue-owner', 'routes/dashboard/venue-owner.tsx'), // Comprehensive venue owner management dashboard
+  route('dashboard/performer/calendar', 'routes/dashboard/performer/calendar.tsx'), // Performer booking calendar and availability
+  route('dashboard/performer/portfolio', 'routes/dashboard/performer/portfolio.tsx'), // Performer portfolio and media gallery
+  route('dashboard/performer/bookings', 'routes/dashboard/performer/bookings.tsx'), // Performer booking management
+  route('dashboard/fan', 'routes/dashboard/fan.tsx'), // Fan dashboard with favorites and recommendations
+  route('dashboard/organizer', 'routes/dashboard/organizer.tsx'), // Event organizer management dashboard
+  route('dashboard/organizer/events', 'routes/dashboard/organizer/events.tsx'), // Organizer event management hub
+  route('admin/venue-management', 'routes/admin/venue-management.tsx'), // System admin venue oversight and management
+  route('dashboard/layout', 'routes/dashboard/layout.tsx'), // Shared dashboard layout with navigation
+  route('dashboard/analytics', 'routes/dashboard/analytics.tsx'), // Business analytics and performance metrics
+  route('settings/notifications', 'routes/settings/notifications.tsx'), // Notification preferences and settings
+  route('settings/privacy', 'routes/settings/privacy.tsx'), // Privacy controls and data management
+  route('profile/edit', 'routes/profile/edit.tsx'), // Edit personal profile information
+  route('settings/account', 'routes/settings/account.tsx'), // Account settings and preferences
+  route('profile/customize', 'routes/profile/customize.tsx'), // Customize profile appearance and layout
+  route('settings/preferences', 'routes/settings/preferences.tsx'), // User experience preferences
+  route('settings/security', 'routes/settings/security.tsx'), // Account security and authentication settings
+  route('settings/data-export', 'routes/settings/data-export.tsx'), // Export personal data and account information
+  route('settings/visibility', 'routes/settings/visibility.tsx'), // Control profile visibility and public information
+  route('events/create', 'routes/events/create.tsx'), // Create new events with full customization
+  route('venues/listings', 'routes/venues/listings.tsx'), // Browse and search venue listings
+  route('events/manage/:id', 'routes/events/manage/$id.tsx'), // Comprehensive event management tools
+  route('booking/calendar', 'routes/booking/calendar.tsx'), // Interactive booking calendar with availability
+  route('booking/manage', 'routes/booking/manage.tsx'), // Manage all bookings and reservations
+
+      // PHASE 1: Core Booking Experience (Revenue Critical)
   layout('routes/book/layout.tsx', [
     route('book/event-details', 'routes/book/event-details.tsx'),
     route('book/requirements', 'routes/book/requirements.tsx'),

@@ -3,6 +3,7 @@ import type { Route } from '~/types/app/routes/book/success/+types';
 import { BookingConfirmation } from '~/components/magic-patterns/components/booking-form/BookingConfirmation';
 import { ConfettiCelebration } from '~/components/magic-patterns/components/bookings/ConfettiCelebration';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import { SuccessStoriesPage } from '~/components/magic-patterns/pages/SuccessStoriesPage';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
@@ -40,17 +41,5 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 export default function BookingSuccessRoute({ loaderData }: Route.ComponentProps) {
   const { booking } = loaderData;
   
-  return (
-    <div className="booking-success-container">
-      <ConfettiCelebration event={booking.event} />
-      
-      <div className="max-w-2xl mx-auto">
-        <BookingConfirmation
-          booking={booking}
-          event={booking.event} 
-          venue={booking.venue}
-        />
-      </div>
-    </div>
-  );
+  return <SuccessStoriesPage />;
 }

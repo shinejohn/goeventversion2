@@ -1,0 +1,977 @@
+{
+  "timestamp": "2025-09-03T17:26:46.692Z",
+  "totalComponents": 243,
+  "connectedComponents": 184,
+  "connectionPercentage": 75.7,
+  "connections": [
+    {
+      "component": "MarginEventAds",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "ConfirmationStep",
+      "route": "auth/confirm.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "EventDetailsStep",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "ProgressIndicator",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "RequirementsStep",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "ReviewStep",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "SubmitStep",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "BookingConfirmation",
+      "route": "auth/confirm.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "BookingFormProgress",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "ContactPaymentForm",
+      "route": "billing/history.tsx",
+      "category": "payment-financial"
+    },
+    {
+      "component": "EventDetailsForm",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "ReviewSubmitForm",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "ServicesAddonsForm",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "SpaceSetupForm",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "ActionButtons",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "BookingSummaryCard",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "ConfettiCelebration",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "FinancialBreakdown",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "OrganizerDashboard",
+      "route": "dashboard/organizer/events.tsx",
+      "category": "coordinator-dashboard"
+    },
+    {
+      "component": "VenueInformation",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "VenueOwnerDashboard",
+      "route": "dashboard/venue-owner.tsx",
+      "category": "venue-owner-dashboard"
+    },
+    {
+      "component": "CalendarEngagementBar",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "CalendarGrid",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "CalendarHeader",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "CalendarPreview",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "CalendarSidebar",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "CalendarTabs",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "CalendarWizard",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "EventCard",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "EventList",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "CalendarCard",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "CalendarFilters",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "FeaturedCalendars",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "PlannedEventsWidget",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "Invoice",
+      "route": "billing/history.tsx",
+      "category": "payment-financial"
+    },
+    {
+      "component": "AnalyticsOverview",
+      "route": "dashboard/analytics.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "ContentTabs",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "EventHero",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "EventSuggestionModal",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "RelatedEvents",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "VenueMap",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "RevenueReports",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "CalendarView",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "EnhancedEventCard",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "EventFilters",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "EventViewToggle",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "ListView",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "DesignCustomizer",
+      "route": "profile/customize.tsx",
+      "category": "community-hub"
+    },
+    {
+      "component": "HubPreview",
+      "route": "book/review.tsx",
+      "category": "community-hub"
+    },
+    {
+      "component": "SectionManager",
+      "route": "booking/manage.tsx",
+      "category": "community-hub"
+    },
+    {
+      "component": "Footer",
+      "route": "marketing/_components/site-footer.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "Header",
+      "route": "home/account/_components/team-account-layout-page-header.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "PerformerCalendar",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "PerformerGrid",
+      "route": "book/performer.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "PerformerList",
+      "route": "book/performer.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "CreateSharedCalendar",
+      "route": "booking/calendar.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "LikedPerformers",
+      "route": "book/performer.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "LikedVenues",
+      "route": "home/account/settings.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "PublicCalendar",
+      "route": "booking/calendar.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "SharedCalendars",
+      "route": "booking/calendar.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "UserComments",
+      "route": "home/account/settings.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "AvatarUploader",
+      "route": "home/account/settings.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "NotificationPreferences",
+      "route": "home/account/settings.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "PasswordSecurity",
+      "route": "auth/2fa-setup.tsx",
+      "category": "authentication"
+    },
+    {
+      "component": "PrivacySettings",
+      "route": "home/account/settings.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "ProfileInformation",
+      "route": "home/account/settings.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "SettingsSidebar",
+      "route": "home/account/settings.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "SubscriptionModal",
+      "route": "billing/history.tsx",
+      "category": "payment-financial"
+    },
+    {
+      "component": "TicketPurchaseConfirmation",
+      "route": "auth/confirm.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "PasswordInput",
+      "route": "auth/2fa-setup.tsx",
+      "category": "authentication"
+    },
+    {
+      "component": "ProfileDropdown",
+      "route": "home/account/settings.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "SocialLoginButtons",
+      "route": "auth/2fa-setup.tsx",
+      "category": "authentication"
+    },
+    {
+      "component": "AvailabilityCalendar",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "BookingConfirmationPopup",
+      "route": "auth/confirm.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "BookingRequestPopup",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "BookingWidget",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "PricingSection",
+      "route": "billing/history.tsx",
+      "category": "payment-financial"
+    },
+    {
+      "component": "ReviewsSection",
+      "route": "book/review.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "SimilarVenues",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "VenueCard",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "VenueListItem",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "VenueBookingWidget",
+      "route": "book.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "VenueImageGallery",
+      "route": "home/account/settings.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "VenueSpaceDetails",
+      "route": "home/account/settings.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "mockConfirmedBooking",
+      "route": "auth/confirm.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "mockEvents",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "followedArtists",
+      "route": "dashboard/fan.tsx",
+      "category": "performer-dashboard"
+    },
+    {
+      "component": "mockPerformers",
+      "route": "book/performer.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "mockVenues",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "BookItPage",
+      "route": "book.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "BookingMarketplacePage",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "CalendarPage",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "EventDetailPage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "EventOrganizerHubPage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "EventsPage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "ListYourVenuePage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "LoginPage",
+      "route": "auth/2fa-setup.tsx",
+      "category": "authentication"
+    },
+    {
+      "component": "PerformerToolsPage",
+      "route": "book/performer.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "PerformersPage",
+      "route": "book/performer.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "SuccessStoriesPage",
+      "route": "book/success.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "TicketsPage",
+      "route": "home/account/settings.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "VenuesPage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "EventPromotionPage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "FeaturedListingsPage",
+      "route": "venues/listings.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "EmailVerificationPage",
+      "route": "auth/2fa-setup.tsx",
+      "category": "authentication"
+    },
+    {
+      "component": "ForgotPasswordPage",
+      "route": "auth/2fa-setup.tsx",
+      "category": "authentication"
+    },
+    {
+      "component": "RegisterPage",
+      "route": "auth/2fa-setup.tsx",
+      "category": "authentication"
+    },
+    {
+      "component": "ResetPasswordPage",
+      "route": "auth/2fa-setup.tsx",
+      "category": "authentication"
+    },
+    {
+      "component": "BookPerformerPage",
+      "route": "book/performer.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "BookVenuePage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "GigMarketplacePage",
+      "route": "calendars/marketplace.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "GigsMarketplacePage",
+      "route": "calendars/marketplace.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "VenueMarketplacePage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "BookingRequestPage",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "VenueDetailPage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "BookingConfirmationPage",
+      "route": "auth/confirm.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "edit",
+      "route": "profile/edit.tsx",
+      "category": "community-hub"
+    },
+    {
+      "component": "CalendarMarketplacePage",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "create",
+      "route": "events/create.tsx",
+      "category": "community-hub"
+    },
+    {
+      "component": "CheckoutConfirmationPage",
+      "route": "auth/confirm.tsx",
+      "category": "payment-financial"
+    },
+    {
+      "component": "CheckoutDetailsPage",
+      "route": "billing/history.tsx",
+      "category": "payment-financial"
+    },
+    {
+      "component": "CheckoutPaymentPage",
+      "route": "billing/history.tsx",
+      "category": "payment-financial"
+    },
+    {
+      "component": "CalendarDashboardPage",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "TicketCreatorPage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "analytics",
+      "route": "dashboard/analytics.tsx",
+      "category": "community-hub"
+    },
+    {
+      "component": "community",
+      "route": "c.$communitySlug.tsx",
+      "category": "community-hub"
+    },
+    {
+      "component": "HubEventsPage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "performers",
+      "route": "book/performer.tsx",
+      "category": "community-hub"
+    },
+    {
+      "component": "venues",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "FanDashboardPage",
+      "route": "dashboard/fan.tsx",
+      "category": "performer-dashboard"
+    },
+    {
+      "component": "calendar",
+      "route": "book/confirmation.tsx",
+      "category": "booking-system"
+    },
+    {
+      "component": "dashboard",
+      "route": "home/account/_components/dashboard-demo.tsx",
+      "category": "general-dashboard"
+    },
+    {
+      "component": "PerformerDiscoveryPage",
+      "route": "book/performer.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "PerformerManagementPage",
+      "route": "book/performer.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "PerformerOnboardingPage",
+      "route": "book/performer.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "PerformerProfilePage",
+      "route": "book/performer.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "UserProfilePage",
+      "route": "home/account/settings.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "UserProfileSettingsPage",
+      "route": "home/account/settings.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "AccountSettingsPage",
+      "route": "home/account/settings.tsx",
+      "category": "user-profile-settings"
+    },
+    {
+      "component": "MessagesPage",
+      "route": "social/messages.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "NotificationsPage",
+      "route": "settings/notifications.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "SocialFeedPage",
+      "route": "social.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "TicketMarketplacePage",
+      "route": "calendars/marketplace.tsx",
+      "category": "general-ui"
+    },
+    {
+      "component": "NewVenuesPage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "SubmitVenuePage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "TrendingVenuesPage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "VenueManagementPage",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "[venueSlug]",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "book",
+      "route": "book-it/venues/$id/book/index.tsx",
+      "category": "event-venue-management"
+    },
+    {
+      "component": "ContentPerformance",
+      "route": "hubs/ontentperformance.tsx",
+      "category": "community-hub",
+      "isNewRoute": true
+    },
+    {
+      "component": "MemberInsights",
+      "route": "hubs/emberinsights.tsx",
+      "category": "community-hub",
+      "isNewRoute": true
+    },
+    {
+      "component": "OverviewMetrics",
+      "route": "hubs/verviewmetrics.tsx",
+      "category": "community-hub",
+      "isNewRoute": true
+    },
+    {
+      "component": "QuickPageAccess",
+      "route": "misc/uickpageaccess.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "AboutPage",
+      "route": "misc/boutpage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "AdvertisePage",
+      "route": "misc/dvertisepage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "AdvertisingSolutionsPage",
+      "route": "misc/dvertisingsolutionspage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "CareersPage",
+      "route": "misc/areerspage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "CommunityImpactPage",
+      "route": "hubs/ommunityimpactpage.tsx",
+      "category": "community-hub",
+      "isNewRoute": true
+    },
+    {
+      "component": "ContactUsPage",
+      "route": "misc/ontactuspage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "GearPage",
+      "route": "misc/earpage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "HomePage",
+      "route": "misc/omepage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "HowItWorksPage",
+      "route": "misc/owitworkspage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "NotFoundPage",
+      "route": "misc/otfoundpage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "PageDirectory",
+      "route": "misc/agedirectory.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "PartnerWithUsPage",
+      "route": "misc/artnerwithuspage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "PressMediaPage",
+      "route": "misc/ressmediapage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "AdPackagesPage",
+      "route": "misc/dpackagespage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "AdvertisingContactPage",
+      "route": "misc/dvertisingcontactpage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "EmailCampaignsPage",
+      "route": "misc/mailcampaignspage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "HomepageShowcasePage",
+      "route": "misc/omepageshowcasepage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "GigCreatorPage",
+      "route": "misc/igcreatorpage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "[slug]",
+      "route": "misc/slug].tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "HubArticlesPage",
+      "route": "hubs/ubarticlespage.tsx",
+      "category": "community-hub",
+      "isNewRoute": true
+    },
+    {
+      "component": "gallery",
+      "route": "hubs/allery.tsx",
+      "category": "community-hub",
+      "isNewRoute": true
+    },
+    {
+      "component": "MarketReportPage",
+      "route": "misc/arketreportpage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "FeedPage",
+      "route": "misc/eedpage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "FriendsPage",
+      "route": "misc/riendspage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "GroupsPage",
+      "route": "misc/roupspage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "JazzQuartetPage",
+      "route": "misc/azzquartetpage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "SunsetMusicFestivalPage",
+      "route": "misc/unsetmusicfestivalpage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "UrbanLoftPage",
+      "route": "misc/rbanloftpage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "TicketDetailPage",
+      "route": "misc/icketdetailpage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "TicketPurchasePage",
+      "route": "misc/icketpurchasepage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    },
+    {
+      "component": "TicketSelectionPage",
+      "route": "misc/icketselectionpage.tsx",
+      "category": "general-ui",
+      "isNewRoute": true
+    }
+  ],
+  "errors": [],
+  "byCategory": {
+    "event-venue-management": 37,
+    "booking-system": 41,
+    "payment-financial": 7,
+    "coordinator-dashboard": 1,
+    "venue-owner-dashboard": 1,
+    "general-ui": 52,
+    "community-hub": 14,
+    "user-profile-settings": 20,
+    "authentication": 8,
+    "performer-dashboard": 2,
+    "general-dashboard": 1
+  }
+}

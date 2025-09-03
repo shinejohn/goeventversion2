@@ -3,6 +3,42 @@ import type { Route } from '~/types/app/routes/book/confirmation/+types';
 import { ConfirmationStep } from '~/components/magic-patterns/components/booking/ConfirmationStep';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { redirect } from 'react-router';
+import { EventDetailsStep } from '~/components/magic-patterns/components/booking/EventDetailsStep';
+import { ProgressIndicator } from '~/components/magic-patterns/components/booking/ProgressIndicator';
+import { RequirementsStep } from '~/components/magic-patterns/components/booking/RequirementsStep';
+import { ReviewStep } from '~/components/magic-patterns/components/booking/ReviewStep';
+import { SubmitStep } from '~/components/magic-patterns/components/booking/SubmitStep';
+import { BookingFormProgress } from '~/components/magic-patterns/components/booking-form/BookingFormProgress';
+import { EventDetailsForm } from '~/components/magic-patterns/components/booking-form/EventDetailsForm';
+import { ReviewSubmitForm } from '~/components/magic-patterns/components/booking-form/ReviewSubmitForm';
+import { ServicesAddonsForm } from '~/components/magic-patterns/components/booking-form/ServicesAddonsForm';
+import { SpaceSetupForm } from '~/components/magic-patterns/components/booking-form/SpaceSetupForm';
+import { ActionButtons } from '~/components/magic-patterns/components/bookings/ActionButtons';
+import { BookingSummaryCard } from '~/components/magic-patterns/components/bookings/BookingSummaryCard';
+import { ConfettiCelebration } from '~/components/magic-patterns/components/bookings/ConfettiCelebration';
+import { FinancialBreakdown } from '~/components/magic-patterns/components/bookings/FinancialBreakdown';
+import { VenueInformation } from '~/components/magic-patterns/components/bookings/VenueInformation';
+import { CalendarEngagementBar } from '~/components/magic-patterns/components/calendar/CalendarEngagementBar';
+import { CalendarGrid } from '~/components/magic-patterns/components/dashboard/calendars/CalendarGrid';
+import { CalendarHeader } from '~/components/magic-patterns/components/calendar/CalendarHeader';
+import { CalendarPreview } from '~/components/magic-patterns/components/calendar/CalendarPreview';
+import { CalendarSidebar } from '~/components/magic-patterns/components/calendar/CalendarSidebar';
+import { CalendarTabs } from '~/components/magic-patterns/components/calendar/CalendarTabs';
+import { CalendarWizard } from '~/components/magic-patterns/components/calendar/CalendarWizard';
+import { CalendarCard } from '~/components/magic-patterns/components/calendars/CalendarCard';
+import { CalendarFilters } from '~/components/magic-patterns/components/calendars/CalendarFilters';
+import { FeaturedCalendars } from '~/components/magic-patterns/components/calendars/FeaturedCalendars';
+import { CalendarView } from '~/components/magic-patterns/components/hub/events/CalendarView';
+import { PerformerCalendar } from '~/components/magic-patterns/components/performers/PerformerCalendar';
+import { AvailabilityCalendar } from '~/components/magic-patterns/components/venue-detail/AvailabilityCalendar';
+import { BookingRequestPopup } from '~/components/magic-patterns/components/venue-detail/BookingRequestPopup';
+import { BookingWidget } from '~/components/magic-patterns/components/venue-detail/BookingWidget';
+import { BookingMarketplacePage } from '~/components/magic-patterns/pages/BookingMarketplacePage';
+import { CalendarPage } from '~/components/magic-patterns/pages/CalendarPage';
+import { BookingRequestPage } from '~/components/magic-patterns/pages/book-it/venues/BookingRequestPage';
+import { CalendarMarketplacePage } from '~/components/magic-patterns/pages/calendars/CalendarMarketplacePage';
+import { CalendarDashboardPage } from '~/components/magic-patterns/pages/dashboard/calendars';
+import { calendar } from '~/components/magic-patterns/pages/my/calendar';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
@@ -112,15 +148,5 @@ export const action = async ({ request }: Route.ActionArgs) => {
 export default function ConfirmationStepRoute({ loaderData, actionData }: Route.ComponentProps) {
   const { booking, event, venue, currentStep } = loaderData;
   
-  return (
-    <div className="booking-step-container">
-      <ConfirmationStep
-        formData={booking?.data}
-        event={event}
-        venue={venue}
-        currentStep={currentStep}
-        error={actionData?.error}
-      />
-    </div>
-  );
+  return <EventDetailsStep />;
 }

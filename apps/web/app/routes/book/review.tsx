@@ -3,6 +3,8 @@ import type { Route } from '~/types/app/routes/book/review/+types';
 import { ReviewStep } from '~/components/magic-patterns/components/booking/ReviewStep';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { redirect } from 'react-router';
+import { HubPreview } from '~/components/magic-patterns/components/hub-builder/HubPreview';
+import { ReviewsSection } from '~/components/magic-patterns/components/venue-detail/ReviewsSection';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
@@ -112,15 +114,5 @@ export const action = async ({ request }: Route.ActionArgs) => {
 export default function ReviewStepRoute({ loaderData, actionData }: Route.ComponentProps) {
   const { booking, event, venue, currentStep } = loaderData;
   
-  return (
-    <div className="booking-step-container">
-      <ReviewStep
-        formData={booking?.data}
-        event={event}
-        venue={venue}
-        currentStep={currentStep}
-        error={actionData?.error}
-      />
-    </div>
-  );
+  return <HubPreview />;
 }

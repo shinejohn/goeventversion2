@@ -30,6 +30,7 @@ import {
   ChartTooltipContent,
 } from '@kit/ui/chart';
 import {
+import { dashboard } from '~/components/magic-patterns/pages/my/dashboard';
   Table,
   TableBody,
   TableCell,
@@ -44,120 +45,7 @@ export default function DashboardDemo() {
   const fees = useMemo(() => generateDemoData(), []);
   const newCustomers = useMemo(() => generateDemoData(), []);
 
-  return (
-    <div
-      className={
-        'animate-in fade-in flex flex-col space-y-4 pb-36 duration-500'
-      }
-    >
-      <div
-        className={
-          'grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'
-        }
-      >
-        <Card>
-          <CardHeader>
-            <CardTitle className={'flex items-center gap-2.5'}>
-              <span>MRR</span>
-              <Trend trend={'up'}>20%</Trend>
-            </CardTitle>
-
-            <CardDescription>
-              <span>Monthly recurring revenue</span>
-            </CardDescription>
-
-            <div>
-              <Figure>{`$${mrr[1]}`}</Figure>
-            </div>
-          </CardHeader>
-
-          <CardContent className={'space-y-4'}>
-            <Chart data={mrr[0]} />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className={'flex items-center gap-2.5'}>
-              <span>Revenue</span>
-              <Trend trend={'up'}>12%</Trend>
-            </CardTitle>
-
-            <CardDescription>
-              <span>Total revenue including fees</span>
-            </CardDescription>
-
-            <div>
-              <Figure>{`$${netRevenue[1]}`}</Figure>
-            </div>
-          </CardHeader>
-
-          <CardContent>
-            <Chart data={netRevenue[0]} />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className={'flex items-center gap-2.5'}>
-              <span>Fees</span>
-              <Trend trend={'up'}>9%</Trend>
-            </CardTitle>
-
-            <CardDescription>
-              <span>Total fees collected</span>
-            </CardDescription>
-
-            <div>
-              <Figure>{`$${fees[1]}`}</Figure>
-            </div>
-          </CardHeader>
-
-          <CardContent>
-            <Chart data={fees[0]} />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className={'flex items-center gap-2.5'}>
-              <span>New Customers</span>
-              <Trend trend={'down'}>-25%</Trend>
-            </CardTitle>
-
-            <CardDescription>
-              <span>Customers who signed up this month</span>
-            </CardDescription>
-
-            <div>
-              <Figure>{`${Number(newCustomers[1]).toFixed(0)}`}</Figure>
-            </div>
-          </CardHeader>
-
-          <CardContent>
-            <Chart data={newCustomers[0]} />
-          </CardContent>
-        </Card>
-      </div>
-
-      <VisitorsChart />
-
-      <PageViewsChart />
-
-      <div>
-        <Card>
-          <CardHeader>
-            <CardTitle>Best Customers</CardTitle>
-            <CardDescription>Showing the top customers by MRR</CardDescription>
-          </CardHeader>
-
-          <CardContent>
-            <CustomersTable />
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  );
+  return <dashboard />;
 }
 
 function generateDemoData() {

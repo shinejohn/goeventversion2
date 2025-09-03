@@ -27,6 +27,20 @@ import type { Route as AccountWorkspaceRoute } from '~/types/app/routes/home/acc
 import type { Route } from '~/types/app/routes/home/account/+types/settings';
 
 import { TeamAccountLayoutPageHeader } from './_components/team-account-layout-page-header';
+import { LikedVenues } from '~/components/magic-patterns/components/profile/LikedVenues';
+import { UserComments } from '~/components/magic-patterns/components/profile/UserComments';
+import { AvatarUploader } from '~/components/magic-patterns/components/settings/AvatarUploader';
+import { NotificationPreferences } from '~/components/magic-patterns/components/settings/NotificationPreferences';
+import { PrivacySettings } from '~/components/magic-patterns/components/settings/PrivacySettings';
+import { ProfileInformation } from '~/components/magic-patterns/components/settings/ProfileInformation';
+import { SettingsSidebar } from '~/components/magic-patterns/components/settings/SettingsSidebar';
+import { ProfileDropdown } from '~/components/magic-patterns/components/ui/ProfileDropdown';
+import { VenueImageGallery } from '~/components/magic-patterns/components/venue-profile/VenueImageGallery';
+import { VenueSpaceDetails } from '~/components/magic-patterns/components/venue-profile/VenueSpaceDetails';
+import { TicketsPage } from '~/components/magic-patterns/pages/profile/TicketsPage';
+import { UserProfilePage } from '~/components/magic-patterns/pages/profile/UserProfilePage';
+import { UserProfileSettingsPage } from '~/components/magic-patterns/pages/profile/UserProfileSettingsPage';
+import { AccountSettingsPage } from '~/components/magic-patterns/pages/settings/AccountSettingsPage';
 
 const paths = {
   teamAccountSettings: pathsConfig.app.accountSettings,

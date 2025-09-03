@@ -1,4 +1,5 @@
 import { PageHeader } from '@kit/ui/page';
+import { Header } from '~/components/magic-patterns/components/layout/Header';
 
 export function TeamAccountLayoutPageHeader(
   props: React.PropsWithChildren<{
