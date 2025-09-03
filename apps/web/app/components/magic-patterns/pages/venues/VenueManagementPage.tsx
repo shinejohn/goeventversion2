@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { ArrowLeftIcon, BuildingIcon, HomeIcon, ChevronRightIcon, PlusIcon, CalendarIcon, MessageCircleIcon, BarChartIcon, SettingsIcon, ClockIcon, CheckCircleIcon, XCircleIcon, EditIcon, TrashIcon, EyeIcon, BellIcon, UsersIcon, DollarSignIcon, ImageIcon, TagIcon, GlobeIcon, ChevronLeftIcon, ChevronDownIcon, SaveIcon, RefreshCwIcon, ShieldIcon, AlertCircleIcon, HelpCircleIcon, FileTextIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { mockVenues } from '../../mockdata/venues';
 export const VenueManagementPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('venues');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -144,17 +142,17 @@ export const VenueManagementPage = () => {
     }]
   };
   const handleBackToVenues = () => {
-    navigateTo('/venues');
+    navigate('/venues');
   };
   const handleAddVenue = () => {
-    navigateTo('/venues/submit');
+    navigate('/venues/submit');
   };
   const handleEditVenue = (venueId: string) => {
     // In a real app, this would navigate to an edit page
     alert(`Edit venue ${venueId}`);
   };
   const handleViewVenue = (venueId: string) => {
-    navigateTo(`/venues/${venueId}`);
+    navigate(`/venues/${venueId}`);
   };
   const handleDeleteVenue = (venueId: string) => {
     // In a real app, this would show a confirmation dialog
@@ -228,12 +226,12 @@ export const VenueManagementPage = () => {
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <nav className="flex text-sm text-gray-500">
-            <button onClick={() => navigateTo('/')} className="hover:text-gray-700 flex items-center">
+            <button onClick={() => navigate('/')} className="hover:text-gray-700 flex items-center">
               <HomeIcon className="h-4 w-4 mr-1" />
               Home
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />
-            <button onClick={() => navigateTo('/venues')} className="hover:text-gray-700">
+            <button onClick={() => navigate('/venues')} className="hover:text-gray-700">
               Venues
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />

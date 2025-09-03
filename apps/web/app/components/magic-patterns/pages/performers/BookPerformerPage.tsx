@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { mockPerformers } from '../../mockdata/performers';
 import { ArrowLeftIcon, CalendarIcon, ClockIcon, MapPinIcon, UserIcon, BuildingIcon, MailIcon, PhoneIcon, InfoIcon, FileTextIcon, CheckCircleIcon, CheckIcon, XIcon, PlusIcon, MinusIcon, DollarSignIcon, SaveIcon, SendIcon, UploadIcon, HelpCircleIcon, AlertCircleIcon, StarIcon, MusicIcon } from 'lucide-react';
 type BookPerformerPageProps = {
@@ -8,9 +8,7 @@ type BookPerformerPageProps = {
 export const BookPerformerPage = ({
   performerId = 'performer-1'
 }: BookPerformerPageProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [performer, setPerformer] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -127,7 +125,7 @@ export const BookPerformerPage = ({
       setIsSubmitting(false);
       setIsSubmitted(true);
       // Scroll to top
-      window.scrollTo(0, 0);
+      typeof window !== "undefined" && window.scrollTo(0, 0);
     }, 1500);
   };
   // Handle save draft
@@ -136,7 +134,7 @@ export const BookPerformerPage = ({
   };
   // Return to performer profile
   const handleReturnToProfile = () => {
-    navigateTo(`/performers/${performerId}`);
+    navigate(`/performers/${performerId}`);
   };
   // If performer is not loaded yet, show loading
   if (!performer) {
@@ -217,7 +215,7 @@ export const BookPerformerPage = ({
                 <button onClick={handleReturnToProfile} className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md">
                   Return to Performer Profile
                 </button>
-                <button onClick={() => navigateTo('/performers')} className="px-6 py-3 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium rounded-md">
+                <button onClick={() => navigate('/performers')} className="px-6 py-3 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium rounded-md">
                   Browse More Performers
                 </button>
               </div>

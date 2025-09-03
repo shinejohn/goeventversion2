@@ -1,6 +1,6 @@
 import React from 'react';
 import { CalendarIcon, UsersIcon, StarIcon, TrendingUpIcon, PlusIcon, CheckIcon, ExternalLinkIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 type CalendarSidebarProps = {
   calendarData: any;
   isAddedToMyCalendars: boolean;
@@ -11,9 +11,7 @@ export const CalendarSidebar = ({
   isAddedToMyCalendars,
   onAddToMyCalendars
 }: CalendarSidebarProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   return <div className="w-full lg:w-80 space-y-6">
       {/* Add to My Calendars */}
       <div className="bg-white rounded-lg shadow-sm p-4">
@@ -31,7 +29,7 @@ export const CalendarSidebar = ({
       <div className="bg-white rounded-lg shadow-sm p-4">
         <h3 className="font-medium text-gray-900 mb-3">Upcoming Highlights</h3>
         <div className="space-y-3">
-          {calendarData.events.slice(0, 3).map((event: any) => <div key={event.id} className="flex items-start p-2 hover:bg-gray-50 rounded-md cursor-pointer" onClick={() => navigateTo(`/event/${event.id}`)}>
+          {calendarData.events.slice(0, 3).map((event: any) => <div key={event.id} className="flex items-start p-2 hover:bg-gray-50 rounded-md cursor-pointer" onClick={() => navigate(`/event/${event.id}`)}>
               <div className="flex-shrink-0 h-10 w-10 rounded overflow-hidden mr-3">
                 <img src={event.image} alt={event.title} className="h-full w-full object-cover" />
               </div>
@@ -49,7 +47,7 @@ export const CalendarSidebar = ({
               </div>
             </div>)}
         </div>
-        <button onClick={() => navigateTo(`/calendar/${calendarData.id}/events`)} className="w-full text-center text-sm text-indigo-600 hover:text-indigo-800 mt-3">
+        <button onClick={() => navigate(`/calendar/${calendarData.id}/events`)} className="w-full text-center text-sm text-indigo-600 hover:text-indigo-800 mt-3">
           View all events
         </button>
       </div>
@@ -110,7 +108,7 @@ export const CalendarSidebar = ({
       <div className="bg-white rounded-lg shadow-sm p-4">
         <h3 className="font-medium text-gray-900 mb-3">Related Calendars</h3>
         <div className="space-y-3">
-          {calendarData.relatedCalendars.map((calendar: any) => <div key={calendar.id} className="flex items-start p-2 hover:bg-gray-50 rounded-md cursor-pointer" onClick={() => navigateTo(`/calendar/${calendar.id}`)}>
+          {calendarData.relatedCalendars.map((calendar: any) => <div key={calendar.id} className="flex items-start p-2 hover:bg-gray-50 rounded-md cursor-pointer" onClick={() => navigate(`/calendar/${calendar.id}`)}>
               <div className="flex-shrink-0 h-10 w-10 rounded overflow-hidden mr-3">
                 <img src={calendar.image} alt={calendar.title} className="h-full w-full object-cover" />
               </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { mockPerformers } from '../../mockdata/performers';
 import { HeartIcon, ShareIcon, BellIcon, MoreHorizontalIcon, CalendarIcon, ClockIcon, MapPinIcon, MusicIcon, UsersIcon, StarIcon, CheckCircleIcon, MessageCircleIcon, PlayIcon, ShoppingBagIcon, MessageSquareIcon, InfoIcon, ChevronRightIcon, ExternalLinkIcon, ThumbsUpIcon, ThumbsDownIcon, FlagIcon, DownloadIcon, InstagramIcon, TwitterIcon, FacebookIcon, YoutubeIcon, LinkIcon, TicketIcon, ArrowRightIcon, CameraIcon, VideoIcon, MicIcon, FileTextIcon, DollarSignIcon, PlusIcon, MinusIcon, ShoppingCartIcon, HeartIcon as HeartOutlineIcon, AlertCircleIcon } from 'lucide-react';
 type PerformerProfilePageProps = {
@@ -19,9 +19,7 @@ enum ProfileTab {
 export const PerformerProfilePage = ({
   performerId = 'performer-1'
 }: PerformerProfilePageProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<ProfileTab>(ProfileTab.Overview);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isMediaExpanded, setIsMediaExpanded] = useState(false);
@@ -45,7 +43,7 @@ export const PerformerProfilePage = ({
           <p className="text-gray-600 mb-6">
             The performer you're looking for doesn't exist or has been removed.
           </p>
-          <button onClick={() => navigateTo('/performers')} className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+          <button onClick={() => navigate('/performers')} className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
             Browse All Performers
           </button>
         </div>
@@ -3254,7 +3252,7 @@ export const PerformerProfilePage = ({
                 Similar Artists
               </h3>
               <div className="space-y-3">
-                {mockPerformers.slice(1, 6).map((artist, index) => <div key={index} className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded-md" onClick={() => navigateTo(`/performers/${artist.id}`)}>
+                {mockPerformers.slice(1, 6).map((artist, index) => <div key={index} className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded-md" onClick={() => navigate(`/performers/${artist.id}`)}>
                     <div className="h-10 w-10 rounded-full overflow-hidden">
                       <img src={artist.profileImage} alt={artist.name} className="h-full w-full object-cover" />
                     </div>
@@ -3303,7 +3301,7 @@ export const PerformerProfilePage = ({
                     </div>)}
               </div>
               <div className="mt-4 text-center">
-                <button onClick={() => navigateTo('/calendar')} className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                <button onClick={() => navigate('/calendar')} className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
                   View Full Calendar
                 </button>
               </div>

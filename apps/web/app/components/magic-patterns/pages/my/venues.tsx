@@ -1,6 +1,6 @@
 import React, { useState, Children } from 'react';
 import { HeartIcon, CalendarIcon, MapPinIcon, ClockIcon, StarIcon, PlusIcon, ChevronDownIcon, MoreHorizontalIcon, BellIcon, CheckCircleIcon, TicketIcon, UsersIcon, ChevronRightIcon, ListIcon, BarChartIcon, GiftIcon, MessageSquareIcon, CameraIcon, BuildingIcon, FileTextIcon, ShareIcon, SearchIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { mockVenues } from '../../mockdata/venues';
 // Mock data for the user's venues
 const mockFavoriteVenues = mockVenues.slice(0, 6).map(venue => ({
@@ -192,9 +192,7 @@ const mockUserStats = {
   listsCreated: 3
 };
 export default function MyVenuesPage() {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [sortOption, setSortOption] = useState('recent');
   const [timeFilter, setTimeFilter] = useState('upcoming');
   const [activeSection, setActiveSection] = useState('favorites');
@@ -227,27 +225,27 @@ export default function MyVenuesPage() {
   });
   // Handle venue click
   const handleVenueClick = (venueId: string) => {
-    navigateTo(`/venues/${venueId}/${venueId.replace('venue-', '')}`);
+    navigate(`/venues/${venueId}/${venueId.replace('venue-', '')}`);
   };
   // Handle event click
   const handleEventClick = (eventId: string, venueId: string) => {
-    navigateTo(`/venues/${venueId}/events/${eventId}`);
+    navigate(`/venues/${venueId}/events/${eventId}`);
   };
   // Handle list click
   const handleListClick = (listId: string) => {
-    navigateTo(`/my/venues/lists/${listId}`);
+    navigate(`/my/venues/lists/${listId}`);
   };
   // Handle creating a new list
   const handleCreateList = () => {
-    navigateTo('/my/venues/lists/create');
+    navigate('/my/venues/lists/create');
   };
   // Handle writing a review
   const handleWriteReview = (venueId: string) => {
-    navigateTo(`/venues/${venueId}/review`);
+    navigate(`/venues/${venueId}/review`);
   };
   // Handle uploading photos
   const handleUploadPhotos = (venueId: string) => {
-    navigateTo(`/venues/${venueId}/photos/upload`);
+    navigate(`/venues/${venueId}/photos/upload`);
   };
   // Navigation tabs
   const tabs = [{
@@ -373,7 +371,7 @@ export default function MyVenuesPage() {
                     <option value="visits">Most Visited</option>
                   </select>
                 </div>
-                <button onClick={() => navigateTo('/venues')} className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                <button onClick={() => navigate('/venues')} className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
                   <PlusIcon className="h-4 w-4 mr-1" />
                   Add Venues
                 </button>
@@ -459,7 +457,7 @@ export default function MyVenuesPage() {
                   Start exploring venues and save your favorites
                 </p>
                 <div className="mt-6">
-                  <button onClick={() => navigateTo('/venues')} className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                  <button onClick={() => navigate('/venues')} className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
                     Browse Venues
                   </button>
                 </div>
@@ -566,7 +564,7 @@ export default function MyVenuesPage() {
                     <option value="thisMonth">This Month</option>
                   </select>
                 </div>
-                <button onClick={() => navigateTo('/calendar')} className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                <button onClick={() => navigate('/calendar')} className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
                   <CalendarIcon className="h-4 w-4 mr-1" />
                   View Calendar
                 </button>
@@ -649,7 +647,7 @@ export default function MyVenuesPage() {
                     selected time period
                   </p>
                   <div className="mt-6">
-                    <button onClick={() => navigateTo('/events')} className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                    <button onClick={() => navigate('/events')} className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
                       Browse All Events
                     </button>
                   </div>
@@ -750,7 +748,7 @@ export default function MyVenuesPage() {
                     Visit venues more often to earn rewards and special offers
                   </p>
                   <div className="mt-6">
-                    <button onClick={() => navigateTo('/venues')} className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                    <button onClick={() => navigate('/venues')} className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
                       Browse Venues
                     </button>
                   </div>

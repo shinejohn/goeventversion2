@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Header } from '../../../components/layout/Header';
 import { Footer } from '../../../components/layout/Footer';
 import { ArticleHero } from '../../../components/hub/articles/ArticleHero';
@@ -11,9 +11,7 @@ export const HubArticlesPage = () => {
   const {
     slug
   } = useParams();
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [hubData, setHubData] = useState<any>(null);
   const [articles, setArticles] = useState<any[]>([]);
@@ -145,7 +143,7 @@ export const HubArticlesPage = () => {
   };
   // Write for Hub handler
   const handleWriteForHub = () => {
-    navigateTo(`/hub/${slug}/submit-article`);
+    navigate(`/hub/${slug}/submit-article`);
   };
   if (isLoading) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -163,7 +161,7 @@ export const HubArticlesPage = () => {
       }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex items-center mb-4">
-              <button onClick={() => navigateTo(`/hubs/${slug}`)} className="flex items-center text-white/80 hover:text-white">
+              <button onClick={() => navigate(`/hubs/${slug}`)} className="flex items-center text-white/80 hover:text-white">
                 <ArrowLeftIcon className="h-4 w-4 mr-1" />
                 Back to Hub
               </button>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { UserIcon, CalendarIcon, MusicIcon, BuildingIcon, LockIcon, BellIcon, ShareIcon, PlusIcon, SaveIcon, XIcon, EyeIcon, PencilIcon, TrashIcon } from 'lucide-react';
 import { CreateSharedCalendar } from '../../components/profile/CreateSharedCalendar';
 // Mock user data
@@ -43,9 +43,7 @@ const userData = {
   }]
 };
 export const UserProfileSettingsPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('profile');
   const [formData, setFormData] = useState({
     name: userData.name,
@@ -133,7 +131,7 @@ export const UserProfileSettingsPage = () => {
             </p>
           </div>
           <div className="mt-4 md:mt-0">
-            <button onClick={() => navigateTo(`/profile/${userData.username}`)} className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+            <button onClick={() => navigate(`/profile/${userData.username}`)} className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
               <EyeIcon className="h-4 w-4 mr-2" />
               View Public Profile
             </button>

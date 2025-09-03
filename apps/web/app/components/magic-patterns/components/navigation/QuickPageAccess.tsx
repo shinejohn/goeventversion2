@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ListIcon, XIcon, SearchIcon, HomeIcon, ArrowRightIcon, FilterIcon, FolderIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 type PageInfo = {
   title: string;
   path: string;
@@ -14,10 +14,7 @@ export const QuickPageAccess = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const {
-    navigateTo,
-    currentPath
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Get all pages from the PageDirectory
   const allPages: PageInfo[] = [
   // Main Pages
@@ -766,7 +763,7 @@ export const QuickPageAccess = () => {
     return matchesSearch && matchesCategory;
   });
   const handleNavigate = (path: string) => {
-    navigateTo(path);
+    navigate(path);
     setIsOpen(false);
   };
   return <div className="fixed bottom-6 left-6 z-50">

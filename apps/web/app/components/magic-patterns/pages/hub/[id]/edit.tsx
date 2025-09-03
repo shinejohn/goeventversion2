@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { HubData } from '../../hub/create';
 // Import all the builder components
 import { HubBuilderNav } from '../../../components/hub-builder/HubBuilderNav';
@@ -145,9 +145,7 @@ export default function HubEditPage() {
   } = useParams<{
     id: string;
   }>();
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [hubData, setHubData] = useState<HubData | null>(null);
   const [activeStep, setActiveStep] = useState<BuilderStep>('setup');
@@ -265,7 +263,7 @@ export default function HubEditPage() {
       // This would be an API call in a real application
       await new Promise(resolve => setTimeout(resolve, 2000));
       // Navigate to the hub
-      navigateTo(`/hub/${hubData?.slug}`);
+      navigate(`/hub/${hubData?.slug}`);
     } catch (error) {
       setIsLoading(false);
       setSaveStatus('error');
@@ -323,7 +321,7 @@ export default function HubEditPage() {
             The hub you're looking for doesn't exist or you don't have
             permission to edit it.
           </p>
-          <button onClick={() => navigateTo('/hubs')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button onClick={() => navigate('/hubs')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Back to Hubs
           </button>
         </div>
@@ -335,7 +333,7 @@ export default function HubEditPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <button onClick={() => navigateTo(`/hub/${hubData.slug}`)} className="text-gray-500 hover:text-gray-700 flex items-center">
+              <button onClick={() => navigate(`/hub/${hubData.slug}`)} className="text-gray-500 hover:text-gray-700 flex items-center">
                 <ChevronLeftIcon className="h-5 w-5 mr-1" />
                 Back to Hub
               </button>

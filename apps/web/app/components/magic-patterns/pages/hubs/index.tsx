@@ -1,10 +1,8 @@
 import React from 'react';
 import { Search, MapPin, Users } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 const HubsDiscoveryPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Mock communities data
   const communities = [{
     id: 'jazz-lovers',
@@ -36,7 +34,7 @@ const HubsDiscoveryPage = () => {
     location: 'St. Petersburg, FL'
   }];
   const handleCommunityClick = communityId => {
-    navigateTo(`/hub/${communityId}/community`);
+    navigate(`/hub/${communityId}/community`);
   };
   return <div className="min-h-screen bg-gray-50">
       <main className="flex-grow">

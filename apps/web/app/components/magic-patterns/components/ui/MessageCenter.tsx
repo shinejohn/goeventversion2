@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MessageSquareIcon, UserIcon, XIcon, SendIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 type Message = {
   id: number;
   sender: {
@@ -27,9 +27,7 @@ export const MessageCenter = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeConversation, setActiveConversation] = useState<number | null>(null);
   const [messageText, setMessageText] = useState('');
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Mock conversations
   const [conversations, setConversations] = useState<Conversation[]>([{
     id: 1,
@@ -213,7 +211,7 @@ export const MessageCenter = () => {
     setActiveConversation(null);
   };
   const viewAllMessages = () => {
-    navigateTo('/messages');
+    navigate('/messages');
     setIsOpen(false);
   };
   return <div className="relative">

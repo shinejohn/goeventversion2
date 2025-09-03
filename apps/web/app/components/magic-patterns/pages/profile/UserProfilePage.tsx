@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { CalendarIcon, MapPinIcon, UserIcon, SettingsIcon, MusicIcon, BuildingIcon, MessageSquareIcon, ShareIcon, InstagramIcon, TwitterIcon, FacebookIcon, LinkedinIcon, PlusIcon, HeartIcon, UsersIcon } from 'lucide-react';
 import { PublicCalendar } from '../../components/profile/PublicCalendar';
 import { LikedPerformers } from '../../components/profile/LikedPerformers';
@@ -29,9 +29,7 @@ const userData = {
   performerId: 'performer-1'
 };
 export const UserProfilePage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('calendar');
   const tabs = [{
     id: 'calendar',
@@ -55,7 +53,7 @@ export const UserProfilePage = () => {
     icon: <ShareIcon className="h-5 w-5" />
   }];
   const handleManagePerformer = () => {
-    navigateTo('/performers/management');
+    navigate('/performers/management');
   };
   return <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -99,7 +97,7 @@ export const UserProfilePage = () => {
                   </a>}
               </div>
               <div className="flex space-x-3">
-                <button onClick={() => navigateTo('/profile/settings')} className="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                <button onClick={() => navigate('/profile/settings')} className="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                   <SettingsIcon className="h-4 w-4 mr-1" />
                   Edit Profile
                 </button>

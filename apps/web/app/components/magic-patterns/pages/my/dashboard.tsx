@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { CalendarIcon, TicketIcon, StarIcon, MapPinIcon, MusicIcon, UsersIcon, TrendingUpIcon, BellIcon, HeartIcon, ClockIcon, ChevronRightIcon, BookmarkIcon, PlusIcon, FilterIcon, CheckIcon } from 'lucide-react';
 // Mock data for upcoming events
 const upcomingEvents = [{
@@ -106,9 +106,7 @@ const recentActivity = [{
   details: 'Saved to wishlist'
 }];
 const Dashboard = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   // Format date for display
   const formatEventDate = (date: Date) => {
@@ -213,7 +211,7 @@ const Dashboard = () => {
                 <h2 className="text-lg font-semibold text-gray-900">
                   Upcoming Events
                 </h2>
-                <button onClick={() => navigateTo('/my/calendar')} className="text-sm text-indigo-600 hover:text-indigo-800 flex items-center">
+                <button onClick={() => navigate('/my/calendar')} className="text-sm text-indigo-600 hover:text-indigo-800 flex items-center">
                   View Calendar
                   <ChevronRightIcon className="ml-1 h-4 w-4" />
                 </button>
@@ -228,11 +226,11 @@ const Dashboard = () => {
                       Find events to add to your calendar.
                     </p>
                     <div className="mt-6">
-                      <button type="button" className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onClick={() => navigateTo('/events')}>
+                      <button type="button" className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onClick={() => navigate('/events')}>
                         Browse Events
                       </button>
                     </div>
-                  </div> : upcomingEvents.map(event => <div key={event.id} className="px-6 py-4 flex items-center hover:bg-gray-50 cursor-pointer" onClick={() => navigateTo(`/event?id=${event.id}`)}>
+                  </div> : upcomingEvents.map(event => <div key={event.id} className="px-6 py-4 flex items-center hover:bg-gray-50 cursor-pointer" onClick={() => navigate(`/event?id=${event.id}`)}>
                       <div className="h-16 w-16 rounded-md overflow-hidden flex-shrink-0">
                         <img src={event.image} alt={event.title} className="h-full w-full object-cover" />
                       </div>
@@ -260,7 +258,7 @@ const Dashboard = () => {
                     </div>)}
               </div>
               {upcomingEvents.length > 0 && <div className="px-6 py-3 bg-gray-50 text-center">
-                  <button className="text-sm text-indigo-600 hover:text-indigo-800 font-medium" onClick={() => navigateTo('/profile/tickets')}>
+                  <button className="text-sm text-indigo-600 hover:text-indigo-800 font-medium" onClick={() => navigate('/profile/tickets')}>
                     View All Events
                   </button>
                 </div>}
@@ -278,7 +276,7 @@ const Dashboard = () => {
                   </button>
                 </div>
                 <div className="divide-y divide-gray-200">
-                  {followedEntities.slice(0, 3).map(entity => <div key={entity.id} className="px-6 py-4 flex items-center hover:bg-gray-50 cursor-pointer" onClick={() => navigateTo(`/${entity.type}s/${entity.id}`)}>
+                  {followedEntities.slice(0, 3).map(entity => <div key={entity.id} className="px-6 py-4 flex items-center hover:bg-gray-50 cursor-pointer" onClick={() => navigate(`/${entity.type}s/${entity.id}`)}>
                       <div className="h-12 w-12 rounded-full overflow-hidden flex-shrink-0">
                         <img src={entity.image} alt={entity.name} className="h-full w-full object-cover" />
                       </div>
@@ -312,7 +310,7 @@ const Dashboard = () => {
                   </button>
                 </div>
                 <div className="divide-y divide-gray-200">
-                  {recommendedEvents.slice(0, 3).map(event => <div key={event.id} className="px-6 py-4 flex items-center hover:bg-gray-50 cursor-pointer" onClick={() => navigateTo(`/event?id=${event.id}`)}>
+                  {recommendedEvents.slice(0, 3).map(event => <div key={event.id} className="px-6 py-4 flex items-center hover:bg-gray-50 cursor-pointer" onClick={() => navigate(`/event?id=${event.id}`)}>
                       <div className="h-16 w-16 rounded-md overflow-hidden flex-shrink-0">
                         <img src={event.image} alt={event.title} className="h-full w-full object-cover" />
                       </div>
@@ -348,7 +346,7 @@ const Dashboard = () => {
               <h2 className="text-lg font-semibold text-gray-900">
                 My Tickets
               </h2>
-              <button onClick={() => navigateTo('/profile/tickets')} className="text-sm text-indigo-600 hover:text-indigo-800 flex items-center">
+              <button onClick={() => navigate('/profile/tickets')} className="text-sm text-indigo-600 hover:text-indigo-800 flex items-center">
                 View All Tickets
                 <ChevronRightIcon className="ml-1 h-4 w-4" />
               </button>
@@ -368,7 +366,7 @@ const Dashboard = () => {
               </button>
             </div>
             <div className="divide-y divide-gray-200">
-              {upcomingEvents.map(event => <div key={event.id} className="px-6 py-4 flex items-center hover:bg-gray-50 cursor-pointer" onClick={() => navigateTo(`/tickets/${event.id}`)}>
+              {upcomingEvents.map(event => <div key={event.id} className="px-6 py-4 flex items-center hover:bg-gray-50 cursor-pointer" onClick={() => navigate(`/tickets/${event.id}`)}>
                   <div className="h-20 w-20 rounded-md overflow-hidden flex-shrink-0">
                     <img src={event.image} alt={event.title} className="h-full w-full object-cover" />
                   </div>
@@ -417,7 +415,7 @@ const Dashboard = () => {
                 Showing {upcomingEvents.length} of {upcomingEvents.length}{' '}
                 tickets
               </span>
-              <button className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium hover:bg-indigo-700" onClick={() => navigateTo('/events')}>
+              <button className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium hover:bg-indigo-700" onClick={() => navigate('/events')}>
                 Find More Events
               </button>
             </div>
@@ -443,7 +441,7 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {followedEntities.map(entity => <div key={entity.id} className="bg-white shadow rounded-lg overflow-hidden cursor-pointer hover:shadow-md transition-shadow duration-200" onClick={() => navigateTo(`/${entity.type}s/${entity.id}`)}>
+              {followedEntities.map(entity => <div key={entity.id} className="bg-white shadow rounded-lg overflow-hidden cursor-pointer hover:shadow-md transition-shadow duration-200" onClick={() => navigate(`/${entity.type}s/${entity.id}`)}>
                   <div className="h-32 w-full overflow-hidden">
                     <img src={entity.image} alt={entity.name} className="h-full w-full object-cover" />
                   </div>
@@ -465,7 +463,7 @@ const Dashboard = () => {
                     <div className="mt-3 flex justify-between">
                       <button className="text-xs text-indigo-600 hover:text-indigo-800 flex items-center" onClick={e => {
                   e.stopPropagation();
-                  navigateTo(`/${entity.type}s/${entity.id}/events`);
+                  navigate(`/${entity.type}s/${entity.id}/events`);
                 }}>
                         View Events
                         <ChevronRightIcon className="ml-1 h-3 w-3" />
@@ -481,7 +479,7 @@ const Dashboard = () => {
                   </div>
                 </div>)}
               {/* Add New Card */}
-              <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-gray-100" onClick={() => navigateTo('/discover')}>
+              <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-gray-100" onClick={() => navigate('/discover')}>
                 <PlusIcon className="h-10 w-10 text-gray-400" />
                 <h3 className="mt-2 text-sm font-medium text-gray-900">
                   Follow More
@@ -513,7 +511,7 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recommendedEvents.map(event => <div key={event.id} className="bg-white shadow rounded-lg overflow-hidden cursor-pointer hover:shadow-md transition-shadow duration-200" onClick={() => navigateTo(`/event?id=${event.id}`)}>
+              {recommendedEvents.map(event => <div key={event.id} className="bg-white shadow rounded-lg overflow-hidden cursor-pointer hover:shadow-md transition-shadow duration-200" onClick={() => navigate(`/event?id=${event.id}`)}>
                   <div className="relative h-40 w-full overflow-hidden">
                     <img src={event.image} alt={event.title} className="h-full w-full object-cover" />
                     <div className="absolute top-2 right-2 px-2 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs flex items-center">

@@ -7,7 +7,7 @@ import React, { useState, Component } from 'react';
  * Components: None
  */
 import { MapPinIcon, ChevronDownIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 type LocationSelectorProps = {
   currentLocation: string;
   eventCount: number;
@@ -21,9 +21,7 @@ export const LocationSelector = ({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(currentLocation);
   const [searchLocation, setSearchLocation] = useState('');
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const popularLocations = ['Tampa, FL', 'St. Petersburg, FL', 'Dunedin, FL', 'Safety Harbor, FL', 'Palm Harbor, FL', 'Tarpon Springs, FL'];
   const filteredLocations = searchLocation.trim() === '' ? popularLocations : popularLocations.filter(loc => loc.toLowerCase().includes(searchLocation.toLowerCase()));
   const toggleDropdown = () => {
@@ -37,7 +35,7 @@ export const LocationSelector = ({
   };
   const handleUseCurrentLocation = () => {
     // In a real app, this would use the browser's geolocation API
-    navigator.geolocation.getCurrentPosition(position => {
+    typeof navigator !== "undefined" && navigator.geolocation.getCurrentPosition(position => {
       console.log('Using current location', position.coords);
       // This would normally make an API call to reverse geocode the coordinates
       setSelectedLocation('Current Location');

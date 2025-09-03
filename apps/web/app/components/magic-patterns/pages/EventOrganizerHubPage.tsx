@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Calendar, Users, Ticket, BarChart, CheckCircle, Clock, DollarSign, MessageSquare, Mail, Star, PieChart, Zap, Award } from 'lucide-react';
 export const EventOrganizerHubPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const features = [{
     title: 'Event Creation & Management',
     description: 'Create, edit, and manage your events with our intuitive event builder. Set dates, times, ticket types, and more.',
@@ -110,10 +108,10 @@ export const EventOrganizerHubPage = () => {
               Everything you need to create, manage, and grow successful events
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button onClick={() => navigateTo('/events/create')} className="px-8 py-3 bg-white text-blue-600 font-medium rounded-md hover:bg-blue-50 transition-colors">
+              <button onClick={() => navigate('/events/create')} className="px-8 py-3 bg-white text-blue-600 font-medium rounded-md hover:bg-blue-50 transition-colors">
                 Create an Event
               </button>
-              <button onClick={() => navigateTo('/organizer-hub/demo')} className="px-8 py-3 bg-blue-700 text-white font-medium rounded-md hover:bg-blue-800 transition-colors">
+              <button onClick={() => navigate('/organizer-hub/demo')} className="px-8 py-3 bg-blue-700 text-white font-medium rounded-md hover:bg-blue-800 transition-colors">
                 Watch Demo
               </button>
             </div>
@@ -185,7 +183,7 @@ export const EventOrganizerHubPage = () => {
               </div>)}
           </div>
           <div className="mt-12 text-center">
-            <button onClick={() => navigateTo('/events')} className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors inline-flex items-center">
+            <button onClick={() => navigate('/events')} className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors inline-flex items-center">
               Browse Events
               <Calendar className="ml-2 h-5 w-5" />
             </button>
@@ -383,7 +381,7 @@ export const EventOrganizerHubPage = () => {
                         <span>{feature}</span>
                       </li>)}
                   </ul>
-                  <button onClick={() => navigateTo('/events/create')} className={`w-full py-3 px-4 rounded-md font-medium ${plan.recommended ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}>
+                  <button onClick={() => navigate('/events/create')} className={`w-full py-3 px-4 rounded-md font-medium ${plan.recommended ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}>
                     {plan.ctaText}
                   </button>
                 </div>
@@ -461,10 +459,10 @@ export const EventOrganizerHubPage = () => {
             Join thousands of successful event organizers on When's The Fun
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button onClick={() => navigateTo('/events/create')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
+            <button onClick={() => navigate('/events/create')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
               Create an Event
             </button>
-            <button onClick={() => navigateTo('/contact')} className="px-8 py-3 bg-indigo-800 text-white font-medium rounded-md hover:bg-indigo-900 transition-colors border border-indigo-600">
+            <button onClick={() => navigate('/contact')} className="px-8 py-3 bg-indigo-800 text-white font-medium rounded-md hover:bg-indigo-900 transition-colors border border-indigo-600">
               Contact Sales
             </button>
           </div>

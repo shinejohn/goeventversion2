@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { ArrowRight, BarChart, Calendar, CheckCircle, ChevronLeft, Clock, DollarSign, MapPin, Star, Users, Building, Image, MessageSquare, Zap } from 'lucide-react';
 export const UrbanLoftPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const results = [{
     metric: '200%',
     description: 'Increase in bookings within 3 months',
@@ -54,7 +52,7 @@ export const UrbanLoftPage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-16">
           <div className="mb-6">
-            <button onClick={() => navigateTo('/success-stories')} className="inline-flex items-center text-white hover:text-blue-200 transition-colors">
+            <button onClick={() => navigate('/success-stories')} className="inline-flex items-center text-white hover:text-blue-200 transition-colors">
               <ChevronLeft className="h-5 w-5 mr-1" />
               Back to Success Stories
             </button>
@@ -323,7 +321,7 @@ export const UrbanLoftPage = () => {
                 Learn how When's The Fun can help you increase bookings and
                 revenue for your space.
               </p>
-              <button onClick={() => navigateTo('/venues/submit')} className="w-full bg-white text-blue-600 font-medium py-2 px-4 rounded-md hover:bg-blue-50 transition-colors flex items-center justify-center">
+              <button onClick={() => navigate('/venues/submit')} className="w-full bg-white text-blue-600 font-medium py-2 px-4 rounded-md hover:bg-blue-50 transition-colors flex items-center justify-center">
                 List Your Venue
                 <ArrowRight className="ml-2 h-4 w-4" />
               </button>
@@ -338,7 +336,7 @@ export const UrbanLoftPage = () => {
             Explore More Success Stories
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigateTo('/success-stories/sunset-music-festival')}>
+            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/success-stories/sunset-music-festival')}>
               <div className="h-48 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6a3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Sunset Music Festival crowd" className="w-full h-full object-cover" />
               </div>
@@ -359,7 +357,7 @@ export const UrbanLoftPage = () => {
                 </button>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigateTo('/success-stories/jazz-quartet')}>
+            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/success-stories/jazz-quartet')}>
               <div className="h-48 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Jazz Quartet performing" className="w-full h-full object-cover" />
               </div>
@@ -380,7 +378,7 @@ export const UrbanLoftPage = () => {
                 </button>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigateTo('/success-stories/food-festival')}>
+            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/success-stories/food-festival')}>
               <div className="h-48 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Food festival vendors" className="w-full h-full object-cover" />
               </div>
@@ -415,10 +413,10 @@ export const UrbanLoftPage = () => {
             revenue with When's The Fun
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button onClick={() => navigateTo('/venues/submit')} className="px-8 py-3 bg-white text-blue-700 font-medium rounded-md hover:bg-blue-50 transition-colors">
+            <button onClick={() => navigate('/venues/submit')} className="px-8 py-3 bg-white text-blue-700 font-medium rounded-md hover:bg-blue-50 transition-colors">
               List Your Venue
             </button>
-            <button onClick={() => navigateTo('/contact')} className="px-8 py-3 bg-blue-800 text-white font-medium rounded-md hover:bg-blue-900 transition-colors border border-blue-600">
+            <button onClick={() => navigate('/contact')} className="px-8 py-3 bg-blue-800 text-white font-medium rounded-md hover:bg-blue-900 transition-colors border border-blue-600">
               Talk to Our Team
             </button>
           </div>

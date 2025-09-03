@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { ArrowRight, BarChart, Calendar, CheckCircle, ChevronLeft, Clock, DollarSign, MapPin, Music, Star, Users, Mic, Globe, HeadphonesIcon, TrendingUp } from 'lucide-react';
 export const JazzQuartetPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const results = [{
     metric: '5x',
     description: 'Increase in booking requests',
@@ -54,7 +52,7 @@ export const JazzQuartetPage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-16">
           <div className="mb-6">
-            <button onClick={() => navigateTo('/success-stories')} className="inline-flex items-center text-white hover:text-green-200 transition-colors">
+            <button onClick={() => navigate('/success-stories')} className="inline-flex items-center text-white hover:text-green-200 transition-colors">
               <ChevronLeft className="h-5 w-5 mr-1" />
               Back to Success Stories
             </button>
@@ -324,7 +322,7 @@ export const JazzQuartetPage = () => {
                 Learn how When's The Fun can help you book more gigs and grow
                 your audience.
               </p>
-              <button onClick={() => navigateTo('/performers/tools')} className="w-full bg-white text-green-600 font-medium py-2 px-4 rounded-md hover:bg-green-50 transition-colors flex items-center justify-center">
+              <button onClick={() => navigate('/performers/tools')} className="w-full bg-white text-green-600 font-medium py-2 px-4 rounded-md hover:bg-green-50 transition-colors flex items-center justify-center">
                 Explore Performer Tools
                 <ArrowRight className="ml-2 h-4 w-4" />
               </button>
@@ -339,7 +337,7 @@ export const JazzQuartetPage = () => {
             Explore More Success Stories
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigateTo('/success-stories/sunset-music-festival')}>
+            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/success-stories/sunset-music-festival')}>
               <div className="h-48 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6a3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Sunset Music Festival crowd" className="w-full h-full object-cover" />
               </div>
@@ -360,7 +358,7 @@ export const JazzQuartetPage = () => {
                 </button>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigateTo('/success-stories/urban-loft')}>
+            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/success-stories/urban-loft')}>
               <div className="h-48 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="The Urban Loft venue" className="w-full h-full object-cover" />
               </div>
@@ -381,7 +379,7 @@ export const JazzQuartetPage = () => {
                 </button>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigateTo('/success-stories/dj-collective')}>
+            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/success-stories/dj-collective')}>
               <div className="h-48 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1571266028243-a52300c2ffc5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="DJ performing" className="w-full h-full object-cover" />
               </div>
@@ -416,10 +414,10 @@ export const JazzQuartetPage = () => {
             their audience with When's The Fun
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button onClick={() => navigateTo('/performers/register')} className="px-8 py-3 bg-white text-green-700 font-medium rounded-md hover:bg-green-50 transition-colors">
+            <button onClick={() => navigate('/performers/register')} className="px-8 py-3 bg-white text-green-700 font-medium rounded-md hover:bg-green-50 transition-colors">
               Create Your Profile
             </button>
-            <button onClick={() => navigateTo('/performers/tools')} className="px-8 py-3 bg-green-800 text-white font-medium rounded-md hover:bg-green-900 transition-colors border border-green-600">
+            <button onClick={() => navigate('/performers/tools')} className="px-8 py-3 bg-green-800 text-white font-medium rounded-md hover:bg-green-900 transition-colors border border-green-600">
               Explore Performer Tools
             </button>
           </div>

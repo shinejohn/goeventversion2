@@ -1,10 +1,8 @@
 import React, { useState, createElement } from 'react';
 import { ArrowRightIcon, TicketIcon, CalendarIcon, MapPinIcon, ClockIcon } from 'lucide-react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const TicketsPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const ticketCategories = [{
     title: 'Buy Tickets',
     description: 'Browse and purchase tickets for upcoming events',
@@ -100,13 +98,13 @@ export const TicketsPage = () => {
             </p>
             <div className="mt-8 flex justify-center">
               <div className="inline-flex rounded-md shadow">
-                <button onClick={() => navigateTo('/tickets/buy')} className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-white hover:bg-indigo-50">
+                <button onClick={() => navigate('/tickets/buy')} className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-white hover:bg-indigo-50">
                   <TicketIcon className="h-5 w-5 mr-2" />
                   Browse Tickets
                 </button>
               </div>
               <div className="ml-3 inline-flex">
-                <button onClick={() => navigateTo('/profile/tickets')} className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                <button onClick={() => navigate('/profile/tickets')} className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
                   My Tickets
                 </button>
               </div>
@@ -120,7 +118,7 @@ export const TicketsPage = () => {
           Ticket Options
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {ticketCategories.map((category, index) => <div key={index} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow cursor-pointer text-center" onClick={() => navigateTo(category.path)}>
+          {ticketCategories.map((category, index) => <div key={index} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow cursor-pointer text-center" onClick={() => navigate(category.path)}>
               <div className="text-3xl mb-3">{category.icon}</div>
               <h3 className="text-lg font-bold text-gray-900">
                 {category.title}
@@ -141,7 +139,7 @@ export const TicketsPage = () => {
             <h2 className="text-2xl font-bold text-gray-900">
               Upcoming Events
             </h2>
-            <button className="text-indigo-600 hover:text-indigo-800 flex items-center font-medium" onClick={() => navigateTo('/tickets/buy')}>
+            <button className="text-indigo-600 hover:text-indigo-800 flex items-center font-medium" onClick={() => navigate('/tickets/buy')}>
               View all events
               <ArrowRightIcon className="ml-1 h-4 w-4" />
             </button>
@@ -172,7 +170,7 @@ export const TicketsPage = () => {
                 type: 'text/calendar;charset=utf-8'
               });
               const url = URL.createObjectURL(blob);
-              const link = document.createElement('a');
+              const link = typeof document !== "undefined" && document.createElement('a');
               link.href = url;
               link.setAttribute('download', `${event.title.replace(/\s+/g, '_')}.ics`);
               document.body.appendChild(link);
@@ -181,7 +179,7 @@ export const TicketsPage = () => {
               setCalendarSuccess(true);
               setTimeout(() => setCalendarSuccess(false), 2000);
             };
-            return <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateTo(`/tickets/${event.id}/select`)}>
+            return <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate(`/tickets/${event.id}/select`)}>
                   <div className="h-48 overflow-hidden relative">
                     <img src={event.image} alt={event.title} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
                     <div className="absolute top-0 right-0 m-2">
@@ -219,7 +217,7 @@ export const TicketsPage = () => {
                         </button>
                         <button className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-3 py-1 rounded" onClick={e => {
                       e.stopPropagation();
-                      navigateTo(`/tickets/${event.id}/select`);
+                      navigate(`/tickets/${event.id}/select`);
                     }}>
                           Get Tickets
                         </button>
@@ -281,7 +279,7 @@ export const TicketsPage = () => {
           </div>
         </div>
         <div className="text-center mt-8">
-          <button className="text-indigo-600 hover:text-indigo-800 font-medium" onClick={() => navigateTo('/help/tickets')}>
+          <button className="text-indigo-600 hover:text-indigo-800 font-medium" onClick={() => navigate('/help/tickets')}>
             View all ticket FAQs
           </button>
         </div>

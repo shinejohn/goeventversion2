@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, createElement, Component } from 'react';
 import { FacebookIcon, TwitterIcon, LinkedinIcon, InstagramIcon, MailIcon, LinkIcon, CopyIcon, CheckIcon, XIcon, CodeIcon, DownloadIcon, ChevronDownIcon, ExternalLinkIcon } from 'lucide-react';
+import { ClientOnly } from '@kit/ui/client-only';
 type ShareEmbedWidgetProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -22,7 +23,7 @@ type ShareEmbedWidgetProps = {
     theme?: 'light' | 'dark';
   };
 };
-export const ShareEmbedWidget = ({
+const ShareEmbedWidgetInternal = ({
   isOpen,
   onClose,
   title,
@@ -126,8 +127,8 @@ export const ShareEmbedWidget = ({
   // Handle copy link to clipboard with error handling
   const copyToClipboard = (text: string, type: 'link' | 'embed' = 'link') => {
     try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => {
+      if (typeof navigator !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) {
+        typeof navigator !== "undefined" && navigator.clipboard.writeText(text).then(() => {
           setCopied(true);
           setTimeout(() => setCopied(false), 2000);
         }).catch(error => {
@@ -145,7 +146,7 @@ export const ShareEmbedWidget = ({
   // Fallback copy method
   const fallbackCopyToClipboard = (text: string) => {
     try {
-      const textArea = document.createElement('textarea');
+      const textArea = typeof document !== "undefined" && document.createElement('textarea');
       textArea.value = text;
       textArea.style.position = 'fixed';
       textArea.style.left = '-999999px';
@@ -164,7 +165,7 @@ export const ShareEmbedWidget = ({
   // Handle download QR code with error handling
   const downloadQrCode = () => {
     try {
-      const link = document.createElement('a');
+      const link = typeof document !== "undefined" && document.createElement('a');
       link.href = qrCodeUrl;
       link.download = `${(title || 'qr-code').replace(/\s+/g, '-').toLowerCase()}-qr-code.png`;
       document.body.appendChild(link);
@@ -178,17 +179,17 @@ export const ShareEmbedWidget = ({
   const shareViaEmail = () => {
     const subject = encodeURIComponent(title);
     const body = encodeURIComponent(`${description}\n\nCheck it out: ${url}`);
-    window.open(`mailto:?subject=${subject}&body=${body}`);
+    typeof window !== "undefined" && window.open(`mailto:?subject=${subject}&body=${body}`);
   };
   // Social media share functions
   const shareToFacebook = () => {
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
+    typeof window !== "undefined" && window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
   };
   const shareToTwitter = () => {
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`);
+    typeof window !== "undefined" && window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`);
   };
   const shareToLinkedIn = () => {
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`);
+    typeof window !== "undefined" && window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`);
   };
   const shareToInstagram = () => {
     // Instagram doesn't have a direct web share URL, this would typically open the app
@@ -278,8 +279,8 @@ export const ShareEmbedWidget = ({
               </button>
 
               {/* Native Share (if available) */}
-              {navigator.share && <button onClick={() => {
-            navigator.share({
+              {typeof navigator !== "undefined" && navigator.share && <button onClick={() => {
+            typeof navigator !== "undefined" && navigator.share({
               title,
               text: description,
               url
@@ -421,4 +422,12 @@ export const ShareEmbedWidget = ({
         </div>
       </div>
     </div>;
+};
+
+export const ShareEmbedWidget = (props: ShareEmbedWidgetProps) => {
+  return (
+    <ClientOnly>
+      <ShareEmbedWidgetInternal {...props} />
+    </ClientOnly>
+  );
 };

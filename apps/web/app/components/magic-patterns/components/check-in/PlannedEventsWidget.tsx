@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CalendarIcon, MapPinIcon, ClockIcon, TicketIcon, EyeIcon, EyeOffIcon, XIcon, ChevronRightIcon } from 'lucide-react';
 import { useCheckIn, PlannedEvent } from '../../context/CheckInContext';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 interface PlannedEventsWidgetProps {
   limit?: number;
   showControls?: boolean;
@@ -17,9 +17,7 @@ export const PlannedEventsWidget: React.FC<PlannedEventsWidgetProps> = ({
     togglePlannedEventSharing,
     removePlannedEvent
   } = useCheckIn();
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [showAll, setShowAll] = useState(false);
   const displayEvents = showAll ? plannedEvents : plannedEvents.slice(0, limit);
   const formatDate = (dateStr: string) => {
@@ -31,10 +29,10 @@ export const PlannedEventsWidget: React.FC<PlannedEventsWidgetProps> = ({
     });
   };
   const handleEventClick = (eventId: string, venueId: string) => {
-    navigateTo(`/venues/${venueId}/events/${eventId}`);
+    navigate(`/venues/${venueId}/events/${eventId}`);
   };
   const handleVenueClick = (venueId: string) => {
-    navigateTo(`/venues/${venueId}/${venueId.replace('venue-', '')}`);
+    navigate(`/venues/${venueId}/${venueId.replace('venue-', '')}`);
   };
   const handleToggleSharing = (eventId: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -48,7 +46,7 @@ export const PlannedEventsWidget: React.FC<PlannedEventsWidgetProps> = ({
     if (plannedEvents.length > limit) {
       setShowAll(!showAll);
     } else {
-      navigateTo('/my/calendar');
+      navigate('/my/calendar');
     }
   };
   if (plannedEvents.length === 0) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { CalendarIcon, ClockIcon, EyeIcon, HeartIcon, MessageSquareIcon, BookmarkIcon } from 'lucide-react';
 type ArticleCardProps = {
   article: any;
@@ -9,9 +9,7 @@ export const ArticleCard = ({
   article,
   hubSlug
 }: ArticleCardProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Format the date
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -23,12 +21,12 @@ export const ArticleCard = ({
   };
   // Navigate to article detail
   const handleViewArticle = () => {
-    navigateTo(`/hub/${hubSlug}/articles/${article.id}`);
+    navigate(`/hub/${hubSlug}/articles/${article.id}`);
   };
   // Navigate to author profile
   const handleViewAuthor = (e: React.MouseEvent) => {
     e.stopPropagation();
-    navigateTo(`/profile/${article.author.id}`);
+    navigate(`/profile/${article.author.id}`);
   };
   return <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 hover:shadow-md transition-shadow duration-200 cursor-pointer flex flex-col" onClick={handleViewArticle}>
       {/* Image */}

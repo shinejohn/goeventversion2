@@ -6,7 +6,7 @@ import React, { useEffect, useState, Component } from 'react';
  * Description: Rotating background images with community stats and featured event advertising
  * Components: None
  */
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { ArrowRightIcon } from 'lucide-react';
 // Mock data for community showcase
 const mockShowcaseData = [{
@@ -42,9 +42,7 @@ const mockShowcaseData = [{
 }];
 export const CommunityShowcase = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Auto-rotate images
   useEffect(() => {
     const interval = setInterval(() => {
@@ -54,7 +52,7 @@ export const CommunityShowcase = () => {
   }, []);
   const currentShowcase = mockShowcaseData[currentIndex];
   const handleEventClick = () => {
-    navigateTo(currentShowcase.eventUrl);
+    navigate(currentShowcase.eventUrl);
   };
   return <>
       <div className="absolute inset-0 bg-black opacity-40 z-10"></div>

@@ -359,7 +359,7 @@ export const AutomationRulesStep = ({
                 }
               }} />
                   <button type="button" onClick={e => {
-                const input = document.getElementById('locations') as HTMLInputElement;
+                const input = typeof document !== "undefined" && document.getElementById('locations') as HTMLInputElement;
                 if (input.value.trim()) {
                   handleArrayInput('locations', input.value.trim(), 'add');
                   input.value = '';
@@ -391,7 +391,7 @@ export const AutomationRulesStep = ({
                 }
               }} />
                   <button type="button" onClick={e => {
-                const input = document.getElementById('keywords') as HTMLInputElement;
+                const input = typeof document !== "undefined" && document.getElementById('keywords') as HTMLInputElement;
                 if (input.value.trim()) {
                   handleArrayInput('keywords', input.value.trim(), 'add');
                   input.value = '';
@@ -428,7 +428,7 @@ export const AutomationRulesStep = ({
                     }
                   }} />
                       <button type="button" onClick={e => {
-                    const input = document.getElementById('venues-include') as HTMLInputElement;
+                    const input = typeof document !== "undefined" && document.getElementById('venues-include') as HTMLInputElement;
                     if (input.value.trim()) {
                       handleArrayInput('venues.include', input.value.trim(), 'add');
                       input.value = '';
@@ -459,7 +459,7 @@ export const AutomationRulesStep = ({
                     }
                   }} />
                       <button type="button" onClick={e => {
-                    const input = document.getElementById('venues-exclude') as HTMLInputElement;
+                    const input = typeof document !== "undefined" && document.getElementById('venues-exclude') as HTMLInputElement;
                     if (input.value.trim()) {
                       handleArrayInput('venues.exclude', input.value.trim(), 'add');
                       input.value = '';

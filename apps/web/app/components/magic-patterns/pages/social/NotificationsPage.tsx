@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { BellIcon, CheckIcon, XIcon, UserPlusIcon, CalendarIcon, MessageCircleIcon, ThumbsUpIcon, HeartIcon, StarIcon, MusicIcon, MapPinIcon, FilterIcon, MoreHorizontalIcon, ChevronDownIcon } from 'lucide-react';
 // Mock data for notifications
 const mockNotifications = [{
@@ -131,9 +131,7 @@ const mockNotifications = [{
   system: true
 }];
 const NotificationsPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [notifications, setNotifications] = useState(mockNotifications);
   const [activeTab, setActiveTab] = useState('all');
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
@@ -251,7 +249,7 @@ const NotificationsPage = () => {
             <button onClick={() => respondToEventInvite(notification.id, false)} className="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-200">
               Not Going
             </button>
-            <button onClick={() => navigateTo(`/events/${notification.target.id}`)} className="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-200">
+            <button onClick={() => navigate(`/events/${notification.target.id}`)} className="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-200">
               View Event
             </button>
           </div>;
@@ -263,7 +261,7 @@ const NotificationsPage = () => {
             <button onClick={() => respondToGroupInvite(notification.id, false)} className="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-200">
               Decline
             </button>
-            <button onClick={() => navigateTo(`/social/groups/${notification.target.id}`)} className="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-200">
+            <button onClick={() => navigate(`/social/groups/${notification.target.id}`)} className="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-200">
               View Group
             </button>
           </div>;
@@ -401,7 +399,7 @@ const NotificationsPage = () => {
         </div>
         {/* Settings link */}
         <div className="mt-6 text-center">
-          <button onClick={() => navigateTo('/profile/settings/notifications')} className="text-sm text-indigo-600 hover:text-indigo-800">
+          <button onClick={() => navigate('/profile/settings/notifications')} className="text-sm text-indigo-600 hover:text-indigo-800">
             Notification Settings
           </button>
         </div>

@@ -7,12 +7,13 @@ import React, { useState, Component } from 'react';
  * Components: EventHero, ContentTabs, VenueMap
  */
 import { ArrowLeftIcon, ShareIcon, HeartIcon, FlameIcon, MapPinIcon, UsersIcon, SunIcon, CloudIcon, CloudRainIcon, ClockIcon, CalendarIcon, TagIcon, UserIcon, TicketIcon, ArrowRightIcon, InfoIcon, MusicIcon, UtensilsIcon, StarIcon, CheckCircleIcon, CarIcon, BusIcon, BikeIcon, ChevronDownIcon, AlertCircleIcon, XIcon } from 'lucide-react';
+import { ClientOnly } from '@kit/ui/client-only';
 // Import components
 import { EventHero } from '../components/events/EventHero';
 import { ContentTabs } from '../components/events/ContentTabs';
 import { VenueMap } from '../components/events/VenueMap';
 import { RelatedEvents } from '../components/events/RelatedEvents';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 // Mock data for event
 const eventData = {
   id: 'event-1',
@@ -276,13 +277,11 @@ const eventData = {
     }
   }
 };
-export const EventDetailPage = () => {
+const EventDetailPageInternal = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
   const [showTicketModal, setShowTicketModal] = useState(false);
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Format date for display
   const formatEventDate = date => {
     return date.toLocaleDateString('en-US', {
@@ -314,7 +313,7 @@ export const EventDetailPage = () => {
   // Handle ticket purchase
   const handleGetTickets = () => {
     // Navigate to ticket purchase page for this specific event
-    navigateTo(`/tickets/${eventData.id}`);
+    navigate(`/tickets/${eventData.id}`);
   };
   // Handle save functionality
   const handleSave = () => {
@@ -323,32 +322,38 @@ export const EventDetailPage = () => {
     // Here we would typically call an API to save/unsave the event
     // For now, we'll just show a toast message
     if (newSavedState) {
-      alert(`Event saved to your favorites!`);
+      // alert(`Event saved to your favorites!`);
+      console.log(`Event saved to your favorites!`);
     } else {
-      alert(`Event removed from your favorites.`);
+      // alert(`Event removed from your favorites.`);
+      console.log(`Event removed from your favorites.`);
     }
   };
   // Handle share functionality
   const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
+    if (typeof navigator !== "undefined" && navigator.share) {
+      typeof navigator !== "undefined" && navigator.share({
         title: eventData.title,
         text: `Check out ${eventData.title}`,
         url: window.location.href
       }).catch(err => {
-        alert('Sharing functionality: ' + eventData.title);
+        // alert('Sharing functionality: ' + eventData.title);
+        console.error('Share failed:', error);
       });
     } else {
-      alert('Sharing functionality: ' + eventData.title);
+      // alert('Sharing functionality: ' + eventData.title);
+      console.log('Sharing functionality: ' + eventData.title);
     }
   };
   // Handle add to calendar with specific calendar type
   const handleAddToCalendar = type => {
-    alert(`Added to ${type}: ${eventData.title} on ${formatEventDate(eventData.date)}`);
+    // alert(`Added to ${type}: ${eventData.title} on ${formatEventDate(eventData.date)}`);
+    console.log(`Added to ${type}: ${eventData.title} on ${formatEventDate(eventData.date)}`);
   };
   // Handle invite friends
   const handleInviteFriends = () => {
-    alert('Opening friend selection dialog to invite friends to this event');
+    // alert('Opening friend selection dialog to invite friends to this event');
+    console.log('Opening friend selection dialog to invite friends to this event');
   };
   // Get ticket status text and color
   const getTicketStatus = () => {
@@ -491,10 +496,10 @@ export const EventDetailPage = () => {
                     Categories
                   </h3>
                   <div className="flex flex-wrap gap-2">
-                    {eventData.categories.slice(0, 3).map((category, index) => <span key={index} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 cursor-pointer hover:bg-indigo-200" onClick={() => alert(`Showing all ${category} events`)}>
+                    {eventData.categories.slice(0, 3).map((category, index) => <span key={index} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 cursor-pointer hover:bg-indigo-200" onClick={() => console.log(`Showing all ${category} events`)}>
                         {category}
                       </span>)}
-                    {eventData.categories.length > 3 && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 cursor-pointer hover:bg-gray-200" onClick={() => alert('Showing all categories for this event')}>
+                    {eventData.categories.length > 3 && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 cursor-pointer hover:bg-gray-200" onClick={() => console.log('Showing all categories for this event')}>
                         +{eventData.categories.length - 3} more
                       </span>}
                   </div>
@@ -511,7 +516,7 @@ export const EventDetailPage = () => {
                     </p>
                     <a href="#" onClick={e => {
                     e.preventDefault();
-                    alert(`Viewing organizer: ${eventData.organizer.name}`);
+                    console.log(`Viewing organizer: ${eventData.organizer.name}`);
                   }} className="text-indigo-600 hover:text-indigo-800 font-medium flex items-center">
                       {eventData.organizer.name}
                       {eventData.organizer.verified && <CheckCircleIcon className="h-4 w-4 text-blue-500 ml-1" />}
@@ -526,7 +531,7 @@ export const EventDetailPage = () => {
                       </p>
                       <a href="#" onClick={e => {
                     e.preventDefault();
-                    alert(`Viewing series: ${eventData.series.name}`);
+                    console.log(`Viewing series: ${eventData.series.name}`);
                   }} className="text-indigo-600 hover:text-indigo-800 font-medium">
                         {eventData.series.name} • {eventData.series.years} years
                       </a>
@@ -727,7 +732,7 @@ export const EventDetailPage = () => {
               <h3 className="font-medium text-gray-900 mb-4">Who's Going</h3>
               <div className="flex items-center mb-4">
                 <div className="flex -space-x-2 mr-3">
-                  {eventData.socialProof.friendsAttending.slice(0, 5).map((friend, index) => <img key={index} src={friend.image} alt={friend.name} className="h-8 w-8 rounded-full border-2 border-white cursor-pointer" title={friend.name} onClick={() => alert(`Viewing ${friend.name}'s profile`)} />)}
+                  {eventData.socialProof.friendsAttending.slice(0, 5).map((friend, index) => <img key={index} src={friend.image} alt={friend.name} className="h-8 w-8 rounded-full border-2 border-white cursor-pointer" title={friend.name} onClick={() => console.log(`Viewing ${friend.name}'s profile`)} />)}
                 </div>
                 {eventData.socialProof.friendsAttending.length > 0 ? <p className="text-sm text-gray-600">
                     <span className="font-medium">
@@ -762,7 +767,7 @@ export const EventDetailPage = () => {
                 <h3 className="font-medium text-gray-900">Similar Events</h3>
                 <a href="#" onClick={e => {
                 e.preventDefault();
-                alert('Viewing all similar events');
+                console.log('Viewing all similar events');
               }} className="text-sm text-indigo-600 hover:text-indigo-800 flex items-center">
                   View all
                   <ArrowRightIcon className="h-4 w-4 ml-1" />
@@ -771,7 +776,7 @@ export const EventDetailPage = () => {
               <div className="space-y-4">
                 {[1, 2].map(item => <a key={item} href="#" onClick={e => {
                 e.preventDefault();
-                alert(`Viewing event: ${item === 1 ? 'Tampa Bay Blues Festival' : 'St. Pete Jazz Festival'}`);
+                console.log(`Viewing event: ${item === 1 ? 'Tampa Bay Blues Festival' : 'St. Pete Jazz Festival'}`);
               }} className="flex items-start hover:bg-gray-50 p-2 -mx-2 rounded-md">
                     <div className="h-14 w-14 rounded-md overflow-hidden flex-shrink-0 bg-gray-200">
                       <img src={`https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6a3?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80&random=${item}`} alt="Event" className="h-full w-full object-cover" />
@@ -805,7 +810,7 @@ export const EventDetailPage = () => {
             </h2>
             <a href="#" onClick={e => {
             e.preventDefault();
-            alert('Viewing all recommended events');
+            console.log('Viewing all recommended events');
           }} className="text-indigo-600 hover:text-indigo-800 flex items-center">
               View all
               <ArrowRightIcon className="h-4 w-4 ml-1" />
@@ -870,7 +875,7 @@ export const EventDetailPage = () => {
             </div>
             <button onClick={() => {
           setShowTicketModal(false);
-          alert('Redirecting to payment processing...');
+          console.log('Redirecting to payment processing...');
         }} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-md">
               Checkout
             </button>
@@ -889,4 +894,12 @@ export const EventDetailPage = () => {
           </div>
         </div>}
     </div>;
+};
+
+export const EventDetailPage = () => {
+  return (
+    <ClientOnly>
+      <EventDetailPageInternal />
+    </ClientOnly>
+  );
 };

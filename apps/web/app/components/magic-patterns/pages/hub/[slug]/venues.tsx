@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'react-router-dom';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { DirectoryFilters } from '../../../components/hub/directory/DirectoryFilters';
 import { DirectoryCard } from '../../../components/hub/directory/DirectoryCard';
 import { mockVenues } from '../../../mockdata/venues';
@@ -10,9 +10,7 @@ export default function HubVenuesPage() {
   const {
     slug
   } = router.params || {};
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [hubData, setHubData] = useState<any>(null);
   const [venues, setVenues] = useState<any[]>([]);
@@ -99,7 +97,7 @@ export default function HubVenuesPage() {
   };
   // Submit new venue listing
   const handleSubmitListing = () => {
-    navigateTo(`/hub/${slug}/submit-venue`);
+    navigate(`/hub/${slug}/submit-venue`);
   };
   if (isLoading) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -115,7 +113,7 @@ export default function HubVenuesPage() {
     }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center mb-4">
-            <button onClick={() => navigateTo(`/hubs/${slug}`)} className="flex items-center text-white/80 hover:text-white">
+            <button onClick={() => navigate(`/hubs/${slug}`)} className="flex items-center text-white/80 hover:text-white">
               <ArrowLeftIcon className="h-4 w-4 mr-1" />
               Back to Hub
             </button>
@@ -200,7 +198,7 @@ export default function HubVenuesPage() {
               </button>
             </div>
           </div> : <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
-            {filteredVenues.map(venue => <DirectoryCard key={venue.id} item={venue} type="venue" viewMode={viewMode} hubSlug={slug as string} onView={() => navigateTo(`/venues/${venue.id}`)} onFollow={() => {
+            {filteredVenues.map(venue => <DirectoryCard key={venue.id} item={venue} type="venue" viewMode={viewMode} hubSlug={slug as string} onView={() => navigate(`/venues/${venue.id}`)} onFollow={() => {
           // Handle follow action
           console.log(`Following venue: ${venue.id}`);
         }} />)}

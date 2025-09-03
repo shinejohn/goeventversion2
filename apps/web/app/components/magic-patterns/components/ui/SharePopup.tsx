@@ -19,7 +19,7 @@ export const SharePopup: React.FC<SharePopupProps> = ({
   const [copied, setCopied] = useState(false);
   if (!isOpen) return null;
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(url);
+    typeof navigator !== "undefined" && navigator.clipboard.writeText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -28,21 +28,21 @@ export const SharePopup: React.FC<SharePopupProps> = ({
     icon: <FacebookIcon className="h-5 w-5" />,
     color: 'bg-blue-100 text-blue-600',
     onClick: () => {
-      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(title)}`, '_blank');
+      typeof window !== "undefined" && window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(title)}`, '_blank');
     }
   }, {
     name: 'Twitter',
     icon: <TwitterIcon className="h-5 w-5" />,
     color: 'bg-sky-100 text-sky-600',
     onClick: () => {
-      window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank');
+      typeof window !== "undefined" && window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank');
     }
   }, {
     name: 'LinkedIn',
     icon: <LinkedinIcon className="h-5 w-5" />,
     color: 'bg-blue-100 text-blue-800',
     onClick: () => {
-      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+      typeof window !== "undefined" && window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
     }
   }, {
     name: 'Email',

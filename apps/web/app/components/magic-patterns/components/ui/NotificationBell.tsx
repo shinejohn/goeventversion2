@@ -7,7 +7,7 @@ import React, { useState, Component } from 'react';
  * Components: None
  */
 import { BellIcon, CheckIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 type NotificationBellProps = {
   count: number;
 };
@@ -52,9 +52,7 @@ export const NotificationBell = ({
     time: '5 days ago',
     isRead: true
   }]);
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const unreadCount = notifications.filter(n => !n.isRead).length;
   const markAllAsRead = () => {
     setNotifications(notifications.map(notification => ({
@@ -73,16 +71,16 @@ export const NotificationBell = ({
     // Navigate based on notification type
     switch (notification.type) {
       case 'event':
-        navigateTo('/event');
+        navigate('/event');
         break;
       case 'friend':
-        navigateTo('/my/following');
+        navigate('/my/following');
         break;
       case 'ticket':
-        navigateTo('/profile/tickets');
+        navigate('/profile/tickets');
         break;
       case 'system':
-        navigateTo('/settings/account');
+        navigate('/settings/account');
         break;
       default:
         break;
@@ -90,7 +88,7 @@ export const NotificationBell = ({
     setIsOpen(false);
   };
   const viewAllNotifications = () => {
-    navigateTo('/my/notifications');
+    navigate('/my/notifications');
     setIsOpen(false);
   };
   return <div className="relative">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Component } from 'react';
 import { ChevronDownIcon, SearchIcon, BellIcon, MessageSquareIcon, PlusIcon, ShoppingBagIcon, UserIcon, TicketIcon, MegaphoneIcon, CalendarIcon, UsersIcon, MenuIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { GlobalSearch } from '../ui/GlobalSearch';
 import { LocationSelector } from '../ui/LocationSelector';
 import { NotificationBell } from '../ui/NotificationBell';
@@ -21,10 +21,8 @@ const NavItem = ({
   badge,
   icon
 }: NavItemProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
-  return <button onClick={() => navigateTo(href)} className="flex items-center px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-indigo-200">
+  const navigate = useNavigate();
+  return <button onClick={() => navigate(href)} className="flex items-center px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-indigo-200">
       <span className="font-medium text-base">{title}</span>
       {icon && <span className="ml-1.5">{icon}</span>}
       {badge && <span className={`ml-1.5 text-xs font-semibold px-1.5 py-0.5 rounded-full ${badge.color}`}>
@@ -36,9 +34,7 @@ export const MainHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // User state - would come from auth context in a real app
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userProfile, setUserProfile] = useState({
@@ -62,7 +58,7 @@ export const MainHeader = () => {
   // Safe navigation handler
   const handleNavigation = (path: string) => {
     try {
-      navigateTo(path);
+      navigate(path);
       setIsMobileMenuOpen(false);
     } catch (e) {
       console.error('Navigation error:', e);
@@ -123,7 +119,7 @@ export const MainHeader = () => {
         <div className="flex items-center justify-between px-6 py-3 border-b border-gray-100">
           {/* Left Section - Logo & Location */}
           <div className="flex items-center space-x-6">
-            <div className="flex items-center cursor-pointer" onClick={() => navigateTo('/')}>
+            <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
               <span className="font-bold text-xl text-[#FF6B6B]">
                 Go Event City
               </span>
@@ -135,27 +131,27 @@ export const MainHeader = () => {
             <div className="w-64">
               <GlobalSearch />
             </div>
-            {isLoggedIn && <button className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1.5 rounded-md transition-colors duration-150" onClick={() => navigateTo('/events/create')}>
+            {isLoggedIn && <button className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1.5 rounded-md transition-colors duration-150" onClick={() => navigate('/events/create')}>
                 <PlusIcon className="h-4 w-4 mr-1.5" />
                 <span className="text-sm font-medium">Create Event</span>
               </button>}
-            {isLoggedIn && <button className="relative text-gray-500 hover:text-gray-700 p-1.5 rounded-full hover:bg-gray-100 transition-colors duration-150" onClick={() => navigateTo('/social/notifications')} aria-label="Notifications">
+            {isLoggedIn && <button className="relative text-gray-500 hover:text-gray-700 p-1.5 rounded-full hover:bg-gray-100 transition-colors duration-150" onClick={() => navigate('/social/notifications')} aria-label="Notifications">
                 <BellIcon className="h-5 w-5" />
                 {userProfile.notificationCount > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                     {userProfile.notificationCount}
                   </span>}
               </button>}
-            {isLoggedIn && <button className="relative text-gray-500 hover:text-gray-700 p-1.5 rounded-full hover:bg-gray-100 transition-colors duration-150" onClick={() => navigateTo('/social/messages')} aria-label="Messages">
+            {isLoggedIn && <button className="relative text-gray-500 hover:text-gray-700 p-1.5 rounded-full hover:bg-gray-100 transition-colors duration-150" onClick={() => navigate('/social/messages')} aria-label="Messages">
                 <MessageSquareIcon className="h-5 w-5" />
                 {userProfile.unreadMessageCount > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                     {userProfile.unreadMessageCount}
                   </span>}
               </button>}
             {isLoggedIn ? <ProfileDropdown avatar={userProfile.avatar} /> : <div className="flex items-center space-x-3">
-                <button className="text-indigo-600 hover:text-indigo-800 font-medium text-sm px-3 py-2 rounded-md hover:bg-indigo-50 transition-colors duration-150" onClick={() => navigateTo('/login')}>
+                <button className="text-indigo-600 hover:text-indigo-800 font-medium text-sm px-3 py-2 rounded-md hover:bg-indigo-50 transition-colors duration-150" onClick={() => navigate('/login')}>
                   Log In
                 </button>
-                <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md font-medium text-sm shadow-sm transition-colors duration-150" onClick={() => navigateTo('/signup')}>
+                <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md font-medium text-sm shadow-sm transition-colors duration-150" onClick={() => navigate('/signup')}>
                   Sign Up
                 </button>
               </div>}
@@ -175,7 +171,7 @@ export const MainHeader = () => {
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-gray-700 mr-3 p-1.5 hover:bg-gray-100 rounded-md transition-colors duration-150" aria-label="Toggle menu">
             <MenuIcon className="h-5 w-5" />
           </button>
-          <div className="flex items-center cursor-pointer" onClick={() => navigateTo('/')}>
+          <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
             <span className="font-bold text-lg text-[#FF6B6B]">
               Go Event City
             </span>
@@ -183,7 +179,7 @@ export const MainHeader = () => {
         </div>
         <div className="flex items-center space-x-3">
           {/* Add Communities button for mobile */}
-          <button onClick={() => navigateTo('/hubs')} className="bg-indigo-600 text-white px-2.5 py-1.5 rounded-md text-xs font-medium flex items-center shadow-sm hover:bg-indigo-700 transition-colors duration-150">
+          <button onClick={() => navigate('/hubs')} className="bg-indigo-600 text-white px-2.5 py-1.5 rounded-md text-xs font-medium flex items-center shadow-sm hover:bg-indigo-700 transition-colors duration-150">
             <UsersIcon className="h-3 w-3 mr-1.5" />
             Communities
           </button>
@@ -194,7 +190,7 @@ export const MainHeader = () => {
               {userProfile.avatar ? <img src={userProfile.avatar} alt="User profile" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-gray-200 flex items-center justify-center">
                   <UserIcon className="h-4 w-4 text-gray-500" />
                 </div>}
-            </div> : <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-md text-sm font-medium shadow-sm transition-colors duration-150" onClick={() => navigateTo('/login')}>
+            </div> : <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-md text-sm font-medium shadow-sm transition-colors duration-150" onClick={() => navigate('/login')}>
               Login
             </button>}
         </div>
@@ -220,7 +216,7 @@ export const MainHeader = () => {
                     </span>}
                 </button>)}
             {/* Create Event button for mobile */}
-            {isLoggedIn && <button className="flex items-center w-full px-4 py-3 text-left text-gray-700 hover:bg-gray-50 border-t border-gray-100 transition-colors duration-150" onClick={() => navigateTo('/events/create')}>
+            {isLoggedIn && <button className="flex items-center w-full px-4 py-3 text-left text-gray-700 hover:bg-gray-50 border-t border-gray-100 transition-colors duration-150" onClick={() => navigate('/events/create')}>
                 <PlusIcon className="h-5 w-5 mr-3 text-gray-500" />
                 <span className="font-medium text-base">Create Event</span>
               </button>}
@@ -293,7 +289,7 @@ export const MainHeader = () => {
               </h4>
               <div className="flex flex-wrap gap-2">
                 {['Live Music', 'Farmers Market', 'Art Walk', 'Comedy Show', 'Food Festival'].map((term, i) => <button key={i} className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-sm text-gray-700 transition-colors duration-150" onClick={() => {
-              navigateTo(`/search?q=${encodeURIComponent(term)}`);
+              navigate(`/search?q=${encodeURIComponent(term)}`);
               setIsSearchOpen(false);
             }}>
                     {term}

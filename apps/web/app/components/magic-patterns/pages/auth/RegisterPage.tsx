@@ -8,13 +8,11 @@ import React, { useState, Component } from 'react';
  */
 import { SocialLoginButtons } from '../../components/ui/SocialLoginButtons';
 import { PasswordInput } from '../../components/ui/PasswordInput';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { UserIcon, BuildingIcon, MusicIcon, CheckIcon } from 'lucide-react';
 import { CalendarIcon, TicketIcon, UsersIcon } from 'lucide-react';
 export const RegisterPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [accountType, setAccountType] = useState<'fan' | 'venue' | 'performer'>('fan');
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -51,7 +49,7 @@ export const RegisterPage = () => {
       // In a real app, this would submit the form data to an API
       console.log('Form submitted:', formData);
       // Redirect to email verification page
-      navigateTo('/auth/verify-email');
+      navigate('/auth/verify-email');
     }
   };
   const isNextDisabled = () => {
@@ -255,7 +253,7 @@ export const RegisterPage = () => {
             <div className="flex items-center justify-between">
               {step > 1 ? <button type="button" onClick={() => setStep(step - 1)} className="py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   Back
-                </button> : <button type="button" onClick={() => navigateTo('/login')} className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                </button> : <button type="button" onClick={() => navigate('/login')} className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                   Already have an account?
                 </button>}
               <button type="submit" disabled={isNextDisabled()} className={`group relative w-auto flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${isNextDisabled() ? 'bg-indigo-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'}`}>

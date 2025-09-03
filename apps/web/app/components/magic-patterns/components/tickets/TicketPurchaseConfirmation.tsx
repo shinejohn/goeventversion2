@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CheckIcon, TicketIcon, CalendarIcon, MapPinIcon, ClockIcon, CreditCardIcon, UserIcon, LockIcon, ArrowRightIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 interface TicketPurchaseConfirmationProps {
   ticketData: {
     id: string;
@@ -21,9 +21,7 @@ export const TicketPurchaseConfirmation = ({
   ticketData,
   onClose
 }: TicketPurchaseConfirmationProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [purchaseComplete, setPurchaseComplete] = useState(false);
   const [processing, setProcessing] = useState(false);
   const handlePurchase = () => {
@@ -49,7 +47,7 @@ export const TicketPurchaseConfirmation = ({
     });
   };
   const handleViewTicket = () => {
-    navigateTo(`/tickets/${ticketData.id}`);
+    navigate(`/tickets/${ticketData.id}`);
     onClose();
   };
   return <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">

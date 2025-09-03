@@ -1,19 +1,17 @@
 import React, { useEffect } from 'react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { LogOutIcon, CheckIcon } from 'lucide-react';
 const LogoutPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Simulate logging out
   useEffect(() => {
     // In a real app, this would call your auth service to log out
     const logoutTimer = setTimeout(() => {
       // Redirect to home page after logout
-      navigateTo('/');
+      navigate('/');
     }, 2000);
     return () => clearTimeout(logoutTimer);
-  }, [navigateTo]);
+  }, [navigate]);
   return <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8 text-center">
         <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
@@ -32,11 +30,11 @@ const LogoutPage = () => {
           You will be redirected to the home page shortly...
         </p>
         <div className="flex justify-center space-x-4">
-          <button onClick={() => navigateTo('/login')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button onClick={() => navigate('/login')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <LogOutIcon className="h-4 w-4 mr-2" />
             Log In Again
           </button>
-          <button onClick={() => navigateTo('/')} className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button onClick={() => navigate('/')} className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Go to Home
           </button>
         </div>

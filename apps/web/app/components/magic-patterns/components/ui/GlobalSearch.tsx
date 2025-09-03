@@ -7,14 +7,12 @@ import React, { useState, Component } from 'react';
  * Components: None
  */
 import { SearchIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const GlobalSearch = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [searchResults, setSearchResults] = useState<any[]>([]);
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Mock search results based on query
   const getSuggestions = (query: string) => {
     if (!query.trim()) return [];
@@ -70,14 +68,14 @@ export const GlobalSearch = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Searching for:', searchQuery);
-    navigateTo(`/search?q=${encodeURIComponent(searchQuery)}`);
+    navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
     setIsFocused(false);
   };
   const handleSuggestionClick = (item: any) => {
     if (item.type === 'event') {
-      navigateTo(`/event?id=${item.id}`);
+      navigate(`/event?id=${item.id}`);
     } else if (item.type === 'category') {
-      navigateTo(`/events?category=${encodeURIComponent(item.name)}`);
+      navigate(`/events?category=${encodeURIComponent(item.name)}`);
     }
     setIsFocused(false);
   };

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Briefcase, MapPin, Clock, ChevronDown, ChevronUp, Users, Heart, Award, Coffee, Zap, Globe } from 'lucide-react';
 export const CareersPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [openJobId, setOpenJobId] = useState<string | null>(null);
   const toggleJob = (id: string) => {
     if (openJobId === id) {
@@ -123,7 +121,7 @@ export const CareersPage = () => {
             <p className="text-xl text-purple-100 mb-8">
               Help us build the future of community events and local experiences
             </p>
-            <button onClick={() => navigateTo('#open-positions')} className="px-8 py-3 bg-white text-purple-600 font-medium rounded-md hover:bg-purple-50 transition-colors">
+            <button onClick={() => navigate('#open-positions')} className="px-8 py-3 bg-white text-purple-600 font-medium rounded-md hover:bg-purple-50 transition-colors">
               View Open Positions
             </button>
           </div>
@@ -380,7 +378,7 @@ export const CareersPage = () => {
                         </ul>
                       </div>
                       <div className="mt-8">
-                        <button onClick={() => navigateTo(`/careers/apply/${job.id}`)} className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button onClick={() => navigate(`/careers/apply/${job.id}`)} className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                           Apply for this position
                         </button>
                       </div>
@@ -493,7 +491,7 @@ export const CareersPage = () => {
             We're always looking for talented people to join our team. Send us
             your resume and we'll keep you in mind for future opportunities.
           </p>
-          <button onClick={() => navigateTo('/careers/general-application')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
+          <button onClick={() => navigate('/careers/general-application')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
             Submit General Application
           </button>
         </div>

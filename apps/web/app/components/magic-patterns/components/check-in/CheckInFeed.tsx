@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MapPinIcon, ClockIcon, HeartIcon, MessageCircleIcon, ShareIcon, UserIcon, CalendarIcon } from 'lucide-react';
 import { useCheckIn, CheckIn } from '../../context/CheckInContext';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 interface CheckInFeedProps {
   type?: 'user' | 'friends' | 'nearby';
   userId?: string;
@@ -22,9 +22,7 @@ export const CheckInFeed: React.FC<CheckInFeedProps> = ({
     getNearbyCheckIns,
     getUserLocation
   } = useCheckIn();
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -71,10 +69,10 @@ export const CheckInFeed: React.FC<CheckInFeedProps> = ({
     });
   };
   const handleVenueClick = (venueId: string) => {
-    navigateTo(`/venues/${venueId}/${venueId.replace('venue-', '')}`);
+    navigate(`/venues/${venueId}/${venueId.replace('venue-', '')}`);
   };
   const handleEventClick = (eventId: string, venueId: string) => {
-    navigateTo(`/venues/${venueId}/events/${eventId}`);
+    navigate(`/venues/${venueId}/events/${eventId}`);
   };
   if (loading) {
     return <div className={`bg-white rounded-lg shadow-sm p-4 ${className}`}>

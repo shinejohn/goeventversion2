@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Component } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { UserIcon, MessageSquareIcon, HeartIcon, ShareIcon, ImageIcon, SmileIcon, MapPinIcon, CalendarIcon, MusicIcon, BuildingIcon, PlusIcon, XIcon, ChevronDownIcon, BellIcon, UsersIcon, SearchIcon, FilterIcon } from 'lucide-react';
 // Mock data for posts
 const mockPosts = [{
@@ -173,9 +173,7 @@ const userGroups = [{
   isJoined: false
 }];
 const FeedPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [posts, setPosts] = useState(mockPosts);
   const [newPostContent, setNewPostContent] = useState('');
   const [newPostImages, setNewPostImages] = useState<string[]>([]);
@@ -311,7 +309,7 @@ const FeedPage = () => {
                 </div>
               </div>
               <div className="border-t border-gray-200 p-4">
-                <button onClick={() => navigateTo('/profile/alexjohnson')} className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button onClick={() => navigate('/profile/alexjohnson')} className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   View Profile
                 </button>
               </div>
@@ -321,25 +319,25 @@ const FeedPage = () => {
               <div className="p-4">
                 <h3 className="font-medium text-gray-900">Navigation</h3>
                 <nav className="mt-2 space-y-1">
-                  <button onClick={() => navigateTo('/social/feed')} className="w-full flex items-center px-3 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md">
+                  <button onClick={() => navigate('/social/feed')} className="w-full flex items-center px-3 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md">
                     <svg className="mr-3 h-5 w-5 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                     </svg>
                     Feed
                   </button>
-                  <button onClick={() => navigateTo('/social/groups')} className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md">
+                  <button onClick={() => navigate('/social/groups')} className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md">
                     <UsersIcon className="mr-3 h-5 w-5 text-gray-400" />
                     Groups
                   </button>
-                  <button onClick={() => navigateTo('/social/messages')} className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md">
+                  <button onClick={() => navigate('/social/messages')} className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md">
                     <MessageSquareIcon className="mr-3 h-5 w-5 text-gray-400" />
                     Messages
                   </button>
-                  <button onClick={() => navigateTo('/social/events')} className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md">
+                  <button onClick={() => navigate('/social/events')} className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md">
                     <CalendarIcon className="mr-3 h-5 w-5 text-gray-400" />
                     Events
                   </button>
-                  <button onClick={() => navigateTo('/social/saved')} className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md">
+                  <button onClick={() => navigate('/social/saved')} className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md">
                     <svg className="mr-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                     </svg>
@@ -354,7 +352,7 @@ const FeedPage = () => {
                 <h3 className="font-medium text-gray-900">Trending Topics</h3>
                 <div className="mt-2 space-y-3">
                   {trendingTopics.map((topic, index) => <div key={index} className="flex justify-between items-center">
-                      <button onClick={() => navigateTo(`/social/search?q=${encodeURIComponent(topic.tag)}`)} className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                      <button onClick={() => navigate(`/social/search?q=${encodeURIComponent(topic.tag)}`)} className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
                         {topic.tag}
                       </button>
                       <span className="text-xs text-gray-500">
@@ -441,7 +439,7 @@ const FeedPage = () => {
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-medium text-gray-900">
-                          <button onClick={() => navigateTo(post.author.isVenue ? `/venues/${post.author.id}` : post.author.isPerformer ? `/performers/${post.author.id}` : `/profile/${post.author.username.replace('@', '')}`)} className="hover:underline">
+                          <button onClick={() => navigate(post.author.isVenue ? `/venues/${post.author.id}` : post.author.isPerformer ? `/performers/${post.author.id}` : `/profile/${post.author.username.replace('@', '')}`)} className="hover:underline">
                             {post.author.name}
                           </button>
                           {post.author.isVenue && <span className="ml-1 text-xs bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded">
@@ -465,11 +463,11 @@ const FeedPage = () => {
                     </p>
                     {/* Location and Event Tags */}
                     {(post.location || post.event) && <div className="mt-2 flex flex-wrap gap-2">
-                        {post.location && <button onClick={() => navigateTo(`/venues/search?q=${encodeURIComponent(post.location)}`)} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800">
+                        {post.location && <button onClick={() => navigate(`/venues/search?q=${encodeURIComponent(post.location)}`)} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800">
                             <MapPinIcon className="h-3 w-3 mr-1" />
                             {post.location}
                           </button>}
-                        {post.event && <button onClick={() => navigateTo(`/events/${post.event.id}`)} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-indigo-100 text-indigo-800">
+                        {post.event && <button onClick={() => navigate(`/events/${post.event.id}`)} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-indigo-100 text-indigo-800">
                             <CalendarIcon className="h-3 w-3 mr-1" />
                             {post.event.name} • {post.event.date}
                           </button>}
@@ -487,7 +485,7 @@ const FeedPage = () => {
                       <HeartIcon className={`h-5 w-5 ${post.liked ? 'fill-current' : ''}`} />
                       <span className="ml-1">{post.likes}</span>
                     </button>
-                    <button onClick={() => navigateTo(`/social/post/${post.id}`)} className="flex items-center text-sm text-gray-500 hover:text-gray-700">
+                    <button onClick={() => navigate(`/social/post/${post.id}`)} className="flex items-center text-sm text-gray-500 hover:text-gray-700">
                       <MessageSquareIcon className="h-5 w-5" />
                       <span className="ml-1">{post.comments}</span>
                     </button>
@@ -553,7 +551,7 @@ const FeedPage = () => {
                     </div>
                   </div>)}
                 <div className="p-4 text-center">
-                  <button onClick={() => navigateTo('/social/discover')} className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                  <button onClick={() => navigate('/social/discover')} className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
                     View More
                   </button>
                 </div>
@@ -572,7 +570,7 @@ const FeedPage = () => {
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-medium text-gray-900">
-                          <button onClick={() => navigateTo(`/events/${event.id}`)} className="hover:underline">
+                          <button onClick={() => navigate(`/events/${event.id}`)} className="hover:underline">
                             {event.name}
                           </button>
                         </p>
@@ -591,7 +589,7 @@ const FeedPage = () => {
                     </div>
                   </div>)}
                 <div className="p-4 text-center">
-                  <button onClick={() => navigateTo('/events')} className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                  <button onClick={() => navigate('/events')} className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
                     View All Events
                   </button>
                 </div>
@@ -610,7 +608,7 @@ const FeedPage = () => {
                       </div>
                       <div className="ml-3 min-w-0 flex-1">
                         <p className="text-sm font-medium text-gray-900">
-                          <button onClick={() => navigateTo(`/social/groups/${group.id}`)} className="hover:underline">
+                          <button onClick={() => navigate(`/social/groups/${group.id}`)} className="hover:underline">
                             {group.name}
                           </button>
                         </p>
@@ -627,7 +625,7 @@ const FeedPage = () => {
                     </div>
                   </div>)}
                 <div className="p-4 text-center">
-                  <button onClick={() => navigateTo('/social/groups')} className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                  <button onClick={() => navigate('/social/groups')} className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
                     View All Groups
                   </button>
                 </div>

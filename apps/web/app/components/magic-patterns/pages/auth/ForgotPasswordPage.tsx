@@ -7,11 +7,9 @@ import React, { useState, Component } from 'react';
  * Components: None
  */
 import { MailIcon, ArrowLeftIcon, CheckCircleIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const ForgotPasswordPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,7 +34,7 @@ export const ForgotPasswordPage = () => {
   };
   return <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <button onClick={() => navigateTo('/login')} className="flex items-center text-sm text-indigo-600 hover:text-indigo-500 mb-6">
+        <button onClick={() => navigate('/login')} className="flex items-center text-sm text-indigo-600 hover:text-indigo-500 mb-6">
           <ArrowLeftIcon className="h-4 w-4 mr-1" />
           Back to login
         </button>
@@ -99,11 +97,11 @@ export const ForgotPasswordPage = () => {
               </div>
             </div>
             <div className="mt-6 text-center">
-              <button type="button" onClick={() => navigateTo('/login')} className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+              <button type="button" onClick={() => navigate('/login')} className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                 Return to login
               </button>
               <span className="mx-2 text-gray-500">•</span>
-              <button type="button" onClick={() => navigateTo('/register')} className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+              <button type="button" onClick={() => navigate('/register')} className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                 Create new account
               </button>
             </div>

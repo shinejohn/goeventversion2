@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { CalendarIcon, ListIcon, MapPinIcon, UsersIcon, MessageSquareIcon, InfoIcon, ShareIcon, HeartIcon, PlusIcon, ExternalLinkIcon, CheckIcon, TrendingUpIcon, StarIcon, ClockIcon, ChevronDownIcon, FilterIcon, SunIcon, CloudIcon, CloudRainIcon, ArrowRightIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { CalendarTabs } from '../../components/calendar/CalendarTabs';
 import { CalendarSidebar } from '../../components/calendar/CalendarSidebar';
 import { CalendarEngagementBar } from '../../components/calendar/CalendarEngagementBar';
 import { EventCard } from '../../components/calendar/EventCard';
 export default function CalendarDetailPage() {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('calendar');
   const [viewMode, setViewMode] = useState<'month' | 'week' | 'list' | 'map'>('list');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -535,7 +533,7 @@ export default function CalendarDetailPage() {
                             </div>
                           </div>
                           <div className="mt-4 flex justify-end">
-                            <button onClick={() => navigateTo(`/event/${event.id}`)} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none">
+                            <button onClick={() => navigate(`/event/${event.id}`)} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none">
                               View Details
                               <ArrowRightIcon className="ml-1.5 h-4 w-4" />
                             </button>
@@ -685,7 +683,7 @@ export default function CalendarDetailPage() {
                 Find curated calendars for any interest or community
               </p>
             </div>
-            <button onClick={() => navigateTo('/calendars')} className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50">
+            <button onClick={() => navigate('/calendars')} className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50">
               Browse Calendar Marketplace
               <ArrowRightIcon className="ml-2 h-5 w-5" />
             </button>

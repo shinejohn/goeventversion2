@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MapPinIcon, UsersIcon, ClockIcon, TagIcon, XIcon, ChevronDownIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 type FiltersProps = {
   filters: {
     location: {
@@ -22,9 +22,7 @@ export const CalendarFilters = ({
   onFilterChange,
   onClose
 }: FiltersProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [expandedSections, setExpandedSections] = useState({
     location: true,
     followers: true,
@@ -190,7 +188,7 @@ export const CalendarFilters = ({
           </div>}
       </div>
       <div className="mt-6 pt-4 border-t border-gray-200">
-        <button onClick={() => navigateTo('/calendars/marketplace')} className="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-sm">
+        <button onClick={() => navigate('/calendars/marketplace')} className="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-sm">
           Browse Calendars
         </button>
       </div>

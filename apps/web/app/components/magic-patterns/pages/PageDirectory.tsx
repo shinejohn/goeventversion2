@@ -7,7 +7,7 @@ import React, { Component } from 'react';
  * Components: None
  */
 import { CalendarIcon, UserIcon, SettingsIcon, MailIcon, HomeIcon, CheckCircleIcon, FolderIcon, TagIcon, FileTextIcon, ArrowRightIcon, MusicIcon, MapPinIcon, TicketIcon, ShoppingBagIcon, BriefcaseIcon, HeartIcon, ListIcon, GiftIcon, MessageSquareIcon, CameraIcon, BuildingIcon, DollarSignIcon, ClockIcon, StarIcon, UsersIcon, PieChartIcon, AlertCircleIcon, BookmarkIcon, BellIcon, CreditCardIcon, LayoutIcon, MegaphoneIcon, BarChartIcon, InfoIcon, HelpCircleIcon, PhoneIcon, SearchIcon, TruckIcon } from 'lucide-react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 type PageInfo = {
   title: string;
   path: string;
@@ -18,10 +18,7 @@ type PageInfo = {
   icon: React.ReactNode;
 };
 export const PageDirectory = () => {
-  const {
-    navigateTo,
-    currentPath
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Add implementation status to each page
   const implementationStatus = {
     HomePage: true,
@@ -87,7 +84,7 @@ export const PageDirectory = () => {
     }
   };
   const handleNavigate = (path: string) => {
-    navigateTo(path);
+    navigate(path);
   };
   return <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

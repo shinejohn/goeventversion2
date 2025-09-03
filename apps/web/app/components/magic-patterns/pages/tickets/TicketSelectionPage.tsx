@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { TicketIcon, PlusIcon, MinusIcon, InfoIcon, CalendarIcon, MapPinIcon, ClockIcon, ChevronRightIcon, TagIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { ProgressIndicator } from '../../components/booking/ProgressIndicator';
 export const TicketSelectionPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [selectedTickets, setSelectedTickets] = useState([]);
   const [selectedAddons, setSelectedAddons] = useState([]);
   const [promoCode, setPromoCode] = useState('');
@@ -130,7 +128,7 @@ export const TicketSelectionPage = () => {
       total: calculateTotal(),
       isFreeOrder: hasOnlyFreeTickets
     }));
-    navigateTo('/checkout/details');
+    navigate('/checkout/details');
   };
   if (isLoading) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -146,7 +144,7 @@ export const TicketSelectionPage = () => {
             The event you're looking for could not be found or is no longer
             available.
           </p>
-          <button onClick={() => navigateTo('/tickets')} className="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+          <button onClick={() => navigate('/tickets')} className="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
             Browse Events
           </button>
         </div>

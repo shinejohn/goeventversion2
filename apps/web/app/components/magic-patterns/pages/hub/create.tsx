@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { HubBuilderNav } from '../../components/hub-builder/HubBuilderNav';
 import { SetupWizard } from '../../components/hub-builder/SetupWizard';
 import { DesignCustomizer } from '../../components/hub-builder/DesignCustomizer';
@@ -188,9 +188,7 @@ const initialHubData: HubData = {
 };
 type BuilderStep = 'setup' | 'design' | 'sections' | 'permissions' | 'monetization' | 'preview';
 export default function HubCreatePage() {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [hubData, setHubData] = useState<HubData>(initialHubData);
   const [activeStep, setActiveStep] = useState<BuilderStep>('setup');
@@ -284,7 +282,7 @@ export default function HubCreatePage() {
       // This would be an API call in a real application
       await new Promise(resolve => setTimeout(resolve, 2000));
       // Navigate to the newly created hub
-      navigateTo(`/hub/${hubData.slug}`);
+      navigate(`/hub/${hubData.slug}`);
     } catch (error) {
       setIsLoading(false);
       setSaveStatus('error');
@@ -332,7 +330,7 @@ export default function HubCreatePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <button onClick={() => navigateTo('/hubs')} className="text-gray-500 hover:text-gray-700 flex items-center">
+              <button onClick={() => navigate('/hubs')} className="text-gray-500 hover:text-gray-700 flex items-center">
                 <ChevronLeftIcon className="h-5 w-5 mr-1" />
                 Back to Hubs
               </button>

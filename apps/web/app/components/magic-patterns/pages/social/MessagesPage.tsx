@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { SearchIcon, PaperclipIcon, SmileIcon, SendIcon, PhoneIcon, VideoIcon, InfoIcon, MoreHorizontalIcon, ImageIcon, FileIcon, MicIcon, MapPinIcon, CheckIcon, ChevronDownIcon, PlusIcon, UserPlusIcon } from 'lucide-react';
 // Mock data for conversations
 const mockConversations = [{
@@ -135,9 +135,7 @@ const getRandomMessage = (isSelf: boolean) => {
   return messages[Math.floor(Math.random() * messages.length)];
 };
 const MessagesPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [conversations, setConversations] = useState(mockConversations);
   const [selectedConversation, setSelectedConversation] = useState<string | null>(null);
   const [messages, setMessages] = useState<any[]>([]);
@@ -265,7 +263,7 @@ const MessagesPage = () => {
                 <button className="text-sm text-gray-600 font-medium">
                   Unread
                 </button>
-                <button onClick={() => navigateTo('/social/messages/new')} className="text-sm text-indigo-600 font-medium flex items-center">
+                <button onClick={() => navigate('/social/messages/new')} className="text-sm text-indigo-600 font-medium flex items-center">
                   <PlusIcon className="h-4 w-4 mr-1" />
                   New Message
                 </button>
@@ -429,7 +427,7 @@ const MessagesPage = () => {
                 <p className="text-gray-600 mb-6">
                   Select a conversation or start a new one to begin messaging
                 </p>
-                <button onClick={() => navigateTo('/social/messages/new')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button onClick={() => navigate('/social/messages/new')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   <UserPlusIcon className="h-5 w-5 mr-2" />
                   New Conversation
                 </button>

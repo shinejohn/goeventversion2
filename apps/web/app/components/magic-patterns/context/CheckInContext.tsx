@@ -1,5 +1,5 @@
 import React, { useEffect, useState, createContext, useContext, Component } from 'react';
-import { useNavigationContext } from './NavigationContext';
+import { useNavigate } from 'react-router';
 // Types for our check-in system
 export type CheckInLocation = {
   latitude: number;
@@ -87,9 +87,7 @@ export const CheckInProvider: React.FC<{
   const [activeCheckIn, setActiveCheckIn] = useState<CheckIn | null>(null);
   const [plannedEvents, setPlannedEvents] = useState<PlannedEvent[]>([]);
   const [isCheckingIn, setIsCheckingIn] = useState(false);
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Load check-ins from storage on mount
   useEffect(() => {
     // In a real app, this would fetch from an API
@@ -131,13 +129,13 @@ export const CheckInProvider: React.FC<{
   }, [plannedEvents]);
   // Get user's current location
   const getUserLocation = async (): Promise<CheckInLocation | null> => {
-    if (!navigator.geolocation) {
+    if (!typeof navigator !== "undefined" && navigator.geolocation) {
       console.error('Geolocation is not supported by this browser');
       return null;
     }
     try {
       const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
+        typeof navigator !== "undefined" && navigator.geolocation.getCurrentPosition(resolve, reject, {
           enableHighAccuracy: true,
           timeout: 5000,
           maximumAge: 0
@@ -255,17 +253,17 @@ export const CheckInProvider: React.FC<{
     const shareUrl = `https://whensthefun.com/checkin/${checkInId}`;
     switch (platform) {
       case 'facebook':
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`, '_blank');
+        typeof window !== "undefined" && window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`, '_blank');
         break;
       case 'twitter':
-        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
+        typeof window !== "undefined" && window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
         break;
       case 'instagram':
         // Instagram doesn't support direct sharing via URL
         alert('To share on Instagram, please take a screenshot and share it from the Instagram app');
         break;
       case 'copy':
-        navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+        typeof navigator !== "undefined" && navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
         alert('Check-in link copied to clipboard!');
         break;
     }

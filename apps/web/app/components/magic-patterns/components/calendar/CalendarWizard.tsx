@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { InfoIcon, PaletteIcon, DollarSignIcon, EyeIcon, SaveIcon, SendIcon, ClockIcon, CheckIcon, ChevronRightIcon } from 'lucide-react';
 import { BasicInfoStep } from './wizard/BasicInfoStep';
 import { AutomationRulesStep } from './wizard/AutomationRulesStep';
@@ -14,9 +14,7 @@ export const CalendarWizard = ({
   mode,
   initialData
 }: CalendarWizardProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     // Basic Info
@@ -82,13 +80,13 @@ export const CalendarWizard = ({
   const handleNextStep = () => {
     if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1);
-      window.scrollTo(0, 0);
+      typeof window !== "undefined" && window.scrollTo(0, 0);
     }
   };
   const handlePrevStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
-      window.scrollTo(0, 0);
+      typeof window !== "undefined" && window.scrollTo(0, 0);
     }
   };
   const handleSave = (option: 'draft' | 'publish' | 'schedule') => {
@@ -105,7 +103,7 @@ export const CalendarWizard = ({
       setTimeout(() => {
         setSaveSuccess(false);
         if (option === 'publish') {
-          navigateTo(`/calendar/${initialData?.id || 'new-calendar'}`);
+          navigate(`/calendar/${initialData?.id || 'new-calendar'}`);
         }
       }, 2000);
     }, 1500);

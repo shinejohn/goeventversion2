@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CalendarIcon, EyeIcon, UsersIcon, ChevronRightIcon, ExternalLinkIcon, ShareIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 // Mock data for shared calendars
 const mockSharedCalendars = [{
   id: 'cal-1',
@@ -123,9 +123,7 @@ type SharedCalendarsProps = {
 export const SharedCalendars = ({
   userId
 }: SharedCalendarsProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [expandedCalendar, setExpandedCalendar] = useState<string | null>(null);
   const [shareModalOpen, setShareModalOpen] = useState<string | null>(null);
   const toggleCalendarExpansion = (calendarId: string) => {
@@ -242,7 +240,7 @@ export const SharedCalendars = ({
                         </div>
                         <button className="text-xs text-indigo-600 hover:text-indigo-800" onClick={e => {
                   e.stopPropagation();
-                  navigateTo(`/event/${event.id}`);
+                  navigate(`/event/${event.id}`);
                 }}>
                           View
                         </button>
@@ -251,7 +249,7 @@ export const SharedCalendars = ({
                   <div className="mt-4 flex justify-between">
                     <button className="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" onClick={e => {
                 e.stopPropagation();
-                navigateTo(`/calendar/${calendar.id}`);
+                navigate(`/calendar/${calendar.id}`);
               }}>
                       <CalendarIcon className="h-3 w-3 mr-1" />
                       View Full Calendar
@@ -285,7 +283,7 @@ export const SharedCalendars = ({
               <div className="flex items-center">
                 <input type="text" readOnly value={`https://whensthefun.com/calendar/${shareModalOpen}`} className="flex-1 py-2 px-3 border border-gray-300 rounded-l-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                 <button className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm font-medium rounded-r-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onClick={() => {
-              navigator.clipboard.writeText(`https://whensthefun.com/calendar/${shareModalOpen}`);
+              typeof navigator !== "undefined" && navigator.clipboard.writeText(`https://whensthefun.com/calendar/${shareModalOpen}`);
             }}>
                   Copy
                 </button>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Children, Component } from 'react';
 import { CheckCircleIcon, MapPinIcon, CalendarIcon, ClockIcon, StarIcon, UsersIcon, HeartIcon, ShareIcon, BellIcon, MessageCircleIcon, CheckIcon, XIcon, InfoIcon, HomeIcon, ChevronRightIcon, ExternalLinkIcon, DollarSignIcon, PhoneIcon, BuildingIcon, TicketIcon, ImageIcon, LayoutIcon, WifiIcon, HelpCircleIcon, ZapIcon, MicIcon, UtensilsIcon, ShieldIcon, TruckIcon, CameraIcon, AwardIcon, ThumbsUpIcon, BarChartIcon, CalendarDaysIcon, RepeatIcon, UserPlusIcon } from 'lucide-react';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { useCheckIn } from '../../../context/CheckInContext';
 import { mockVenues } from '../../../mockdata/venues';
 import { VenueImageGallery } from '../../../components/venue-profile/VenueImageGallery';
@@ -313,9 +313,7 @@ export default function VenueProfilePage() {
       email: 'sarah@grandballroom.com'
     }
   };
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const {
     activeCheckIn
   } = useCheckIn();
@@ -338,8 +336,8 @@ export default function VenueProfilePage() {
   };
   // Handle share functionality
   const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
+    if (typeof navigator !== "undefined" && navigator.share) {
+      typeof navigator !== "undefined" && navigator.share({
         title: venue.name,
         text: `Check out ${venue.name} on When's The Fun`,
         url: window.location.href
@@ -360,7 +358,7 @@ export default function VenueProfilePage() {
       alert('Please select a date for your event');
       return;
     }
-    navigateTo(`/book-it/venues/${venue.id}/request`);
+    navigate(`/book-it/venues/${venue.id}/request`);
   };
   // Handle mobile booking panel
   const toggleMobileBooking = () => {
@@ -383,16 +381,16 @@ export default function VenueProfilePage() {
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <nav className="flex text-sm text-gray-500">
-            <button onClick={() => navigateTo('/')} className="hover:text-gray-700 flex items-center">
+            <button onClick={() => navigate('/')} className="hover:text-gray-700 flex items-center">
               <HomeIcon className="h-4 w-4 mr-1" />
               Home
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />
-            <button onClick={() => navigateTo('/venues')} className="hover:text-gray-700">
+            <button onClick={() => navigate('/venues')} className="hover:text-gray-700">
               Venues
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />
-            <button onClick={() => navigateTo('/venues/search?type=' + encodeURIComponent(venue.venueType))} className="hover:text-gray-700">
+            <button onClick={() => navigate('/venues/search?type=' + encodeURIComponent(venue.venueType))} className="hover:text-gray-700">
               {venue.venueType}
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />
@@ -1014,7 +1012,7 @@ export default function VenueProfilePage() {
                 <h2 className="text-lg font-medium text-gray-900 mb-3">
                   Similar Venues
                 </h2>
-                <VenueSimilar venues={mockVenues.filter(v => v.id !== venue.id).slice(0, 3)} onVenueClick={venueId => navigateTo(`/venues/${venueId}/venue-name`)} />
+                <VenueSimilar venues={mockVenues.filter(v => v.id !== venue.id).slice(0, 3)} onVenueClick={venueId => navigate(`/venues/${venueId}/venue-name`)} />
               </div>
             </div>
           </div>
@@ -1057,7 +1055,7 @@ export default function VenueProfilePage() {
           </div>
         </div>}
       {/* Back to top button */}
-      <button onClick={() => window.scrollTo({
+      <button onClick={() => typeof window !== "undefined" && window.scrollTo({
       top: 0,
       behavior: 'smooth'
     })} className="fixed bottom-20 right-6 p-2 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

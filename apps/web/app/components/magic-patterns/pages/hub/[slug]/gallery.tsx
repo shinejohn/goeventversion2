@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'react-router-dom';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { MediaGrid } from '../../../components/hub/gallery/MediaGrid';
 import { MediaLightbox } from '../../../components/hub/gallery/MediaLightbox';
 import { MediaUploader } from '../../../components/hub/gallery/MediaUploader';
@@ -11,9 +11,7 @@ export default function HubGalleryPage() {
   const {
     slug
   } = router.params || {};
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [hubData, setHubData] = useState<any>(null);
   const [mediaItems, setMediaItems] = useState<any[]>([]);
@@ -229,7 +227,7 @@ export default function HubGalleryPage() {
     }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center mb-4">
-            <button onClick={() => navigateTo(`/hubs/${slug}`)} className="flex items-center text-white/80 hover:text-white">
+            <button onClick={() => navigate(`/hubs/${slug}`)} className="flex items-center text-white/80 hover:text-white">
               <ArrowLeftIcon className="h-4 w-4 mr-1" />
               Back to Hub
             </button>

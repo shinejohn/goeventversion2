@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { MailIcon, PhoneIcon, UserIcon } from 'lucide-react';
 export const AdvertisingContactPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   return <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white py-16">
@@ -55,7 +53,7 @@ export const AdvertisingContactPage = () => {
                 Browse our advertising packages to learn more about our
                 offerings.
               </p>
-              <button className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700" onClick={() => navigateTo('/advertise/packages')}>
+              <button className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700" onClick={() => navigate('/advertise/packages')}>
                 View Packages
               </button>
             </div>

@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Bell as BellIcon, Calendar as CalendarIcon, CheckCircle as CheckCircleIcon, ChevronDown as ChevronDownIcon, ChevronRight as ChevronRightIcon, Clock as ClockIcon, Edit as EditIcon, Filter as FilterIcon, Grid as GridIcon, Heart as HeartIcon, Image as ImageIcon, List as ListIcon, Map as MapIcon, MapPin as MapPinIcon, MessageSquare as MessageSquareIcon, MoreHorizontal as MoreHorizontalIcon, Music as MusicIcon, Plus as PlusIcon, Search as SearchIcon, Settings as SettingsIcon, ShoppingBag as ShoppingBagIcon, Star as StarIcon, Ticket as TicketIcon, Trash as TrashIcon, TrendingUp as TrendingUpIcon, User as UserIcon, X as XIcon, AlertCircle as AlertCircleIcon, Bookmark as BookmarkIcon, DollarSign as DollarSignIcon, ExternalLink as ExternalLinkIcon } from 'lucide-react';
 import { followedArtists, upcomingShows, exclusiveContent, userActivity } from '../../mockdata/fanDashboard';
 import { PlannedEventsWidget } from '../../components/check-in/PlannedEventsWidget';
 import { CheckInFeed } from '../../components/check-in/CheckInFeed';
 export const FanDashboardPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // State for sorting and filtering
   const [artistSort, setArtistSort] = useState('recently-active');
   const [showView, setShowView] = useState('list');
@@ -200,7 +198,7 @@ export const FanDashboardPage = () => {
                           </span>
                         </div>
                         <div className="mt-4 flex space-x-2">
-                          <button onClick={() => navigateTo(`/performers/${artist.id}`)} className="flex-1 bg-indigo-100 text-indigo-700 hover:bg-indigo-200 py-2 px-3 rounded-md text-sm font-medium">
+                          <button onClick={() => navigate(`/performers/${artist.id}`)} className="flex-1 bg-indigo-100 text-indigo-700 hover:bg-indigo-200 py-2 px-3 rounded-md text-sm font-medium">
                             View Profile
                           </button>
                           <button className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 py-2 px-3 rounded-md text-sm font-medium">
@@ -224,7 +222,7 @@ export const FanDashboardPage = () => {
                     </div>
                     <div className="mt-8 md:mt-0 md:ml-8">
                       <div className="rounded-md shadow">
-                        <button onClick={() => navigateTo('/performers')} className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50">
+                        <button onClick={() => navigate('/performers')} className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50">
                           <SearchIcon className="h-5 w-5 mr-2" />
                           Browse Artists
                         </button>

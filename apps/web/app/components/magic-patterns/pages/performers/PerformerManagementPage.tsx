@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeftIcon, HomeIcon, ChevronRightIcon, PlusIcon, CalendarIcon, MessageCircleIcon, BarChartIcon, SettingsIcon, ClockIcon, CheckCircleIcon, XCircleIcon, EditIcon, TrashIcon, EyeIcon, BellIcon, UsersIcon, DollarSignIcon, ImageIcon, TagIcon, GlobeIcon, ChevronLeftIcon, ChevronDownIcon, SaveIcon, RefreshCwIcon, ShieldIcon, HelpCircleIcon, FileTextIcon, MusicIcon, MicIcon, StarIcon, HeadphonesIcon, MapPinIcon, VideoIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 // Mock data for performer management
 const myPerformers = [{
   id: 'performer-1',
@@ -156,9 +156,7 @@ const analyticsData = {
   }]
 };
 export const PerformerManagementPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('performers');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -166,7 +164,7 @@ export const PerformerManagementPage = () => {
   const [analyticsTimeframe, setAnalyticsTimeframe] = useState('month');
   const [settingsSection, setSettingsSection] = useState('general');
   const handleBackToPerformers = () => {
-    navigateTo('/performers');
+    navigate('/performers');
   };
   const handleAddPerformer = () => {
     // In a real app, this would navigate to a form to add a new performer profile
@@ -177,7 +175,7 @@ export const PerformerManagementPage = () => {
     alert(`Edit performer ${performerId}`);
   };
   const handleViewPerformer = (performerId: string) => {
-    navigateTo(`/performers/${performerId}`);
+    navigate(`/performers/${performerId}`);
   };
   const handleDeletePerformer = (performerId: string) => {
     // In a real app, this would show a confirmation dialog
@@ -251,12 +249,12 @@ export const PerformerManagementPage = () => {
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <nav className="flex text-sm text-gray-500">
-            <button onClick={() => navigateTo('/')} className="hover:text-gray-700 flex items-center">
+            <button onClick={() => navigate('/')} className="hover:text-gray-700 flex items-center">
               <HomeIcon className="h-4 w-4 mr-1" />
               Home
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />
-            <button onClick={() => navigateTo('/performers')} className="hover:text-gray-700">
+            <button onClick={() => navigate('/performers')} className="hover:text-gray-700">
               Performers
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />

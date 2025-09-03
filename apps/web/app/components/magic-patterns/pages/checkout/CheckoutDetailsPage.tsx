@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon, InfoIcon, TicketIcon, CheckIcon, SmartphoneIcon, MailIcon, UserIcon } from 'lucide-react';
 import { ProgressIndicator } from '../../components/booking/ProgressIndicator';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const CheckoutDetailsPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [isOrderSummaryOpen, setIsOrderSummaryOpen] = useState(true);
   const [createAccount, setCreateAccount] = useState(false);
   const [deliveryMethod, setDeliveryMethod] = useState('mobile');
@@ -26,7 +24,7 @@ export const CheckoutDetailsPage = () => {
       setPromoApplied(parsedOrder.promoApplied);
     } else {
       // No order data, redirect back to ticket selection
-      navigateTo('/tickets/select');
+      navigate('/tickets/select');
     }
   }, []);
   // Handle continue to next step
@@ -44,9 +42,9 @@ export const CheckoutDetailsPage = () => {
       }));
       // Navigate to payment or confirmation based on whether it's a free order
       if (isFreeOrder) {
-        navigateTo('/checkout/confirmation');
+        navigate('/checkout/confirmation');
       } else {
-        navigateTo('/checkout/payment');
+        navigate('/checkout/payment');
       }
     }
   };

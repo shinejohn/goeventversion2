@@ -7,7 +7,7 @@ import React, { useState, Component } from 'react';
  * Components: None
  */
 import { SearchIcon, FilterIcon, MapPinIcon, CalendarIcon, UsersIcon, MusicIcon, BuildingIcon, DollarSignIcon, StarIcon, ChevronDownIcon, ArrowRightIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 // Mock venue data
 const venues = [{
   id: 'venue-1',
@@ -103,9 +103,7 @@ type FilterState = {
   availability: string[];
 };
 export const BookVenuePage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [dateRange, setDateRange] = useState('');
   const [guestCount, setGuestCount] = useState('');
@@ -207,7 +205,7 @@ export const BookVenuePage = () => {
     setGuestCount('');
   };
   const handleViewVenue = (venueId: string) => {
-    navigateTo(`/book-it/venues/${venueId}`);
+    navigate(`/book-it/venues/${venueId}`);
   };
   // Count active filters
   const activeFilterCount = Object.values(filters).reduce((count, filterArray) => count + filterArray.length, 0);
@@ -553,7 +551,7 @@ export const BookVenuePage = () => {
               event based on your specific requirements.
             </p>
             <div className="mt-6">
-              <button type="button" className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onClick={() => navigateTo('/book/start')}>
+              <button type="button" className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onClick={() => navigate('/book/start')}>
                 Get Personalized Recommendations
               </button>
             </div>

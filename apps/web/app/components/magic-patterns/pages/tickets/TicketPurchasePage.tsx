@@ -1,11 +1,9 @@
 import React, { useEffect, useState, Children } from 'react';
 import { TicketIcon, CalendarIcon, MapPinIcon, ClockIcon, ChevronLeftIcon, InfoIcon, UserIcon, CreditCardIcon, CheckIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { TicketPurchaseConfirmation } from '../../components/tickets/TicketPurchaseConfirmation';
 export const TicketPurchasePage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [selectedTicketType, setSelectedTicketType] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -80,7 +78,7 @@ export const TicketPurchasePage = () => {
     if (!selectedTicket) return;
     if (!isLoggedIn) {
       // Redirect to login if not logged in
-      navigateTo('/login?redirect=/tickets/purchase');
+      navigate('/login?redirect=/tickets/purchase');
       return;
     }
     setShowConfirmation(true);
@@ -89,7 +87,7 @@ export const TicketPurchasePage = () => {
       {/* Back Button */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <button onClick={() => navigateTo('/events')} className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
+          <button onClick={() => navigate('/events')} className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
             <ChevronLeftIcon className="h-5 w-5 mr-1" />
             Back to Events
           </button>

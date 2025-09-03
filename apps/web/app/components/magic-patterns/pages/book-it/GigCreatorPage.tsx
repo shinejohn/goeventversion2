@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { CalendarIcon, MapPinIcon, MusicIcon, ClockIcon, DollarSignIcon, UsersIcon, CheckCircleIcon, BuildingIcon, InfoIcon, ArrowRightIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const GigCreatorPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -52,7 +50,7 @@ export const GigCreatorPage = () => {
     e.preventDefault();
     console.log('Form submitted:', formData);
     // In a real app, this would send the data to the server
-    navigateTo('/book-it/gig-confirmation');
+    navigate('/book-it/gig-confirmation');
   };
   const eventTypes = ['Wedding', 'Corporate Event', 'Private Party', 'Concert', 'Festival', 'Club Night', 'Restaurant Performance', 'Charity Event', 'Birthday Party', 'Anniversary', 'Holiday Celebration', 'Other'];
   const performerTypes = ['Band', 'Solo Musician', 'DJ', 'Classical Ensemble', 'Jazz Group', 'Cover Band', 'Tribute Act', 'Singer-Songwriter', 'Comedian', 'Magician', 'Dance Group', 'Other'];
@@ -352,7 +350,7 @@ export const GigCreatorPage = () => {
                 {/* Submit Button */}
                 <div className="pt-4 border-t border-gray-200">
                   <div className="flex justify-end">
-                    <button type="button" className="mr-3 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500" onClick={() => navigateTo('/book')}>
+                    <button type="button" className="mr-3 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500" onClick={() => navigate('/book')}>
                       Cancel
                     </button>
                     <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">

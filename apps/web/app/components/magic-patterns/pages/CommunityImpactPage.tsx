@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Heart, Users, Landmark, TrendingUp, Calendar, Briefcase, Leaf, Globe } from 'lucide-react';
 export const CommunityImpactPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const impactStats = [{
     number: '500+',
     label: 'Local Communities Served',
@@ -68,10 +66,10 @@ export const CommunityImpactPage = () => {
               experiences and local partnerships
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button onClick={() => navigateTo('/partner-with-us')} className="px-8 py-3 bg-white text-green-600 font-medium rounded-md hover:bg-green-50 transition-colors">
+              <button onClick={() => navigate('/partner-with-us')} className="px-8 py-3 bg-white text-green-600 font-medium rounded-md hover:bg-green-50 transition-colors">
                 Partner With Us
               </button>
-              <button onClick={() => navigateTo('/community-stories')} className="px-8 py-3 bg-green-700 text-white font-medium rounded-md hover:bg-green-800 transition-colors">
+              <button onClick={() => navigate('/community-stories')} className="px-8 py-3 bg-green-700 text-white font-medium rounded-md hover:bg-green-800 transition-colors">
                 Read Success Stories
               </button>
             </div>
@@ -306,10 +304,10 @@ export const CommunityImpactPage = () => {
             partner with us to create more vibrant, connected communities.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button onClick={() => navigateTo('/partner-with-us')} className="px-8 py-3 bg-white text-green-700 font-medium rounded-md hover:bg-green-50 transition-colors">
+            <button onClick={() => navigate('/partner-with-us')} className="px-8 py-3 bg-white text-green-700 font-medium rounded-md hover:bg-green-50 transition-colors">
               Become a Partner
             </button>
-            <button onClick={() => navigateTo('/contact')} className="px-8 py-3 bg-green-700 text-white font-medium rounded-md hover:bg-green-800 transition-colors border border-white">
+            <button onClick={() => navigate('/contact')} className="px-8 py-3 bg-green-700 text-white font-medium rounded-md hover:bg-green-800 transition-colors border border-white">
               Contact Our Impact Team
             </button>
           </div>

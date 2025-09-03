@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { HomeIcon, CalendarIcon, UserIcon, SettingsIcon, MenuIcon, XIcon, TicketIcon, CompassIcon, ListIcon, MusicIcon, MapPinIcon, ShoppingBagIcon, BriefcaseIcon, HeartIcon, UsersIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const FloatingNav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showDirectoryButton, setShowDirectoryButton] = useState(true);
-  const {
-    navigateTo,
-    currentPath
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -92,7 +89,7 @@ export const FloatingNav = () => {
   }];
   const handleNavigation = (path: string) => {
     try {
-      navigateTo(path);
+      navigate(path);
       setIsOpen(false);
     } catch (error) {
       console.error('Navigation error:', error);

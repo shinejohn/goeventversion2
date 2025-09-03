@@ -10,6 +10,7 @@ import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import type { Route } from '~/types/app/routes/auth/+types/sign-up';
 import { UserIcon, BuildingIcon, MusicIcon, CheckIcon, CalendarIcon, TicketIcon, UsersIcon } from 'lucide-react';
+import { json, redirect } from 'react-router';
 
 // Inline Magic Patterns components
 const SocialLoginButtons = ({ signUp = false }: { signUp?: boolean }) => {
@@ -57,6 +58,19 @@ export const meta = ({ data }: Route.MetaArgs) => {
 const paths = {
   callback: pathsConfig.auth.callback,
   appHome: pathsConfig.app.home,
+};
+
+
+export const action = async ({ request }: Route.ActionArgs) => {
+  const formData = await request.formData();
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
+  
+  // TODO: Implement authentication logic
+  // const supabase = getSupabaseServerClient(request);
+  // const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  
+  return json({ success: true });
 };
 
 export default function SignUpPage(props: Route.ComponentProps) {

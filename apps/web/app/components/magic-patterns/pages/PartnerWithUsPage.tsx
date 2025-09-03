@@ -1,10 +1,8 @@
 import React from 'react';
 import { ArrowRightIcon } from 'lucide-react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const PartnerWithUsPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   return <div className="bg-gray-50 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
@@ -108,7 +106,7 @@ export const PartnerWithUsPage = () => {
                   Contact our partnerships team to discuss how we can work
                   together to achieve your goals.
                 </p>
-                <button onClick={() => navigateTo('/contact')} className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+                <button onClick={() => navigate('/contact')} className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
                   Contact Partnerships Team
                   <ArrowRightIcon className="ml-2 h-5 w-5" />
                 </button>

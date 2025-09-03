@@ -7,7 +7,7 @@ import React, { useState, Component } from 'react';
  * Components: None
  */
 import { ChevronDownIcon, UserIcon, TicketIcon, SettingsIcon, BuildingIcon, HelpCircleIcon, LogOutIcon, CalendarIcon, LayoutIcon, BellIcon, MessageSquareIcon, UsersIcon, HeartIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 type ProfileDropdownProps = {
   avatar: string;
 };
@@ -15,9 +15,7 @@ export const ProfileDropdown = ({
   avatar
 }: ProfileDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Mock user data for navigation
   const username = 'alexjohnson'; // This would come from auth context in a real app
   const menuItems = [{
@@ -70,7 +68,7 @@ export const ProfileDropdown = ({
     href: '/login'
   }];
   const handleMenuItemClick = (href: string) => {
-    navigateTo(href);
+    navigate(href);
     setIsOpen(false);
   };
   return <div className="relative">

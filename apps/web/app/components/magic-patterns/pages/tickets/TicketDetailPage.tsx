@@ -1,6 +1,6 @@
 import React, { useEffect, useState, createElement, Component } from 'react';
 import { ChevronLeftIcon, CalendarIcon, MapPinIcon, ClockIcon, ShareIcon, DownloadIcon, UserIcon, SlidersIcon, ExternalLinkIcon, InfoIcon, TicketIcon, CheckIcon, XIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 const safeDateFormat = (date: Date | null | undefined) => {
   if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
     return 'Date not available';
@@ -51,9 +51,7 @@ const generateQRCodeDataURL = (data: string) => {
   }
 };
 export const TicketDetailPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [isQrEnlarged, setIsQrEnlarged] = useState(false);
   const [brightness, setBrightness] = useState(100);
   const [scanAnimation, setScanAnimation] = useState(false);
@@ -105,7 +103,7 @@ export const TicketDetailPage = () => {
   const safeNavigate = (path: string) => {
     try {
       if (navigateTo && typeof navigateTo === 'function') {
-        navigateTo(path);
+        navigate(path);
       } else {
         window.location.href = path;
       }
@@ -143,7 +141,7 @@ export const TicketDetailPage = () => {
           type: 'text/plain;charset=utf-8'
         });
         const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
+        const link = typeof document !== "undefined" && document.createElement('a');
         link.href = url;
         link.setAttribute('download', `ticket_${ticketData.id}.txt`);
         document.body.appendChild(link);
@@ -155,7 +153,7 @@ export const TicketDetailPage = () => {
         console.error('Blob creation failed:', blobError);
         // Fallback method
         const dataStr = 'data:text/plain;charset=utf-8,' + encodeURIComponent(ticketText);
-        const downloadAnchorNode = document.createElement('a');
+        const downloadAnchorNode = typeof document !== "undefined" && document.createElement('a');
         downloadAnchorNode.setAttribute('href', dataStr);
         downloadAnchorNode.setAttribute('download', `ticket_${ticketData.id}.txt`);
         document.body.appendChild(downloadAnchorNode);
@@ -218,7 +216,7 @@ export const TicketDetailPage = () => {
           <p className="mt-2 text-gray-600">
             The ticket you're looking for could not be found or has expired.
           </p>
-          <button onClick={() => navigateTo('/profile/tickets')} className="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+          <button onClick={() => navigate('/profile/tickets')} className="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
             <ChevronLeftIcon className="h-5 w-5 mr-1" />
             Back to My Tickets
           </button>
@@ -229,7 +227,7 @@ export const TicketDetailPage = () => {
       {/* Back Button */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <button onClick={() => navigateTo('/profile/tickets')} className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
+          <button onClick={() => navigate('/profile/tickets')} className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
             <ChevronLeftIcon className="h-5 w-5 mr-1" />
             Back to My Tickets
           </button>
@@ -408,7 +406,7 @@ export const TicketDetailPage = () => {
 
         {/* Help Link */}
         <div className="text-center mb-8">
-          <button onClick={() => navigateTo('/help')} className="text-indigo-600 hover:text-indigo-800 font-medium">
+          <button onClick={() => navigate('/help')} className="text-indigo-600 hover:text-indigo-800 font-medium">
             Need help with your ticket?
           </button>
         </div>

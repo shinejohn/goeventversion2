@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { MusicIcon, CheckIcon, DollarSignIcon, BarChartIcon, UsersIcon, CalendarIcon, StarIcon, ArrowRightIcon, MapPinIcon, ClockIcon, CheckCircleIcon, TicketIcon, ShoppingBagIcon, GlobeIcon, CalendarDaysIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const PerformerOnboardingPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const handleContinue = () => {
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
     } else {
-      navigateTo('/performers/setup-profile');
+      navigate('/performers/setup-profile');
     }
   };
   return <div className="min-h-screen bg-white">

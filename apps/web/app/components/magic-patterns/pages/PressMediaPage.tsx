@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Download, ExternalLink, Calendar, Mail, FileText, Image, Newspaper, Award } from 'lucide-react';
 export const PressMediaPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const pressReleases = [{
     title: "When's The Fun Expands to 15 New Cities",
     date: 'June 15, 2023',
@@ -100,11 +98,11 @@ export const PressMediaPage = () => {
               professionals
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button onClick={() => navigateTo('/press/kit')} className="px-8 py-3 bg-white text-blue-600 font-medium rounded-md hover:bg-blue-50 transition-colors flex items-center justify-center">
+              <button onClick={() => navigate('/press/kit')} className="px-8 py-3 bg-white text-blue-600 font-medium rounded-md hover:bg-blue-50 transition-colors flex items-center justify-center">
                 <Download className="h-5 w-5 mr-2" />
                 Download Press Kit
               </button>
-              <button onClick={() => navigateTo('/contact')} className="px-8 py-3 bg-blue-700 text-white font-medium rounded-md hover:bg-blue-800 transition-colors flex items-center justify-center">
+              <button onClick={() => navigate('/contact')} className="px-8 py-3 bg-blue-700 text-white font-medium rounded-md hover:bg-blue-800 transition-colors flex items-center justify-center">
                 <Mail className="h-5 w-5 mr-2" />
                 Contact Media Relations
               </button>
@@ -131,14 +129,14 @@ export const PressMediaPage = () => {
                   {release.title}
                 </h3>
                 <p className="text-gray-600 mb-4">{release.excerpt}</p>
-                <button onClick={() => navigateTo(release.link)} className="text-indigo-600 font-medium hover:text-indigo-800 flex items-center">
+                <button onClick={() => navigate(release.link)} className="text-indigo-600 font-medium hover:text-indigo-800 flex items-center">
                   Read Full Release
                   <ExternalLink className="h-4 w-4 ml-1" />
                 </button>
               </div>)}
           </div>
           <div className="mt-8 text-center">
-            <button onClick={() => navigateTo('/press/releases')} className="text-indigo-600 font-medium hover:text-indigo-800 inline-flex items-center">
+            <button onClick={() => navigate('/press/releases')} className="text-indigo-600 font-medium hover:text-indigo-800 inline-flex items-center">
               View All Press Releases
               <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -262,7 +260,7 @@ export const PressMediaPage = () => {
                 </div>
               </div>
               <div className="mt-8">
-                <button onClick={() => navigateTo('/contact')} className="px-6 py-2 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
+                <button onClick={() => navigate('/contact')} className="px-6 py-2 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
                   Contact Us
                 </button>
               </div>

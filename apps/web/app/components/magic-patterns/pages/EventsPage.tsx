@@ -1,11 +1,9 @@
 import React, { useState, createElement } from 'react';
 import { ArrowRightIcon, CalendarIcon, MapPinIcon, MusicIcon, UtensilsIcon, PaletteIcon, UserIcon, HeartIcon, GlassWaterIcon, SunIcon, StarIcon, ClockIcon, ChevronRightIcon, ShareIcon, CheckIcon, SearchIcon } from 'lucide-react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { LocationSelector } from '../components/ui/LocationSelector';
 export const EventsPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [calendarSuccess, setCalendarSuccess] = useState<string | null>(null);
   const [shareSuccess, setShareSuccess] = useState<string | null>(null);
@@ -251,7 +249,7 @@ export const EventsPage = () => {
       type: 'text/calendar;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = typeof document !== "undefined" && document.createElement('a');
     link.href = url;
     link.setAttribute('download', `${event.title.replace(/\s+/g, '_')}.ics`);
     document.body.appendChild(link);
@@ -308,13 +306,13 @@ export const EventsPage = () => {
         <div className="max-w-7xl mx-auto px-3 sm:px-4">
           <div className="flex justify-between items-center mb-3">
             <h2 className="text-xl font-bold text-gray-900">Featured Events</h2>
-            <button className="text-indigo-600 hover:text-indigo-800 flex items-center font-medium text-sm" onClick={() => navigateTo('/calendar')}>
+            <button className="text-indigo-600 hover:text-indigo-800 flex items-center font-medium text-sm" onClick={() => navigate('/calendar')}>
               View calendar
               <ArrowRightIcon className="ml-1 h-4 w-4" />
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {featuredEvents.map(event => <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateTo('/events/' + event.id)}>
+            {featuredEvents.map(event => <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/events/' + event.id)}>
                 <div className="h-48 overflow-hidden">
                   <img src={event.image} alt={event.title} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
                 </div>
@@ -337,7 +335,7 @@ export const EventsPage = () => {
                   </div>
                   <button onClick={e => {
                 e.stopPropagation();
-                navigateTo('/events/' + event.id);
+                navigate('/events/' + event.id);
               }} className="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded-md flex items-center justify-center">
                     See Details
                     <ChevronRightIcon className="h-4 w-4 ml-1" />
@@ -408,7 +406,7 @@ export const EventsPage = () => {
                             <button onClick={e => handleAddToCalendar(event, e)} className="text-gray-500 hover:text-indigo-600 p-1 rounded-full hover:bg-gray-100" title="Add to Calendar">
                               {calendarSuccess === event.id ? <CheckIcon className="h-4 w-4 text-green-500" /> : <CalendarIcon className="h-4 w-4" />}
                             </button>
-                            <button onClick={() => navigateTo('/events/' + event.id)} className="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full hover:bg-indigo-200 flex items-center">
+                            <button onClick={() => navigate('/events/' + event.id)} className="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full hover:bg-indigo-200 flex items-center">
                               See Details
                               <ChevronRightIcon className="h-3 w-3 ml-1" />
                             </button>
@@ -441,10 +439,10 @@ export const EventsPage = () => {
             </p>
           </div>
           <div className="flex gap-4">
-            <button className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-sm" onClick={() => navigateTo('/calendar')}>
+            <button className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-sm" onClick={() => navigate('/calendar')}>
               View Calendar
             </button>
-            <button className="px-6 py-2 bg-white hover:bg-gray-50 text-gray-800 font-medium rounded-md shadow-sm border border-gray-300" onClick={() => navigateTo('/events/submit')}>
+            <button className="px-6 py-2 bg-white hover:bg-gray-50 text-gray-800 font-medium rounded-md shadow-sm border border-gray-300" onClick={() => navigate('/events/submit')}>
               Submit Event
             </button>
           </div>

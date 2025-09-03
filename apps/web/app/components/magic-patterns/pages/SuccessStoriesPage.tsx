@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Award, Star, Calendar, MapPin, Music, Users, TrendingUp, ArrowRight, Quote, Heart, PlayCircle } from 'lucide-react';
 export const SuccessStoriesPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const featuredStories = [{
     title: 'How Sunset Music Festival Increased Attendance by 40%',
     category: 'Event Organizer',
@@ -128,10 +126,10 @@ export const SuccessStoriesPage = () => {
               events, venues, and performances
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button onClick={() => navigateTo('/success-stories/categories')} className="px-8 py-3 bg-white text-purple-600 font-medium rounded-md hover:bg-purple-50 transition-colors">
+              <button onClick={() => navigate('/success-stories/categories')} className="px-8 py-3 bg-white text-purple-600 font-medium rounded-md hover:bg-purple-50 transition-colors">
                 Browse Stories
               </button>
-              <button onClick={() => navigateTo('/contact')} className="px-8 py-3 bg-purple-700 text-white font-medium rounded-md hover:bg-purple-800 transition-colors">
+              <button onClick={() => navigate('/contact')} className="px-8 py-3 bg-purple-700 text-white font-medium rounded-md hover:bg-purple-800 transition-colors">
                 Share Your Story
               </button>
             </div>
@@ -151,7 +149,7 @@ export const SuccessStoriesPage = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {featuredStories.map((story, index) => <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateTo(story.path)}>
+            {featuredStories.map((story, index) => <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate(story.path)}>
                 <div className="h-48 overflow-hidden relative">
                   <img src={story.image} alt={story.title} className="w-full h-full object-cover" />
                   <div className="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-medium px-2 py-1 rounded-full">
@@ -165,7 +163,7 @@ export const SuccessStoriesPage = () => {
                   <p className="text-gray-600 mb-4">{story.description}</p>
                   <button className="text-indigo-600 font-medium hover:text-indigo-800 flex items-center" onClick={e => {
                 e.stopPropagation();
-                navigateTo(story.path);
+                navigate(story.path);
               }}>
                     Read Full Story
                     <ArrowRight className="ml-1 h-4 w-4" />
@@ -244,7 +242,7 @@ export const SuccessStoriesPage = () => {
                   </div>
                 </div>
               </div>
-              <button onClick={() => navigateTo('/success-stories/emerald-room')} className="mt-6 px-6 py-2 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors">
+              <button onClick={() => navigate('/success-stories/emerald-room')} className="mt-6 px-6 py-2 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors">
                 Read Full Case Study
               </button>
             </div>
@@ -272,7 +270,7 @@ export const SuccessStoriesPage = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {categories.map((category, index) => <div key={index} className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateTo(category.path)}>
+            {categories.map((category, index) => <div key={index} className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate(category.path)}>
                 <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 mb-4">
                   {category.icon}
                 </div>
@@ -327,7 +325,7 @@ export const SuccessStoriesPage = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {caseStudies.map((study, index) => <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateTo(study.path)}>
+            {caseStudies.map((study, index) => <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate(study.path)}>
                 <div className="h-48 overflow-hidden relative">
                   <img src={study.image} alt={study.title} className="w-full h-full object-cover" />
                   <div className="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-medium px-2 py-1 rounded-full">
@@ -354,7 +352,7 @@ export const SuccessStoriesPage = () => {
                   </div>
                   <button className="text-indigo-600 font-medium hover:text-indigo-800 flex items-center" onClick={e => {
                 e.stopPropagation();
-                navigateTo(study.path);
+                navigate(study.path);
               }}>
                     Read Case Study
                     <ArrowRight className="ml-1 h-4 w-4" />
@@ -371,13 +369,13 @@ export const SuccessStoriesPage = () => {
             <h2 className="text-2xl font-bold text-gray-900">
               Recent Success Stories
             </h2>
-            <button onClick={() => navigateTo('/success-stories/all')} className="text-indigo-600 font-medium hover:text-indigo-800 flex items-center">
+            <button onClick={() => navigate('/success-stories/all')} className="text-indigo-600 font-medium hover:text-indigo-800 flex items-center">
               View All Stories
               <ArrowRight className="ml-1 h-4 w-4" />
             </button>
           </div>
           <div className="space-y-4">
-            {recentStories.map((story, index) => <div key={index} className="bg-white p-4 rounded-lg border border-gray-200 hover:border-indigo-300 hover:shadow-sm transition-all cursor-pointer flex items-center justify-between" onClick={() => navigateTo(story.path)}>
+            {recentStories.map((story, index) => <div key={index} className="bg-white p-4 rounded-lg border border-gray-200 hover:border-indigo-300 hover:shadow-sm transition-all cursor-pointer flex items-center justify-between" onClick={() => navigate(story.path)}>
                 <div>
                   <div className="text-sm text-indigo-600 mb-1">
                     {story.category}
@@ -406,7 +404,7 @@ export const SuccessStoriesPage = () => {
             event. Share your story with us and you might be featured on our
             website!
           </p>
-          <button onClick={() => navigateTo('/contact')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
+          <button onClick={() => navigate('/contact')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
             Share Your Story
           </button>
         </div>

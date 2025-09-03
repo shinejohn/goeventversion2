@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Mail, Phone, MapPin, MessageSquare, HelpCircle, Send, AlertCircle, CheckCircle } from 'lucide-react';
 export const ContactUsPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -451,7 +449,7 @@ export const ContactUsPage = () => {
               </div>)}
           </div>
           <div className="mt-8 text-center">
-            <button onClick={() => navigateTo('/faq')} className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+            <button onClick={() => navigate('/faq')} className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
               View All FAQs
             </button>
           </div>
@@ -466,11 +464,11 @@ export const ContactUsPage = () => {
             detailed information
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button onClick={() => navigateTo('/help')} className="px-8 py-3 bg-white text-blue-700 font-medium rounded-md hover:bg-blue-50 transition-colors flex items-center justify-center">
+            <button onClick={() => navigate('/help')} className="px-8 py-3 bg-white text-blue-700 font-medium rounded-md hover:bg-blue-50 transition-colors flex items-center justify-center">
               <HelpCircle className="h-5 w-5 mr-2" />
               Help Center
             </button>
-            <button onClick={() => navigateTo('/support/chat')} className="px-8 py-3 bg-blue-800 text-white font-medium rounded-md hover:bg-blue-900 transition-colors border border-blue-600 flex items-center justify-center">
+            <button onClick={() => navigate('/support/chat')} className="px-8 py-3 bg-blue-800 text-white font-medium rounded-md hover:bg-blue-900 transition-colors border border-blue-600 flex items-center justify-center">
               <MessageSquare className="h-5 w-5 mr-2" />
               Live Chat Support
             </button>

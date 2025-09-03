@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { SearchIcon, MapPinIcon, SlidersIcon, TrendingUpIcon, UsersIcon, ClockIcon, PlusCircleIcon, XIcon, ChevronDownIcon, CheckIcon, StarIcon, CalendarIcon, FilterIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { CalendarCard } from '../../components/calendars/CalendarCard';
 import { CalendarFilters } from '../../components/calendars/CalendarFilters';
 import { FeaturedCalendars } from '../../components/calendars/FeaturedCalendars';
 export const CalendarMarketplacePage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [showFilters, setShowFilters] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortOption, setSortOption] = useState('trending');

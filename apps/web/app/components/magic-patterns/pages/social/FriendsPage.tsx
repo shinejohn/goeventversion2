@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { UserPlusIcon, UserIcon, SearchIcon, UsersIcon, UserMinusIcon, MessageCircleIcon, MailIcon, ChevronDownIcon, FilterIcon } from 'lucide-react';
 // Mock data for friends
 const mockFriends = [{
@@ -123,9 +123,7 @@ const mockSentRequests = [{
   status: 'requested'
 }];
 const FriendsPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [friends, setFriends] = useState(mockFriends);
@@ -299,10 +297,10 @@ const FriendsPage = () => {
                             {friend.lastActive}
                           </div>
                           <div className="mt-2 flex space-x-2">
-                            <button onClick={() => navigateTo(`/profile/${friend.username}`)} className="px-2 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
+                            <button onClick={() => navigate(`/profile/${friend.username}`)} className="px-2 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
                               View Profile
                             </button>
-                            <button onClick={() => navigateTo(`/social/messages/${friend.id}`)} className="px-2 py-1 text-xs font-medium text-indigo-700 bg-indigo-100 rounded-md hover:bg-indigo-200">
+                            <button onClick={() => navigate(`/social/messages/${friend.id}`)} className="px-2 py-1 text-xs font-medium text-indigo-700 bg-indigo-100 rounded-md hover:bg-indigo-200">
                               Message
                             </button>
                             <div className="relative ml-auto">
@@ -350,7 +348,7 @@ const FriendsPage = () => {
                             <button onClick={() => handleDeclineRequest(request.id)} className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200">
                               Decline
                             </button>
-                            <button onClick={() => navigateTo(`/profile/${request.username}`)} className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
+                            <button onClick={() => navigate(`/profile/${request.username}`)} className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
                               View Profile
                             </button>
                           </div>
@@ -389,7 +387,7 @@ const FriendsPage = () => {
                               <UserPlusIcon className="h-4 w-4 mr-1 inline-block" />
                               Add Friend
                             </button>
-                            <button onClick={() => navigateTo(`/profile/${suggestion.username}`)} className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
+                            <button onClick={() => navigate(`/profile/${suggestion.username}`)} className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
                               View Profile
                             </button>
                           </div>
@@ -428,7 +426,7 @@ const FriendsPage = () => {
                             <button onClick={() => handleCancelRequest(request.id)} className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200">
                               Cancel Request
                             </button>
-                            <button onClick={() => navigateTo(`/profile/${request.username}`)} className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
+                            <button onClick={() => navigate(`/profile/${request.username}`)} className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
                               View Profile
                             </button>
                           </div>

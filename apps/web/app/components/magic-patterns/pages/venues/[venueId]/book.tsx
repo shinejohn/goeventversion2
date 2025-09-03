@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { mockVenues } from '../../../mockdata/venues';
 import { ArrowLeftIcon, CheckIcon, ChevronRightIcon, AlertCircleIcon } from 'lucide-react';
 import { EventDetailsForm } from '../../../components/booking-form/EventDetailsForm';
@@ -17,9 +17,7 @@ const mockUser = {
   organization: 'Johnson & Associates'
 };
 export default function VenueBookingPage() {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [venue, setVenue] = useState<any>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -314,11 +312,11 @@ export default function VenueBookingPage() {
   };
   // Navigation between steps
   const handleNextStep = () => {
-    window.scrollTo(0, 0);
+    typeof window !== "undefined" && window.scrollTo(0, 0);
     setCurrentStep(prev => Math.min(prev + 1, 5));
   };
   const handlePrevStep = () => {
-    window.scrollTo(0, 0);
+    typeof window !== "undefined" && window.scrollTo(0, 0);
     setCurrentStep(prev => Math.max(prev - 1, 1));
   };
   // Form submission
@@ -330,17 +328,17 @@ export default function VenueBookingPage() {
     setBookingReference(reference);
     // Show confirmation
     setIsSubmitted(true);
-    window.scrollTo(0, 0);
+    typeof window !== "undefined" && window.scrollTo(0, 0);
   };
   // Handle cancel
   const handleCancel = () => {
     if (window.confirm('Are you sure you want to cancel? Your booking information will be lost.')) {
-      navigateTo(`/venues/${venue.id}/${venue.name.toLowerCase().replace(/\s+/g, '-')}`);
+      navigate(`/venues/${venue.id}/${venue.name.toLowerCase().replace(/\s+/g, '-')}`);
     }
   };
   // Return to venue page
   const handleReturnToVenue = () => {
-    navigateTo(`/venues/${venue.id}/${venue.name.toLowerCase().replace(/\s+/g, '-')}`);
+    navigate(`/venues/${venue.id}/${venue.name.toLowerCase().replace(/\s+/g, '-')}`);
   };
   // Validate current step
   const validateStep = (step: number): boolean => {
@@ -392,7 +390,7 @@ export default function VenueBookingPage() {
             Something went wrong
           </h2>
           <p className="text-gray-600 mb-6">{error}</p>
-          <button onClick={() => navigateTo('/venues')} className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+          <button onClick={() => navigate('/venues')} className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
             Return to Venues
           </button>
         </div>
@@ -431,7 +429,7 @@ export default function VenueBookingPage() {
           </div>}
         {/* Form Container */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-          {isSubmitted ? <BookingConfirmation venue={venue} formData={formData} pricing={pricing} bookingReference={bookingReference} onViewBookings={() => navigateTo('/my/bookings')} onBrowseVenues={() => navigateTo('/venues')} /> : <>
+          {isSubmitted ? <BookingConfirmation venue={venue} formData={formData} pricing={pricing} bookingReference={bookingReference} onViewBookings={() => navigate('/my/bookings')} onBrowseVenues={() => navigate('/venues')} /> : <>
               {/* Step 1: Event Details */}
               {currentStep === 1 && <EventDetailsForm formData={formData} onInputChange={handleInputChange} onAlternativeDateChange={handleAlternativeDateChange} onNextStep={handleNextStep} isValid={validateStep(1)} />}
               {/* Step 2: Space & Setup */}

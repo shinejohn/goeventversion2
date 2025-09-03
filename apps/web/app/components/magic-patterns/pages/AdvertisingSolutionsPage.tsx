@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Megaphone, Target, BarChart, Users, Globe, Mail, Calendar, Star, CheckCircle, Award, Zap, TrendingUp } from 'lucide-react';
 export const AdvertisingSolutionsPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const adSolutions = [{
     title: 'Featured Events',
     description: 'Showcase your event at the top of search results and on the homepage to maximize visibility.',
@@ -131,10 +129,10 @@ export const AdvertisingSolutionsPage = () => {
               business
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button onClick={() => navigateTo('/advertise/packages')} className="px-8 py-3 bg-white text-orange-600 font-medium rounded-md hover:bg-orange-50 transition-colors">
+              <button onClick={() => navigate('/advertise/packages')} className="px-8 py-3 bg-white text-orange-600 font-medium rounded-md hover:bg-orange-50 transition-colors">
                 View Pricing
               </button>
-              <button onClick={() => navigateTo('/advertise/contact')} className="px-8 py-3 bg-orange-700 text-white font-medium rounded-md hover:bg-orange-800 transition-colors">
+              <button onClick={() => navigate('/advertise/contact')} className="px-8 py-3 bg-orange-700 text-white font-medium rounded-md hover:bg-orange-800 transition-colors">
                 Contact Sales
               </button>
             </div>
@@ -260,7 +258,7 @@ export const AdvertisingSolutionsPage = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {adTypes.map((type, index) => <div key={index} className="group relative h-64 rounded-lg overflow-hidden shadow-md cursor-pointer" onClick={() => navigateTo(type.path)}>
+            {adTypes.map((type, index) => <div key={index} className="group relative h-64 rounded-lg overflow-hidden shadow-md cursor-pointer" onClick={() => navigate(type.path)}>
                 <img src={type.image} alt={type.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 right-6">
@@ -385,7 +383,7 @@ export const AdvertisingSolutionsPage = () => {
                         <span>{feature}</span>
                       </li>)}
                   </ul>
-                  <button onClick={() => navigateTo('/advertise/packages')} className={`w-full py-3 px-4 rounded-md font-medium ${plan.recommended ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}>
+                  <button onClick={() => navigate('/advertise/packages')} className={`w-full py-3 px-4 rounded-md font-medium ${plan.recommended ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}>
                     {plan.ctaText}
                   </button>
                 </div>
@@ -394,7 +392,7 @@ export const AdvertisingSolutionsPage = () => {
           <div className="text-center mt-8">
             <p className="text-gray-600">
               Need a custom solution?{' '}
-              <button onClick={() => navigateTo('/advertise/contact')} className="text-indigo-600 font-medium hover:text-indigo-800">
+              <button onClick={() => navigate('/advertise/contact')} className="text-indigo-600 font-medium hover:text-indigo-800">
                 Contact our sales team
               </button>
             </p>
@@ -472,10 +470,10 @@ export const AdvertisingSolutionsPage = () => {
             event-goers
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button onClick={() => navigateTo('/advertise/packages')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
+            <button onClick={() => navigate('/advertise/packages')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
               View Pricing
             </button>
-            <button onClick={() => navigateTo('/advertise/contact')} className="px-8 py-3 bg-indigo-800 text-white font-medium rounded-md hover:bg-indigo-900 transition-colors border border-indigo-600">
+            <button onClick={() => navigate('/advertise/contact')} className="px-8 py-3 bg-indigo-800 text-white font-medium rounded-md hover:bg-indigo-900 transition-colors border border-indigo-600">
               Contact Sales
             </button>
           </div>

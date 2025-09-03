@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircleIcon, CalendarIcon, ClockIcon, UsersIcon, MapPinIcon, MailIcon, PhoneIcon, ArrowRightIcon, PrinterIcon, DownloadIcon, CalendarDaysIcon } from 'lucide-react';
+import { CheckCircleIcon, CalendarIcon, ClockIcon, UsersIcon, MapPinIcon, MailIcon, PhoneIcon, ArrowRightIcon, PrinterIcon, DownloadIcon, CalendarDaysIcon, Building2Icon as BuildingIcon, DollarSignIcon } from 'lucide-react';
 type BookingConfirmationProps = {
   venue: any;
   formData: any;

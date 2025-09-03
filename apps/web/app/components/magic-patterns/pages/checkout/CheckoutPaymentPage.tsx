@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon, InfoIcon, LockIcon, CreditCardIcon, HomeIcon, CheckIcon, MapPinIcon, DownloadIcon, PrinterIcon } from 'lucide-react';
 import { ProgressIndicator } from '../../components/booking/ProgressIndicator';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Invoice } from '../../components/checkout/Invoice';
 export const CheckoutPaymentPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [isOrderSummaryOpen, setIsOrderSummaryOpen] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [sameAsContact, setSameAsContact] = useState(true);
@@ -30,7 +28,7 @@ export const CheckoutPaymentPage = () => {
       }
     } else {
       // Missing data, redirect back
-      navigateTo('/tickets/select');
+      navigate('/tickets/select');
     }
   }, []);
   const handleCompletePurchase = e => {
@@ -50,7 +48,7 @@ export const CheckoutPaymentPage = () => {
     }));
     // Simulate payment processing delay
     setTimeout(() => {
-      navigateTo('/checkout/confirmation');
+      navigate('/checkout/confirmation');
     }, 2000);
   };
   // Calculate total with all fees

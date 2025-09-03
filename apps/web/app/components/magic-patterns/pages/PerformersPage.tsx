@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { ArrowRightIcon, MusicIcon, CalendarIcon, MapPinIcon, StarIcon, SearchIcon } from 'lucide-react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { LocationSelector } from '../components/ui/LocationSelector';
 export const PerformersPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -122,7 +120,7 @@ export const PerformersPage = () => {
             </p>
             <div className="mt-8 flex justify-center">
               <div className="inline-flex">
-                <button onClick={() => navigateTo('/performers/join')} className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700">
+                <button onClick={() => navigate('/performers/join')} className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700">
                   Join as Performer
                 </button>
               </div>
@@ -136,7 +134,7 @@ export const PerformersPage = () => {
           Browse Performers By Type
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {performerCategories.map((category, index) => <div key={index} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigateTo(category.path)}>
+          {performerCategories.map((category, index) => <div key={index} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate(category.path)}>
               <h3 className="text-lg font-bold text-gray-900">
                 {category.title}
               </h3>
@@ -157,13 +155,13 @@ export const PerformersPage = () => {
             <h2 className="text-2xl font-bold text-gray-900">
               Featured Performers
             </h2>
-            <button className="text-purple-600 hover:text-purple-800 flex items-center font-medium" onClick={() => navigateTo('/performers')}>
+            <button className="text-purple-600 hover:text-purple-800 flex items-center font-medium" onClick={() => navigate('/performers')}>
               View all performers
               <ArrowRightIcon className="ml-1 h-4 w-4" />
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredPerformers.map(performer => <div key={performer.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateTo(`/performers/${performer.id}`)}>
+            {featuredPerformers.map(performer => <div key={performer.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate(`/performers/${performer.id}`)}>
                 <div className="h-48 overflow-hidden">
                   <img src={performer.image} alt={performer.name} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
                 </div>
@@ -205,10 +203,10 @@ export const PerformersPage = () => {
           your audience
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <button className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-md shadow-sm" onClick={() => navigateTo('/performers/join')}>
+          <button className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-md shadow-sm" onClick={() => navigate('/performers/join')}>
             Create Performer Profile
           </button>
-          <button className="px-8 py-3 bg-white hover:bg-gray-50 text-gray-800 font-medium rounded-md shadow-sm border border-gray-300" onClick={() => navigateTo('/book/performer')}>
+          <button className="px-8 py-3 bg-white hover:bg-gray-50 text-gray-800 font-medium rounded-md shadow-sm border border-gray-300" onClick={() => navigate('/book/performer')}>
             Find Gigs
           </button>
         </div>

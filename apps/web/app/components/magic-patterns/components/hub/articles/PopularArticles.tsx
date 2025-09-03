@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { TrendingUpIcon, EyeIcon, ClockIcon } from 'lucide-react';
 type PopularArticlesProps = {
   articles: any[];
@@ -9,9 +9,7 @@ export const PopularArticles = ({
   articles,
   hubSlug
 }: PopularArticlesProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Format the date
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -22,7 +20,7 @@ export const PopularArticles = ({
   };
   // Navigate to article detail
   const handleViewArticle = (articleId: string) => {
-    navigateTo(`/hub/${hubSlug}/articles/${articleId}`);
+    navigate(`/hub/${hubSlug}/articles/${articleId}`);
   };
   if (!articles.length) return null;
   return <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
@@ -63,7 +61,7 @@ export const PopularArticles = ({
             </div>
           </div>)}
       </div>
-      <button onClick={() => navigateTo(`/hub/${hubSlug}/articles/popular`)} className="mt-4 w-full py-2 text-sm text-indigo-600 hover:text-indigo-800 font-medium text-center">
+      <button onClick={() => navigate(`/hub/${hubSlug}/articles/popular`)} className="mt-4 w-full py-2 text-sm text-indigo-600 hover:text-indigo-800 font-medium text-center">
         View All Popular Articles
       </button>
     </div>;

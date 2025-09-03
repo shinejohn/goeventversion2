@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SearchIcon, FilterIcon, CalendarIcon, MapPinIcon, ClockIcon, ChevronDownIcon, GridIcon, ListIcon, TagIcon, StarIcon, XIcon, CheckIcon, HomeIcon, ChevronRightIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 // Types
 type ViewMode = 'grid' | 'list';
 type SortOption = 'recommended' | 'price_low' | 'price_high' | 'date' | 'popularity';
@@ -9,9 +9,7 @@ type PriceRange = {
   max: number;
 };
 export const TicketMarketplacePage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [sortOption, setSortOption] = useState<SortOption>('recommended');
   const [searchQuery, setSearchQuery] = useState('');
@@ -184,12 +182,12 @@ export const TicketMarketplacePage = () => {
       {/* Breadcrumbs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <nav className="flex text-sm text-gray-500">
-          <button onClick={() => navigateTo('/')} className="hover:text-gray-700 flex items-center">
+          <button onClick={() => navigate('/')} className="hover:text-gray-700 flex items-center">
             <HomeIcon className="h-4 w-4 mr-1" />
             Home
           </button>
           <ChevronRightIcon className="h-4 w-4 mx-2" />
-          <button onClick={() => navigateTo('/tickets')} className="hover:text-gray-700">
+          <button onClick={() => navigate('/tickets')} className="hover:text-gray-700">
             Tickets
           </button>
           <ChevronRightIcon className="h-4 w-4 mx-2" />
@@ -322,7 +320,7 @@ export const TicketMarketplacePage = () => {
                     </div>
                   </div>)}
               </div> : filteredTickets.length > 0 ? viewMode === 'grid' ? <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {filteredTickets.map((ticket: any) => <div key={ticket.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer border border-gray-200" onClick={() => navigateTo(`/tickets/${ticket.id}/select`)}>
+                  {filteredTickets.map((ticket: any) => <div key={ticket.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer border border-gray-200" onClick={() => navigate(`/tickets/${ticket.id}/select`)}>
                       <div className="relative h-48 overflow-hidden">
                         <img src={ticket.image} alt={ticket.eventName} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
                         {ticket.featured && <div className="absolute top-0 left-0 m-2">
@@ -370,7 +368,7 @@ export const TicketMarketplacePage = () => {
                           </div>
                           <button onClick={e => {
                     e.stopPropagation();
-                    navigateTo(`/tickets/${ticket.id}/select`);
+                    navigate(`/tickets/${ticket.id}/select`);
                   }} className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
                             Get Tickets
                           </button>
@@ -378,7 +376,7 @@ export const TicketMarketplacePage = () => {
                       </div>
                     </div>)}
                 </div> : <div className="space-y-4">
-                  {filteredTickets.map((ticket: any) => <div key={ticket.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer border border-gray-200" onClick={() => navigateTo(`/tickets/${ticket.id}/select`)}>
+                  {filteredTickets.map((ticket: any) => <div key={ticket.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer border border-gray-200" onClick={() => navigate(`/tickets/${ticket.id}/select`)}>
                       <div className="p-4 sm:p-6 flex flex-col sm:flex-row">
                         {/* Event Image */}
                         <div className="sm:w-1/4 mb-4 sm:mb-0 sm:mr-6">
@@ -452,7 +450,7 @@ export const TicketMarketplacePage = () => {
                               </div>
                               <button onClick={e => {
                         e.stopPropagation();
-                        navigateTo(`/tickets/${ticket.id}/select`);
+                        navigate(`/tickets/${ticket.id}/select`);
                       }} className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
                                 Get Tickets
                               </button>
@@ -490,7 +488,7 @@ export const TicketMarketplacePage = () => {
         </div>
       </div>
       {/* Back to top button */}
-      <button onClick={() => window.scrollTo({
+      <button onClick={() => typeof window !== "undefined" && window.scrollTo({
       top: 0,
       behavior: 'smooth'
     })} className="fixed bottom-6 right-6 p-2 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

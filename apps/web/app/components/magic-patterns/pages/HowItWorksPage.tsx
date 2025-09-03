@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Search, Calendar, CreditCard, Users, MapPin, Music, Ticket, ShoppingBag, Megaphone } from 'lucide-react';
 export const HowItWorksPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const features = [{
     title: 'Discover Events',
     description: "Browse local events, filter by category, date, or location to find exactly what you're looking for.",
@@ -84,10 +82,10 @@ export const HowItWorksPage = () => {
               events in your community
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button onClick={() => navigateTo('/signup')} className="px-8 py-3 bg-white text-indigo-600 font-medium rounded-md hover:bg-indigo-50 transition-colors">
+              <button onClick={() => navigate('/signup')} className="px-8 py-3 bg-white text-indigo-600 font-medium rounded-md hover:bg-indigo-50 transition-colors">
                 Get Started
               </button>
-              <button onClick={() => navigateTo('/events')} className="px-8 py-3 bg-indigo-700 text-white font-medium rounded-md hover:bg-indigo-800 transition-colors">
+              <button onClick={() => navigate('/events')} className="px-8 py-3 bg-indigo-700 text-white font-medium rounded-md hover:bg-indigo-800 transition-colors">
                 Browse Events
               </button>
             </div>
@@ -113,7 +111,7 @@ export const HowItWorksPage = () => {
                   {feature.title}
                 </h3>
                 <p className="text-gray-600 mb-4">{feature.description}</p>
-                <button onClick={() => navigateTo(feature.link)} className="text-indigo-600 font-medium hover:text-indigo-800 flex items-center">
+                <button onClick={() => navigate(feature.link)} className="text-indigo-600 font-medium hover:text-indigo-800 flex items-center">
                   {feature.cta}
                   <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -197,7 +195,7 @@ export const HowItWorksPage = () => {
                   Share events with friends and coordinate attendance
                 </li>
               </ul>
-              <button onClick={() => navigateTo('/events')} className="mt-6 px-6 py-2 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors">
+              <button onClick={() => navigate('/events')} className="mt-6 px-6 py-2 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors">
                 Find Events
               </button>
             </div>
@@ -237,7 +235,7 @@ export const HowItWorksPage = () => {
                   Access analytics and insights to grow your business
                 </li>
               </ul>
-              <button onClick={() => navigateTo('/venues/submit')} className="mt-6 px-6 py-2 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors">
+              <button onClick={() => navigate('/venues/submit')} className="mt-6 px-6 py-2 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors">
                 List Your Venue
               </button>
             </div>
@@ -254,7 +252,7 @@ export const HowItWorksPage = () => {
             Join thousands of users discovering events, venues, and performers
             in their community.
           </p>
-          <button onClick={() => navigateTo('/signup')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
+          <button onClick={() => navigate('/signup')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
             Create Your Free Account
           </button>
         </div>

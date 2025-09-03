@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { PlusIcon, DownloadIcon, SettingsIcon, CheckSquareIcon, BarChart2Icon, CalendarIcon, UsersIcon, BellIcon, ClockIcon, FilterIcon, SearchIcon, ChevronDownIcon, GridIcon, ListIcon } from 'lucide-react';
 import { CalendarGrid } from '../../components/dashboard/calendars/CalendarGrid';
 import { AnalyticsOverview } from '../../components/dashboard/calendars/AnalyticsOverview';
 import { PendingActions } from '../../components/dashboard/calendars/PendingActions';
 import { QuickActionsBar } from '../../components/dashboard/calendars/QuickActionsBar';
 export const CalendarDashboardPage = function CalendarDashboardPage() {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [calendars, setCalendars] = useState([]);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -277,10 +275,10 @@ export const CalendarDashboardPage = function CalendarDashboardPage() {
   const handleCalendarAction = (action: string, id: string) => {
     switch (action) {
       case 'edit':
-        navigateTo(`/calendar/${id}/edit`);
+        navigate(`/calendar/${id}/edit`);
         break;
       case 'view':
-        navigateTo(`/calendar/${id}`);
+        navigate(`/calendar/${id}`);
         break;
       case 'delete':
         // Handle delete action
@@ -320,11 +318,11 @@ export const CalendarDashboardPage = function CalendarDashboardPage() {
             </p>
           </div>
           <div className="mt-4 md:mt-0">
-            <QuickActionsBar onCreateNew={() => navigateTo('/calendars/create')} onBulkEdit={() => {
+            <QuickActionsBar onCreateNew={() => navigate('/calendars/create')} onBulkEdit={() => {
             alert('Bulk edit feature');
           }} onExportData={() => {
             alert('Export data feature');
-          }} onSettings={() => navigateTo('/profile/settings')} />
+          }} onSettings={() => navigate('/profile/settings')} />
           </div>
         </div>
 
@@ -379,7 +377,7 @@ export const CalendarDashboardPage = function CalendarDashboardPage() {
           const pendingCount = pendingActionsData.events.length + pendingActionsData.memberRequests.length + pendingActionsData.comments.length;
           if (pendingCount > 0) {
             // Scroll to pending actions section
-            document.getElementById('pending-actions')?.scrollIntoView({
+            typeof document !== "undefined" && document.getElementById('pending-actions')?.scrollIntoView({
               behavior: 'smooth'
             });
           }
@@ -480,7 +478,7 @@ export const CalendarDashboardPage = function CalendarDashboardPage() {
                       {searchQuery ? 'Try adjusting your search or filters' : 'Get started by creating a new calendar'}
                     </p>
                     {!searchQuery && <div className="mt-6">
-                        <button onClick={() => navigateTo('/calendars/create')} className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                        <button onClick={() => navigate('/calendars/create')} className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
                           <PlusIcon className="-ml-1 mr-2 h-5 w-5" />
                           Create Calendar
                         </button>

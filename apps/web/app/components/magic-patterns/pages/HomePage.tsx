@@ -213,7 +213,7 @@ export const HomePage = () => {
   const upcomingEventsByDay = generateUpcomingEvents();
   // Handle category selection - navigate to events page with filter
   const handleCategorySelect = (category: string) => {
-    navigateTo('/events');
+    navigate('/events');
   };
   // Handle date change
   const handleDateChange = (date: Date) => {
@@ -253,7 +253,7 @@ export const HomePage = () => {
       type: 'text/calendar;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = typeof document !== "undefined" && document.createElement('a');
     link.href = url;
     link.setAttribute('download', `${event.title.replace(/\s+/g, '_')}.ics`);
     document.body.appendChild(link);
@@ -292,7 +292,7 @@ export const HomePage = () => {
                   <option>St. Petersburg, FL</option>
                 </select>
               </div>
-              <button className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-md font-medium" onClick={() => navigateTo('/calendar')}>
+              <button className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-md font-medium" onClick={() => navigate('/calendar')}>
                 Find
               </button>
             </div>
@@ -328,13 +328,13 @@ export const HomePage = () => {
                 Sponsored listings
               </p>
             </div>
-            <button className="text-indigo-600 hover:text-indigo-800 flex items-center font-medium text-sm" onClick={() => navigateTo('/events')}>
+            <button className="text-indigo-600 hover:text-indigo-800 flex items-center font-medium text-sm" onClick={() => navigate('/events')}>
               View all events
               <ArrowRightIcon className="ml-1 h-4 w-4" />
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {featuredEvents.map(event => <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateTo(`/events/${event.id}`)}>
+            {featuredEvents.map(event => <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate(`/events/${event.id}`)}>
                 <div className="h-48 overflow-hidden relative">
                   <img src={event.image} alt={event.title} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
                   <div className="absolute top-2 right-2">
@@ -367,7 +367,7 @@ export const HomePage = () => {
                     </button>
                     <button onClick={e => {
                   e.stopPropagation();
-                  navigateTo(`/events/${event.id}`);
+                  navigate(`/events/${event.id}`);
                 }} className="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full hover:bg-indigo-200">
                       Details
                     </button>
@@ -376,7 +376,7 @@ export const HomePage = () => {
               </div>)}
           </div>
           <div className="mt-4 text-center">
-            <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium" onClick={() => navigateTo('/advertise/event-promotion')}>
+            <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium" onClick={() => navigate('/advertise/event-promotion')}>
               Promote your event here
             </button>
           </div>
@@ -396,13 +396,13 @@ export const HomePage = () => {
                 Sponsored listings
               </p>
             </div>
-            <button className="text-indigo-600 hover:text-indigo-800 flex items-center font-medium" onClick={() => navigateTo('/venues')}>
+            <button className="text-indigo-600 hover:text-indigo-800 flex items-center font-medium" onClick={() => navigate('/venues')}>
               View all venues
               <ArrowRightIcon className="ml-1 h-4 w-4" />
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {featuredVenues.map(venue => <div key={venue.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateTo('/venues/' + venue.id)}>
+            {featuredVenues.map(venue => <div key={venue.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/venues/' + venue.id)}>
                 <div className="h-48 overflow-hidden relative">
                   <img src={venue.image} alt={venue.name} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
                   <div className="absolute top-2 right-2">
@@ -438,7 +438,7 @@ export const HomePage = () => {
               </div>)}
           </div>
           <div className="mt-4 text-center">
-            <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium" onClick={() => navigateTo('/advertise/featured-listings')}>
+            <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium" onClick={() => navigate('/advertise/featured-listings')}>
               Promote your venue here
             </button>
           </div>
@@ -458,13 +458,13 @@ export const HomePage = () => {
                 Sponsored listings
               </p>
             </div>
-            <button className="text-indigo-600 hover:text-indigo-800 flex items-center font-medium" onClick={() => navigateTo('/performers')}>
+            <button className="text-indigo-600 hover:text-indigo-800 flex items-center font-medium" onClick={() => navigate('/performers')}>
               View all performers
               <ArrowRightIcon className="ml-1 h-4 w-4" />
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {featuredPerformers.map(performer => <div key={performer.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateTo('/performers/' + performer.id)}>
+            {featuredPerformers.map(performer => <div key={performer.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/performers/' + performer.id)}>
                 <div className="h-48 overflow-hidden relative">
                   <img src={performer.image} alt={performer.name} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
@@ -503,7 +503,7 @@ export const HomePage = () => {
               </div>)}
           </div>
           <div className="mt-4 text-center">
-            <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium" onClick={() => navigateTo('/advertise/featured-listings')}>
+            <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium" onClick={() => navigate('/advertise/featured-listings')}>
               Promote your performances here
             </button>
           </div>
@@ -514,7 +514,7 @@ export const HomePage = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900">Upcoming Events</h2>
-          <button className="text-indigo-600 hover:text-indigo-800 flex items-center font-medium" onClick={() => navigateTo('/calendar')}>
+          <button className="text-indigo-600 hover:text-indigo-800 flex items-center font-medium" onClick={() => navigate('/calendar')}>
             View full calendar
             <ArrowRightIcon className="ml-1 h-4 w-4" />
           </button>
@@ -526,7 +526,7 @@ export const HomePage = () => {
                 {day.date}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {day.events.map(event => <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigateTo(`/events/${event.id}`)}>
+                {day.events.map(event => <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate(`/events/${event.id}`)}>
                     <div className="h-40 overflow-hidden">
                       <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
                       <div className="absolute top-2 left-2">
@@ -560,7 +560,7 @@ export const HomePage = () => {
                           </button>
                           <button className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full hover:bg-indigo-200" onClick={e => {
                       e.stopPropagation();
-                      navigateTo(`/events/${event.id}`);
+                      navigate(`/events/${event.id}`);
                     }}>
                             Details
                           </button>
@@ -583,10 +583,10 @@ export const HomePage = () => {
           every day
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <button className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-sm" onClick={() => navigateTo('/calendar')}>
+          <button className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-sm" onClick={() => navigate('/calendar')}>
             Explore All Events
           </button>
-          <button className="px-8 py-3 bg-white hover:bg-gray-50 text-gray-800 font-medium rounded-md shadow-sm border border-gray-300" onClick={() => navigateTo('/login')}>
+          <button className="px-8 py-3 bg-white hover:bg-gray-50 text-gray-800 font-medium rounded-md shadow-sm border border-gray-300" onClick={() => navigate('/login')}>
             Sign Up
           </button>
         </div>

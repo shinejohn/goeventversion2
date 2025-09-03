@@ -7,13 +7,11 @@ import React, { useEffect, useState, Component } from 'react';
  * Components: PasswordInput
  */
 import { ArrowLeftIcon, CheckCircleIcon, AlertCircleIcon, RefreshCwIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { PasswordInput } from '../../components/ui/PasswordInput';
 type TokenStatus = 'validating' | 'valid' | 'invalid' | 'expired';
 export const ResetPasswordPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [tokenStatus, setTokenStatus] = useState<TokenStatus>('validating');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -91,7 +89,7 @@ export const ResetPasswordPage = () => {
               This password reset link is invalid or has already been used.
             </p>
             <div className="mt-6">
-              <button type="button" onClick={() => navigateTo('/auth/forgot-password')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <button type="button" onClick={() => navigate('/auth/forgot-password')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Request a new link
               </button>
             </div>
@@ -108,7 +106,7 @@ export const ResetPasswordPage = () => {
               This password reset link has expired for security reasons.
             </p>
             <div className="mt-6">
-              <button type="button" onClick={() => navigateTo('/auth/forgot-password')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <button type="button" onClick={() => navigate('/auth/forgot-password')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Request a new link
               </button>
             </div>
@@ -127,7 +125,7 @@ export const ResetPasswordPage = () => {
                 with your new password.
               </p>
               <div className="mt-6">
-                <button type="button" onClick={() => navigateTo('/login')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button type="button" onClick={() => navigate('/login')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   Go to login
                 </button>
               </div>
@@ -170,7 +168,7 @@ export const ResetPasswordPage = () => {
   };
   return <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <button onClick={() => navigateTo('/login')} className="flex items-center text-sm text-indigo-600 hover:text-indigo-500 mb-6">
+        <button onClick={() => navigate('/login')} className="flex items-center text-sm text-indigo-600 hover:text-indigo-500 mb-6">
           <ArrowLeftIcon className="h-4 w-4 mr-1" />
           Back to login
         </button>

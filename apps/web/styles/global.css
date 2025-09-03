@@ -24,6 +24,7 @@
 @source "../../../packages/plugins/*/src/**/*.{ts,tsx}";
 @source "../../../packages/cms/*/src/**/*.{ts,tsx}";
 @source "../{app,components,config,lib}/**/*.{ts,tsx}";
+@source "../app/components/magic-patterns/**/*.{ts,tsx}";
 
 /* variants - update the below if you add a new variant */
 @variant dark (&:where(.dark, .dark *));

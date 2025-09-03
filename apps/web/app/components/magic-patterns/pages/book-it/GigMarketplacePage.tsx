@@ -1,10 +1,8 @@
 import React, { Children } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Music, MapPin, Calendar, DollarSign, Users, Search, Filter, ChevronDown, Star, Clock, MessageSquare, Briefcase, CheckCircle, ArrowRight, FileText, Bell } from 'lucide-react';
 export const GigMarketplacePage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Sample gig listings
   const featuredGigs = [{
     id: 1,
@@ -159,10 +157,10 @@ export const GigMarketplacePage = () => {
               make your event unforgettable
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button onClick={() => navigateTo('/book-it/create-gig')} className="px-8 py-3 bg-white text-teal-600 font-medium rounded-md hover:bg-teal-50 transition-colors">
+              <button onClick={() => navigate('/book-it/create-gig')} className="px-8 py-3 bg-white text-teal-600 font-medium rounded-md hover:bg-teal-50 transition-colors">
                 Post a Gig
               </button>
-              <button onClick={() => navigateTo('/performers')} className="px-8 py-3 bg-teal-700 text-white font-medium rounded-md hover:bg-teal-800 transition-colors">
+              <button onClick={() => navigate('/performers')} className="px-8 py-3 bg-teal-700 text-white font-medium rounded-md hover:bg-teal-800 transition-colors">
                 Browse Performers
               </button>
             </div>
@@ -287,13 +285,13 @@ export const GigMarketplacePage = () => {
                 <h2 className="text-2xl font-bold text-gray-900">
                   Featured Gigs
                 </h2>
-                <button onClick={() => navigateTo('/book-it/gigs/featured')} className="text-teal-600 font-medium hover:text-teal-800 flex items-center">
+                <button onClick={() => navigate('/book-it/gigs/featured')} className="text-teal-600 font-medium hover:text-teal-800 flex items-center">
                   View All
                   <ArrowRight className="ml-1 h-4 w-4" />
                 </button>
               </div>
               <div className="space-y-6">
-                {featuredGigs.map(gig => <div key={gig.id} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigateTo(`/book-it/gigs/${gig.id}`)}>
+                {featuredGigs.map(gig => <div key={gig.id} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate(`/book-it/gigs/${gig.id}`)}>
                     <div className="flex justify-between items-start">
                       <div>
                         <span className="inline-block bg-teal-100 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded-full mb-2">
@@ -359,13 +357,13 @@ export const GigMarketplacePage = () => {
                 <h2 className="text-2xl font-bold text-gray-900">
                   Recent Gigs
                 </h2>
-                <button onClick={() => navigateTo('/book-it/gigs/recent')} className="text-teal-600 font-medium hover:text-teal-800 flex items-center">
+                <button onClick={() => navigate('/book-it/gigs/recent')} className="text-teal-600 font-medium hover:text-teal-800 flex items-center">
                   View All
                   <ArrowRight className="ml-1 h-4 w-4" />
                 </button>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {recentGigs.map(gig => <div key={gig.id} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigateTo(`/book-it/gigs/${gig.id}`)}>
+                {recentGigs.map(gig => <div key={gig.id} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate(`/book-it/gigs/${gig.id}`)}>
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="text-lg font-bold text-gray-900">
                         {gig.title}
@@ -477,10 +475,10 @@ export const GigMarketplacePage = () => {
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <button onClick={() => navigateTo('/performers/register')} className="px-6 py-3 bg-white text-teal-700 font-medium rounded-md hover:bg-teal-50 transition-colors">
+                  <button onClick={() => navigate('/performers/register')} className="px-6 py-3 bg-white text-teal-700 font-medium rounded-md hover:bg-teal-50 transition-colors">
                     Join as a Performer
                   </button>
-                  <button onClick={() => navigateTo('/performers/tools')} className="px-6 py-3 bg-teal-800 text-white font-medium rounded-md hover:bg-teal-900 transition-colors border border-teal-600">
+                  <button onClick={() => navigate('/performers/tools')} className="px-6 py-3 bg-teal-800 text-white font-medium rounded-md hover:bg-teal-900 transition-colors border border-teal-600">
                     Learn More
                   </button>
                 </div>
@@ -503,10 +501,10 @@ export const GigMarketplacePage = () => {
             performers
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button onClick={() => navigateTo('/book-it/create-gig')} className="px-8 py-3 bg-white text-teal-700 font-medium rounded-md hover:bg-teal-50 transition-colors">
+            <button onClick={() => navigate('/book-it/create-gig')} className="px-8 py-3 bg-white text-teal-700 font-medium rounded-md hover:bg-teal-50 transition-colors">
               Post a Gig
             </button>
-            <button onClick={() => navigateTo('/book-it/how-it-works')} className="px-8 py-3 bg-teal-800 text-white font-medium rounded-md hover:bg-teal-900 transition-colors border border-teal-600">
+            <button onClick={() => navigate('/book-it/how-it-works')} className="px-8 py-3 bg-teal-800 text-white font-medium rounded-md hover:bg-teal-900 transition-colors border border-teal-600">
               Learn More
             </button>
           </div>

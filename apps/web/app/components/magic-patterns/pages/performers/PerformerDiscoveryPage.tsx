@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { SearchIcon, FilterIcon, GridIcon, ListIcon, CalendarIcon, XIcon, ChevronDownIcon, MapPinIcon, TrendingUpIcon, UsersIcon, MusicIcon, StarIcon, HeartIcon, PlayIcon, CheckCircleIcon, SparklesIcon } from 'lucide-react';
+import { ClientOnly } from '@kit/ui/client-only';
 import { mockPerformers } from '../../mockdata/performers';
 import { FilterSidebar } from '../../components/performers/FilterSidebar';
 import { PerformerGrid } from '../../components/performers/PerformerGrid';
@@ -9,10 +10,8 @@ import { PerformerCalendar } from '../../components/performers/PerformerCalendar
 import { DiscoverySections } from '../../components/performers/DiscoverySections';
 type ViewMode = 'grid' | 'list' | 'calendar';
 type SortOption = 'trending' | 'popular' | 'newest' | 'upcoming' | 'reviews' | 'alphabetical';
-export const PerformerDiscoveryPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+const PerformerDiscoveryPageInternal = () => {
+  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [sortBy, setSortBy] = useState<SortOption>('trending');
   const [searchQuery, setSearchQuery] = useState('');
@@ -316,7 +315,7 @@ export const PerformerDiscoveryPage = () => {
             </button>
             {/* Sort Dropdown (Mobile) */}
             <div className="relative">
-              <button className="flex items-center bg-white border border-gray-300 rounded-md px-4 py-2 text-gray-700 hover:bg-gray-50" onClick={() => document.getElementById('mobile-sort-dropdown')?.classList.toggle('hidden')}>
+              <button className="flex items-center bg-white border border-gray-300 rounded-md px-4 py-2 text-gray-700 hover:bg-gray-50" onClick={() => typeof document !== "undefined" && document.getElementById('mobile-sort-dropdown')?.classList.toggle('hidden')}>
                 <TrendingUpIcon className="h-5 w-5 mr-2" />
                 {sortBy === 'trending' && 'Trending Now'}
                 {sortBy === 'popular' && 'Most Popular'}
@@ -330,37 +329,37 @@ export const PerformerDiscoveryPage = () => {
                 <div className="py-1">
                   <button className={`block px-4 py-2 text-sm w-full text-left ${sortBy === 'trending' ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100'}`} onClick={() => {
                   handleSortChange('trending');
-                  document.getElementById('mobile-sort-dropdown')?.classList.add('hidden');
+                  typeof document !== "undefined" && document.getElementById('mobile-sort-dropdown')?.classList.add('hidden');
                 }}>
                     Trending Now
                   </button>
                   <button className={`block px-4 py-2 text-sm w-full text-left ${sortBy === 'popular' ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100'}`} onClick={() => {
                   handleSortChange('popular');
-                  document.getElementById('mobile-sort-dropdown')?.classList.add('hidden');
+                  typeof document !== "undefined" && document.getElementById('mobile-sort-dropdown')?.classList.add('hidden');
                 }}>
                     Most Popular
                   </button>
                   <button className={`block px-4 py-2 text-sm w-full text-left ${sortBy === 'newest' ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100'}`} onClick={() => {
                   handleSortChange('newest');
-                  document.getElementById('mobile-sort-dropdown')?.classList.add('hidden');
+                  typeof document !== "undefined" && document.getElementById('mobile-sort-dropdown')?.classList.add('hidden');
                 }}>
                     Newest Artists
                   </button>
                   <button className={`block px-4 py-2 text-sm w-full text-left ${sortBy === 'upcoming' ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100'}`} onClick={() => {
                   handleSortChange('upcoming');
-                  document.getElementById('mobile-sort-dropdown')?.classList.add('hidden');
+                  typeof document !== "undefined" && document.getElementById('mobile-sort-dropdown')?.classList.add('hidden');
                 }}>
                     Upcoming Shows
                   </button>
                   <button className={`block px-4 py-2 text-sm w-full text-left ${sortBy === 'reviews' ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100'}`} onClick={() => {
                   handleSortChange('reviews');
-                  document.getElementById('mobile-sort-dropdown')?.classList.add('hidden');
+                  typeof document !== "undefined" && document.getElementById('mobile-sort-dropdown')?.classList.add('hidden');
                 }}>
                     Most Reviews
                   </button>
                   <button className={`block px-4 py-2 text-sm w-full text-left ${sortBy === 'alphabetical' ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100'}`} onClick={() => {
                   handleSortChange('alphabetical');
-                  document.getElementById('mobile-sort-dropdown')?.classList.add('hidden');
+                  typeof document !== "undefined" && document.getElementById('mobile-sort-dropdown')?.classList.add('hidden');
                 }}>
                     Alphabetical
                   </button>
@@ -395,7 +394,7 @@ export const PerformerDiscoveryPage = () => {
               <div className="flex items-center">
                 <span className="text-gray-700 mr-2">Sort by:</span>
                 <div className="relative">
-                  <button className="flex items-center bg-white border border-gray-300 rounded-md px-4 py-2 text-gray-700 hover:bg-gray-50" onClick={() => document.getElementById('sort-dropdown')?.classList.toggle('hidden')}>
+                  <button className="flex items-center bg-white border border-gray-300 rounded-md px-4 py-2 text-gray-700 hover:bg-gray-50" onClick={() => typeof document !== "undefined" && document.getElementById('sort-dropdown')?.classList.toggle('hidden')}>
                     {sortBy === 'trending' && 'Trending Now'}
                     {sortBy === 'popular' && 'Most Popular'}
                     {sortBy === 'newest' && 'Newest Artists'}
@@ -408,37 +407,37 @@ export const PerformerDiscoveryPage = () => {
                     <div className="py-1">
                       <button className={`block px-4 py-2 text-sm w-full text-left ${sortBy === 'trending' ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100'}`} onClick={() => {
                       handleSortChange('trending');
-                      document.getElementById('sort-dropdown')?.classList.add('hidden');
+                      typeof document !== "undefined" && document.getElementById('sort-dropdown')?.classList.add('hidden');
                     }}>
                         Trending Now
                       </button>
                       <button className={`block px-4 py-2 text-sm w-full text-left ${sortBy === 'popular' ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100'}`} onClick={() => {
                       handleSortChange('popular');
-                      document.getElementById('sort-dropdown')?.classList.add('hidden');
+                      typeof document !== "undefined" && document.getElementById('sort-dropdown')?.classList.add('hidden');
                     }}>
                         Most Popular
                       </button>
                       <button className={`block px-4 py-2 text-sm w-full text-left ${sortBy === 'newest' ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100'}`} onClick={() => {
                       handleSortChange('newest');
-                      document.getElementById('sort-dropdown')?.classList.add('hidden');
+                      typeof document !== "undefined" && document.getElementById('sort-dropdown')?.classList.add('hidden');
                     }}>
                         Newest Artists
                       </button>
                       <button className={`block px-4 py-2 text-sm w-full text-left ${sortBy === 'upcoming' ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100'}`} onClick={() => {
                       handleSortChange('upcoming');
-                      document.getElementById('sort-dropdown')?.classList.add('hidden');
+                      typeof document !== "undefined" && document.getElementById('sort-dropdown')?.classList.add('hidden');
                     }}>
                         Upcoming Shows
                       </button>
                       <button className={`block px-4 py-2 text-sm w-full text-left ${sortBy === 'reviews' ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100'}`} onClick={() => {
                       handleSortChange('reviews');
-                      document.getElementById('sort-dropdown')?.classList.add('hidden');
+                      typeof document !== "undefined" && document.getElementById('sort-dropdown')?.classList.add('hidden');
                     }}>
                         Most Reviews
                       </button>
                       <button className={`block px-4 py-2 text-sm w-full text-left ${sortBy === 'alphabetical' ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100'}`} onClick={() => {
                       handleSortChange('alphabetical');
-                      document.getElementById('sort-dropdown')?.classList.add('hidden');
+                      typeof document !== "undefined" && document.getElementById('sort-dropdown')?.classList.add('hidden');
                     }}>
                         Alphabetical
                       </button>
@@ -559,14 +558,22 @@ export const PerformerDiscoveryPage = () => {
               </div>}
             {/* Performer Grid/List/Calendar View */}
             {filteredPerformers.length > 0 && <>
-                {viewMode === 'grid' && <PerformerGrid performers={filteredPerformers} onPerformerClick={performerId => navigateTo(`/performers/${performerId}`)} />}
-                {viewMode === 'list' && <PerformerList performers={filteredPerformers} onPerformerClick={performerId => navigateTo(`/performers/${performerId}`)} />}
-                {viewMode === 'calendar' && <PerformerCalendar performers={filteredPerformers} onPerformerClick={performerId => navigateTo(`/performers/${performerId}`)} />}
+                {viewMode === 'grid' && <PerformerGrid performers={filteredPerformers} onPerformerClick={performerId => navigate(`/performers/${performerId}`)} />}
+                {viewMode === 'list' && <PerformerList performers={filteredPerformers} onPerformerClick={performerId => navigate(`/performers/${performerId}`)} />}
+                {viewMode === 'calendar' && <PerformerCalendar performers={filteredPerformers} onPerformerClick={performerId => navigate(`/performers/${performerId}`)} />}
               </>}
             {/* Discovery Sections (only show when no search/filters active) */}
-            {searchQuery === '' && getActiveFilterCount() === 0 && <DiscoverySections performers={mockPerformers} onPerformerClick={performerId => navigateTo(`/performers/${performerId}`)} />}
+            {searchQuery === '' && getActiveFilterCount() === 0 && <DiscoverySections performers={mockPerformers} onPerformerClick={performerId => navigate(`/performers/${performerId}`)} />}
           </div>
         </div>
       </div>
     </div>;
+};
+
+export const PerformerDiscoveryPage = () => {
+  return (
+    <ClientOnly>
+      <PerformerDiscoveryPageInternal />
+    </ClientOnly>
+  );
 };

@@ -60,8 +60,8 @@ export const EventHero = ({
       {/* Action Buttons */}
       <div className="absolute top-4 right-4 z-10 flex space-x-3">
         <button onClick={() => {
-        if (navigator.share) {
-          navigator.share({
+        if (typeof navigator !== "undefined" && navigator.share) {
+          typeof navigator !== "undefined" && navigator.share({
             title: title,
             text: `Check out ${title}`,
             url: window.location.href

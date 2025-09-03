@@ -32,7 +32,7 @@ export const ConfirmationStep = ({
   };
   // Copy booking reference to clipboard
   const copyReferenceToClipboard = () => {
-    navigator.clipboard.writeText(bookingReference);
+    typeof navigator !== "undefined" && navigator.clipboard.writeText(bookingReference);
     alert('Booking reference copied to clipboard!');
   };
   return <div className="p-6">

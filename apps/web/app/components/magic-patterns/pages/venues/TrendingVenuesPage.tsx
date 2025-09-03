@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MapPinIcon, StarIcon, TrendingUpIcon, FilterIcon, SearchIcon, UsersIcon, MusicIcon, CalendarIcon, ThumbsUpIcon, BuildingIcon, ChevronRightIcon, HomeIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 // Mock data for trending venues
 const trendingVenues = [{
   id: 'venue-1',
@@ -82,9 +82,7 @@ const trendingVenues = [{
   popularFor: ['Weddings', 'Galas', 'Corporate Events']
 }];
 export const TrendingVenuesPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedVenueType, setSelectedVenueType] = useState<string | null>(null);
   const [selectedCapacity, setSelectedCapacity] = useState<string | null>(null);
@@ -129,19 +127,19 @@ export const TrendingVenuesPage = () => {
     setFilteredVenues(results);
   }, [searchTerm, selectedVenueType, selectedCapacity]);
   const handleVenueClick = (venueId: string) => {
-    navigateTo(`/book-it/venues/${venueId}`);
+    navigate(`/book-it/venues/${venueId}`);
   };
   return <div className="min-h-screen bg-gray-50">
       {/* Breadcrumbs */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <nav className="flex text-sm text-gray-500">
-            <button onClick={() => navigateTo('/')} className="hover:text-gray-700 flex items-center">
+            <button onClick={() => navigate('/')} className="hover:text-gray-700 flex items-center">
               <HomeIcon className="h-4 w-4 mr-1" />
               Home
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />
-            <button onClick={() => navigateTo('/venues')} className="hover:text-gray-700">
+            <button onClick={() => navigate('/venues')} className="hover:text-gray-700">
               Venues
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />
@@ -360,12 +358,12 @@ export const TrendingVenuesPage = () => {
           </h2>
           <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
             <div className="inline-flex rounded-md shadow">
-              <button onClick={() => navigateTo('/book-it/venues')} className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+              <button onClick={() => navigate('/book-it/venues')} className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
                 Browse All Venues
               </button>
             </div>
             <div className="ml-3 inline-flex rounded-md shadow">
-              <button onClick={() => navigateTo('/book/start')} className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50">
+              <button onClick={() => navigate('/book/start')} className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50">
                 Start Planning
               </button>
             </div>

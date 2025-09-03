@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRightIcon, MapPinIcon, StarIcon, CalendarIcon, SearchIcon, GridIcon, ListIcon, MapIcon, SlidersIcon, XIcon, CheckCircleIcon, FilterIcon, TicketIcon, ClockIcon, MusicIcon } from 'lucide-react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { FilterSidebar } from '../components/venue-marketplace/FilterSidebar';
 import { VenueCard } from '../components/venue-marketplace/VenueCard';
 import { VenueListItem } from '../components/venue-marketplace/VenueListItem';
@@ -9,9 +9,7 @@ import { mockVenues } from '../mockdata/venues';
 type ViewMode = 'grid' | 'list' | 'map';
 type SortOption = 'recommended' | 'popular' | 'newest' | 'price_low' | 'price_high' | 'distance' | 'rating' | 'capacity';
 export const VenuesPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [sortBy, setSortBy] = useState<SortOption>('popular');
   const [searchQuery, setSearchQuery] = useState('');
@@ -164,7 +162,7 @@ export const VenuesPage = () => {
   }];
   // Handle navigation to venue detail
   const handleViewVenueDetail = (venueId: string) => {
-    navigateTo(`/venues/${venueId}`);
+    navigate(`/venues/${venueId}`);
   };
   // Handle navigation to venue collections
   const handleNavigateToCollection = (collectionPath: string) => {
@@ -173,23 +171,23 @@ export const VenuesPage = () => {
   };
   // Handle venue submission form navigation
   const handleListVenue = () => {
-    navigateTo('/venues/submit');
+    navigate('/venues/submit');
   };
   // Handle venue management navigation
   const handleVenueManagement = () => {
-    navigateTo('/venues/management');
+    navigate('/venues/management');
   };
   // Handle trending venues navigation
   const handleViewAllTrending = () => {
-    navigateTo('/venues/trending');
+    navigate('/venues/trending');
   };
   // Handle new venues navigation
   const handleViewAllNew = () => {
-    navigateTo('/venues/new');
+    navigate('/venues/new');
   };
   // Handle event detail navigation
   const handleViewEventDetail = (eventId: string) => {
-    navigateTo(`/events/${eventId}`);
+    navigate(`/events/${eventId}`);
   };
   return <div className="min-h-screen bg-white">
       {/* Search Bar - Replacing the hero section */}
@@ -379,7 +377,7 @@ export const VenuesPage = () => {
                       </div>)}
                   </div>
                   <div className="mt-4 text-center">
-                    <button onClick={() => navigateTo('/events')} className="text-indigo-600 hover:text-indigo-800 font-medium inline-flex items-center">
+                    <button onClick={() => navigate('/events')} className="text-indigo-600 hover:text-indigo-800 font-medium inline-flex items-center">
                       View all upcoming events
                       <ArrowRightIcon className="ml-1 h-4 w-4" />
                     </button>

@@ -1,5 +1,5 @@
 import React, { useState, createElement } from 'react';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { CalendarIcon, ClockIcon, MapPinIcon, UsersIcon, MessageSquareIcon, StarIcon, ThumbsUpIcon, InfoIcon, ShareIcon, PlusIcon, ExternalLinkIcon, CheckIcon } from 'lucide-react';
 type EnhancedEventCardProps = {
   event: any;
@@ -9,9 +9,7 @@ export const EnhancedEventCard = ({
   event,
   hubData
 }: EnhancedEventCardProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [isAttending, setIsAttending] = useState(false);
   const [showCuratorNotes, setShowCuratorNotes] = useState(false);
   const [calendarAdded, setCalendarAdded] = useState(false);
@@ -51,7 +49,7 @@ export const EnhancedEventCard = ({
       type: 'text/calendar;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = typeof document !== "undefined" && document.createElement('a');
     link.href = url;
     link.setAttribute('download', `${event.title.replace(/\s+/g, '_')}.ics`);
     document.body.appendChild(link);
@@ -88,7 +86,7 @@ export const EnhancedEventCard = ({
       {/* Content Section */}
       <div className="p-4">
         <div className="flex items-start justify-between mb-2">
-          <h3 className="text-lg font-bold text-gray-900 hover:text-indigo-600 cursor-pointer" onClick={() => navigateTo(`/event/${event.id}`)}>
+          <h3 className="text-lg font-bold text-gray-900 hover:text-indigo-600 cursor-pointer" onClick={() => navigate(`/event/${event.id}`)}>
             {event.title}
           </h3>
           {/* Community Rating */}
@@ -154,12 +152,12 @@ export const EnhancedEventCard = ({
             <button className="p-2 text-gray-500 hover:text-indigo-600 hover:bg-gray-100 rounded-full" title="Share Event">
               <ShareIcon className="h-5 w-5" />
             </button>
-            <button onClick={() => navigateTo(`/hub/${hubData.id}/discussion/${event.discussionThreadId}`)} className="p-2 text-gray-500 hover:text-indigo-600 hover:bg-gray-100 rounded-full" title="View Discussion">
+            <button onClick={() => navigate(`/hub/${hubData.id}/discussion/${event.discussionThreadId}`)} className="p-2 text-gray-500 hover:text-indigo-600 hover:bg-gray-100 rounded-full" title="View Discussion">
               <MessageSquareIcon className="h-5 w-5" />
             </button>
           </div>
           <div className="flex space-x-2">
-            <button onClick={() => navigateTo(`/event/${event.id}`)} className="px-3 py-1.5 text-xs text-indigo-600 hover:text-indigo-800 border border-indigo-200 hover:border-indigo-300 rounded-md flex items-center">
+            <button onClick={() => navigate(`/event/${event.id}`)} className="px-3 py-1.5 text-xs text-indigo-600 hover:text-indigo-800 border border-indigo-200 hover:border-indigo-300 rounded-md flex items-center">
               <ExternalLinkIcon className="h-3.5 w-3.5 mr-1" />
               Details
             </button>

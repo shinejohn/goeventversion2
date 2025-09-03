@@ -1,10 +1,8 @@
 import React from 'react';
 import { CalendarIcon, MapPinIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const RelatedEvents = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const relatedEvents = [{
     id: 'event-1',
     title: 'Tampa Bay Blues Festival',
@@ -31,7 +29,7 @@ export const RelatedEvents = () => {
     distance: '5 miles'
   }];
   return <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {relatedEvents.map(event => <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200" onClick={() => navigateTo('/event')}>
+      {relatedEvents.map(event => <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200" onClick={() => navigate('/event')}>
           <div className="h-48 overflow-hidden">
             <img src={event.image} alt={event.title} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
           </div>

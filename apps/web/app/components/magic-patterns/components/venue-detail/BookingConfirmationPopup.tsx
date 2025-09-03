@@ -1,6 +1,6 @@
 import React from 'react';
 import { XIcon, CheckCircleIcon, CalendarIcon, ClockIcon, ArrowRightIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 type BookingConfirmationPopupProps = {
   venueName: string;
   selectedDate: Date | null;
@@ -15,11 +15,9 @@ export const BookingConfirmationPopup = ({
   endTime,
   onClose
 }: BookingConfirmationPopupProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const handleViewBookings = () => {
-    navigateTo('/bookings/confirmed');
+    navigate('/bookings/confirmed');
     onClose();
   };
   const handleClose = () => {

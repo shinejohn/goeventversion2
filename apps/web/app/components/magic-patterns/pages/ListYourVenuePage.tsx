@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { MapPinIcon, CalendarIcon, UsersIcon, DollarSignIcon, BarChartIcon, CheckCircleIcon, ArrowRightIcon } from 'lucide-react';
 export const ListYourVenuePage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const benefits = [{
     title: 'Reach More Event Planners',
     description: 'Connect with thousands of event planners actively searching for venues like yours.',
@@ -102,10 +100,10 @@ export const ListYourVenuePage = () => {
               venue business
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button onClick={() => navigateTo('/venues/submit')} className="px-8 py-3 bg-white text-indigo-600 font-medium rounded-md hover:bg-indigo-50 transition-colors">
+              <button onClick={() => navigate('/venues/submit')} className="px-8 py-3 bg-white text-indigo-600 font-medium rounded-md hover:bg-indigo-50 transition-colors">
                 List Your Venue
               </button>
-              <button onClick={() => navigateTo('/partner-with-us')} className="px-8 py-3 bg-indigo-700 text-white font-medium rounded-md hover:bg-indigo-800 transition-colors">
+              <button onClick={() => navigate('/partner-with-us')} className="px-8 py-3 bg-indigo-700 text-white font-medium rounded-md hover:bg-indigo-800 transition-colors">
                 Learn More
               </button>
             </div>
@@ -223,7 +221,7 @@ export const ListYourVenuePage = () => {
                         <span>{feature}</span>
                       </li>)}
                   </ul>
-                  <button onClick={() => navigateTo('/venues/submit')} className={`w-full py-3 px-4 rounded-md font-medium ${plan.recommended ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}>
+                  <button onClick={() => navigate('/venues/submit')} className={`w-full py-3 px-4 rounded-md font-medium ${plan.recommended ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}>
                     {plan.ctaText}
                   </button>
                 </div>
@@ -293,10 +291,10 @@ export const ListYourVenuePage = () => {
             Fun
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button onClick={() => navigateTo('/venues/submit')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
+            <button onClick={() => navigate('/venues/submit')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
               List Your Venue
             </button>
-            <button onClick={() => navigateTo('/contact')} className="px-8 py-3 bg-indigo-800 text-white font-medium rounded-md hover:bg-indigo-900 transition-colors border border-indigo-600">
+            <button onClick={() => navigate('/contact')} className="px-8 py-3 bg-indigo-800 text-white font-medium rounded-md hover:bg-indigo-900 transition-colors border border-indigo-600">
               Contact Sales
             </button>
           </div>

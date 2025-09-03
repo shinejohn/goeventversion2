@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CheckCircleIcon, MapPinIcon, CalendarIcon, ClockIcon, StarIcon, UsersIcon, HeartIcon, ShareIcon, ArrowLeftIcon, ChevronRightIcon, ChevronLeftIcon, ExternalLinkIcon, MessageCircleIcon, CheckIcon, XIcon, InfoIcon, HomeIcon } from 'lucide-react';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { mockVenues } from '../../../mockdata/venues';
 import { ImageGallery } from '../../../components/venue-detail/ImageGallery';
 import { BookingWidget } from '../../../components/venue-detail/BookingWidget';
@@ -178,9 +178,7 @@ export const VenueDetailPage = () => {
       '2024-06-30': 'partially-available'
     }
   };
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState('18:00');
   const [endTime, setEndTime] = useState('23:00');
@@ -193,7 +191,7 @@ export const VenueDetailPage = () => {
   const similarVenues = mockVenues.filter(v => v.id !== venue.id && v.venueType === venue.venueType).slice(0, 4);
   // Handle back navigation
   const handleBack = () => {
-    navigateTo('/book-it/venues');
+    navigate('/book-it/venues');
   };
   // Handle save to favorites
   const handleSave = () => {
@@ -201,8 +199,8 @@ export const VenueDetailPage = () => {
   };
   // Handle share functionality
   const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
+    if (typeof navigator !== "undefined" && navigator.share) {
+      typeof navigator !== "undefined" && navigator.share({
         title: venue.name,
         text: `Check out ${venue.name} on When's The Fun`,
         url: window.location.href
@@ -234,7 +232,7 @@ export const VenueDetailPage = () => {
   // Scroll to section handler
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
-    const element = document.getElementById(sectionId);
+    const element = typeof document !== "undefined" && document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth'
@@ -246,16 +244,16 @@ export const VenueDetailPage = () => {
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <nav className="flex text-sm text-gray-500">
-            <button onClick={() => navigateTo('/')} className="hover:text-gray-700 flex items-center">
+            <button onClick={() => navigate('/')} className="hover:text-gray-700 flex items-center">
               <HomeIcon className="h-4 w-4 mr-1" />
               Home
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />
-            <button onClick={() => navigateTo('/book')} className="hover:text-gray-700">
+            <button onClick={() => navigate('/book')} className="hover:text-gray-700">
               Book It
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />
-            <button onClick={() => navigateTo('/book-it/venues')} className="hover:text-gray-700">
+            <button onClick={() => navigate('/book-it/venues')} className="hover:text-gray-700">
               Venues
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />
@@ -466,7 +464,7 @@ export const VenueDetailPage = () => {
           <h2 className="text-2xl font-bold text-gray-900 mb-8">
             Similar Venues You Might Like
           </h2>
-          <SimilarVenues venues={similarVenues} onVenueClick={venueId => navigateTo(`/book-it/venues/${venueId}`)} />
+          <SimilarVenues venues={similarVenues} onVenueClick={venueId => navigate(`/book-it/venues/${venueId}`)} />
         </div>
       </div>
 
@@ -513,7 +511,7 @@ export const VenueDetailPage = () => {
       {showBookingConfirmation && <BookingConfirmationPopup venueName={venue.name} selectedDate={selectedDate} startTime={startTime} endTime={endTime} onClose={() => setShowBookingConfirmation(false)} />}
 
       {/* Back to top button */}
-      <button onClick={() => window.scrollTo({
+      <button onClick={() => typeof window !== "undefined" && window.scrollTo({
       top: 0,
       behavior: 'smooth'
     })} className="fixed bottom-20 right-6 p-2 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

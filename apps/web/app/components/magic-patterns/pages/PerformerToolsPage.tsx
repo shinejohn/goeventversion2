@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Music, Calendar, DollarSign, BarChart, Users, MessageSquare, Globe, Star, CheckCircle, Clock, Briefcase, Award } from 'lucide-react';
 export const PerformerToolsPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const tools = [{
     title: 'Profile Builder',
     description: 'Create a stunning profile that showcases your talent with photos, videos, and audio samples.',
@@ -111,10 +109,10 @@ export const PerformerToolsPage = () => {
               grow your career
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button onClick={() => navigateTo('/performers/register')} className="px-8 py-3 bg-white text-purple-600 font-medium rounded-md hover:bg-purple-50 transition-colors">
+              <button onClick={() => navigate('/performers/register')} className="px-8 py-3 bg-white text-purple-600 font-medium rounded-md hover:bg-purple-50 transition-colors">
                 Create Your Profile
               </button>
-              <button onClick={() => navigateTo('/performers/tools/demo')} className="px-8 py-3 bg-purple-700 text-white font-medium rounded-md hover:bg-purple-800 transition-colors">
+              <button onClick={() => navigate('/performers/tools/demo')} className="px-8 py-3 bg-purple-700 text-white font-medium rounded-md hover:bg-purple-800 transition-colors">
                 See Demo
               </button>
             </div>
@@ -184,7 +182,7 @@ export const PerformerToolsPage = () => {
               </div>)}
           </div>
           <div className="mt-12 text-center">
-            <button onClick={() => navigateTo('/performers')} className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors inline-flex items-center">
+            <button onClick={() => navigate('/performers')} className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors inline-flex items-center">
               Browse Performers
               <Music className="ml-2 h-5 w-5" />
             </button>
@@ -358,7 +356,7 @@ export const PerformerToolsPage = () => {
                         <span>{feature}</span>
                       </li>)}
                   </ul>
-                  <button onClick={() => navigateTo('/performers/register')} className={`w-full py-3 px-4 rounded-md font-medium ${plan.recommended ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}>
+                  <button onClick={() => navigate('/performers/register')} className={`w-full py-3 px-4 rounded-md font-medium ${plan.recommended ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}>
                     {plan.ctaText}
                   </button>
                 </div>
@@ -437,10 +435,10 @@ export const PerformerToolsPage = () => {
             more gigs and manage their careers
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button onClick={() => navigateTo('/performers/register')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
+            <button onClick={() => navigate('/performers/register')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
               Create Your Profile
             </button>
-            <button onClick={() => navigateTo('/contact')} className="px-8 py-3 bg-indigo-800 text-white font-medium rounded-md hover:bg-indigo-900 transition-colors border border-indigo-600">
+            <button onClick={() => navigate('/contact')} className="px-8 py-3 bg-indigo-800 text-white font-medium rounded-md hover:bg-indigo-900 transition-colors border border-indigo-600">
               Contact Our Team
             </button>
           </div>

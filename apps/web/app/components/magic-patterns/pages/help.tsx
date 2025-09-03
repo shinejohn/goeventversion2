@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { HelpCircleIcon, SearchIcon, BookOpenIcon, MessageSquareIcon, PhoneIcon, MailIcon, FileTextIcon, CheckIcon, ChevronRightIcon, ChevronDownIcon, AlertCircleIcon, InfoIcon, ArrowRightIcon } from 'lucide-react';
 const HelpPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [expandedFaqs, setExpandedFaqs] = useState<number[]>([]);
@@ -147,7 +145,7 @@ const HelpPage = () => {
             Popular Help Articles
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {popularArticles.filter(article => !activeCategory || article.category === activeCategory).map(article => <div key={article.id} className="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigateTo(`/help/articles/${article.id}`)}>
+            {popularArticles.filter(article => !activeCategory || article.category === activeCategory).map(article => <div key={article.id} className="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate(`/help/articles/${article.id}`)}>
                   <div className="flex items-start">
                     <div className="flex-shrink-0">
                       <BookOpenIcon className="h-6 w-6 text-indigo-500" />

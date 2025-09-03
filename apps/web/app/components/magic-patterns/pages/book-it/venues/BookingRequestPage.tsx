@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { ArrowLeftIcon, CalendarIcon, ClockIcon, UsersIcon, MapPinIcon, DollarSignIcon, CheckIcon, InfoIcon, HomeIcon, ChevronRightIcon } from 'lucide-react';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { mockVenues } from '../../../mockdata/venues';
 export const BookingRequestPage = () => {
-  const {
-    navigateTo,
-    currentPath
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // In a real app, we would extract the venueId from the URL
   // For this example, we'll assume it's venue-1
   const venueId = currentPath.split('/')[3] || 'venue-1';
@@ -47,7 +44,7 @@ export const BookingRequestPage = () => {
     e.preventDefault();
     if (step < 3) {
       setStep(step + 1);
-      window.scrollTo(0, 0);
+      typeof window !== "undefined" && window.scrollTo(0, 0);
     } else {
       setIsSubmitting(true);
       // Simulate API call
@@ -60,16 +57,16 @@ export const BookingRequestPage = () => {
   const handleBack = () => {
     if (step > 1) {
       setStep(step - 1);
-      window.scrollTo(0, 0);
+      typeof window !== "undefined" && window.scrollTo(0, 0);
     } else {
-      navigateTo(`/book-it/venues/${venueId}`);
+      navigate(`/book-it/venues/${venueId}`);
     }
   };
   const handleViewBookings = () => {
-    navigateTo('/bookings/confirmed');
+    navigate('/bookings/confirmed');
   };
   const handleBackToVenue = () => {
-    navigateTo(`/book-it/venues/${venueId}`);
+    navigate(`/book-it/venues/${venueId}`);
   };
   // Calculate estimated cost
   const calculateEstimatedCost = () => {
@@ -88,16 +85,16 @@ export const BookingRequestPage = () => {
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <nav className="flex text-sm text-gray-500">
-            <button onClick={() => navigateTo('/')} className="hover:text-gray-700 flex items-center">
+            <button onClick={() => navigate('/')} className="hover:text-gray-700 flex items-center">
               <HomeIcon className="h-4 w-4 mr-1" />
               Home
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />
-            <button onClick={() => navigateTo('/book-it/venues')} className="hover:text-gray-700">
+            <button onClick={() => navigate('/book-it/venues')} className="hover:text-gray-700">
               Venues
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />
-            <button onClick={() => navigateTo(`/book-it/venues/${venueId}`)} className="hover:text-gray-700">
+            <button onClick={() => navigate(`/book-it/venues/${venueId}`)} className="hover:text-gray-700">
               {venue.name}
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />

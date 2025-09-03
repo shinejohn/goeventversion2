@@ -30,7 +30,7 @@ export const VenueImageGallery = ({
   };
   const handleVirtualTour = () => {
     if (virtualTourUrl) {
-      window.open(virtualTourUrl, '_blank');
+      typeof window !== "undefined" && window.open(virtualTourUrl, '_blank');
     } else {
       alert('Virtual tour is not available for this venue');
     }

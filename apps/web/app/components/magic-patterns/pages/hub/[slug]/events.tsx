@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Header } from '../../../components/layout/Header';
 import { Footer } from '../../../components/layout/Footer';
 import { EventViewToggle } from '../../../components/hub/events/EventViewToggle';
@@ -13,9 +13,7 @@ export const HubEventsPage = () => {
   const {
     slug
   } = useParams();
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<'calendar' | 'list' | 'map'>('list');
   const [isLoading, setIsLoading] = useState(true);
   const [hubData, setHubData] = useState<any>(null);
@@ -93,7 +91,7 @@ export const HubEventsPage = () => {
   };
   // Submit event handler
   const handleSubmitEvent = () => {
-    navigateTo(`/hub/${slug}/submit-event`);
+    navigate(`/hub/${slug}/submit-event`);
   };
   if (isLoading) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -111,7 +109,7 @@ export const HubEventsPage = () => {
       }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex items-center mb-4">
-              <button onClick={() => navigateTo(`/hubs/${slug}`)} className="flex items-center text-white/80 hover:text-white">
+              <button onClick={() => navigate(`/hubs/${slug}`)} className="flex items-center text-white/80 hover:text-white">
                 <ArrowLeftIcon className="h-4 w-4 mr-1" />
                 Back to Hub
               </button>

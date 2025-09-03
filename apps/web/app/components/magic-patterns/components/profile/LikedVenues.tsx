@@ -1,6 +1,6 @@
 import React from 'react';
 import { MapPinIcon, StarIcon, CalendarIcon, ChevronRightIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 // Mock data for liked venues
 const mockLikedVenues = [{
   id: 'venue-1',
@@ -69,9 +69,7 @@ type LikedVenuesProps = {
 export const LikedVenues = ({
   userId
 }: LikedVenuesProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   return <div>
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">Liked Venues</h2>
@@ -80,7 +78,7 @@ export const LikedVenues = ({
         </span>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {mockLikedVenues.map(venue => <div key={venue.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateTo(`/venues/${venue.id}`)}>
+        {mockLikedVenues.map(venue => <div key={venue.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate(`/venues/${venue.id}`)}>
             <div className="h-48 overflow-hidden">
               <img src={venue.image} alt={venue.name} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
             </div>
@@ -114,7 +112,7 @@ export const LikedVenues = ({
                 </div>
                 <button onClick={e => {
               e.stopPropagation();
-              navigateTo(`/venues/${venue.id}`);
+              navigate(`/venues/${venue.id}`);
             }} className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full hover:bg-blue-200 flex items-center">
                   View Venue
                   <ChevronRightIcon className="h-3 w-3 ml-1" />

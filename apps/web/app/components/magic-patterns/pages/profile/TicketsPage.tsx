@@ -1,10 +1,8 @@
 import React, { useState, createElement } from 'react';
 import { TicketIcon, CalendarIcon, MapPinIcon, ClockIcon, ShareIcon, DownloadIcon, ChevronRightIcon, StarIcon, ArrowRightIcon, UserIcon, XIcon, CheckIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const TicketsPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('upcoming');
   const [filter, setFilter] = useState('all');
   const [showTransferModal, setShowTransferModal] = useState(false);
@@ -159,7 +157,7 @@ export const TicketsPage = () => {
     return ticketsToFilter;
   };
   const handleViewTicket = ticketId => {
-    navigateTo(`/tickets/${ticketId}`);
+    navigate(`/tickets/${ticketId}`);
   };
   // Handle transfer ticket
   const handleTransferTicket = ticket => {
@@ -198,7 +196,7 @@ export const TicketsPage = () => {
       type: 'text/calendar;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = typeof document !== "undefined" && document.createElement('a');
     link.href = url;
     link.setAttribute('download', `${event.title.replace(/\s+/g, '_')}.ics`);
     document.body.appendChild(link);
@@ -219,7 +217,7 @@ export const TicketsPage = () => {
       type: 'text/plain;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = typeof document !== "undefined" && document.createElement('a');
     link.href = url;
     link.setAttribute('download', `ticket_${ticket.id}.txt`);
     document.body.appendChild(link);
@@ -239,7 +237,7 @@ export const TicketsPage = () => {
             </p>
           </div>
           <div className="mt-4 md:mt-0">
-            <button onClick={() => navigateTo('/events')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button onClick={() => navigate('/events')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               <TicketIcon className="h-4 w-4 mr-2" />
               Find More Events
             </button>
@@ -365,7 +363,7 @@ export const TicketsPage = () => {
               <p className="text-gray-600 mb-6">
                 {activeTab === 'upcoming' ? "You don't have any upcoming events" : activeTab === 'past' ? "You haven't attended any past events yet" : "You haven't transferred any tickets yet"}
               </p>
-              <button onClick={() => navigateTo('/events')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <button onClick={() => navigate('/events')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Browse Events
               </button>
             </div>}

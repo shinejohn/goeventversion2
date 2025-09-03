@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { ArrowRightIcon, CalendarIcon } from 'lucide-react';
 export const EventPromotionPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   return <div className="min-h-screen bg-white">
       <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -30,7 +28,7 @@ export const EventPromotionPage = () => {
           </p>
         </div>
         <div className="mt-12 text-center">
-          <button onClick={() => navigateTo('/advertise/packages')} className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-md shadow-md inline-flex items-center">
+          <button onClick={() => navigate('/advertise/packages')} className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-md shadow-md inline-flex items-center">
             View Promotion Packages
             <ArrowRightIcon className="ml-2 h-4 w-4" />
           </button>

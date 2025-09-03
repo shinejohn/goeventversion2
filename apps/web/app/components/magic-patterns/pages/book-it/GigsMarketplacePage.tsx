@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { SearchIcon, FilterIcon, CalendarIcon, MapPinIcon, MusicIcon, DollarSignIcon, ClockIcon, ArrowRightIcon, CheckCircleIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const GigsMarketplacePage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
@@ -172,7 +170,7 @@ export const GigsMarketplacePage = () => {
     setSearchTerm('');
   };
   const handleViewGig = gigId => {
-    navigateTo(`/book-it/gigs/${gigId}`);
+    navigate(`/book-it/gigs/${gigId}`);
   };
   // Count active filters
   const activeFilterCount = Object.values(filters).reduce((count, filterArray) => count + (Array.isArray(filterArray) ? filterArray.length : filterArray ? 1 : 0), 0);
@@ -319,7 +317,7 @@ export const GigsMarketplacePage = () => {
             </p>
           </div>
           <div className="mt-4 md:mt-0">
-            <button onClick={() => navigateTo('/book-it/create-gig')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700">
+            <button onClick={() => navigate('/book-it/create-gig')} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700">
               Post a New Gig
             </button>
           </div>
@@ -436,7 +434,7 @@ export const GigsMarketplacePage = () => {
               ready to make your event special.
             </p>
             <div className="mt-6">
-              <button type="button" className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700" onClick={() => navigateTo('/book-it/create-gig')}>
+              <button type="button" className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700" onClick={() => navigate('/book-it/create-gig')}>
                 Create a Gig Listing
               </button>
             </div>

@@ -1,15 +1,13 @@
 import React, { useState, createElement } from 'react';
 import { CalendarIcon, ShareIcon, MessageSquareIcon, FileTextIcon, SettingsIcon, DownloadIcon, ClipboardCopyIcon, CheckIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 type ActionButtonsProps = {
   booking: any;
 };
 export const ActionButtons = ({
   booking
 }: ActionButtonsProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [copySuccess, setCopySuccess] = useState(false);
   const [calendarSuccess, setCalendarSuccess] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
@@ -33,7 +31,7 @@ export const ActionButtons = ({
       type: 'text/calendar;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = typeof document !== "undefined" && document.createElement('a');
     link.href = url;
     link.setAttribute('download', `booking_${booking.bookingId || 'event'}.ics`);
     document.body.appendChild(link);
@@ -47,7 +45,7 @@ export const ActionButtons = ({
   const handleShareEvent = () => {
     // Copy booking link to clipboard
     const bookingUrl = `https://whensthefun.com/bookings/${booking.bookingId || 'unknown'}`;
-    navigator.clipboard.writeText(bookingUrl);
+    typeof navigator !== "undefined" && navigator.clipboard.writeText(bookingUrl);
     setCopySuccess(true);
     setTimeout(() => setCopySuccess(false), 2000);
   };
@@ -57,7 +55,7 @@ export const ActionButtons = ({
     setMessageSuccess(true);
     setTimeout(() => setMessageSuccess(false), 2000);
     setTimeout(() => {
-      navigateTo('/messages');
+      navigate('/messages');
     }, 1000);
   };
   // Handle view contract
@@ -71,7 +69,7 @@ export const ActionButtons = ({
       type: 'text/plain;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = typeof document !== "undefined" && document.createElement('a');
     link.href = url;
     link.setAttribute('download', `contract_${booking.bookingId || 'booking'}.txt`);
     document.body.appendChild(link);
@@ -84,7 +82,7 @@ export const ActionButtons = ({
   // Handle manage booking
   const handleManageBooking = () => {
     // In a real app, this would navigate to the booking management page
-    navigateTo(`/bookings/manage/${booking.bookingId || 'unknown'}`);
+    navigate(`/bookings/manage/${booking.bookingId || 'unknown'}`);
   };
   return <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden sticky top-6">
       {/* Success Messages */}

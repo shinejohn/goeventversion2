@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Header } from '../../../components/layout/Header';
 import { Footer } from '../../../components/layout/Footer';
 import { DirectoryFilters } from '../../../components/hub/directory/DirectoryFilters';
@@ -11,9 +11,7 @@ export default function HubPerformersPage() {
   const {
     slug
   } = useParams();
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [hubData, setHubData] = useState<any>(null);
   const [performers, setPerformers] = useState<any[]>([]);
@@ -114,7 +112,7 @@ export default function HubPerformersPage() {
   };
   // Submit new performer listing
   const handleSubmitListing = () => {
-    navigateTo(`/hub/${slug}/submit-performer`);
+    navigate(`/hub/${slug}/submit-performer`);
   };
   // Helper function to get hub-specific badges for performers
   function getHubBadges(performer: any, hubSlug: string) {
@@ -163,7 +161,7 @@ export default function HubPerformersPage() {
       }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex items-center mb-4">
-              <button onClick={() => navigateTo(`/hubs/${slug}`)} className="flex items-center text-white/80 hover:text-white">
+              <button onClick={() => navigate(`/hubs/${slug}`)} className="flex items-center text-white/80 hover:text-white">
                 <ArrowLeftIcon className="h-4 w-4 mr-1" />
                 Back to Hub
               </button>
@@ -250,7 +248,7 @@ export default function HubPerformersPage() {
                 </button>
               </div>
             </div> : <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
-              {filteredPerformers.map(performer => <DirectoryCard key={performer.id} item={performer} type="performer" viewMode={viewMode} hubSlug={slug as string} onView={() => navigateTo(`/performers/${performer.id}`)} onFollow={() => {
+              {filteredPerformers.map(performer => <DirectoryCard key={performer.id} item={performer} type="performer" viewMode={viewMode} hubSlug={slug as string} onView={() => navigate(`/performers/${performer.id}`)} onFollow={() => {
             // Handle follow action
             console.log(`Following performer: ${performer.id}`);
           }} />)}

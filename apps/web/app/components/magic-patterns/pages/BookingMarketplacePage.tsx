@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { MapPin, Music, Calendar, Users, CheckCircle, Clock, DollarSign, Star, MessageSquare, Shield, Award, Search } from 'lucide-react';
 export const BookingMarketplacePage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const marketplaceFeatures = [{
     title: 'Venue Booking',
     description: 'Find and book the perfect venue for your event, from intimate spaces to large concert halls.',
@@ -110,10 +108,10 @@ export const BookingMarketplacePage = () => {
               Find and book venues, performers, and services for your next event
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button onClick={() => navigateTo('/book-it/venues')} className="px-8 py-3 bg-white text-teal-600 font-medium rounded-md hover:bg-teal-50 transition-colors">
+              <button onClick={() => navigate('/book-it/venues')} className="px-8 py-3 bg-white text-teal-600 font-medium rounded-md hover:bg-teal-50 transition-colors">
                 Find Venues
               </button>
-              <button onClick={() => navigateTo('/book-it/performers')} className="px-8 py-3 bg-teal-700 text-white font-medium rounded-md hover:bg-teal-800 transition-colors">
+              <button onClick={() => navigate('/book-it/performers')} className="px-8 py-3 bg-teal-700 text-white font-medium rounded-md hover:bg-teal-800 transition-colors">
                 Book Performers
               </button>
             </div>
@@ -133,7 +131,7 @@ export const BookingMarketplacePage = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {marketplaceFeatures.map((feature, index) => <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateTo(feature.path)}>
+            {marketplaceFeatures.map((feature, index) => <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate(feature.path)}>
                 <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 mb-4">
                   {feature.icon}
                 </div>
@@ -143,7 +141,7 @@ export const BookingMarketplacePage = () => {
                 <p className="text-gray-600 mb-4">{feature.description}</p>
                 <button className="text-indigo-600 font-medium hover:text-indigo-800 flex items-center" onClick={e => {
               e.stopPropagation();
-              navigateTo(feature.path);
+              navigate(feature.path);
             }}>
                   Explore
                   <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -180,12 +178,12 @@ export const BookingMarketplacePage = () => {
             </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {venueCategories.map((category, index) => <div key={index} className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 text-center cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => navigateTo(`/book-it/venues?category=${category.toLowerCase().replace(/\s+/g, '-')}`)}>
+            {venueCategories.map((category, index) => <div key={index} className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 text-center cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => navigate(`/book-it/venues?category=${category.toLowerCase().replace(/\s+/g, '-')}`)}>
                 <p className="font-medium text-gray-900">{category}</p>
               </div>)}
           </div>
           <div className="mt-12 text-center">
-            <button onClick={() => navigateTo('/book-it/venues')} className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors inline-flex items-center">
+            <button onClick={() => navigate('/book-it/venues')} className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors inline-flex items-center">
               Browse All Venues
               <MapPin className="ml-2 h-5 w-5" />
             </button>
@@ -205,12 +203,12 @@ export const BookingMarketplacePage = () => {
             </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {performerTypes.map((type, index) => <div key={index} className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 text-center cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => navigateTo(`/book-it/performers?category=${type.toLowerCase().replace(/\s+/g, '-')}`)}>
+            {performerTypes.map((type, index) => <div key={index} className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 text-center cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => navigate(`/book-it/performers?category=${type.toLowerCase().replace(/\s+/g, '-')}`)}>
                 <p className="font-medium text-gray-900">{type}</p>
               </div>)}
           </div>
           <div className="mt-12 text-center">
-            <button onClick={() => navigateTo('/book-it/performers')} className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors inline-flex items-center">
+            <button onClick={() => navigate('/book-it/performers')} className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors inline-flex items-center">
               Browse All Performers
               <Music className="ml-2 h-5 w-5" />
             </button>
@@ -400,10 +398,10 @@ export const BookingMarketplacePage = () => {
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <button onClick={() => navigateTo('/venues/submit')} className="px-6 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
+                  <button onClick={() => navigate('/venues/submit')} className="px-6 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
                     List Your Venue
                   </button>
-                  <button onClick={() => navigateTo('/performers/register')} className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-800 transition-colors border border-white">
+                  <button onClick={() => navigate('/performers/register')} className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-800 transition-colors border border-white">
                     Register as a Performer
                   </button>
                 </div>
@@ -426,10 +424,10 @@ export const BookingMarketplacePage = () => {
             unforgettable
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button onClick={() => navigateTo('/book-it/venues')} className="px-8 py-3 bg-white text-teal-700 font-medium rounded-md hover:bg-teal-50 transition-colors">
+            <button onClick={() => navigate('/book-it/venues')} className="px-8 py-3 bg-white text-teal-700 font-medium rounded-md hover:bg-teal-50 transition-colors">
               Find Venues
             </button>
-            <button onClick={() => navigateTo('/book-it/performers')} className="px-8 py-3 bg-teal-800 text-white font-medium rounded-md hover:bg-teal-900 transition-colors border border-teal-600">
+            <button onClick={() => navigate('/book-it/performers')} className="px-8 py-3 bg-teal-800 text-white font-medium rounded-md hover:bg-teal-900 transition-colors border border-teal-600">
               Book Performers
             </button>
           </div>

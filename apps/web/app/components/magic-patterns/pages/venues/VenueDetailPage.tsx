@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { MapPinIcon, CalendarIcon, ClockIcon, StarIcon, UsersIcon, HeartIcon, ShareIcon, CheckCircleIcon, ArrowLeftIcon, ExternalLinkIcon, MessageCircleIcon, CheckIcon, XIcon, InfoIcon, MusicIcon, DollarSignIcon, WifiIcon, CameraIcon, LayoutIcon, PhoneIcon, GlobeIcon, TicketIcon, UserIcon, CalendarDaysIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { mockVenues } from '../../mockdata/venues';
 export const VenueDetailPage = () => {
   const {
     id
   } = useParams();
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const [isSaved, setIsSaved] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
@@ -61,7 +59,7 @@ export const VenueDetailPage = () => {
   }];
   // Handle back navigation
   const handleBack = () => {
-    navigateTo('/venues');
+    navigate('/venues');
   };
   // Handle save to favorites
   const handleSave = () => {
@@ -77,7 +75,7 @@ export const VenueDetailPage = () => {
   };
   // Handle navigation to event detail
   const handleViewEvent = eventId => {
-    navigateTo(`/events/${eventId}`);
+    navigate(`/events/${eventId}`);
   };
   // Handle message
   const handleContact = () => {
@@ -85,7 +83,7 @@ export const VenueDetailPage = () => {
   };
   // Handle ticket purchase
   const handleBuyTickets = eventId => {
-    navigateTo(`/events/${eventId}/tickets`);
+    navigate(`/events/${eventId}/tickets`);
   };
   if (!venue) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -94,7 +92,7 @@ export const VenueDetailPage = () => {
           <p className="mt-2 text-gray-600">
             The venue you're looking for doesn't exist.
           </p>
-          <button onClick={() => navigateTo('/venues')} className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+          <button onClick={() => navigate('/venues')} className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
             Return to Venues
           </button>
         </div>
@@ -1017,12 +1015,12 @@ export const VenueDetailPage = () => {
                               reviews)
                             </div>
                           </div>
-                          <button onClick={() => navigateTo(`/venues/${similarVenue.id}`)} className="ml-2 text-xs text-indigo-600 font-medium hover:text-indigo-800">
+                          <button onClick={() => navigate(`/venues/${similarVenue.id}`)} className="ml-2 text-xs text-indigo-600 font-medium hover:text-indigo-800">
                             View
                           </button>
                         </div>)}
                   </div>
-                  <button onClick={() => navigateTo('/venues')} className="mt-4 w-full text-indigo-600 text-sm font-medium hover:text-indigo-800 flex items-center justify-center">
+                  <button onClick={() => navigate('/venues')} className="mt-4 w-full text-indigo-600 text-sm font-medium hover:text-indigo-800 flex items-center justify-center">
                     Explore more venues
                     <svg className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

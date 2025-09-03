@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { XIcon, ChevronLeftIcon, ChevronRightIcon, HeartIcon, ShareIcon, DownloadIcon, MessageSquareIcon, PlayIcon, PauseIcon, VolumeXIcon, Volume2Icon } from 'lucide-react';
+import { ClientOnly } from '@kit/ui/client-only';
 type MediaLightboxProps = {
   mediaItem: any;
   onClose: () => void;
   onNavigate: (direction: 'next' | 'prev') => void;
   onLike: () => void;
 };
-export const MediaLightbox = ({
+const MediaLightboxInternal = ({
   mediaItem,
   onClose,
   onNavigate,
@@ -36,17 +37,21 @@ export const MediaLightbox = ({
         onNavigate('prev');
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }
   }, [onClose, onNavigate]);
   // Prevent body scrolling while lightbox is open
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = 'auto';
+      };
+    }
   }, []);
   // Toggle play/pause for video or audio
   const togglePlayPause = () => {
@@ -59,19 +64,19 @@ export const MediaLightbox = ({
   // Handle download
   const handleDownload = () => {
     // In a real app, this would trigger a download of the media file
-    alert(`Downloading ${mediaItem.title}`);
+    console.log(`Downloading ${mediaItem.title}`);
   };
   // Handle share
   const handleShare = () => {
     // In a real app, this would open a share dialog
-    alert(`Sharing ${mediaItem.title}`);
+    console.log(`Sharing ${mediaItem.title}`);
   };
   // Handle comment submission
   const handleCommentSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (comment.trim()) {
       // In a real app, this would submit the comment to the server
-      alert(`Comment submitted: ${comment}`);
+      console.log(`Comment submitted: ${comment}`);
       setComment('');
     }
   };
@@ -249,6 +254,15 @@ export const MediaLightbox = ({
       </div>
     </div>;
 };
+
+export const MediaLightbox = (props: MediaLightboxProps) => {
+  return (
+    <ClientOnly>
+      <MediaLightboxInternal {...props} />
+    </ClientOnly>
+  );
+};
+
 // Add the missing MusicIcon component
 function MusicIcon(props: React.SVGProps<SVGSVGElement>) {
   return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { ArrowLeftIcon, BuildingIcon, CheckCircleIcon, HomeIcon, ChevronRightIcon, MapPinIcon, UsersIcon, DollarSignIcon, ImageIcon, ClipboardIcon, CheckIcon, ClockIcon, InfoIcon, PlusIcon, XIcon, CalendarIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const SubmitVenuePage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -141,14 +139,14 @@ export const SubmitVenuePage = () => {
   };
   const nextStep = () => {
     if (validateCurrentStep()) {
-      window.scrollTo(0, 0);
+      typeof window !== "undefined" && window.scrollTo(0, 0);
       setCurrentStep(currentStep + 1);
     } else {
       alert('Please fill out all required fields before proceeding.');
     }
   };
   const prevStep = () => {
-    window.scrollTo(0, 0);
+    typeof window !== "undefined" && window.scrollTo(0, 0);
     setCurrentStep(currentStep - 1);
   };
   const handleSubmit = async (e: React.FormEvent) => {
@@ -162,7 +160,7 @@ export const SubmitVenuePage = () => {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
       setIsSubmitted(true);
-      window.scrollTo(0, 0);
+      typeof window !== "undefined" && window.scrollTo(0, 0);
     } catch (error) {
       console.error('Error submitting venue:', error);
       alert('An error occurred while submitting your venue. Please try again.');
@@ -171,19 +169,19 @@ export const SubmitVenuePage = () => {
     }
   };
   const handleBackToVenues = () => {
-    navigateTo('/venues');
+    navigate('/venues');
   };
   return <div className="min-h-screen bg-gray-50">
       {/* Breadcrumbs */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <nav className="flex text-sm text-gray-500">
-            <button onClick={() => navigateTo('/')} className="hover:text-gray-700 flex items-center">
+            <button onClick={() => navigate('/')} className="hover:text-gray-700 flex items-center">
               <HomeIcon className="h-4 w-4 mr-1" />
               Home
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />
-            <button onClick={() => navigateTo('/venues')} className="hover:text-gray-700">
+            <button onClick={() => navigate('/venues')} className="hover:text-gray-700">
               Venues
             </button>
             <ChevronRightIcon className="h-4 w-4 mx-2" />
@@ -771,7 +769,7 @@ export const SubmitVenuePage = () => {
                   {currentStep > 1 && <button type="button" onClick={prevStep} className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                       Back
                     </button>}
-                  {currentStep === 1 && <button type="button" onClick={() => navigateTo('/venues')} className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  {currentStep === 1 && <button type="button" onClick={() => navigate('/venues')} className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                       Cancel
                     </button>}
                   {currentStep < 6 ? <button type="button" onClick={nextStep} className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -821,10 +819,10 @@ export const SubmitVenuePage = () => {
                 </ul>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button onClick={() => navigateTo('/venues/management')} className="w-full sm:w-auto px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button onClick={() => navigate('/venues/management')} className="w-full sm:w-auto px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   Go to Venue Management
                 </button>
-                <button onClick={() => navigateTo('/venues')} className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                <button onClick={() => navigate('/venues')} className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                   Browse Venues
                 </button>
               </div>

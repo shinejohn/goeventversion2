@@ -1,0 +1,113 @@
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router';
+import { MapPinIcon, ExternalLinkIcon } from 'lucide-react';
+type MapViewProps = {
+  events: any[];
+};
+export const MapView = ({
+  events
+}: MapViewProps) => {
+  const navigate = useNavigate();
+  const [mapError, setMapError] = useState<string | null>(null);
+  // Safe event click handler
+  const handleEventClick = (eventId: string) => {
+    try {
+      if (eventId && navigateTo) {
+        navigate(`/events/${eventId}`);
+      }
+    } catch (error) {
+      console.error('Navigation error:', error);
+    }
+  };
+  // Safe Google Maps handler
+  const handleViewOnGoogleMaps = () => {
+    try {
+      if (events && events.length > 0) {
+        const firstEvent = events.find(e => e.location?.lat && e.location?.lng);
+        if (firstEvent && firstEvent.location) {
+          const {
+            lat,
+            lng
+          } = firstEvent.location;
+          if (typeof lat === 'number' && typeof lng === 'number') {
+            window.open(`https://maps.google.com/?q=${lat},${lng}`, '_blank');
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Google Maps error:', error);
+      setMapError('Unable to open Google Maps');
+    }
+  };
+  // Safe array filtering
+  const getEventsWithLocation = () => {
+    try {
+      if (!Array.isArray(events)) return [];
+      return events.filter(event => {
+        return event && event.location && typeof event.location.lat === 'number' && typeof event.location.lng === 'number' && !isNaN(event.location.lat) && !isNaN(event.location.lng);
+      });
+    } catch (error) {
+      console.error('Event filtering error:', error);
+      return [];
+    }
+  };
+  const eventsWithLocation = getEventsWithLocation();
+  return <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div className="h-[600px] w-full relative bg-gray-100 flex flex-col items-center justify-center">
+        <MapPinIcon className="h-16 w-16 text-gray-400 mb-4" />
+        <h3 className="text-lg font-medium text-gray-900 mb-2">
+          Event Locations
+        </h3>
+        <p className="text-gray-600 mb-6 text-center max-w-md">
+          Interactive map functionality is temporarily unavailable. View event
+          locations below or open in Google Maps.
+        </p>
+        {mapError && <div className="mb-4 p-2 bg-red-100 text-red-700 rounded text-sm">
+            {mapError}
+          </div>}
+        <div className="flex space-x-4 mb-8">
+          <button onClick={handleViewOnGoogleMaps} className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700" disabled={eventsWithLocation.length === 0}>
+            <ExternalLinkIcon className="h-4 w-4 mr-2" />
+            View on Google Maps
+          </button>
+        </div>
+        {/* Event list with locations */}
+        <div className="w-full max-w-2xl max-h-64 overflow-y-auto px-6">
+          <div className="space-y-3">
+            {eventsWithLocation.length > 0 ? eventsWithLocation.map((event, index) => <div key={event.id || `event-${index}`} className="bg-white rounded-lg p-4 border border-gray-200 cursor-pointer hover:shadow-md transition-shadow" onClick={() => handleEventClick(event.id)}>
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900 mb-1">
+                        {event.title || 'Event'}
+                      </h4>
+                      <p className="text-sm text-gray-600 mb-2">
+                        {event.venue?.name || ''}{' '}
+                        {event.venue?.city ? ', ' + event.venue.city : ''}
+                      </p>
+                      <div className="flex items-center text-xs text-gray-500">
+                        <MapPinIcon className="h-3 w-3 mr-1" />
+                        <span>
+                          {Number(event.location.lat).toFixed(4)},{' '}
+                          {Number(event.location.lng).toFixed(4)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm text-gray-600">
+                        {event.date ? new Date(event.date).toLocaleDateString() : ''}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        {event.time || ''}
+                      </p>
+                    </div>
+                  </div>
+                </div>) : <div className="text-center py-8">
+                <p className="text-gray-500">
+                  No events with location data available
+                </p>
+              </div>}
+          </div>
+        </div>
+      </div>
+    </div>;
+};

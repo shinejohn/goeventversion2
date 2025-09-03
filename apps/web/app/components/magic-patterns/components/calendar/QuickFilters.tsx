@@ -1,6 +1,6 @@
 import React from 'react';
 import { SlidersIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 type QuickFiltersProps = {
   selectedCategory: string;
   setSelectedCategory: (category: string) => void;
@@ -11,32 +11,30 @@ export const QuickFilters = ({
   setSelectedCategory,
   toggleAdvancedFilters
 }: QuickFiltersProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const timeFilters = ['Now', 'Today', 'Tomorrow', 'This Weekend', 'Custom Date'];
   const categoryFilters = ['All', 'Music', 'Food & Drink', 'Sports', 'Arts & Culture', 'Family', 'Nightlife'];
   const handleTimeFilterClick = (filter: string) => {
     // Navigate to appropriate calendar view based on filter
     switch (filter) {
       case 'Now':
-        navigateTo('/calendar?time=now');
+        navigate('/calendar?time=now');
         break;
       case 'Today':
-        navigateTo('/calendar?time=today');
+        navigate('/calendar?time=today');
         break;
       case 'Tomorrow':
-        navigateTo('/calendar?time=tomorrow');
+        navigate('/calendar?time=tomorrow');
         break;
       case 'This Weekend':
-        navigateTo('/calendar?time=weekend');
+        navigate('/calendar?time=weekend');
         break;
       case 'Custom Date':
         // Open date picker or navigate to custom date page
-        navigateTo('/calendar?custom=true');
+        navigate('/calendar?custom=true');
         break;
       default:
-        navigateTo('/calendar');
+        navigate('/calendar');
     }
   };
   return <div className="space-y-4">
@@ -51,7 +49,7 @@ export const QuickFilters = ({
         {categoryFilters.map(category => <button key={category} className={`px-3 py-1.5 text-sm rounded-full ${selectedCategory === category ? 'bg-indigo-600 text-white' : 'bg-white border border-gray-300 hover:bg-gray-50'}`} onClick={() => setSelectedCategory(category)}>
             {category}
           </button>)}
-        <button className="px-3 py-1.5 text-sm bg-white border border-gray-300 rounded-full hover:bg-gray-50" onClick={() => navigateTo('/calendar?show=all-categories')}>
+        <button className="px-3 py-1.5 text-sm bg-white border border-gray-300 rounded-full hover:bg-gray-50" onClick={() => navigate('/calendar?show=all-categories')}>
           More...
         </button>
         <button onClick={toggleAdvancedFilters} className="ml-2 p-1.5 rounded-full bg-white border border-gray-300 hover:bg-gray-50">

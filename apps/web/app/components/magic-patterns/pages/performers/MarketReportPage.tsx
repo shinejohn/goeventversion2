@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend } from 'recharts';
 import { TrendingUpIcon, MapPinIcon, MusicIcon, DollarSignIcon, CalendarIcon, DownloadIcon, InfoIcon, ArrowRightIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const MarketReportPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [selectedLocation, setSelectedLocation] = useState('Clearwater, FL');
   const [selectedGenre, setSelectedGenre] = useState('All Genres');
   const [timeRange, setTimeRange] = useState('last6Months');
@@ -419,11 +417,11 @@ export const MarketReportPage = () => {
               applying to gigs that match your skills and preferences.
             </p>
             <div className="mt-6 flex flex-col sm:flex-row justify-center gap-4">
-              <button type="button" className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700" onClick={() => navigateTo('/book-it/gigs')}>
+              <button type="button" className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700" onClick={() => navigate('/book-it/gigs')}>
                 Browse Available Gigs
                 <ArrowRightIcon className="ml-2 h-5 w-5" />
               </button>
-              <button type="button" className="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" onClick={() => navigateTo('/performers/profile/edit')}>
+              <button type="button" className="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" onClick={() => navigate('/performers/profile/edit')}>
                 Optimize Your Profile
               </button>
             </div>

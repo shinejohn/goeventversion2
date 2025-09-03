@@ -1,10 +1,8 @@
 import React, { useState, createElement } from 'react';
 import { CalendarIcon, ShareIcon, MessageSquareIcon, FileTextIcon, SettingsIcon, DownloadIcon, ClipboardCopyIcon, CheckIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const BookingConfirmationPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [copySuccess, setCopySuccess] = useState(false);
   const [calendarSuccess, setCalendarSuccess] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
@@ -50,7 +48,7 @@ export const BookingConfirmationPage = () => {
       type: 'text/calendar;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = typeof document !== "undefined" && document.createElement('a');
     link.href = url;
     link.setAttribute('download', `${booking.bookingId}_event.ics`);
     document.body.appendChild(link);
@@ -64,7 +62,7 @@ export const BookingConfirmationPage = () => {
   const handleShareEvent = () => {
     // Copy booking link to clipboard
     const bookingUrl = `https://goeventcity.com/bookings/${booking.bookingId}`;
-    navigator.clipboard.writeText(bookingUrl);
+    typeof navigator !== "undefined" && navigator.clipboard.writeText(bookingUrl);
     setCopySuccess(true);
     setTimeout(() => setCopySuccess(false), 2000);
   };
@@ -74,7 +72,7 @@ export const BookingConfirmationPage = () => {
     setMessageSuccess(true);
     setTimeout(() => setMessageSuccess(false), 2000);
     setTimeout(() => {
-      navigateTo('/messages');
+      navigate('/messages');
     }, 1000);
   };
   // Handle view contract
@@ -86,7 +84,7 @@ export const BookingConfirmationPage = () => {
       type: 'text/plain;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = typeof document !== "undefined" && document.createElement('a');
     link.href = url;
     link.setAttribute('download', `${booking.bookingId}_contract.txt`);
     document.body.appendChild(link);
@@ -99,7 +97,7 @@ export const BookingConfirmationPage = () => {
   // Handle manage booking
   const handleManageBooking = () => {
     // In a real app, this would navigate to the booking management page
-    navigateTo(`/bookings/manage/${booking.bookingId}`);
+    navigate(`/bookings/manage/${booking.bookingId}`);
   };
   return <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden sticky top-6">
       {/* Success Messages */}

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { CheckIcon, DownloadIcon, ShareIcon, TicketIcon, CalendarIcon, SmartphoneIcon, MailIcon, PrinterIcon } from 'lucide-react';
 import { ProgressIndicator } from '../../components/booking/ProgressIndicator';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { Invoice } from '../../components/checkout/Invoice';
 export const CheckoutConfirmationPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [orderData, setOrderData] = useState(null);
   const [customerInfo, setCustomerInfo] = useState(null);
   const [isFreeOrder, setIsFreeOrder] = useState(false);
@@ -15,7 +13,7 @@ export const CheckoutConfirmationPage = () => {
   const [orderNumber, setOrderNumber] = useState('');
   // Animation effect on load
   useEffect(() => {
-    const checkmarkAnimation = document.getElementById('checkmark-animation');
+    const checkmarkAnimation = typeof document !== "undefined" && document.getElementById('checkmark-animation');
     if (checkmarkAnimation) {
       checkmarkAnimation.classList.add('scale-100');
       checkmarkAnimation.classList.remove('scale-0');
@@ -47,11 +45,11 @@ export const CheckoutConfirmationPage = () => {
       }
     } else {
       // No order data, redirect back
-      navigateTo('/tickets/select');
+      navigate('/tickets/select');
     }
   }, []);
   const handleViewTickets = () => {
-    navigateTo('/profile/tickets');
+    navigate('/profile/tickets');
   };
   if (!orderData || !customerInfo) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -299,7 +297,7 @@ export const CheckoutConfirmationPage = () => {
         </div>
         {/* Continue Shopping Link */}
         <div className="mt-8 text-center">
-          <button onClick={() => navigateTo('/events')} className="text-indigo-600 hover:text-indigo-800 font-medium">
+          <button onClick={() => navigate('/events')} className="text-indigo-600 hover:text-indigo-800 font-medium">
             Continue browsing events
           </button>
         </div>

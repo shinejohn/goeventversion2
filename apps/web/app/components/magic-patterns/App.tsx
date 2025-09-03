@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// Using React Router 7 - no need to import Router components in this file
 /**
  * Page: Main App Container
  * Type: CSR
@@ -29,7 +29,7 @@ import { EmailCampaignsPage } from './pages/advertise/EmailCampaignsPage';
 import { AdvertisingContactPage } from './pages/advertise/AdvertisingContactPage';
 import { FloatingNav } from './components/navigation/FloatingNav';
 import { QuickPageAccess } from './components/navigation/QuickPageAccess';
-import { NavigationProvider } from './context/NavigationContext';
+;
 import { VenueMarketplacePage } from './pages/book-it/VenueMarketplacePage';
 import { VenueDetailPage } from './pages/venues/VenueDetailPage';
 import { BookingRequestPage } from './pages/book-it/venues/BookingRequestPage';
@@ -96,7 +96,7 @@ import { CheckInProvider } from './context/CheckInContext';
 import { PerformerManagementPage } from './pages/performers/PerformerManagementPage';
 export const App = () => {
   return <Router>
-      <NavigationProvider>
+      
         <div className="min-h-screen bg-gray-50 flex flex-col">
           <MainHeader />
           <main className="flex-grow">
@@ -196,6 +196,6 @@ export const App = () => {
           <QuickPageAccess />
           <MarginEventAds />
         </div>
-      </NavigationProvider>
+      
     </Router>;
 };

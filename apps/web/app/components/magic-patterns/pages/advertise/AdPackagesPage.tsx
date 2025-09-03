@@ -1,10 +1,8 @@
 import React from 'react';
 import { CheckIcon, ArrowRightIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const AdPackagesPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // Pricing plans
   const pricingPlans = [{
     name: 'Basic',
@@ -88,7 +86,7 @@ export const AdPackagesPage = () => {
                     </li>)}
                 </ul>
                 <div className="mt-8">
-                  <button className={`w-full py-3 px-4 rounded-md shadow font-medium ${plan.highlighted ? 'bg-orange-600 hover:bg-orange-700 text-white' : 'bg-white hover:bg-gray-50 text-gray-900 border border-gray-300'}`} onClick={() => navigateTo(plan.path)}>
+                  <button className={`w-full py-3 px-4 rounded-md shadow font-medium ${plan.highlighted ? 'bg-orange-600 hover:bg-orange-700 text-white' : 'bg-white hover:bg-gray-50 text-gray-900 border border-gray-300'}`} onClick={() => navigate(plan.path)}>
                     {plan.cta}
                   </button>
                 </div>
@@ -103,7 +101,7 @@ export const AdPackagesPage = () => {
             Our team can create a tailored advertising package to meet your
             specific needs
           </p>
-          <button className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700" onClick={() => navigateTo('/advertise/contact')}>
+          <button className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700" onClick={() => navigate('/advertise/contact')}>
             Contact Our Sales Team
             <ArrowRightIcon className="ml-2 h-4 w-4" />
           </button>
@@ -153,10 +151,10 @@ export const AdPackagesPage = () => {
             with our advertising solutions
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button className="px-8 py-3 bg-white text-orange-600 font-medium rounded-md shadow-sm hover:bg-orange-50" onClick={() => navigateTo('/checkout/details?plan=professional-advertising')}>
+            <button className="px-8 py-3 bg-white text-orange-600 font-medium rounded-md shadow-sm hover:bg-orange-50" onClick={() => navigate('/checkout/details?plan=professional-advertising')}>
               Get Started Now
             </button>
-            <button className="px-8 py-3 bg-orange-700 text-white font-medium rounded-md shadow-sm border border-orange-500 hover:bg-orange-800" onClick={() => navigateTo('/advertise/contact')}>
+            <button className="px-8 py-3 bg-orange-700 text-white font-medium rounded-md shadow-sm border border-orange-500 hover:bg-orange-800" onClick={() => navigate('/advertise/contact')}>
               Contact Sales
             </button>
           </div>

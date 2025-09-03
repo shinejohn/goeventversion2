@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { SearchIcon, UsersIcon, PlusIcon, FilterIcon, ChevronDownIcon, CalendarIcon, MessageCircleIcon, UserIcon, CheckIcon, XIcon, GlobeIcon, LockIcon } from 'lucide-react';
 // Mock data for groups
 const mockGroups = [{
@@ -125,9 +125,7 @@ const suggestedGroups = [{
 // Group categories
 const groupCategories = ['All Categories', 'Music', 'Local Events', 'Food & Drink', 'Arts & Culture', 'Professional', 'Sports', 'Technology', 'Photography', 'Outdoors', 'Family', 'Education', 'Health & Wellness'];
 const GroupsPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('my-groups');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Categories');
@@ -181,7 +179,7 @@ const GroupsPage = () => {
           <div className="md:w-1/4">
             <div className="bg-white rounded-lg shadow mb-6">
               <div className="p-4">
-                <button onClick={() => navigateTo('/social/groups/create')} className="w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button onClick={() => navigate('/social/groups/create')} className="w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   <PlusIcon className="h-5 w-5 mr-2" />
                   Create New Group
                 </button>
@@ -288,7 +286,7 @@ const GroupsPage = () => {
                                 {group.lastActive}
                               </span>
                               <div className="flex space-x-2">
-                                <button onClick={() => navigateTo(`/social/groups/${group.id}`)} className="px-3 py-1.5 text-sm font-medium text-indigo-700 bg-indigo-100 rounded-md hover:bg-indigo-200">
+                                <button onClick={() => navigate(`/social/groups/${group.id}`)} className="px-3 py-1.5 text-sm font-medium text-indigo-700 bg-indigo-100 rounded-md hover:bg-indigo-200">
                                   View
                                 </button>
                                 <button onClick={() => handleLeaveGroup(group.id)} className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
@@ -366,7 +364,7 @@ const GroupsPage = () => {
                               <button onClick={() => handleJoinGroup(group.id)} className="px-3 py-1.5 text-sm font-medium text-indigo-700 bg-indigo-100 rounded-md hover:bg-indigo-200">
                                 Join
                               </button>
-                              <button onClick={() => navigateTo(`/social/groups/${group.id}`)} className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
+                              <button onClick={() => navigate(`/social/groups/${group.id}`)} className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
                                 View
                               </button>
                             </div>
@@ -421,7 +419,7 @@ const GroupsPage = () => {
                               <button onClick={() => handleJoinGroup(group.id)} className="px-3 py-1.5 text-sm font-medium text-indigo-700 bg-indigo-100 rounded-md hover:bg-indigo-200">
                                 Join
                               </button>
-                              <button onClick={() => navigateTo(`/social/groups/${group.id}`)} className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
+                              <button onClick={() => navigate(`/social/groups/${group.id}`)} className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
                                 View
                               </button>
                             </div>

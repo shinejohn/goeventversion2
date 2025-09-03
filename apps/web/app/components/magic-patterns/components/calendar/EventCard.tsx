@@ -70,7 +70,7 @@ export const EventCard = ({
   const handleTicketClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent event card click from triggering
     if (event.ticketInfo?.url) {
-      window.open(event.ticketInfo.url, '_blank');
+      typeof window !== "undefined" && window.open(event.ticketInfo.url, '_blank');
     } else {
       alert(`Purchasing tickets for: ${event.title}`);
     }
@@ -96,7 +96,7 @@ export const EventCard = ({
       type: 'text/calendar;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = typeof document !== "undefined" && document.createElement('a');
     link.href = url;
     link.setAttribute('download', `${event.title.replace(/\s+/g, '_')}.ics`);
     document.body.appendChild(link);

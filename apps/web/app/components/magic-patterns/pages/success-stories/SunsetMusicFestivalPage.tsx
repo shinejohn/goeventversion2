@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { ArrowRight, BarChart, Calendar, CheckCircle, ChevronLeft, Clock, DollarSign, MapPin, Music, Star, Users } from 'lucide-react';
 export const SunsetMusicFestivalPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const results = [{
     metric: '40%',
     description: 'Increase in attendance',
@@ -54,7 +52,7 @@ export const SunsetMusicFestivalPage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-16">
           <div className="mb-6">
-            <button onClick={() => navigateTo('/success-stories')} className="inline-flex items-center text-white hover:text-indigo-200 transition-colors">
+            <button onClick={() => navigate('/success-stories')} className="inline-flex items-center text-white hover:text-indigo-200 transition-colors">
               <ChevronLeft className="h-5 w-5 mr-1" />
               Back to Success Stories
             </button>
@@ -315,7 +313,7 @@ export const SunsetMusicFestivalPage = () => {
                 Learn how When's The Fun can help you increase attendance and
                 revenue for your next event.
               </p>
-              <button onClick={() => navigateTo('/organizer-hub')} className="w-full bg-white text-indigo-600 font-medium py-2 px-4 rounded-md hover:bg-indigo-50 transition-colors flex items-center justify-center">
+              <button onClick={() => navigate('/organizer-hub')} className="w-full bg-white text-indigo-600 font-medium py-2 px-4 rounded-md hover:bg-indigo-50 transition-colors flex items-center justify-center">
                 Explore Event Organizer Hub
                 <ArrowRight className="ml-2 h-4 w-4" />
               </button>
@@ -330,7 +328,7 @@ export const SunsetMusicFestivalPage = () => {
             Explore More Success Stories
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigateTo('/success-stories/urban-loft')}>
+            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/success-stories/urban-loft')}>
               <div className="h-48 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="The Urban Loft venue" className="w-full h-full object-cover" />
               </div>
@@ -351,7 +349,7 @@ export const SunsetMusicFestivalPage = () => {
                 </button>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigateTo('/success-stories/jazz-quartet')}>
+            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/success-stories/jazz-quartet')}>
               <div className="h-48 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Jazz Quartet performing" className="w-full h-full object-cover" />
               </div>
@@ -372,7 +370,7 @@ export const SunsetMusicFestivalPage = () => {
                 </button>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigateTo('/success-stories/downtown-revival')}>
+            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate('/success-stories/downtown-revival')}>
               <div className="h-48 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Downtown street festival" className="w-full h-full object-cover" />
               </div>
@@ -407,10 +405,10 @@ export const SunsetMusicFestivalPage = () => {
             and increasing revenue with When's The Fun
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button onClick={() => navigateTo('/events/create')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
+            <button onClick={() => navigate('/events/create')} className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md hover:bg-indigo-50 transition-colors">
               Create Your Event
             </button>
-            <button onClick={() => navigateTo('/contact')} className="px-8 py-3 bg-indigo-800 text-white font-medium rounded-md hover:bg-indigo-900 transition-colors border border-indigo-600">
+            <button onClick={() => navigate('/contact')} className="px-8 py-3 bg-indigo-800 text-white font-medium rounded-md hover:bg-indigo-900 transition-colors border border-indigo-600">
               Talk to Our Team
             </button>
           </div>

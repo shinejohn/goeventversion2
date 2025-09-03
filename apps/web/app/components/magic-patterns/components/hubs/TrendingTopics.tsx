@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { TrendingUpIcon, ChevronRightIcon } from 'lucide-react';
 type Hub = {
   id: string;
@@ -36,9 +36,7 @@ type TrendingTopicsProps = {
 export const TrendingTopics = ({
   trendingHubs
 }: TrendingTopicsProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   if (trendingHubs.length === 0) {
     return null;
   }
@@ -48,13 +46,13 @@ export const TrendingTopics = ({
           <TrendingUpIcon className="h-5 w-5 text-indigo-600 mr-2" />
           <h2 className="text-2xl font-bold text-gray-900">Trending Topics</h2>
         </div>
-        <button className="text-sm text-indigo-600 hover:text-indigo-800 font-medium flex items-center" onClick={() => navigateTo('/hubs/trending')}>
+        <button className="text-sm text-indigo-600 hover:text-indigo-800 font-medium flex items-center" onClick={() => navigate('/hubs/trending')}>
           View all trending
           <ChevronRightIcon className="ml-1 h-4 w-4" />
         </button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {trendingHubs.map(hub => <div key={hub.id} className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 hover:shadow-md transition-shadow duration-200 cursor-pointer" onClick={() => navigateTo(`/hubs/${hub.id}`)}>
+        {trendingHubs.map(hub => <div key={hub.id} className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 hover:shadow-md transition-shadow duration-200 cursor-pointer" onClick={() => navigate(`/hubs/${hub.id}`)}>
             <div className="relative h-32 overflow-hidden">
               <img src={hub.image} alt={hub.name} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>

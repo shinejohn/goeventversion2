@@ -35,7 +35,7 @@ export const CalendarEngagementBar = ({
             <HeartIcon className="h-5 w-5" fill={liked ? 'currentColor' : 'none'} />
             <span>{likes}</span>
           </button>
-          <button className="flex items-center space-x-1 text-gray-500 hover:text-gray-700" onClick={() => document.getElementById('discussion-tab')?.click()}>
+          <button className="flex items-center space-x-1 text-gray-500 hover:text-gray-700" onClick={() => typeof document !== "undefined" && document.getElementById('discussion-tab')?.click()}>
             <MessageSquareIcon className="h-5 w-5" />
             <span>{commentCount}</span>
           </button>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 type CalendarViewProps = {
   events: any[];
@@ -7,9 +7,7 @@ type CalendarViewProps = {
 export const CalendarView = ({
   events
 }: CalendarViewProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [calendarDays, setCalendarDays] = useState<any[]>([]);
   // Generate calendar days for the current month
@@ -70,7 +68,7 @@ export const CalendarView = ({
                 </span>}
             </div>
             <div className="mt-1 space-y-1">
-              {day.events.slice(0, 3).map((event: any) => <div key={event.id} onClick={() => navigateTo(`/event/${event.id}`)} className="text-xs p-1 rounded truncate cursor-pointer bg-indigo-100 text-indigo-800 hover:bg-indigo-200" title={event.title}>
+              {day.events.slice(0, 3).map((event: any) => <div key={event.id} onClick={() => navigate(`/event/${event.id}`)} className="text-xs p-1 rounded truncate cursor-pointer bg-indigo-100 text-indigo-800 hover:bg-indigo-200" title={event.title}>
                   {event.time.split(' ')[0]} {event.title}
                 </div>)}
               {day.events.length > 3 && <div className="text-xs text-gray-500 pl-1">

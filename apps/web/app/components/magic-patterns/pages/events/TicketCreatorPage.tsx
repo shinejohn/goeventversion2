@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { PlusIcon, MinusIcon, TrashIcon, EyeIcon, CalendarIcon, ClockIcon, MapPinIcon, TicketIcon, InfoIcon, ArrowLeftIcon, SaveIcon, CheckIcon, XIcon, AlertCircleIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const TicketCreatorPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [ticketTypes, setTicketTypes] = useState([{
     id: 'general',
     name: 'General Admission',
@@ -188,7 +186,7 @@ export const TicketCreatorPage = () => {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <button onClick={() => navigateTo('/events')} className="mr-4 text-gray-500 hover:text-gray-700">
+              <button onClick={() => navigate('/events')} className="mr-4 text-gray-500 hover:text-gray-700">
                 <ArrowLeftIcon className="h-5 w-5" />
               </button>
               <h1 className="text-2xl font-bold text-gray-900">

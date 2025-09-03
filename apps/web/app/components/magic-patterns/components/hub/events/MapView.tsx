@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { MapPinIcon, ExternalLinkIcon } from 'lucide-react';
 type MapViewProps = {
   events: any[];
@@ -7,15 +7,13 @@ type MapViewProps = {
 export const MapView = ({
   events
 }: MapViewProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [mapError, setMapError] = useState<string | null>(null);
   // Safe event click handler
   const handleEventClick = (eventId: string) => {
     try {
       if (eventId && navigateTo) {
-        navigateTo(`/events/${eventId}`);
+        navigate(`/events/${eventId}`);
       }
     } catch (error) {
       console.error('Navigation error:', error);
@@ -32,7 +30,7 @@ export const MapView = ({
             lng
           } = firstEvent.location;
           if (typeof lat === 'number' && typeof lng === 'number') {
-            window.open(`https://maps.google.com/?q=${lat},${lng}`, '_blank');
+            typeof window !== "undefined" && window.open(`https://maps.google.com/?q=${lat},${lng}`, '_blank');
           }
         }
       }

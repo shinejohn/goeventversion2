@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CalendarIcon, UserIcon, CheckCircleIcon, UsersIcon, TrendingUpIcon, ClockIcon, PlusIcon, CheckIcon, MapPinIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 type CalendarEvent = {
   title: string;
   date: string;
@@ -30,9 +30,7 @@ export const CalendarCard = ({
 }: {
   calendar: CalendarProps;
 }) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [isFollowing, setIsFollowing] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const handleFollow = (e: React.MouseEvent) => {
@@ -45,7 +43,7 @@ export const CalendarCard = ({
     }
     return num;
   };
-  return <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigateTo(`/calendar/${calendar.id}`)} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+  return <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate(`/calendar/${calendar.id}`)} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       {/* Calendar Banner Image */}
       <div className="relative h-40 overflow-hidden">
         <img src={calendar.image} alt={calendar.title} className={`w-full h-full object-cover transition-transform duration-500 ${isHovered ? 'scale-110' : 'scale-100'}`} />

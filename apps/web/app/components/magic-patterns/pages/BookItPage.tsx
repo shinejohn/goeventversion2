@@ -1,10 +1,8 @@
 import React from 'react';
 import { ArrowRightIcon, CalendarIcon, MapPinIcon, MusicIcon, BuildingIcon, CheckCircleIcon } from 'lucide-react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const BookItPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const bookingCategories = [{
     title: 'Book a Venue',
     description: 'Find and reserve the perfect space for your event',
@@ -55,7 +53,7 @@ export const BookItPage = () => {
   // Safe navigation handler
   const handleNavigation = (path: string) => {
     try {
-      navigateTo(path);
+      navigate(path);
     } catch (error) {
       console.error('Navigation error:', error);
       // Fallback direct navigation

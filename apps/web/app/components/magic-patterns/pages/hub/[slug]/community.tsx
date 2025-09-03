@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useNavigationContext } from '../../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { MainHeader } from '../../../components/layout/MainHeader';
 import { Footer } from '../../../components/layout/Footer';
 import { ArrowLeftIcon, PlusIcon, SearchIcon, FilterIcon, MessageCircleIcon, UsersIcon, TagIcon, ChevronDownIcon, CheckIcon, XIcon, MessageSquareIcon, HelpCircleIcon, InfoIcon, AlertCircleIcon, BriefcaseIcon } from 'lucide-react';
@@ -8,9 +8,7 @@ export default function HubCommunityPage() {
   const {
     slug
   } = useParams();
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [hubData, setHubData] = useState<any>(null);
   const [threads, setThreads] = useState<any[]>([]);
@@ -134,7 +132,7 @@ export default function HubCommunityPage() {
   // Start a new thread handler
   const handleStartThread = () => {
     try {
-      navigateTo(`/hub/${slug}/new-thread`);
+      navigate(`/hub/${slug}/new-thread`);
     } catch (error) {
       console.error('Navigation error:', error);
       window.location.href = `/hub/${slug}/new-thread`;
@@ -143,7 +141,7 @@ export default function HubCommunityPage() {
   // View thread handler
   const handleViewThread = (threadId: string) => {
     try {
-      navigateTo(`/hub/${slug}/thread/${threadId}`);
+      navigate(`/hub/${slug}/thread/${threadId}`);
     } catch (error) {
       console.error('Navigation error:', error);
       window.location.href = `/hub/${slug}/thread/${threadId}`;
@@ -152,7 +150,7 @@ export default function HubCommunityPage() {
   // Safe navigation handler
   const handleSafeNavigation = (path: string) => {
     try {
-      navigateTo(path);
+      navigate(path);
     } catch (error) {
       console.error('Navigation error:', error);
       window.location.href = path;

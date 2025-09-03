@@ -7,7 +7,7 @@ import React, { useState, Component } from 'react';
  * Components: None
  */
 import { SearchIcon, FilterIcon, MusicIcon, CalendarIcon, MapPinIcon, DollarSignIcon, StarIcon, UsersIcon, ArrowRightIcon, InstagramIcon, YoutubeIcon, ExternalLinkIcon } from 'lucide-react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 // Mock performer data
 const performers = [{
   id: 'performer-1',
@@ -140,9 +140,7 @@ type FilterState = {
   eventType: string[];
 };
 export const BookPerformerPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [dateRange, setDateRange] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -240,7 +238,7 @@ export const BookPerformerPage = () => {
     setDateRange('');
   };
   const handleViewPerformer = (performerId: string) => {
-    navigateTo(`/performers/${performerId}`);
+    navigate(`/performers/${performerId}`);
   };
   // Count active filters
   const activeFilterCount = Object.values(filters).reduce((count, filterArray) => count + filterArray.length, 0);
@@ -613,7 +611,7 @@ export const BookPerformerPage = () => {
               your event based on your specific requirements.
             </p>
             <div className="mt-6">
-              <button type="button" className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500" onClick={() => navigateTo('/book/start')}>
+              <button type="button" className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500" onClick={() => navigate('/book/start')}>
                 Get Personalized Recommendations
               </button>
             </div>

@@ -1,10 +1,8 @@
 import React, { memo, Component } from 'react';
 import { ArrowRightIcon, ShoppingBagIcon, SearchIcon, TagIcon, TruckIcon } from 'lucide-react';
-import { useNavigationContext } from '../context/NavigationContext';
+import { useNavigate } from 'react-router';
 export const GearPage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const shopCategories = [{
     title: 'Event Merch',
     description: 'Official merchandise from your favorite local events',
@@ -78,7 +76,7 @@ export const GearPage = () => {
   // Safe navigation handler
   const handleNavigation = (path: string) => {
     try {
-      navigateTo(path);
+      navigate(path);
     } catch (error) {
       console.error('Navigation error:', error);
       // Fallback direct navigation

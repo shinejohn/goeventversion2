@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { ArrowRightIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 type Hub = {
   id: string;
@@ -36,9 +36,7 @@ type HeroSectionProps = {
 export const HeroSection = ({
   featuredHubs
 }: HeroSectionProps) => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   // Auto-rotate featured hubs
   useEffect(() => {
@@ -66,7 +64,7 @@ export const HeroSection = ({
               leaders
             </p>
             <div className="mt-10">
-              <button onClick={() => navigateTo('/hubs/create')} className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50">
+              <button onClick={() => navigate('/hubs/create')} className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50">
                 Create Your Hub
                 <ArrowRightIcon className="ml-2 h-5 w-5" />
               </button>
@@ -104,7 +102,7 @@ export const HeroSection = ({
                   </span>)}
               </div>
               <div className="mt-8 flex space-x-4">
-                <button onClick={() => navigateTo(`/hubs/${currentHub.id}`)} className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+                <button onClick={() => navigate(`/hubs/${currentHub.id}`)} className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
                   Explore Hub
                   <ArrowRightIcon className="ml-2 h-5 w-5" />
                 </button>

@@ -4,14 +4,12 @@ import { FilterSidebar } from '../../components/venue-marketplace/FilterSidebar'
 import { VenueCard } from '../../components/venue-marketplace/VenueCard';
 import { VenueListItem } from '../../components/venue-marketplace/VenueListItem';
 import { MapView } from '../../components/venue-marketplace/MapView';
-import { useNavigationContext } from '../../context/NavigationContext';
+import { useNavigate } from 'react-router';
 import { mockVenues } from '../../mockdata/venues';
 type ViewMode = 'grid' | 'list' | 'map';
 type SortOption = 'recommended' | 'price_low' | 'price_high' | 'distance' | 'capacity' | 'rating' | 'newest';
 export const VenueMarketplacePage = () => {
-  const {
-    navigateTo
-  } = useNavigationContext();
+  const navigate = useNavigate();
   // State for filters, sorting, and view mode
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [sortOption, setSortOption] = useState<SortOption>('recommended');
@@ -152,12 +150,12 @@ export const VenueMarketplacePage = () => {
       {/* Breadcrumbs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <nav className="flex text-sm text-gray-500">
-          <button onClick={() => navigateTo('/')} className="hover:text-gray-700 flex items-center">
+          <button onClick={() => navigate('/')} className="hover:text-gray-700 flex items-center">
             <HomeIcon className="h-4 w-4 mr-1" />
             Home
           </button>
           <ChevronRightIcon className="h-4 w-4 mx-2" />
-          <button onClick={() => navigateTo('/book')} className="hover:text-gray-700">
+          <button onClick={() => navigate('/book')} className="hover:text-gray-700">
             Book It
           </button>
           <ChevronRightIcon className="h-4 w-4 mx-2" />
@@ -237,10 +235,10 @@ export const VenueMarketplacePage = () => {
                       <div className="h-8 bg-gray-200 rounded w-1/3"></div>
                     </div>
                   </div>)}
-              </div> : filteredVenues.length > 0 ? viewMode === 'map' ? <MapView venues={filteredVenues} onVenueSelect={id => navigateTo(`/book-it/venues/${id}`)} /> : viewMode === 'grid' ? <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {filteredVenues.map(venue => <VenueCard key={venue.id} venue={venue} selectedDate={selectedDate} onViewDetails={() => navigateTo(`/book-it/venues/${venue.id}`)} />)}
+              </div> : filteredVenues.length > 0 ? viewMode === 'map' ? <MapView venues={filteredVenues} onVenueSelect={id => navigate(`/book-it/venues/${id}`)} /> : viewMode === 'grid' ? <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {filteredVenues.map(venue => <VenueCard key={venue.id} venue={venue} selectedDate={selectedDate} onViewDetails={() => navigate(`/book-it/venues/${venue.id}`)} />)}
                 </div> : <div className="space-y-6">
-                  {filteredVenues.map(venue => <VenueListItem key={venue.id} venue={venue} selectedDate={selectedDate} onViewDetails={() => navigateTo(`/book-it/venues/${venue.id}`)} />)}
+                  {filteredVenues.map(venue => <VenueListItem key={venue.id} venue={venue} selectedDate={selectedDate} onViewDetails={() => navigate(`/book-it/venues/${venue.id}`)} />)}
                 </div> :
           // Empty state
           <div className="bg-white rounded-lg shadow-sm p-8 text-center">
@@ -288,7 +286,7 @@ export const VenueMarketplacePage = () => {
         </div>
       </div>
       {/* Back to top button */}
-      <button onClick={() => window.scrollTo({
+      <button onClick={() => typeof window !== "undefined" && window.scrollTo({
       top: 0,
       behavior: 'smooth'
     })} className="fixed bottom-6 right-6 p-2 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
