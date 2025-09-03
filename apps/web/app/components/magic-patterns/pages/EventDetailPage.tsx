@@ -14,8 +14,10 @@ import { ContentTabs } from '../components/events/ContentTabs';
 import { VenueMap } from '../components/events/VenueMap';
 import { RelatedEvents } from '../components/events/RelatedEvents';
 import { useNavigate } from 'react-router';
-// Mock data for event
-const eventData = {
+import { mockEvents } from '../mockdata/events';
+
+// Default event data (fallback)
+const defaultEventData = {
   id: 'event-1',
   slug: 'clearwater-jazz-holiday-2024',
   title: 'Clearwater Jazz Holiday',
@@ -277,11 +279,41 @@ const eventData = {
     }
   }
 };
-const EventDetailPageInternal = () => {
+
+const EventDetailPageInternal = ({ eventId = 'event-1' }: { eventId?: string }) => {
   const [isSaved, setIsSaved] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
   const [showTicketModal, setShowTicketModal] = useState(false);
   const navigate = useNavigate();
+
+  // Look up event by ID from mock data, fallback to hardcoded data
+  const mockEvent = mockEvents.find(event => event.id === eventId);
+  const eventData = mockEvent ? {
+    ...mockEvent,
+    // Add missing properties that the component expects
+    lineup: [{
+      day: 'Performance Day',
+      acts: [{
+        name: 'Featured Performance',
+        startTime: '7:00 PM',
+        endTime: '9:00 PM',
+        stage: 'Main Stage',
+        image: mockEvent.image
+      }]
+    }],
+    amenities: ['Food vendors', 'Restrooms', 'Parking'],
+    parking: [{
+      name: 'Main Parking',
+      address: 'Near venue',
+      price: 10,
+      walkingTime: 5
+    }],
+    weather: {
+      temperature: 75,
+      condition: 'Clear',
+      forecast: 'Perfect weather expected'
+    }
+  } : defaultEventData;
   // Format date for display
   const formatEventDate = date => {
     return date.toLocaleDateString('en-US', {
@@ -896,10 +928,10 @@ const EventDetailPageInternal = () => {
     </div>;
 };
 
-export const EventDetailPage = () => {
+export const EventDetailPage = ({ eventId }: { eventId?: string }) => {
   return (
     <ClientOnly>
-      <EventDetailPageInternal />
+      <EventDetailPageInternal eventId={eventId} />
     </ClientOnly>
   );
 };
