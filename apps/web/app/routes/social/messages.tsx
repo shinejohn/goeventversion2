@@ -1,4 +1,4 @@
-import type { Route } from '~/types/app/routes/social/messages/+types';;
+;
 
 export default function MessagesRoute() {
   return (

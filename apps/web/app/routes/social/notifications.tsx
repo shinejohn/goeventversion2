@@ -1,4 +1,4 @@
-import type { Route } from '~/types/app/routes/social/notifications/+types';;
+;
 
 export default function NotificationsRoute() {
   return (
