@@ -420,7 +420,7 @@ export const PerformerProfilePage = ({
       <div className="relative">
         {/* Cover Photo */}
         <div className="h-64 md:h-80 lg:h-96 w-full overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" alt={`${performer.name} cover`} className="w-full h-full object-cover" />
+          <img src={performer.profileImage} alt={`${performer.name} cover`} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
         </div>
         {/* Profile Info Overlay */}
@@ -981,7 +981,7 @@ export const PerformerProfilePage = ({
                   <div className="space-y-6">
                     {/* Featured Video */}
                     <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden relative">
-                      <img src={media.videos[0]?.thumbnail || 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'} alt="Featured video thumbnail" className="w-full h-full object-cover" />
+                      <img src={media.videos[0]?.thumbnail || performer.profileImage} alt="Featured video thumbnail" className="w-full h-full object-cover" />
                       <div className="absolute inset-0 flex items-center justify-center">
                         <button className="h-16 w-16 rounded-full bg-indigo-600/90 hover:bg-indigo-700 flex items-center justify-center">
                           <PlayIcon className="h-8 w-8 text-white" />
@@ -1665,7 +1665,7 @@ export const PerformerProfilePage = ({
                 {/* Store Header */}
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                   <div className="h-40 bg-indigo-600 relative">
-                    <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Merchandise banner" className="w-full h-full object-cover opacity-30" />
+                    <img src={performer.profileImage} alt="Merchandise banner" className="w-full h-full object-cover opacity-30" />
                     <div className="absolute inset-0 flex items-center justify-center">
                       <h2 className="text-3xl font-bold text-white">
                         Official Merchandise
