@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { MapPinIcon, CalendarIcon, ClockIcon, StarIcon, UsersIcon, HeartIcon, ShareIcon, CheckCircleIcon, ArrowLeftIcon, ExternalLinkIcon, MessageCircleIcon, CheckIcon, XIcon, InfoIcon, MusicIcon, DollarSignIcon, WifiIcon, CameraIcon, LayoutIcon, PhoneIcon, GlobeIcon, TicketIcon, UserIcon, CalendarDaysIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { mockVenues } from '../../mockdata/venues';
