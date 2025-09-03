@@ -1,5 +1,42 @@
 import { type SupabaseClient } from '@supabase/supabase-js';
-import mockEvents from '~/components/magic-patterns/mock-data/events.json';
+import mockEvents, { type MockEvent } from '~/components/magic-patterns/mock-data/events';
+
+// Type definitions for the data service
+export interface Event {
+  id: string;
+  title: string;
+  description: string;
+  startTime: Date;
+  endTime: Date;
+  venue: {
+    name: string;
+    address: string;
+  };
+  category: string;
+  imageUrl?: string;
+  communityId: string;
+}
+
+export interface EventOptions {
+  startDate?: Date;
+  endDate?: Date;
+}
+
+export interface CreateEventInput {
+  title: string;
+  description: string;
+  startTime: Date;
+  endTime: Date;
+  venue: {
+    name: string;
+    address: string;
+  };
+  category: string;
+  imageUrl?: string;
+  communityId: string;
+}
+
+export interface UpdateEventInput extends Partial<CreateEventInput> {}
 
 interface DataService {
   getEvents(communityId: string, options?: EventOptions): Promise<Event[]>;
@@ -11,14 +48,14 @@ interface DataService {
 // Development: Use mock data
 class MockDataService implements DataService {
   async getEvents(communityId: string) {
-    // Return Magic Patterns mock data
-    return mockEvents.filter(e => e.communityId === communityId);
+    // Return Magic Patterns mock data, cast to Event type
+    return mockEvents.filter(e => e.communityId === communityId) as Event[];
   }
   
   async getEvent(eventId: string) {
     const event = mockEvents.find(e => e.id === eventId);
     if (!event) throw new Error('Event not found');
-    return event;
+    return event as Event;
   }
   
   async createEvent(data: CreateEventInput) {
@@ -58,7 +95,7 @@ class SupabaseDataService implements DataService {
     const { data, error } = await query;
     if (error) throw error;
     
-    return transformSupabaseEvents(data);
+    return data.map(transformSupabaseEvent);
   }
   
   async getEvent(eventId: string) {
