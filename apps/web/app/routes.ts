@@ -22,12 +22,51 @@ const apiRoutes = [
   route('api/otp/send', 'routes/api/otp/send.ts'),
 ];
 
+// Magic Patterns routes (no layout wrapper)
+const magicPatternsRoutes = [
+  index('routes/index.tsx'), // HomePage
+  route('about', 'routes/about/index.tsx'),
+  route('advertise', 'routes/advertise/index.tsx'),
+  route('advertise/packages', 'routes/advertise/packages/index.tsx'),
+  route('advertise/email-campaigns', 'routes/advertise/email-campaigns/index.tsx'),
+  route('advertise/event-promotion', 'routes/advertise/event-promotion/index.tsx'),
+  route('advertise/featured-listings', 'routes/advertise/featured-listings/index.tsx'),
+  route('advertise/homepage-showcase', 'routes/advertise/homepage-showcase/index.tsx'),
+  route('advertising-solutions', 'routes/advertising-solutions/index.tsx'),
+  route('book-it', 'routes/book-it/index.tsx'),
+  route('book-it/gigs', 'routes/book-it/gigs/index.tsx'),
+  route('book-it/venues', 'routes/book-it/venues/index.tsx'),
+  route('book-it/venues/:id', 'routes/book-it/venues/$id/index.tsx'),
+  route('book-it/venues/:id/book', 'routes/book-it/venues/$id/book/index.tsx'),
+  route('bookings', 'routes/bookings/index.tsx'),
+  route('bookings/confirmation', 'routes/bookings/confirmation/index.tsx'),
+  route('c/:communitySlug', 'routes/c.$communitySlug.tsx'),
+  route('calendars', 'routes/calendars/index.tsx'),
+  route('careers', 'routes/careers/index.tsx'),
+  route('community-impact', 'routes/community-impact/index.tsx'),
+  route('contact', 'routes/contact/index.tsx'),
+  route('events', 'routes/events/index.tsx'),
+  route('gear', 'routes/gear/index.tsx'),
+  route('help', 'routes/help/index.tsx'),
+  route('how-it-works', 'routes/how-it-works/index.tsx'),
+  route('messages', 'routes/messages/index.tsx'),
+  route('notifications', 'routes/notifications/index.tsx'),
+  route('partner', 'routes/partner/index.tsx'),
+  route('performers', 'routes/performers.tsx'),
+  route('press', 'routes/press/index.tsx'),
+  route('success-stories', 'routes/success-stories/index.tsx'),
+  route('tickets', 'routes/tickets/index.tsx'),
+  route('tickets/:id', 'routes/tickets/$id/index.tsx'),
+  route('tickets/marketplace', 'routes/tickets/marketplace/index.tsx'),
+  route('venues', 'routes/venues.tsx'),
+  route('venues/:id', 'routes/venues.$id.tsx'),
+];
+
+// Makerkit marketing routes with layout
 const marketingLayout = layout('routes/marketing/layout.tsx', [
-  index('routes/marketing/index.tsx'),
   route('terms-of-service', 'routes/marketing/terms-of-service.tsx'),
   route('privacy-policy', 'routes/marketing/privacy-policy.tsx'),
   route('pricing', 'routes/marketing/pricing.tsx'),
-  route('contact', 'routes/marketing/contact/index.tsx'),
   route('faq', 'routes/marketing/faq.tsx'),
   route('blog', 'routes/marketing/blog/index.tsx'),
   route('blog/:slug', 'routes/marketing/blog/$slug.tsx'),
@@ -75,6 +114,7 @@ const teamAccountLayout = layout('routes/home/account/layout.tsx', [
 export default [
   ...rootRoutes,
   ...apiRoutes,
+  ...magicPatternsRoutes,
   adminLayout,
   marketingLayout,
   authLayout,
