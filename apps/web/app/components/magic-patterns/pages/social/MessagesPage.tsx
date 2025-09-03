@@ -438,3 +438,4 @@ const MessagesPage = () => {
     </div>;
 };
 export default MessagesPage;
+export { MessagesPage };
