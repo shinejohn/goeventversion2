@@ -22,8 +22,8 @@ const apiRoutes = [
   route('api/otp/send', 'routes/api/otp/send.ts'),
 ];
 
-// Magic Patterns routes (no layout wrapper)
-const magicPatternsRoutes = [
+// Magic Patterns routes with layout wrapper
+const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   index('routes/index.tsx'), // HomePage
   route('about', 'routes/about/index.tsx'),
   route('advertise', 'routes/advertise/index.tsx'),
@@ -60,7 +60,9 @@ const magicPatternsRoutes = [
   route('tickets/marketplace', 'routes/tickets/marketplace/index.tsx'),
   route('venues', 'routes/venues.tsx'),
   route('venues/:id', 'routes/venues.$id.tsx'),
-];
+  route('events/:id', 'routes/events.$id.tsx'),
+  route('performers/:id', 'routes/performers.$id.tsx'),
+]);
 
 // Makerkit marketing routes with layout
 const marketingLayout = layout('routes/marketing/layout.tsx', [
@@ -114,7 +116,7 @@ const teamAccountLayout = layout('routes/home/account/layout.tsx', [
 export default [
   ...rootRoutes,
   ...apiRoutes,
-  ...magicPatternsRoutes,
+  magicPatternsLayout,
   adminLayout,
   marketingLayout,
   authLayout,
