@@ -1,5 +1,4 @@
 // apps/web/app/routes/events/$id.tsx
-import type { Route } from '~/types/app/routes/events/$id/+types';
 import { EventDetailPage } from '~/components/magic-patterns/pages/EventDetailPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 

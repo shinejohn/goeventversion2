@@ -174,6 +174,7 @@ const adminLayout = layout('routes/admin/layout.tsx', [
   route('admin', 'routes/admin/index.tsx'),
   route('admin/accounts', 'routes/admin/accounts/index.tsx'),
   route('admin/accounts/:account', 'routes/admin/accounts/$account.tsx'),
+  route('admin/seed-database', 'routes/admin/seed-database.tsx'),
 ]);
 
 const userAccountLayout = layout('routes/home/user/layout.tsx', [

@@ -6,9 +6,27 @@ import { VenueCard } from '../components/venue-marketplace/VenueCard';
 import { VenueListItem } from '../components/venue-marketplace/VenueListItem';
 import { VenueMap } from '../components/venue-marketplace/VenueMap';
 import { mockVenues } from '../mockdata/venues';
+
 type ViewMode = 'grid' | 'list' | 'map';
 type SortOption = 'recommended' | 'popular' | 'newest' | 'price_low' | 'price_high' | 'distance' | 'rating' | 'capacity';
-export const VenuesPage = () => {
+
+interface VenueData {
+  id: string;
+  name: string;
+  description: string | null;
+  address: string;
+  capacity: number | null;
+  images: any;
+  amenities: any;
+  average_rating: number | null;
+  total_reviews: number | null;
+  slug: string;
+  community_id: string;
+  account_id: string | null;
+  // Add other fields as needed
+}
+
+export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
   const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [sortBy, setSortBy] = useState<SortOption>('popular');
@@ -30,10 +48,13 @@ export const VenuesPage = () => {
     },
     flexibleDates: false
   });
+  // Use provided venues or fall back to mock data
+  const venuesData = venues || mockVenues;
+  
   // Filtered venues based on search and filters
-  const filteredVenues = mockVenues.filter(venue => {
+  const filteredVenues = venuesData.filter(venue => {
     // Simple search implementation - in a real app this would be more sophisticated
-    if (searchQuery && !venue.name.toLowerCase().includes(searchQuery.toLowerCase()) && !venue.description.toLowerCase().includes(searchQuery.toLowerCase()) && !venue.venueType.toLowerCase().includes(searchQuery.toLowerCase())) {
+    if (searchQuery && !venue.name.toLowerCase().includes(searchQuery.toLowerCase()) && !(venue.description || '').toLowerCase().includes(searchQuery.toLowerCase()) && !venue.venueType.toLowerCase().includes(searchQuery.toLowerCase())) {
       return false;
     }
     // Filter by venue type
@@ -85,9 +106,9 @@ export const VenuesPage = () => {
     }
   });
   // Get trending venues (highest review count in the last month)
-  const trendingVenues = [...mockVenues].sort((a, b) => b.reviewCount / b.lastBookedDaysAgo - a.reviewCount / a.lastBookedDaysAgo).slice(0, 4);
+  const trendingVenues = [...venuesData].sort((a, b) => b.reviewCount / b.lastBookedDaysAgo - a.reviewCount / a.lastBookedDaysAgo).slice(0, 4);
   // Get new venues (added in the last 90 days)
-  const newVenues = mockVenues.filter(venue => {
+  const newVenues = venuesData.filter(venue => {
     const listedDate = new Date(venue.listedDate);
     const ninetyDaysAgo = new Date();
     ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
@@ -97,7 +118,7 @@ export const VenuesPage = () => {
   const upcomingEvents = [{
     id: 'event-1',
     name: 'Summer Jazz Festival',
-    venue: mockVenues[0],
+    venue: venuesData[0],
     date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
     image: 'https://images.unsplash.com/photo-1514525421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     ticketPrice: '$25-45',
@@ -105,7 +126,7 @@ export const VenuesPage = () => {
   }, {
     id: 'event-2',
     name: 'Local Craft Beer Tasting',
-    venue: venues && venues[1] || null,
+    venue: venuesData[1] || null,
     date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
     image: 'https://images.unsplash.com/photo-1575444758702-4a6b9222336e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     ticketPrice: '$35',
@@ -113,7 +134,7 @@ export const VenuesPage = () => {
   }, {
     id: 'event-3',
     name: 'Comedy Night Showcase',
-    venue: venues && venues[2] || null,
+    venue: venuesData[2] || null,
     date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     image: 'https://images.unsplash.com/photo-1527224538127-2104bb71c51b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     ticketPrice: '$20',
@@ -121,7 +142,7 @@ export const VenuesPage = () => {
   }, {
     id: 'event-4',
     name: 'Art Exhibition Opening',
-    venue: venues && venues[3] || null,
+    venue: venuesData[3] || null,
     date: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
     image: 'https://images.unsplash.com/photo-1531058020387-3be344556be6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     ticketPrice: 'Free',
@@ -143,22 +164,22 @@ export const VenuesPage = () => {
   // Venue type categories with counts
   const venueCategories = [{
     title: 'Music Venues',
-    count: mockVenues.filter(v => v.venueType === 'Concert Halls').length
+    count: venuesData.filter(v => v.venueType === 'Concert Halls').length
   }, {
     title: 'Restaurants & Bars',
-    count: mockVenues.filter(v => v.venueType === 'Restaurants & Bars').length
+    count: venuesData.filter(v => v.venueType === 'Restaurants & Bars').length
   }, {
     title: 'Event Spaces',
-    count: mockVenues.filter(v => v.venueType === 'Event Spaces').length
+    count: venuesData.filter(v => v.venueType === 'Event Spaces').length
   }, {
     title: 'Outdoor Venues',
-    count: mockVenues.filter(v => v.venueType === 'Outdoor Venues').length
+    count: venuesData.filter(v => v.venueType === 'Outdoor Venues').length
   }, {
     title: 'Galleries & Museums',
-    count: mockVenues.filter(v => v.venueType === 'Galleries & Museums').length
+    count: venuesData.filter(v => v.venueType === 'Galleries & Museums').length
   }, {
     title: 'Unique Spaces',
-    count: mockVenues.filter(v => v.venueType === 'Unique Spaces').length
+    count: venuesData.filter(v => v.venueType === 'Unique Spaces').length
   }];
   // Handle navigation to venue detail
   const handleViewVenueDetail = (venueId: string) => {
@@ -198,7 +219,7 @@ export const VenuesPage = () => {
               <h1 className="text-2xl font-bold text-gray-900">Venues</h1>
               <div className="text-sm text-gray-500 flex items-center gap-3">
                 <div>
-                  <span className="font-semibold">{mockVenues.length}</span>{' '}
+                  <span className="font-semibold">{venuesData.length}</span>{' '}
                   Venues
                 </div>
                 <div>

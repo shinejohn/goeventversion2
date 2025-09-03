@@ -21,7 +21,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
           id, title, start_date
         )
       `)
-      .eq('status', 'active');
+      .eq('is_active', true);
     
     if (search) {
       query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%`);
@@ -36,7 +36,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     }
     
     if (capacity) {
-      query = query.gte('capacity', parseInt(capacity));
+      query = query.gte('max_capacity', parseInt(capacity));
     }
     
     const { data: venues, error } = await query.order('name');

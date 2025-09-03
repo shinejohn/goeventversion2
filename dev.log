@@ -1,0 +1,27 @@
+
+> react-router-supabase-saas-kit-turbo@1.0.0 dev /Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun
+> cross-env FORCE_COLOR=1 turbo dev --parallel
+
+turbo 2.5.6
+
+[2m• Packages in scope: @kit/accounts, @kit/admin, @kit/analytics, @kit/auth, @kit/baselime, @kit/billing, @kit/billing-gateway, @kit/cms, @kit/cms-types, @kit/csrf, @kit/database-webhooks, @kit/email-templates, @kit/eslint-config, @kit/i18n, @kit/keystatic, @kit/lemon-squeezy, @kit/mailers, @kit/mailers-shared, @kit/monitoring, @kit/monitoring-core, @kit/nodemailer, @kit/notifications, @kit/otp, @kit/prettier-config, @kit/resend, @kit/sentry, @kit/shared, @kit/stripe, @kit/supabase, @kit/tailwind-config, @kit/team-accounts, @kit/tsconfig, @kit/ui, @kit/wordpress, scripts, web, web-e2e[0m
+[2m• Running [0m[1m[2mdev[0m[2m in 37 packages
+[0m[2m• Remote caching disabled[0m
+[35mweb:dev: [0mcache bypass, force executing [2md2dce74b4b92d3a5[0m
+[36mscripts:dev: [0mcache bypass, force executing [2me82e7b724065032e[0m
+[35mweb:dev: [0m
+[35mweb:dev: [0m> web@ dev /Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web
+[35mweb:dev: [0m> react-router dev
+[35mweb:dev: [0m
+[36mscripts:dev: [0m
+[36mscripts:dev: [0m> scripts@0.1.0 dev /Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/tooling/scripts
+[36mscripts:dev: [0m> node ./src/dev.mjs
+[36mscripts:dev: [0m
+[36mscripts:dev: [0m[33m⚠️ You have not setup 'upstream'. Please set up the upstream remote so you can update your Makerkit version.[0m
+[36mscripts:dev: [0m[34mChecking for pending migrations...[0m
+[35mweb:dev: [0m  ➜  Local:   http://localhost:5173/
+[35mweb:dev: [0m  ➜  Network: use --host to expose
+[36mscripts:dev: [0m[33m💡 Info: Project not yet linked to a remote Supabase project. Migration checks skipped - this is expected for new projects. Link your project when you're ready to sync with Supabase.
+[36mscripts:dev: [0m[0m
+[36mscripts:dev: [0m[32mYou are running Node 22.17.1.[0m
+[36mscripts:dev: [0m[32mYou are running pnpm 10.15.0.[0m
