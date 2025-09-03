@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'react-router-dom';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { MediaGrid } from '../../../components/hub/gallery/MediaGrid';
 import { MediaLightbox } from '../../../components/hub/gallery/MediaLightbox';
 import { MediaUploader } from '../../../components/hub/gallery/MediaUploader';
 import { AlbumsList } from '../../../components/hub/gallery/AlbumsList';
 import { ArrowLeftIcon, PlusIcon, SearchIcon, FilterIcon, XIcon, GridIcon, ColumnsIcon, ImageIcon, VideoIcon, MusicIcon, CalendarIcon, StarIcon, ChevronDownIcon, TagIcon, UserIcon, FolderIcon } from 'lucide-react';
 export default function HubGalleryPage() {
-  const router = useRouter();
-  const {
-    slug
-  } = router.params || {};
   const navigate = useNavigate();
+  const { slug } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [hubData, setHubData] = useState<any>(null);
   const [mediaItems, setMediaItems] = useState<any[]>([]);

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
-import { useNavigate } from 'react-router';
+import { useParams, Navigate, useNavigate } from 'react-router';
 import { Footer } from '../../../components/layout/Footer';
 import { ArrowLeftIcon, DownloadIcon, CalendarIcon, UsersIcon, TrendingUpIcon, MessageSquareIcon, FileTextIcon, DollarSignIcon, BarChart2Icon, AlertTriangleIcon, ChevronDownIcon, MapPinIcon, GlobeIcon, InfoIcon, ClockIcon, UserIcon } from 'lucide-react';
 // Import analytics components

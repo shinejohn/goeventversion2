@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { Header } from '../../../components/layout/Header';
 import { Footer } from '../../../components/layout/Footer';
 import { EventViewToggle } from '../../../components/hub/events/EventViewToggle';

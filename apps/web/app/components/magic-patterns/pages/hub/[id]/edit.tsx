@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { HubData } from '../../hub/create';
 // Import all the builder components
 import { HubBuilderNav } from '../../../components/hub-builder/HubBuilderNav';

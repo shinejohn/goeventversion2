@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { MainHeader } from '../../../components/layout/MainHeader';
 import { Footer } from '../../../components/layout/Footer';
 import { ArrowLeftIcon, PlusIcon, SearchIcon, FilterIcon, MessageCircleIcon, UsersIcon, TagIcon, ChevronDownIcon, CheckIcon, XIcon, MessageSquareIcon, HelpCircleIcon, InfoIcon, AlertCircleIcon, BriefcaseIcon } from 'lucide-react';

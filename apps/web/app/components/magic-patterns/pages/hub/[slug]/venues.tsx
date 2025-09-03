@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'react-router-dom';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { DirectoryFilters } from '../../../components/hub/directory/DirectoryFilters';
 import { DirectoryCard } from '../../../components/hub/directory/DirectoryCard';
 import { mockVenues } from '../../../mockdata/venues';
 import { ArrowLeftIcon, PlusIcon, SearchIcon, FilterIcon, GridIcon, LayoutIcon, BuildingIcon } from 'lucide-react';
 export default function HubVenuesPage() {
-  const router = useRouter();
-  const {
-    slug
-  } = router.params || {};
   const navigate = useNavigate();
+  const { slug } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [hubData, setHubData] = useState<any>(null);
   const [venues, setVenues] = useState<any[]>([]);
