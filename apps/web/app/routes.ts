@@ -33,6 +33,19 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('advertise/featured-listings', 'routes/advertise/featured-listings/index.tsx'),
   route('advertise/homepage-showcase', 'routes/advertise/homepage-showcase/index.tsx'),
   route('advertising-solutions', 'routes/advertising-solutions/index.tsx'),
+  
+  // PHASE 1: Core Booking Experience (Revenue Critical)
+  layout('routes/book/layout.tsx', [
+    route('book/event-details', 'routes/book/event-details.tsx'),
+    route('book/requirements', 'routes/book/requirements.tsx'),
+    route('book/services', 'routes/book/services.tsx'),
+    route('book/payment', 'routes/book/payment.tsx'),
+    route('book/review', 'routes/book/review.tsx'),
+    route('book/confirmation', 'routes/book/confirmation.tsx'),
+    route('book/success', 'routes/book/success.tsx'),
+  ]),
+  
+  // Legacy book routes (maintain compatibility)
   route('book', 'routes/book.tsx'), // Book It page
   route('book/performer', 'routes/book/performer.tsx'), // Book performer
   route('book-it', 'routes/book-it/index.tsx'),
@@ -40,36 +53,56 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('book-it/venues', 'routes/book-it/venues/index.tsx'),
   route('book-it/venues/:id', 'routes/book-it/venues/$id/index.tsx'),
   route('book-it/venues/:id/book', 'routes/book-it/venues/$id/book/index.tsx'),
+  
+  // Booking Management
   route('bookings', 'routes/bookings/index.tsx'),
+  route('bookings/:id', 'routes/bookings/$id.tsx'),
   route('bookings/confirmation', 'routes/bookings/confirmation/index.tsx'),
+  
   route('c/:communitySlug', 'routes/c.$communitySlug.tsx'),
   route('calendars', 'routes/calendars/index.tsx'),
   route('calendars/marketplace', 'routes/calendars/marketplace.tsx'),
   route('careers', 'routes/careers/index.tsx'),
   route('community-impact', 'routes/community-impact/index.tsx'),
   route('contact', 'routes/contact/index.tsx'),
+  
+  // PHASE 2: Event Discovery & Navigation
   route('events', 'routes/events/index.tsx'),
+  route('events/:id', 'routes/events/$id.tsx'),
+  
   route('gear', 'routes/gear/index.tsx'),
   route('help', 'routes/help/index.tsx'),
   route('how-it-works', 'routes/how-it-works/index.tsx'),
-  route('hubs', 'routes/hubs.tsx'), // Communities (hubs)
+  
+  // PHASE 3: Community & Social Features
+  route('hubs', 'routes/hubs/index.tsx'),
+  route('hubs/create', 'routes/hubs/create.tsx'),
+  
   route('messages', 'routes/messages/index.tsx'),
   route('notifications', 'routes/notifications/index.tsx'),
   route('partner', 'routes/partner/index.tsx'),
-  route('performers', 'routes/performers.tsx'),
+  
+  // Performers
+  route('performers', 'routes/performers/index.tsx'),
+  route('performers/:id', 'routes/performers/$id.tsx'),
+  
   route('press', 'routes/press/index.tsx'),
-  route('social', 'routes/social.tsx'), // Social feed
+  
+  // Social Features
+  route('social', 'routes/social/index.tsx'),
   route('social/notifications', 'routes/social/notifications.tsx'),
   route('social/messages', 'routes/social/messages.tsx'),
+  
   route('success-stories', 'routes/success-stories/index.tsx'),
   route('tickets', 'routes/tickets/index.tsx'),
   route('tickets/:id', 'routes/tickets/$id/index.tsx'),
   route('tickets/buy', 'routes/tickets/buy.tsx'), // Ticket buying
   route('tickets/marketplace', 'routes/tickets/marketplace/index.tsx'),
-  route('venues', 'routes/venues.tsx'),
-  route('venues/:id', 'routes/venues.$id.tsx'),
-  route('events/:id', 'routes/events.$id.tsx'),
-  route('performers/:id', 'routes/performers.$id.tsx'),
+  
+  // Venues  
+  route('venues', 'routes/venues/index.tsx'),
+  route('venues/:id', 'routes/venues/$id.tsx'),
+  
   route('*', 'routes/$.tsx'), // Catch-all 404 route
 ]);
 

@@ -233,7 +233,7 @@ export const VenueOwnerDashboard = ({
             </div>
             <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
               <div className="flex items-center">
-                <BarChartIcon className="h-8 w-8 text-indigo-400 mr-3" />
+                <BarChart />
                 <div>
                   <h3 className="font-medium text-gray-900">Event Analytics</h3>
                   <p className="text-sm text-gray-600 mt-1">

@@ -1,0 +1,1193 @@
+{
+  "timestamp": "2025-09-03T15:26:50.076Z",
+  "components": {
+    "ConfirmationStep": {
+      "name": "ConfirmationStep",
+      "category": "workflow-step",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking/ConfirmationStep.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": false,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Payment methods",
+        "Pricing information",
+        "Booking confirmation details"
+      ],
+      "workflowStep": 4,
+      "propRequirements": [
+        "formData",
+        "booking",
+        "venue"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "step-route",
+      "suggestedRoute": "/book/confirmation"
+    },
+    "EventDetailsStep": {
+      "name": "EventDetailsStep",
+      "category": "workflow-step",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking/EventDetailsStep.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Event details"
+      ],
+      "workflowStep": 1,
+      "propRequirements": [
+        "onNextStep",
+        "formData",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "step-route",
+      "suggestedRoute": "/book/event-details"
+    },
+    "ProgressIndicator": {
+      "name": "ProgressIndicator",
+      "category": "workflow-step",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking/ProgressIndicator.tsx",
+      "hasFormElements": false,
+      "hasFormSubmission": false,
+      "hasValidation": false,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": false,
+      "dataRequirements": [],
+      "workflowStep": 0,
+      "propRequirements": [
+        "currentStep"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "component",
+      "suggestedRoute": "/book/progressindicator"
+    },
+    "RequirementsStep": {
+      "name": "RequirementsStep",
+      "category": "workflow-step",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking/RequirementsStep.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Venue information",
+        "Event details"
+      ],
+      "workflowStep": 2,
+      "propRequirements": [
+        "onNextStep",
+        "onPrevStep",
+        "formData",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "step-route",
+      "suggestedRoute": "/book/requirements"
+    },
+    "ReviewStep": {
+      "name": "ReviewStep",
+      "category": "workflow-step",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking/ReviewStep.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information",
+        "Complete booking summary"
+      ],
+      "workflowStep": 3,
+      "propRequirements": [
+        "onNextStep",
+        "onPrevStep",
+        "formData",
+        "booking",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "step-route",
+      "suggestedRoute": "/book/review"
+    },
+    "SubmitStep": {
+      "name": "SubmitStep",
+      "category": "workflow-step",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking/SubmitStep.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": true,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information"
+      ],
+      "workflowStep": 5,
+      "propRequirements": [
+        "onPrevStep",
+        "formData",
+        "onSubmit",
+        "booking",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "step-route",
+      "suggestedRoute": "/book/submit"
+    },
+    "BookingConfirmation": {
+      "name": "BookingConfirmation",
+      "category": "form-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking-form/BookingConfirmation.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": false,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information",
+        "Availability data",
+        "Booking confirmation details"
+      ],
+      "workflowStep": 5,
+      "propRequirements": [
+        "formData",
+        "booking",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "action-route",
+      "suggestedRoute": "/book/success"
+    },
+    "BookingFormProgress": {
+      "name": "BookingFormProgress",
+      "category": "form-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking-form/BookingFormProgress.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": false,
+      "hasValidation": false,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": false,
+      "dataRequirements": [
+        "Current booking data"
+      ],
+      "workflowStep": 0,
+      "propRequirements": [
+        "currentStep"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "component",
+      "suggestedRoute": "/book/bookingprogress"
+    },
+    "ContactPaymentForm": {
+      "name": "ContactPaymentForm",
+      "category": "form-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking-form/ContactPaymentForm.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Event details",
+        "Payment methods",
+        "Pricing information"
+      ],
+      "workflowStep": 3,
+      "propRequirements": [
+        "onNextStep",
+        "onPrevStep",
+        "formData",
+        "booking",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "action-route",
+      "suggestedRoute": "/book/payment"
+    },
+    "EventDetailsForm": {
+      "name": "EventDetailsForm",
+      "category": "form-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking-form/EventDetailsForm.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": false,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Event details"
+      ],
+      "workflowStep": 1,
+      "propRequirements": [
+        "onNextStep",
+        "formData",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "action-route",
+      "suggestedRoute": "/book/event-details"
+    },
+    "ReviewSubmitForm": {
+      "name": "ReviewSubmitForm",
+      "category": "form-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking-form/ReviewSubmitForm.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information",
+        "Complete booking summary"
+      ],
+      "workflowStep": 4,
+      "propRequirements": [
+        "onPrevStep",
+        "formData",
+        "onSubmit",
+        "booking",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "action-route",
+      "suggestedRoute": "/book/submit"
+    },
+    "ServicesAddonsForm": {
+      "name": "ServicesAddonsForm",
+      "category": "form-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking-form/ServicesAddonsForm.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": true,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details"
+      ],
+      "workflowStep": 2,
+      "propRequirements": [
+        "onNextStep",
+        "onPrevStep",
+        "formData",
+        "booking",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "action-route",
+      "suggestedRoute": "/book/servicesaddons"
+    },
+    "SpaceSetupForm": {
+      "name": "SpaceSetupForm",
+      "category": "form-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking-form/SpaceSetupForm.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Venue information",
+        "Event details"
+      ],
+      "workflowStep": 2,
+      "propRequirements": [
+        "onNextStep",
+        "onPrevStep",
+        "formData",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "action-route",
+      "suggestedRoute": "/book/spacesetup"
+    },
+    "ActionButtons": {
+      "name": "ActionButtons",
+      "category": "management-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/bookings/ActionButtons.tsx",
+      "hasFormElements": false,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": true,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Availability data"
+      ],
+      "workflowStep": 0,
+      "propRequirements": [
+        "bookingId",
+        "booking",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "react-router"
+      ],
+      "routeType": "action-route",
+      "suggestedRoute": "/book/actionbuttons"
+    },
+    "BookingSummaryCard": {
+      "name": "BookingSummaryCard",
+      "category": "management-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/bookings/BookingSummaryCard.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": false,
+      "hasValidation": false,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": false,
+      "dataRequirements": [
+        "Current booking data",
+        "Event details"
+      ],
+      "workflowStep": 0,
+      "propRequirements": [
+        "bookingId",
+        "booking",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "react-qr-code"
+      ],
+      "routeType": "component",
+      "suggestedRoute": "/book/bookingsummarycard"
+    },
+    "ConfettiCelebration": {
+      "name": "ConfettiCelebration",
+      "category": "management-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/bookings/ConfettiCelebration.tsx",
+      "hasFormElements": false,
+      "hasFormSubmission": false,
+      "hasValidation": false,
+      "hasState": true,
+      "hasEffects": true,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": false,
+      "dataRequirements": [
+        "Event details"
+      ],
+      "workflowStep": 0,
+      "propRequirements": [
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "react-confetti"
+      ],
+      "routeType": "component",
+      "suggestedRoute": "/book/confetticelebration"
+    },
+    "FinancialBreakdown": {
+      "name": "FinancialBreakdown",
+      "category": "management-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/bookings/FinancialBreakdown.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": false,
+      "hasValidation": false,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": false,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information"
+      ],
+      "workflowStep": 0,
+      "propRequirements": [
+        "booking",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "component",
+      "suggestedRoute": "/book/financialbreakdown"
+    },
+    "OrganizerDashboard": {
+      "name": "OrganizerDashboard",
+      "category": "management-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/bookings/OrganizerDashboard.tsx",
+      "hasFormElements": false,
+      "hasFormSubmission": false,
+      "hasValidation": true,
+      "hasState": true,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details"
+      ],
+      "workflowStep": 0,
+      "propRequirements": [
+        "booking",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "component",
+      "suggestedRoute": "/dashboard/events"
+    },
+    "VenueInformation": {
+      "name": "VenueInformation",
+      "category": "management-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/bookings/VenueInformation.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": false,
+      "hasValidation": false,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": false,
+      "dataRequirements": [
+        "Venue information",
+        "Event details"
+      ],
+      "workflowStep": 0,
+      "propRequirements": [
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "component",
+      "suggestedRoute": "/book/venueination"
+    },
+    "VenueOwnerDashboard": {
+      "name": "VenueOwnerDashboard",
+      "category": "management-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/bookings/VenueOwnerDashboard.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": false,
+      "hasState": true,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information"
+      ],
+      "workflowStep": 0,
+      "propRequirements": [
+        "booking",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "action-route",
+      "suggestedRoute": "/dashboard/bookings"
+    }
+  },
+  "workflowSteps": [
+    {
+      "name": "ProgressIndicator",
+      "category": "workflow-step",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking/ProgressIndicator.tsx",
+      "hasFormElements": false,
+      "hasFormSubmission": false,
+      "hasValidation": false,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": false,
+      "dataRequirements": [],
+      "workflowStep": 0,
+      "propRequirements": [
+        "currentStep"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "component",
+      "suggestedRoute": "/book/progressindicator"
+    },
+    {
+      "name": "EventDetailsStep",
+      "category": "workflow-step",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking/EventDetailsStep.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Event details"
+      ],
+      "workflowStep": 1,
+      "propRequirements": [
+        "onNextStep",
+        "formData",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "step-route",
+      "suggestedRoute": "/book/event-details"
+    },
+    {
+      "name": "RequirementsStep",
+      "category": "workflow-step",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking/RequirementsStep.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Venue information",
+        "Event details"
+      ],
+      "workflowStep": 2,
+      "propRequirements": [
+        "onNextStep",
+        "onPrevStep",
+        "formData",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "step-route",
+      "suggestedRoute": "/book/requirements"
+    },
+    {
+      "name": "ReviewStep",
+      "category": "workflow-step",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking/ReviewStep.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information",
+        "Complete booking summary"
+      ],
+      "workflowStep": 3,
+      "propRequirements": [
+        "onNextStep",
+        "onPrevStep",
+        "formData",
+        "booking",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "step-route",
+      "suggestedRoute": "/book/review"
+    },
+    {
+      "name": "ConfirmationStep",
+      "category": "workflow-step",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking/ConfirmationStep.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": false,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Payment methods",
+        "Pricing information",
+        "Booking confirmation details"
+      ],
+      "workflowStep": 4,
+      "propRequirements": [
+        "formData",
+        "booking",
+        "venue"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "step-route",
+      "suggestedRoute": "/book/confirmation"
+    },
+    {
+      "name": "SubmitStep",
+      "category": "workflow-step",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking/SubmitStep.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": true,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information"
+      ],
+      "workflowStep": 5,
+      "propRequirements": [
+        "onPrevStep",
+        "formData",
+        "onSubmit",
+        "booking",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "step-route",
+      "suggestedRoute": "/book/submit"
+    }
+  ],
+  "formComponents": [
+    {
+      "name": "BookingConfirmation",
+      "category": "form-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking-form/BookingConfirmation.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": false,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information",
+        "Availability data",
+        "Booking confirmation details"
+      ],
+      "workflowStep": 5,
+      "propRequirements": [
+        "formData",
+        "booking",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "action-route",
+      "suggestedRoute": "/book/success"
+    },
+    {
+      "name": "BookingFormProgress",
+      "category": "form-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking-form/BookingFormProgress.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": false,
+      "hasValidation": false,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": false,
+      "dataRequirements": [
+        "Current booking data"
+      ],
+      "workflowStep": 0,
+      "propRequirements": [
+        "currentStep"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "component",
+      "suggestedRoute": "/book/bookingprogress"
+    },
+    {
+      "name": "ContactPaymentForm",
+      "category": "form-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking-form/ContactPaymentForm.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Event details",
+        "Payment methods",
+        "Pricing information"
+      ],
+      "workflowStep": 3,
+      "propRequirements": [
+        "onNextStep",
+        "onPrevStep",
+        "formData",
+        "booking",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "action-route",
+      "suggestedRoute": "/book/payment"
+    },
+    {
+      "name": "EventDetailsForm",
+      "category": "form-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking-form/EventDetailsForm.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": false,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Event details"
+      ],
+      "workflowStep": 1,
+      "propRequirements": [
+        "onNextStep",
+        "formData",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "action-route",
+      "suggestedRoute": "/book/event-details"
+    },
+    {
+      "name": "ReviewSubmitForm",
+      "category": "form-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking-form/ReviewSubmitForm.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information",
+        "Complete booking summary"
+      ],
+      "workflowStep": 4,
+      "propRequirements": [
+        "onPrevStep",
+        "formData",
+        "onSubmit",
+        "booking",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "action-route",
+      "suggestedRoute": "/book/submit"
+    },
+    {
+      "name": "ServicesAddonsForm",
+      "category": "form-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking-form/ServicesAddonsForm.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": true,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details"
+      ],
+      "workflowStep": 2,
+      "propRequirements": [
+        "onNextStep",
+        "onPrevStep",
+        "formData",
+        "booking",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "action-route",
+      "suggestedRoute": "/book/servicesaddons"
+    },
+    {
+      "name": "SpaceSetupForm",
+      "category": "form-component",
+      "filePath": "apps/web/app/components/magic-patterns/components/booking-form/SpaceSetupForm.tsx",
+      "hasFormElements": true,
+      "hasFormSubmission": true,
+      "hasValidation": true,
+      "hasState": false,
+      "hasEffects": false,
+      "hasContext": false,
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Venue information",
+        "Event details"
+      ],
+      "workflowStep": 2,
+      "propRequirements": [
+        "onNextStep",
+        "onPrevStep",
+        "formData",
+        "venue",
+        "event"
+      ],
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "routeType": "action-route",
+      "suggestedRoute": "/book/spacesetup"
+    }
+  ],
+  "requiredRoutes": [
+    {
+      "route": "/book/actionbuttons",
+      "component": "ActionButtons",
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Availability data"
+      ]
+    },
+    {
+      "route": "/dashboard/bookings",
+      "component": "VenueOwnerDashboard",
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information"
+      ]
+    },
+    {
+      "route": "/book/event-details",
+      "component": "EventDetailsStep",
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Event details"
+      ]
+    },
+    {
+      "route": "/book/event-details",
+      "component": "EventDetailsForm",
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Event details"
+      ]
+    },
+    {
+      "route": "/book/requirements",
+      "component": "RequirementsStep",
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Venue information",
+        "Event details"
+      ]
+    },
+    {
+      "route": "/book/servicesaddons",
+      "component": "ServicesAddonsForm",
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details"
+      ]
+    },
+    {
+      "route": "/book/spacesetup",
+      "component": "SpaceSetupForm",
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Venue information",
+        "Event details"
+      ]
+    },
+    {
+      "route": "/book/review",
+      "component": "ReviewStep",
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information",
+        "Complete booking summary"
+      ]
+    },
+    {
+      "route": "/book/payment",
+      "component": "ContactPaymentForm",
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Event details",
+        "Payment methods",
+        "Pricing information"
+      ]
+    },
+    {
+      "route": "/book/confirmation",
+      "component": "ConfirmationStep",
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Payment methods",
+        "Pricing information",
+        "Booking confirmation details"
+      ]
+    },
+    {
+      "route": "/book/submit",
+      "component": "ReviewSubmitForm",
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information",
+        "Complete booking summary"
+      ]
+    },
+    {
+      "route": "/book/submit",
+      "component": "SubmitStep",
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information"
+      ]
+    },
+    {
+      "route": "/book/success",
+      "component": "BookingConfirmation",
+      "needsLoader": true,
+      "needsAction": true,
+      "dataRequirements": [
+        "Current booking data",
+        "Venue information",
+        "Event details",
+        "Payment methods",
+        "Pricing information",
+        "Availability data",
+        "Booking confirmation details"
+      ]
+    }
+  ]
+}

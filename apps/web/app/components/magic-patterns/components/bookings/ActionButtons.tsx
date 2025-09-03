@@ -31,7 +31,7 @@ export const ActionButtons = ({
       type: 'text/calendar;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = typeof document !== "undefined" && document.createElement('a');
+    const link = typeof document !== "undefined" && document.createElement("a") as HTMLAnchorElement;
     link.href = url;
     link.setAttribute('download', `booking_${booking.bookingId || 'event'}.ics`);
     document.body.appendChild(link);
@@ -69,7 +69,7 @@ export const ActionButtons = ({
       type: 'text/plain;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = typeof document !== "undefined" && document.createElement('a');
+    const link = typeof document !== "undefined" && document.createElement("a") as HTMLAnchorElement;
     link.href = url;
     link.setAttribute('download', `contract_${booking.bookingId || 'booking'}.txt`);
     document.body.appendChild(link);
