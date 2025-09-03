@@ -1,0 +1,50 @@
+{
+  "fixCount": 9,
+  "issues": [
+    {
+      "file": "apps/web/app/routes/$.tsx",
+      "old": "import type { Route } from '../types/app/routes/+types/root.tsx'",
+      "new": "import type { Route } from '~/types/app/routes/+types/$';"
+    },
+    {
+      "file": "apps/web/app/routes/book/performer.tsx",
+      "old": "import type { Route } from '../../types/app/routes/+types/root.tsx'",
+      "new": "import type { Route } from '~/types/app/routes/book/performer/+types';"
+    },
+    {
+      "file": "apps/web/app/routes/book.tsx",
+      "old": "import type { Route } from '../types/app/routes/+types/root.tsx'",
+      "new": "import type { Route } from '~/types/app/routes/+types/book';"
+    },
+    {
+      "file": "apps/web/app/routes/calendars/marketplace.tsx",
+      "old": "import type { Route } from '../../types/app/routes/+types/root.tsx'",
+      "new": "import type { Route } from '~/types/app/routes/calendars/marketplace/+types';"
+    },
+    {
+      "file": "apps/web/app/routes/hubs.tsx",
+      "old": "import type { Route } from '../types/app/routes/+types/root.tsx'",
+      "new": "import type { Route } from '~/types/app/routes/+types/hubs';"
+    },
+    {
+      "file": "apps/web/app/routes/social/messages.tsx",
+      "old": "import type { Route } from '../../types/app/routes/+types/root.tsx'",
+      "new": "import type { Route } from '~/types/app/routes/social/messages/+types';"
+    },
+    {
+      "file": "apps/web/app/routes/social/notifications.tsx",
+      "old": "import type { Route } from '../../types/app/routes/+types/root.tsx'",
+      "new": "import type { Route } from '~/types/app/routes/social/notifications/+types';"
+    },
+    {
+      "file": "apps/web/app/routes/social.tsx",
+      "old": "import type { Route } from '../types/app/routes/+types/root.tsx'",
+      "new": "import type { Route } from '~/types/app/routes/+types/social';"
+    },
+    {
+      "file": "apps/web/app/routes/tickets/buy.tsx",
+      "old": "import type { Route } from '../../types/app/routes/+types/root.tsx'",
+      "new": "import type { Route } from '~/types/app/routes/tickets/buy/+types';"
+    }
+  ]
+}

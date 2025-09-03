@@ -1,4 +1,4 @@
-import type { Route } from '../../types/app/routes/+types/root.tsx';
+import type { Route } from '~/types/app/routes/tickets/buy/+types';;
 
 export default function TicketBuyRoute() {
   return (

@@ -1,0 +1,950 @@
+{
+  "timestamp": "2025-09-03T13:54:20.040Z",
+  "issues": {
+    "missingModules": [
+      {
+        "route": "$.tsx",
+        "import": "~/components/magic-patterns/pages/NotFoundPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/NotFoundPage.tsx"
+      },
+      {
+        "route": "about/index.tsx",
+        "import": "~/components/magic-patterns/pages/AboutPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/AboutPage.tsx"
+      },
+      {
+        "route": "advertise/email-campaigns/index.tsx",
+        "import": "~/components/magic-patterns/pages/advertise/EmailCampaignsPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/advertise/EmailCampaignsPage.tsx"
+      },
+      {
+        "route": "advertise/event-promotion/index.tsx",
+        "import": "~/components/magic-patterns/pages/advertise/EventPromotionPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/advertise/EventPromotionPage.tsx"
+      },
+      {
+        "route": "advertise/featured-listings/index.tsx",
+        "import": "~/components/magic-patterns/pages/advertise/FeaturedListingsPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/advertise/FeaturedListingsPage.tsx"
+      },
+      {
+        "route": "advertise/homepage-showcase/index.tsx",
+        "import": "~/components/magic-patterns/pages/advertise/HomepageShowcasePage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/advertise/HomepageShowcasePage.tsx"
+      },
+      {
+        "route": "advertise/index.tsx",
+        "import": "~/components/magic-patterns/pages/AdvertisePage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/AdvertisePage.tsx"
+      },
+      {
+        "route": "advertise/packages/index.tsx",
+        "import": "~/components/magic-patterns/pages/advertise/AdPackagesPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/advertise/AdPackagesPage.tsx"
+      },
+      {
+        "route": "advertising-solutions/index.tsx",
+        "import": "~/components/magic-patterns/pages/AdvertisingSolutionsPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/AdvertisingSolutionsPage.tsx"
+      },
+      {
+        "route": "book/performer.tsx",
+        "import": "~/components/magic-patterns/pages/book/BookPerformerPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/book/BookPerformerPage.tsx"
+      },
+      {
+        "route": "book-it/gigs/index.tsx",
+        "import": "~/components/magic-patterns/pages/book-it/GigMarketplacePage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/book-it/GigMarketplacePage.tsx"
+      },
+      {
+        "route": "book-it/index.tsx",
+        "import": "~/components/magic-patterns/pages/BookItPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/BookItPage.tsx"
+      },
+      {
+        "route": "book-it/venues/$id/book/index.tsx",
+        "import": "~/components/magic-patterns/pages/book-it/venues/BookingRequestPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/book-it/venues/BookingRequestPage.tsx"
+      },
+      {
+        "route": "book-it/venues/$id/index.tsx",
+        "import": "~/components/magic-patterns/pages/book-it/venues/VenueDetailPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/book-it/venues/VenueDetailPage.tsx"
+      },
+      {
+        "route": "book-it/venues/index.tsx",
+        "import": "~/components/magic-patterns/pages/book-it/VenueMarketplacePage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/book-it/VenueMarketplacePage.tsx"
+      },
+      {
+        "route": "book.tsx",
+        "import": "~/components/magic-patterns/pages/BookItPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/BookItPage.tsx"
+      },
+      {
+        "route": "bookings/confirmation/index.tsx",
+        "import": "~/components/magic-patterns/pages/bookings/BookingConfirmationPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/bookings/BookingConfirmationPage.tsx"
+      },
+      {
+        "route": "bookings/index.tsx",
+        "import": "~/components/magic-patterns/pages/BookingMarketplacePage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/BookingMarketplacePage.tsx"
+      },
+      {
+        "route": "c.$communitySlug.tsx",
+        "import": "~/components/magic-patterns/pages/hub/[slug]/community",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/hub/[slug]/community.tsx"
+      },
+      {
+        "route": "calendars/index.tsx",
+        "import": "~/components/magic-patterns/pages/CalendarPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/CalendarPage.tsx"
+      },
+      {
+        "route": "calendars/marketplace.tsx",
+        "import": "~/components/magic-patterns/pages/calendars/CalendarMarketplacePage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/calendars/CalendarMarketplacePage.tsx"
+      },
+      {
+        "route": "careers/index.tsx",
+        "import": "~/components/magic-patterns/pages/CareersPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/CareersPage.tsx"
+      },
+      {
+        "route": "community-impact/index.tsx",
+        "import": "~/components/magic-patterns/pages/CommunityImpactPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/CommunityImpactPage.tsx"
+      },
+      {
+        "route": "contact/index.tsx",
+        "import": "~/components/magic-patterns/pages/ContactUsPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/ContactUsPage.tsx"
+      },
+      {
+        "route": "events/index.tsx",
+        "import": "~/components/magic-patterns/pages/EventsPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/EventsPage.tsx"
+      },
+      {
+        "route": "events.$id.tsx",
+        "import": "~/components/magic-patterns/pages/EventDetailPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/EventDetailPage.tsx"
+      },
+      {
+        "route": "gear/index.tsx",
+        "import": "~/components/magic-patterns/pages/GearPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/GearPage.tsx"
+      },
+      {
+        "route": "help/index.tsx",
+        "import": "~/components/magic-patterns/pages/help",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/help.tsx"
+      },
+      {
+        "route": "how-it-works/index.tsx",
+        "import": "~/components/magic-patterns/pages/HowItWorksPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/HowItWorksPage.tsx"
+      },
+      {
+        "route": "hubs.tsx",
+        "import": "~/components/magic-patterns/pages/hubs/index",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/hubs/index.tsx"
+      },
+      {
+        "route": "index.tsx",
+        "import": "~/components/magic-patterns/pages/HomePage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/HomePage.tsx"
+      },
+      {
+        "route": "magic-patterns/layout.tsx",
+        "import": "~/components/magic-patterns/components/layout/Header",
+        "expectedPath": "./apps/web/components/magic-patterns/components/layout/Header.tsx"
+      },
+      {
+        "route": "magic-patterns/layout.tsx",
+        "import": "~/components/magic-patterns/components/layout/Footer",
+        "expectedPath": "./apps/web/components/magic-patterns/components/layout/Footer.tsx"
+      },
+      {
+        "route": "marketing/layout.tsx",
+        "import": "~/components/magic-patterns/components/layout/MainHeader",
+        "expectedPath": "./apps/web/components/magic-patterns/components/layout/MainHeader.tsx"
+      },
+      {
+        "route": "marketing/layout.tsx",
+        "import": "~/components/magic-patterns/components/layout/Footer",
+        "expectedPath": "./apps/web/components/magic-patterns/components/layout/Footer.tsx"
+      },
+      {
+        "route": "messages/index.tsx",
+        "import": "~/components/magic-patterns/pages/social/MessagesPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/social/MessagesPage.tsx"
+      },
+      {
+        "route": "notifications/index.tsx",
+        "import": "~/components/magic-patterns/pages/social/NotificationsPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/social/NotificationsPage.tsx"
+      },
+      {
+        "route": "partner/index.tsx",
+        "import": "~/components/magic-patterns/pages/PartnerWithUsPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/PartnerWithUsPage.tsx"
+      },
+      {
+        "route": "performers.$id.tsx",
+        "import": "~/components/magic-patterns/pages/performers/PerformerProfilePage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/performers/PerformerProfilePage.tsx"
+      },
+      {
+        "route": "performers.tsx",
+        "import": "~/components/magic-patterns/pages/PerformersPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/PerformersPage.tsx"
+      },
+      {
+        "route": "press/index.tsx",
+        "import": "~/components/magic-patterns/pages/PressMediaPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/PressMediaPage.tsx"
+      },
+      {
+        "route": "social.tsx",
+        "import": "~/components/magic-patterns/pages/social/SocialFeedPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/social/SocialFeedPage.tsx"
+      },
+      {
+        "route": "success-stories/index.tsx",
+        "import": "~/components/magic-patterns/pages/SuccessStoriesPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/SuccessStoriesPage.tsx"
+      },
+      {
+        "route": "test-magic-ssr.tsx",
+        "import": "~/components/magic-patterns/pages/HomePage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/HomePage.tsx"
+      },
+      {
+        "route": "tickets/$id/index.tsx",
+        "import": "~/components/magic-patterns/pages/tickets/TicketDetailPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/tickets/TicketDetailPage.tsx"
+      },
+      {
+        "route": "tickets/index.tsx",
+        "import": "~/components/magic-patterns/pages/TicketsPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/TicketsPage.tsx"
+      },
+      {
+        "route": "tickets/marketplace/index.tsx",
+        "import": "~/components/magic-patterns/pages/tickets/TicketMarketplacePage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/tickets/TicketMarketplacePage.tsx"
+      },
+      {
+        "route": "venues.$id.tsx",
+        "import": "~/components/magic-patterns/pages/venues/VenueDetailPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/venues/VenueDetailPage.tsx"
+      },
+      {
+        "route": "venues.tsx",
+        "import": "~/components/magic-patterns/pages/VenuesPage",
+        "expectedPath": "./apps/web/components/magic-patterns/pages/VenuesPage.tsx"
+      }
+    ],
+    "typeErrors": [
+      {
+        "module": "~/components/magic-patterns/mock-data/events",
+        "file": "app/lib/services/data-service.ts"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/NotFoundPage",
+        "file": "app/routes/$.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/AboutPage",
+        "file": "app/routes/about/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/advertise/EmailCampaignsPage",
+        "file": "app/routes/advertise/email-campaigns/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/advertise/EventPromotionPage",
+        "file": "app/routes/advertise/event-promotion/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/advertise/FeaturedListingsPage",
+        "file": "app/routes/advertise/featured-listings/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/advertise/HomepageShowcasePage",
+        "file": "app/routes/advertise/homepage-showcase/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/AdvertisePage",
+        "file": "app/routes/advertise/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/advertise/AdPackagesPage",
+        "file": "app/routes/advertise/packages/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/AdvertisingSolutionsPage",
+        "file": "app/routes/advertising-solutions/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/book-it/GigMarketplacePage",
+        "file": "app/routes/book-it/gigs/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/BookItPage",
+        "file": "app/routes/book-it/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/book-it/venues/BookingRequestPage",
+        "file": "app/routes/book-it/venues/$id/book/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/book-it/venues/VenueDetailPage",
+        "file": "app/routes/book-it/venues/$id/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/book-it/VenueMarketplacePage",
+        "file": "app/routes/book-it/venues/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/BookItPage",
+        "file": "app/routes/book.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/book/BookPerformerPage",
+        "file": "app/routes/book/performer.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/bookings/BookingConfirmationPage",
+        "file": "app/routes/bookings/confirmation/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/BookingMarketplacePage",
+        "file": "app/routes/bookings/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/hub/[slug]/community",
+        "file": "app/routes/c.$communitySlug.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/CalendarPage",
+        "file": "app/routes/calendars/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/calendars/CalendarMarketplacePage",
+        "file": "app/routes/calendars/marketplace.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/CareersPage",
+        "file": "app/routes/careers/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/CommunityImpactPage",
+        "file": "app/routes/community-impact/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/ContactUsPage",
+        "file": "app/routes/contact/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/EventDetailPage",
+        "file": "app/routes/events.$id.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/EventsPage",
+        "file": "app/routes/events/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/GearPage",
+        "file": "app/routes/gear/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/help",
+        "file": "app/routes/help/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/HowItWorksPage",
+        "file": "app/routes/how-it-works/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/hubs/index",
+        "file": "app/routes/hubs.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/HomePage",
+        "file": "app/routes/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/components/layout/Header",
+        "file": "app/routes/magic-patterns/layout.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/components/layout/Footer",
+        "file": "app/routes/magic-patterns/layout.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/components/layout/MainHeader",
+        "file": "app/routes/marketing/layout.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/components/layout/Footer",
+        "file": "app/routes/marketing/layout.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/social/MessagesPage",
+        "file": "app/routes/messages/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/social/NotificationsPage",
+        "file": "app/routes/notifications/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/PartnerWithUsPage",
+        "file": "app/routes/partner/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/performers/PerformerProfilePage",
+        "file": "app/routes/performers.$id.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/PerformersPage",
+        "file": "app/routes/performers.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/PressMediaPage",
+        "file": "app/routes/press/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/social/SocialFeedPage",
+        "file": "app/routes/social.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/SuccessStoriesPage",
+        "file": "app/routes/success-stories/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/HomePage",
+        "file": "app/routes/test-magic-ssr.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/tickets/TicketDetailPage",
+        "file": "app/routes/tickets/$id/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/TicketsPage",
+        "file": "app/routes/tickets/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/tickets/TicketMarketplacePage",
+        "file": "app/routes/tickets/marketplace/index.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/venues/VenueDetailPage",
+        "file": "app/routes/venues.$id.tsx"
+      },
+      {
+        "module": "~/components/magic-patterns/pages/VenuesPage",
+        "file": "app/routes/venues.tsx"
+      }
+    ],
+    "routeMismatches": [],
+    "deadRoutes": [
+      {
+        "route": "advertise/email-campaigns/index.tsx",
+        "import": "~/components/magic-patterns/pages/advertise/EmailCampaignsPage",
+        "suggestion": "advertise/EmailCampaignsPage"
+      },
+      {
+        "route": "advertise/event-promotion/index.tsx",
+        "import": "~/components/magic-patterns/pages/advertise/EventPromotionPage",
+        "suggestion": "advertise/EventPromotionPage"
+      },
+      {
+        "route": "advertise/featured-listings/index.tsx",
+        "import": "~/components/magic-patterns/pages/advertise/FeaturedListingsPage",
+        "suggestion": "advertise/FeaturedListingsPage"
+      },
+      {
+        "route": "advertise/homepage-showcase/index.tsx",
+        "import": "~/components/magic-patterns/pages/advertise/HomepageShowcasePage",
+        "suggestion": "HomePage"
+      },
+      {
+        "route": "advertise/packages/index.tsx",
+        "import": "~/components/magic-patterns/pages/advertise/AdPackagesPage",
+        "suggestion": "advertise/AdPackagesPage"
+      },
+      {
+        "route": "book/performer.tsx",
+        "import": "~/components/magic-patterns/pages/book/BookPerformerPage",
+        "suggestion": "book/BookPerformerPage"
+      },
+      {
+        "route": "book-it/gigs/index.tsx",
+        "import": "~/components/magic-patterns/pages/book-it/GigMarketplacePage",
+        "suggestion": "book-it/GigMarketplacePage"
+      },
+      {
+        "route": "book-it/venues/$id/book/index.tsx",
+        "import": "~/components/magic-patterns/pages/book-it/venues/BookingRequestPage",
+        "suggestion": "book-it/venues/BookingRequestPage"
+      },
+      {
+        "route": "book-it/venues/$id/index.tsx",
+        "import": "~/components/magic-patterns/pages/book-it/venues/VenueDetailPage",
+        "suggestion": "book-it/venues/VenueDetailPage"
+      },
+      {
+        "route": "book-it/venues/index.tsx",
+        "import": "~/components/magic-patterns/pages/book-it/VenueMarketplacePage",
+        "suggestion": "book-it/VenueMarketplacePage"
+      },
+      {
+        "route": "bookings/confirmation/index.tsx",
+        "import": "~/components/magic-patterns/pages/bookings/BookingConfirmationPage",
+        "suggestion": "bookings/BookingConfirmationPage"
+      },
+      {
+        "route": "c.$communitySlug.tsx",
+        "import": "~/components/magic-patterns/pages/hub/[slug]/community",
+        "suggestion": "CommunityImpactPage"
+      },
+      {
+        "route": "calendars/marketplace.tsx",
+        "import": "~/components/magic-patterns/pages/calendars/CalendarMarketplacePage",
+        "suggestion": "calendars/CalendarMarketplacePage"
+      },
+      {
+        "route": "hubs.tsx",
+        "import": "~/components/magic-patterns/pages/hubs/index",
+        "suggestion": "hubs/index"
+      },
+      {
+        "route": "magic-patterns/layout.tsx",
+        "import": "~/components/magic-patterns/components/layout/Footer",
+        "suggestion": null
+      },
+      {
+        "route": "marketing/layout.tsx",
+        "import": "~/components/magic-patterns/components/layout/Footer",
+        "suggestion": null
+      },
+      {
+        "route": "messages/index.tsx",
+        "import": "~/components/magic-patterns/pages/social/MessagesPage",
+        "suggestion": "social/MessagesPage"
+      },
+      {
+        "route": "notifications/index.tsx",
+        "import": "~/components/magic-patterns/pages/social/NotificationsPage",
+        "suggestion": "social/NotificationsPage"
+      },
+      {
+        "route": "performers.$id.tsx",
+        "import": "~/components/magic-patterns/pages/performers/PerformerProfilePage",
+        "suggestion": "performers/PerformerProfilePage"
+      },
+      {
+        "route": "social.tsx",
+        "import": "~/components/magic-patterns/pages/social/SocialFeedPage",
+        "suggestion": "social/SocialFeedPage"
+      },
+      {
+        "route": "tickets/$id/index.tsx",
+        "import": "~/components/magic-patterns/pages/tickets/TicketDetailPage",
+        "suggestion": "tickets/TicketDetailPage"
+      },
+      {
+        "route": "tickets/marketplace/index.tsx",
+        "import": "~/components/magic-patterns/pages/tickets/TicketMarketplacePage",
+        "suggestion": "tickets/TicketMarketplacePage"
+      },
+      {
+        "route": "venues.$id.tsx",
+        "import": "~/components/magic-patterns/pages/venues/VenueDetailPage",
+        "suggestion": "book-it/venues/VenueDetailPage"
+      }
+    ]
+  },
+  "routeMap": [
+    [
+      "$.tsx",
+      {
+        "file": "apps/web/app/routes/$.tsx",
+        "imports": "~/components/magic-patterns/pages/NotFoundPage",
+        "exists": null
+      }
+    ],
+    [
+      "about/index.tsx",
+      {
+        "file": "apps/web/app/routes/about/index.tsx",
+        "imports": "~/components/magic-patterns/pages/AboutPage",
+        "exists": null
+      }
+    ],
+    [
+      "advertise/email-campaigns/index.tsx",
+      {
+        "file": "apps/web/app/routes/advertise/email-campaigns/index.tsx",
+        "imports": "~/components/magic-patterns/pages/advertise/EmailCampaignsPage",
+        "exists": null
+      }
+    ],
+    [
+      "advertise/event-promotion/index.tsx",
+      {
+        "file": "apps/web/app/routes/advertise/event-promotion/index.tsx",
+        "imports": "~/components/magic-patterns/pages/advertise/EventPromotionPage",
+        "exists": null
+      }
+    ],
+    [
+      "advertise/featured-listings/index.tsx",
+      {
+        "file": "apps/web/app/routes/advertise/featured-listings/index.tsx",
+        "imports": "~/components/magic-patterns/pages/advertise/FeaturedListingsPage",
+        "exists": null
+      }
+    ],
+    [
+      "advertise/homepage-showcase/index.tsx",
+      {
+        "file": "apps/web/app/routes/advertise/homepage-showcase/index.tsx",
+        "imports": "~/components/magic-patterns/pages/advertise/HomepageShowcasePage",
+        "exists": null
+      }
+    ],
+    [
+      "advertise/index.tsx",
+      {
+        "file": "apps/web/app/routes/advertise/index.tsx",
+        "imports": "~/components/magic-patterns/pages/AdvertisePage",
+        "exists": null
+      }
+    ],
+    [
+      "advertise/packages/index.tsx",
+      {
+        "file": "apps/web/app/routes/advertise/packages/index.tsx",
+        "imports": "~/components/magic-patterns/pages/advertise/AdPackagesPage",
+        "exists": null
+      }
+    ],
+    [
+      "advertising-solutions/index.tsx",
+      {
+        "file": "apps/web/app/routes/advertising-solutions/index.tsx",
+        "imports": "~/components/magic-patterns/pages/AdvertisingSolutionsPage",
+        "exists": null
+      }
+    ],
+    [
+      "book/performer.tsx",
+      {
+        "file": "apps/web/app/routes/book/performer.tsx",
+        "imports": "~/components/magic-patterns/pages/book/BookPerformerPage",
+        "exists": null
+      }
+    ],
+    [
+      "book-it/gigs/index.tsx",
+      {
+        "file": "apps/web/app/routes/book-it/gigs/index.tsx",
+        "imports": "~/components/magic-patterns/pages/book-it/GigMarketplacePage",
+        "exists": null
+      }
+    ],
+    [
+      "book-it/index.tsx",
+      {
+        "file": "apps/web/app/routes/book-it/index.tsx",
+        "imports": "~/components/magic-patterns/pages/BookItPage",
+        "exists": null
+      }
+    ],
+    [
+      "book-it/venues/$id/book/index.tsx",
+      {
+        "file": "apps/web/app/routes/book-it/venues/$id/book/index.tsx",
+        "imports": "~/components/magic-patterns/pages/book-it/venues/BookingRequestPage",
+        "exists": null
+      }
+    ],
+    [
+      "book-it/venues/$id/index.tsx",
+      {
+        "file": "apps/web/app/routes/book-it/venues/$id/index.tsx",
+        "imports": "~/components/magic-patterns/pages/book-it/venues/VenueDetailPage",
+        "exists": null
+      }
+    ],
+    [
+      "book-it/venues/index.tsx",
+      {
+        "file": "apps/web/app/routes/book-it/venues/index.tsx",
+        "imports": "~/components/magic-patterns/pages/book-it/VenueMarketplacePage",
+        "exists": null
+      }
+    ],
+    [
+      "book.tsx",
+      {
+        "file": "apps/web/app/routes/book.tsx",
+        "imports": "~/components/magic-patterns/pages/BookItPage",
+        "exists": null
+      }
+    ],
+    [
+      "bookings/confirmation/index.tsx",
+      {
+        "file": "apps/web/app/routes/bookings/confirmation/index.tsx",
+        "imports": "~/components/magic-patterns/pages/bookings/BookingConfirmationPage",
+        "exists": null
+      }
+    ],
+    [
+      "bookings/index.tsx",
+      {
+        "file": "apps/web/app/routes/bookings/index.tsx",
+        "imports": "~/components/magic-patterns/pages/BookingMarketplacePage",
+        "exists": null
+      }
+    ],
+    [
+      "c.$communitySlug.tsx",
+      {
+        "file": "apps/web/app/routes/c.$communitySlug.tsx",
+        "imports": "~/components/magic-patterns/pages/hub/[slug]/community",
+        "exists": null
+      }
+    ],
+    [
+      "calendars/index.tsx",
+      {
+        "file": "apps/web/app/routes/calendars/index.tsx",
+        "imports": "~/components/magic-patterns/pages/CalendarPage",
+        "exists": null
+      }
+    ],
+    [
+      "calendars/marketplace.tsx",
+      {
+        "file": "apps/web/app/routes/calendars/marketplace.tsx",
+        "imports": "~/components/magic-patterns/pages/calendars/CalendarMarketplacePage",
+        "exists": null
+      }
+    ],
+    [
+      "careers/index.tsx",
+      {
+        "file": "apps/web/app/routes/careers/index.tsx",
+        "imports": "~/components/magic-patterns/pages/CareersPage",
+        "exists": null
+      }
+    ],
+    [
+      "community-impact/index.tsx",
+      {
+        "file": "apps/web/app/routes/community-impact/index.tsx",
+        "imports": "~/components/magic-patterns/pages/CommunityImpactPage",
+        "exists": null
+      }
+    ],
+    [
+      "contact/index.tsx",
+      {
+        "file": "apps/web/app/routes/contact/index.tsx",
+        "imports": "~/components/magic-patterns/pages/ContactUsPage",
+        "exists": null
+      }
+    ],
+    [
+      "events/index.tsx",
+      {
+        "file": "apps/web/app/routes/events/index.tsx",
+        "imports": "~/components/magic-patterns/pages/EventsPage",
+        "exists": null
+      }
+    ],
+    [
+      "events.$id.tsx",
+      {
+        "file": "apps/web/app/routes/events.$id.tsx",
+        "imports": "~/components/magic-patterns/pages/EventDetailPage",
+        "exists": null
+      }
+    ],
+    [
+      "gear/index.tsx",
+      {
+        "file": "apps/web/app/routes/gear/index.tsx",
+        "imports": "~/components/magic-patterns/pages/GearPage",
+        "exists": null
+      }
+    ],
+    [
+      "help/index.tsx",
+      {
+        "file": "apps/web/app/routes/help/index.tsx",
+        "imports": "~/components/magic-patterns/pages/help",
+        "exists": null
+      }
+    ],
+    [
+      "how-it-works/index.tsx",
+      {
+        "file": "apps/web/app/routes/how-it-works/index.tsx",
+        "imports": "~/components/magic-patterns/pages/HowItWorksPage",
+        "exists": null
+      }
+    ],
+    [
+      "hubs.tsx",
+      {
+        "file": "apps/web/app/routes/hubs.tsx",
+        "imports": "~/components/magic-patterns/pages/hubs/index",
+        "exists": null
+      }
+    ],
+    [
+      "index.tsx",
+      {
+        "file": "apps/web/app/routes/index.tsx",
+        "imports": "~/components/magic-patterns/pages/HomePage",
+        "exists": null
+      }
+    ],
+    [
+      "magic-patterns/layout.tsx",
+      {
+        "file": "apps/web/app/routes/magic-patterns/layout.tsx",
+        "imports": "~/components/magic-patterns/components/layout/Footer",
+        "exists": null
+      }
+    ],
+    [
+      "marketing/layout.tsx",
+      {
+        "file": "apps/web/app/routes/marketing/layout.tsx",
+        "imports": "~/components/magic-patterns/components/layout/Footer",
+        "exists": null
+      }
+    ],
+    [
+      "messages/index.tsx",
+      {
+        "file": "apps/web/app/routes/messages/index.tsx",
+        "imports": "~/components/magic-patterns/pages/social/MessagesPage",
+        "exists": null
+      }
+    ],
+    [
+      "notifications/index.tsx",
+      {
+        "file": "apps/web/app/routes/notifications/index.tsx",
+        "imports": "~/components/magic-patterns/pages/social/NotificationsPage",
+        "exists": null
+      }
+    ],
+    [
+      "partner/index.tsx",
+      {
+        "file": "apps/web/app/routes/partner/index.tsx",
+        "imports": "~/components/magic-patterns/pages/PartnerWithUsPage",
+        "exists": null
+      }
+    ],
+    [
+      "performers.$id.tsx",
+      {
+        "file": "apps/web/app/routes/performers.$id.tsx",
+        "imports": "~/components/magic-patterns/pages/performers/PerformerProfilePage",
+        "exists": null
+      }
+    ],
+    [
+      "performers.tsx",
+      {
+        "file": "apps/web/app/routes/performers.tsx",
+        "imports": "~/components/magic-patterns/pages/PerformersPage",
+        "exists": null
+      }
+    ],
+    [
+      "press/index.tsx",
+      {
+        "file": "apps/web/app/routes/press/index.tsx",
+        "imports": "~/components/magic-patterns/pages/PressMediaPage",
+        "exists": null
+      }
+    ],
+    [
+      "social.tsx",
+      {
+        "file": "apps/web/app/routes/social.tsx",
+        "imports": "~/components/magic-patterns/pages/social/SocialFeedPage",
+        "exists": null
+      }
+    ],
+    [
+      "success-stories/index.tsx",
+      {
+        "file": "apps/web/app/routes/success-stories/index.tsx",
+        "imports": "~/components/magic-patterns/pages/SuccessStoriesPage",
+        "exists": null
+      }
+    ],
+    [
+      "test-magic-ssr.tsx",
+      {
+        "file": "apps/web/app/routes/test-magic-ssr.tsx",
+        "imports": "~/components/magic-patterns/pages/HomePage",
+        "exists": null
+      }
+    ],
+    [
+      "tickets/$id/index.tsx",
+      {
+        "file": "apps/web/app/routes/tickets/$id/index.tsx",
+        "imports": "~/components/magic-patterns/pages/tickets/TicketDetailPage",
+        "exists": null
+      }
+    ],
+    [
+      "tickets/index.tsx",
+      {
+        "file": "apps/web/app/routes/tickets/index.tsx",
+        "imports": "~/components/magic-patterns/pages/TicketsPage",
+        "exists": null
+      }
+    ],
+    [
+      "tickets/marketplace/index.tsx",
+      {
+        "file": "apps/web/app/routes/tickets/marketplace/index.tsx",
+        "imports": "~/components/magic-patterns/pages/tickets/TicketMarketplacePage",
+        "exists": null
+      }
+    ],
+    [
+      "venues.$id.tsx",
+      {
+        "file": "apps/web/app/routes/venues.$id.tsx",
+        "imports": "~/components/magic-patterns/pages/venues/VenueDetailPage",
+        "exists": null
+      }
+    ],
+    [
+      "venues.tsx",
+      {
+        "file": "apps/web/app/routes/venues.tsx",
+        "imports": "~/components/magic-patterns/pages/VenuesPage",
+        "exists": null
+      }
+    ]
+  ]
+}

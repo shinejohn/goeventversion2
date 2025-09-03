@@ -1,4 +1,4 @@
-import type { Route } from '../types/app/routes/+types/root.tsx';
+import type { Route } from '~/types/app/routes/+types/social';;
 
 import SocialFeedPage from '~/components/magic-patterns/pages/social/SocialFeedPage';
 
