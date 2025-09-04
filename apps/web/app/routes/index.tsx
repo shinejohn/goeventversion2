@@ -45,6 +45,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   } catch (error) {
     console.error('Error loading home page data:', error);
     console.log('Force rebuild at:', new Date().toISOString());
+    console.log('Database permission fix needed');
     return {
       title: 'GoEventCity - Discover Events, Venues & Performers',
       events: [],
