@@ -23,9 +23,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       .from('events')
       .select(`
         *,
-        venue:venues(name, address, city, state),
-        organizer:auth.users(name, avatar_url),
-        _count:bookings(count)
+        venue:venues(name, address, city, state)
       `)
       .eq('status', 'published')
       .gte('start_date', new Date().toISOString());

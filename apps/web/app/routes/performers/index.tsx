@@ -9,13 +9,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   try {
     const { data: performers, error } = await client
       .from('performer_profiles')
-      .select(`
-        *,
-        user:auth.users(name, avatar_url),
-        upcoming_events:event_performers(
-          event:events(id, title, start_date)
-        )
-      `)
+      .select(`*`)
       .eq('status', 'active')
       .order('rating', { ascending: false });
     
