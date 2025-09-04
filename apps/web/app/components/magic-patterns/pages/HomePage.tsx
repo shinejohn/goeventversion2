@@ -76,7 +76,7 @@ export const HomePage = ({ events = [], venues = [], performers = [] }: HomePage
     id: event.id,
     title: event.title,
     image: event.image || event.image_url || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    date: new Date(event.start_datetime).toLocaleDateString('en-US', {
+    date: new Date(event.start_date).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric'
     }),
