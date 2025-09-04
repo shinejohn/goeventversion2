@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { ArrowRightIcon, MusicIcon, CalendarIcon, MapPinIcon, StarIcon, SearchIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { LocationSelector } from '../components/ui/LocationSelector';
-export const PerformersPage = () => {
+interface PerformersPageProps {
+  performers?: any[];
+}
+
+export const PerformersPage = ({ performers = [] }: PerformersPageProps) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const handleSearch = (e: React.FormEvent) => {
@@ -30,62 +34,17 @@ export const PerformersPage = () => {
     path: '/performers/artists',
     count: 56
   }];
-  // Sample performers for the page with updated image URLs
-  const featuredPerformers = [{
-    id: 'performer-1',
-    name: 'The Sunset Vibes',
-    image: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    category: 'Band',
-    genre: 'Indie Rock',
-    average_rating: 4.8,
-    total_reviews: 42,
-    nextEvent: 'Aug 15 at Capitol Theatre'
-  }, {
-    id: 'performer-2',
-    name: 'DJ Coastal',
-    image: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    category: 'DJ',
-    genre: 'House / Electronic',
-    average_rating: 4.7,
-    total_reviews: 38,
-    nextEvent: 'Aug 20 at The District Lounge'
-  }, {
-    id: 'performer-3',
-    name: 'Sarah Johnson',
-    image: 'https://images.unsplash.com/photo-1549213783-8284d0336c4f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    category: 'Musician',
-    genre: 'Folk / Acoustic',
-    average_rating: 4.9,
-    total_reviews: 29,
-    nextEvent: 'Aug 22 at Clear Sky on Cleveland'
-  }, {
-    id: 'performer-4',
-    name: 'Comedy Crew',
-    image: 'https://images.unsplash.com/photo-1527224538127-2104bb71c51b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    category: 'Comedy',
-    genre: 'Stand-up / Improv',
-    average_rating: 4.6,
-    total_reviews: 24,
-    nextEvent: 'Aug 25 at Ruth Eckerd Hall'
-  }, {
-    id: 'performer-5',
-    name: 'The Beach Boys Tribute',
-    image: 'https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    category: 'Band',
-    genre: 'Tribute / Covers',
-    average_rating: 4.5,
-    total_reviews: 36,
-    nextEvent: 'Sep 2 at Coachman Park'
-  }, {
-    id: 'performer-6',
-    name: 'Street Art Collective',
-    image: 'https://images.unsplash.com/photo-1460480278897-2c8dce96d2f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    category: 'Artists',
-    genre: 'Visual Arts',
-    average_rating: 4.7,
-    total_reviews: 31,
-    nextEvent: 'Sep 5 at Downtown Arts District'
-  }];
+  // Use REAL performers data from props
+  const featuredPerformers = performers.slice(0, 6).map(performer => ({
+    id: performer.id,
+    name: performer.name || performer.stage_name,
+    image: performer.image || 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    category: performer.category || 'Performer',
+    genre: performer.genres?.[0] || 'Entertainment',
+    average_rating: performer.rating || 0,
+    total_reviews: performer.reviews || 0,
+    nextEvent: 'Check availability'
+  }));
   return <div className="min-h-screen bg-white">
       {/* Page Header with Search and Location */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-2">

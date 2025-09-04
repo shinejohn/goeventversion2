@@ -26,7 +26,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         venue:venues(name, address, city, state)
       `)
       .eq('status', 'published')
-      .gte('start_date', new Date().toISOString());
+      .gte('start_datetime', new Date().toISOString());
     
     // Apply filters
     if (search) {
@@ -42,16 +42,16 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     }
     
     if (dateFrom) {
-      query = query.gte('start_date', dateFrom);
+      query = query.gte('start_datetime', dateFrom);
     }
     
     if (dateTo) {
-      query = query.lte('end_date', dateTo);
+      query = query.lte('end_datetime', dateTo);
     }
     
     // Get events with pagination
     const { data: events, error, count } = await query
-      .order('start_date', { ascending: true })
+      .order('start_datetime', { ascending: true })
       .range(offset, offset + limit - 1);
     
     if (error) throw error;

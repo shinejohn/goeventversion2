@@ -14,9 +14,9 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         venue:venues(name, address)
       `)
       .eq('status', 'published')
-      .gte('start_date', new Date().toISOString())
+      .gte('start_datetime', new Date().toISOString())
       .limit(8)
-      .order('start_date');
+      .order('start_datetime');
     
     // Fetch featured venues
     const { data: venues } = await client
