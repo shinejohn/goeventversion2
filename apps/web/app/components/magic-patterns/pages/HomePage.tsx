@@ -80,7 +80,7 @@ export const HomePage = ({ events = [], venues = [], performers = [] }: HomePage
       month: 'short',
       day: 'numeric'
     }),
-    venue: event.location_name || event.venue || 'TBA',
+    venue: event.location_name || event.venue?.name || 'TBA',
     category: event.category || 'Event',
     price: event.price || (event.price_min ? `$${event.price_min}+` : 'Free')
   }));
@@ -142,7 +142,7 @@ export const HomePage = ({ events = [], venues = [], performers = [] }: HomePage
         id: event.id,
         title: event.title,
         image: event.image || event.image_url || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-        venue: event.location_name || event.venue || 'TBA',
+        venue: event.location_name || event.venue?.name || 'TBA',
         category: event.category || 'Event',
         price: event.price || (event.price_min ? `$${event.price_min}+` : 'Free'),
         time: new Date(event.start_datetime).toLocaleTimeString('en-US', {

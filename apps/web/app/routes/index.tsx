@@ -43,7 +43,6 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     const { data: performers, error: performersError } = await client
       .from('performers')
       .select('*')
-      .eq('available_for_booking', true)
       .eq('is_verified', true)
       .limit(6)
       .order('rating', { ascending: false });

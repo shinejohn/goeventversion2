@@ -1,116 +1,56 @@
-# Railway Environment Variables Guide
+# Railway Environment Variables
 
-This document lists all environment variables needed for the GoEventCity + Makerkit deployment on Railway.
+Add these environment variables to your Railway deployment:
 
-## Required Environment Variables
+## Required Core Variables
+```
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 
-### Core Application
-```bash
-# Application URL (set by Railway automatically)
-VITE_SITE_URL=https://your-app.up.railway.app
-
-# Node Environment
-NODE_ENV=production
-
-# CMS Configuration (fixes the "Unknown CMS type" error)
-VITE_CMS_CLIENT=keystatic
+VITE_SITE_URL=https://goeventversion2-production.up.railway.app
+VITE_PRODUCT_NAME=GoEventCity
+VITE_SITE_TITLE=GoEventCity - Discover Amazing Events in Your City
+VITE_SITE_DESCRIPTION=GoEventCity helps you discover the best events, venues, and entertainment in your city.
 ```
 
-### Supabase Configuration
-```bash
-# Supabase Project Reference (from your Supabase dashboard)
-SUPABASE_PROJECT_REF=your-project-ref
-
-# Supabase URL
-VITE_SUPABASE_URL=https://your-project.supabase.co
-
-# Supabase Anon Key (public key)
-VITE_SUPABASE_ANON_KEY=your-anon-key
-
-# Supabase Service Role Key (private key - keep secure!)
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-
-# Supabase Database URL (if using direct database connections)
-SUPABASE_DB_URL=postgresql://postgres.your-project:password@db.your-project.supabase.co:5432/postgres
+## Feature Flags (All Required)
 ```
-
-### Authentication Configuration
-```bash
-# Auth Redirect URL
-VITE_AUTH_REDIRECT_URL=/auth/callback
-```
-
-### Billing Configuration (Optional - if using billing features)
-```bash
-# Stripe Configuration
-VITE_BILLING_PROVIDER=stripe
-STRIPE_PUBLISHABLE_KEY=pk_test_...
-STRIPE_SECRET_KEY=sk_test_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-```
-
-### Email Configuration (Optional)
-```bash
-# Resend API Key (if using Resend for emails)
-RESEND_API_KEY=re_...
-```
-
-### Feature Flags
-```bash
-# Enable/Disable Features
 VITE_ENABLE_THEME_TOGGLE=true
 VITE_ENABLE_PERSONAL_ACCOUNT_DELETION=false
+VITE_ENABLE_PERSONAL_ACCOUNT_BILLING=false
+VITE_ENABLE_TEAM_ACCOUNTS_DELETION=false
+VITE_ENABLE_TEAM_ACCOUNTS_BILLING=false
 VITE_ENABLE_TEAM_ACCOUNTS=true
 VITE_ENABLE_TEAM_ACCOUNTS_CREATION=true
-VITE_ENABLE_TEAM_ACCOUNTS_DELETION=false
-VITE_ENABLE_PERSONAL_ACCOUNT_BILLING=false
-VITE_ENABLE_TEAM_ACCOUNTS_BILLING=false
+VITE_LANGUAGE_PRIORITY=application
 VITE_ENABLE_NOTIFICATIONS=true
 VITE_REALTIME_NOTIFICATIONS=false
 VITE_ENABLE_VERSION_UPDATER=false
-VITE_LANGUAGE_PRIORITY=application
 ```
 
-### Optional Services
-```bash
-# Turnstile (Cloudflare CAPTCHA)
-VITE_TURNSTILE_SITE_KEY=your-site-key
+## Other Required Variables
+```
+VITE_DEFAULT_THEME_MODE=light
+VITE_AUTH_PASSWORD=true
+VITE_AUTH_MAGIC_LINK=false
+VITE_BILLING_PROVIDER=stripe
+VITE_CMS_CLIENT=keystatic
+VITE_KEYSTATIC_CONTENT_PATH=./content
+VITE_LOCALES_PATH=apps/web/public/locales
 
-# PostHog Analytics
-VITE_POSTHOG_API_KEY=your-api-key
-VITE_POSTHOG_API_HOST=https://app.posthog.com
-
-# Sentry Error Tracking
-VITE_SENTRY_DSN=your-sentry-dsn
+EMAIL_SENDER=noreply@yourdomain.com
+CONTACT_EMAIL=contact@yourdomain.com
+MAILER_PROVIDER=nodemailer
 ```
 
-## Setting Environment Variables in Railway
+## Optional (if using Stripe)
+```
+VITE_STRIPE_PUBLISHABLE_KEY=
+STRIPE_WEBHOOK_SECRET=
+STRIPE_SECRET_KEY=
+```
 
-1. Go to your Railway project dashboard
-2. Click on your service (web)
-3. Navigate to the "Variables" tab
-4. Click "Add Variable" and add each variable listed above
-
-### Important Notes:
-
-1. **VITE_ prefix**: Variables with `VITE_` prefix are exposed to the client-side build
-2. **Sensitive Keys**: Never expose service role keys or secret keys to the client
-3. **CMS Configuration**: The `VITE_CMS_CLIENT=keystatic` is required to fix the "Unknown CMS type" error
-4. **Railway Auto Variables**: Railway automatically sets `PORT` and generates the service URL
-
-## Minimal Required Set
-
-For a basic deployment, you need at minimum:
-- `VITE_CMS_CLIENT=keystatic`
-- `VITE_SUPABASE_URL`
-- `VITE_SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
-- All the feature flag variables (or they'll default to the values in feature-flags.config.ts)
-
-## Verification
-
-After setting the environment variables:
-1. Trigger a new deployment in Railway
-2. Check the build logs for any missing variable errors
-3. Visit `/healthcheck` endpoint to verify the app is running
-4. Check `/blog.data` and `/docs.data` endpoints - they should not return 500 errors
+## Note
+The missing environment variables are what's causing the 404 error. The app fails to initialize properly without them.
+EOF < /dev/null
