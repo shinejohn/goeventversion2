@@ -30,10 +30,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     const { data: venues, error: venuesError } = await client
       .from('venues')
       .select('*')
-      .eq('is_active', true)
-      .eq('verified', true)
       .limit(6)
-      .order('rating', { ascending: false });
+      .order('rating', { ascending: false, nullsFirst: false });
     
     if (venuesError) {
       console.error('Venues fetch error:', venuesError);
@@ -43,9 +41,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     const { data: performers, error: performersError } = await client
       .from('performers')
       .select('*')
-      .eq('is_verified', true)
       .limit(6)
-      .order('rating', { ascending: false });
+      .order('rating', { ascending: false, nullsFirst: false });
     
     if (performersError) {
       console.error('Performers fetch error:', performersError);
