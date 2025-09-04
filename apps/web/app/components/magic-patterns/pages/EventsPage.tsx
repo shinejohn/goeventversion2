@@ -87,8 +87,58 @@ export const EventsPage = ({ events }: EventsPageProps) => {
     venue: 'Downtown Arts District',
     category: 'Arts'
   }];
-  // Use props for community events, fallback to mock data
-  const communityEvents = events || [{
+  // Transform real events to match UI expectations
+  const transformedEvents = events && events.length > 0 
+    ? events.map(event => {
+        // Transform database event to match UI format
+        const eventDate = new Date(event.start_date);
+        const endDate = new Date(event.end_date);
+        
+        // Format date for display
+        const formatDate = (date: Date) => {
+          const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
+          return date.toLocaleDateString('en-US', options);
+        };
+        
+        // Format time
+        const formatTime = (start: Date, end: Date) => {
+          const timeOptions: Intl.DateTimeFormatOptions = {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+          };
+          const startTime = start.toLocaleTimeString('en-US', timeOptions);
+          const endTime = end.toLocaleTimeString('en-US', timeOptions);
+          return `${startTime} - ${endTime}`;
+        };
+        
+        // Determine price display
+        let price = 'Free';
+        if (event.base_price) {
+          if (event.base_price === 0) {
+            price = 'Free';
+          } else {
+            price = `$${event.base_price}`;
+          }
+        }
+        
+        return {
+          id: event.id,
+          title: event.title,
+          image: event.image_url || 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+          date: formatDate(eventDate),
+          rawDate: eventDate,
+          venue: event.venue?.name || event.location_name || 'TBD',
+          category: event.category || 'Event',
+          price: price,
+          time: formatTime(eventDate, endDate),
+          description: event.description || ''
+        };
+      })
+    : null;
+
+  // Use transformed real events or fallback to sample data for demo
+  const communityEvents = transformedEvents || [{
     id: 'event-5',
     title: 'Craft Beer Festival',
     image: 'https://images.unsplash.com/photo-1535958636474-b021ee887b13?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',

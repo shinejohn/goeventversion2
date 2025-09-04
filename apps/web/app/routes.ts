@@ -143,8 +143,11 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('venues', 'routes/venues/index.tsx'),
   route('venues/:id', 'routes/venues/$id.tsx'),
   
-  route('*', 'routes/$.tsx'), // Catch-all 404 route
+  // Remove the wildcard route from inside the layout
 ]);
+
+// Add catch-all route at root level
+const catchAllRoute = route('*', 'routes/$.tsx'); // Catch-all 404 route
 
 // Makerkit marketing routes with layout
 const marketingLayout = layout('routes/marketing/layout.tsx', [
@@ -204,4 +207,5 @@ export default [
   authLayout,
   userAccountLayout,
   teamAccountLayout,
+  catchAllRoute, // Place catch-all route at the end
 ] satisfies RouteConfig;
