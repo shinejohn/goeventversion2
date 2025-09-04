@@ -8,6 +8,16 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const eventId = params.id;
   
   try {
+    console.log('Loading event with ID:', eventId);
+    
+    // First, let's check if there are any events at all
+    const { data: allEvents, error: countError } = await client
+      .from('events')
+      .select('id, title')
+      .limit(5);
+      
+    console.log('Available events in database:', allEvents);
+    
     // Load event with venue data
     const { data: event, error } = await client
       .from('events')
@@ -18,8 +28,15 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .eq('id', eventId)
       .single();
       
+    console.log('Event query result:', { event, error });
+      
     if (error || !event) {
-      throw new Response('Event not found', { status: 404 });
+      console.error('Event not found:', error);
+      // If no events exist, return a helpful message
+      if (allEvents && allEvents.length === 0) {
+        throw new Response('No events in database. Please add events first.', { status: 404 });
+      }
+      throw new Response(`Event not found. Available events: ${allEvents?.map(e => e.id).join(', ')}`, { status: 404 });
     }
     
     // Load related events

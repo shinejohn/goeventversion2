@@ -18,6 +18,16 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   const offset = (page - 1) * limit;
   
   try {
+    console.log('Loading events list with params:', { search, category, location, dateFrom, dateTo, page });
+    
+    // First check if there are any events at all
+    const { data: allEvents, error: countError } = await client
+      .from('events')
+      .select('id, title, status')
+      .limit(5);
+    
+    console.log('All events in database:', allEvents);
+    
     // Build dynamic query
     let query = client
       .from('events')
