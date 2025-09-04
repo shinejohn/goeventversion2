@@ -135,40 +135,8 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
     ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
     return listedDate > ninetyDaysAgo;
   }).slice(0, 4);
-  // Mock upcoming events at venues
-  const upcomingEvents = [{
-    id: 'event-1',
-    name: 'Summer Jazz Festival',
-    venue: venuesData[0],
-    date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
-    image: 'https://images.unsplash.com/photo-1514525421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    ticketPrice: '$25-45',
-    ticketStatus: 'Available'
-  }, {
-    id: 'event-2',
-    name: 'Local Craft Beer Tasting',
-    venue: venuesData[1] || null,
-    date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
-    image: 'https://images.unsplash.com/photo-1575444758702-4a6b9222336e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    ticketPrice: '$35',
-    ticketStatus: 'Selling Fast'
-  }, {
-    id: 'event-3',
-    name: 'Comedy Night Showcase',
-    venue: venuesData[2] || null,
-    date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-    image: 'https://images.unsplash.com/photo-1527224538127-2104bb71c51b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    ticketPrice: '$20',
-    ticketStatus: 'Limited'
-  }, {
-    id: 'event-4',
-    name: 'Art Exhibition Opening',
-    venue: venuesData[3] || null,
-    date: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
-    image: 'https://images.unsplash.com/photo-1531058020387-3be344556be6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    ticketPrice: 'Free',
-    ticketStatus: 'RSVP Required'
-  }];
+  // TODO: Load real upcoming events from database
+  const upcomingEvents = [];
   // Handle filter changes
   const handleFilterChange = (newFilters: Partial<typeof filters>) => {
     setFilters({
