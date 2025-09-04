@@ -1,9 +1,37 @@
 import React, { memo, Component } from 'react';
 import { ArrowRightIcon, ShoppingBagIcon, SearchIcon, TagIcon, TruckIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
-export const GearPage = () => {
+
+// Types for props
+interface ShopCategory {
+  title: string;
+  description: string;
+  path: string;
+  image: string;
+}
+
+interface FeaturedProduct {
+  id: string;
+  name: string;
+  image: string;
+  price: string;
+  category: string;
+  event?: string;
+  artist?: string;
+  era?: string;
+  includes?: string;
+  featured?: string;
+}
+
+interface GearPageProps {
+  shopCategories?: ShopCategory[];
+  featuredProducts?: FeaturedProduct[];
+}
+
+export const GearPage = ({ shopCategories: propCategories, featuredProducts: propProducts }: GearPageProps) => {
   const navigate = useNavigate();
-  const shopCategories = [{
+  // Use props if provided, otherwise fallback to mock data
+  const shopCategories = propCategories || [{
     title: 'Event Merch',
     description: 'Official merchandise from your favorite local events',
     path: '/shop/merch',
@@ -29,8 +57,8 @@ export const GearPage = () => {
     path: '/shop/gifts',
     image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
   }];
-  // Sample featured products
-  const featuredProducts = [{
+  // Use props if provided, otherwise fallback to mock data
+  const featuredProducts = propProducts || [{
     id: 'product-1',
     name: 'Clearwater Jazz Holiday 2024 T-Shirt',
     image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',

@@ -3,10 +3,56 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/tickets/+types';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
-  // Future: Add data fetching logic here
-  return {
-    title: 'Tickets - GoEventCity',
-  };
+  const client = getSupabaseServerClient(request);
+  
+  try {
+    console.log('Loading events for ticket sales...');
+    
+    // Fetch upcoming events with ticket availability
+    const { data: events, error } = await client
+      .from('events')
+      .select(`
+        *,
+        venue:venues(name, address, city, state)
+      `)
+      .eq('status', 'published')
+      .gte('start_date', new Date().toISOString())
+      .order('start_date', { ascending: true })
+      .limit(24);
+    
+    if (error) {
+      console.error('Events fetch error for tickets:', error);
+    }
+    
+    // If no published events, try any events for debugging
+    let finalEvents = events;
+    if (!events || events.length === 0) {
+      console.log('No published events for tickets, trying any events...');
+      const anyResult = await client
+        .from('events')
+        .select(`
+          *,
+          venue:venues(name, address, city, state)
+        `)
+        .order('created_at', { ascending: false })
+        .limit(24);
+      
+      finalEvents = anyResult.data;
+    }
+    
+    console.log('Ticket events data loaded:', { eventsCount: finalEvents?.length || 0 });
+    
+    return {
+      title: 'Tickets - GoEventCity',
+      events: finalEvents || []
+    };
+  } catch (error) {
+    console.error('Tickets loader error:', error);
+    return {
+      title: 'Tickets - GoEventCity',
+      events: []
+    };
+  }
 };
 
 export const meta = ({ data }: Route.MetaArgs) => {
@@ -25,5 +71,9 @@ export const meta = ({ data }: Route.MetaArgs) => {
 export default function TicketsRoute(props: Route.ComponentProps) {
   const data = props.loaderData;
   
-  return <TicketsPage />;
+  console.log('TicketsRoute rendering with data:', {
+    eventsCount: data.events?.length || 0
+  });
+  
+  return <TicketsPage events={data.events} />;
 }

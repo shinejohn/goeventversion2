@@ -3,10 +3,38 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/book-it/venues/+types';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
-  // Future: Add data fetching logic here
-  return {
-    title: 'VenueMarketplace - GoEventCity',
-  };
+  const client = getSupabaseServerClient(request);
+  
+  try {
+    console.log('Loading venues for booking marketplace...');
+    
+    // Fetch available venues for booking
+    const { data: venues, error } = await client
+      .from('venues')
+      .select(`
+        *
+      `)
+      .eq('status', 'active')
+      .order('rating', { ascending: false, nullsFirst: false })
+      .limit(20);
+    
+    if (error) {
+      console.error('Venues fetch error:', error);
+    }
+    
+    console.log('Venue marketplace data loaded:', { venuesCount: venues?.length || 0 });
+    
+    return {
+      title: 'VenueMarketplace - GoEventCity',
+      venues: venues || []
+    };
+  } catch (error) {
+    console.error('Venue marketplace loader error:', error);
+    return {
+      title: 'VenueMarketplace - GoEventCity',
+      venues: []
+    };
+  }
 };
 
 export const meta = ({ data }: Route.MetaArgs) => {
@@ -25,5 +53,9 @@ export const meta = ({ data }: Route.MetaArgs) => {
 export default function VenueMarketplaceRoute(props: Route.ComponentProps) {
   const data = props.loaderData;
   
-  return <VenueMarketplacePage />;
+  console.log('VenueMarketplaceRoute rendering with data:', {
+    venuesCount: data.venues?.length || 0
+  });
+  
+  return <VenueMarketplacePage venues={data.venues} />;
 }
