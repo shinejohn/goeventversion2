@@ -10,17 +10,39 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   console.log('NODE_ENV:', process.env.NODE_ENV);
   
   try {
-    // Fetch featured events
-    const { data: events, error: eventsError } = await client
+    // Fetch featured events - be more permissive
+    console.log('Fetching events from homepage...');
+    
+    // First try published events with start_date column  
+    let { data: events, error: eventsError } = await client
       .from('events')
       .select(`
         *,
         venue:venues(name, address)
       `)
       .eq('status', 'published')
-      .gte('start_datetime', new Date().toISOString())
+      .gte('start_date', new Date().toISOString())
       .limit(8)
-      .order('start_datetime');
+      .order('start_date');
+    
+    console.log('Published events result:', { events, eventsError });
+    
+    // If no results, try ANY events for debugging
+    if (eventsError || !events || events.length === 0) {
+      console.log('No published events, trying ANY events...');
+      const anyResult = await client
+        .from('events')
+        .select(`
+          *,
+          venue:venues(name, address)
+        `)
+        .limit(8)
+        .order('created_at', { ascending: false });
+      
+      console.log('Any events result:', anyResult);
+      events = anyResult.data;
+      eventsError = anyResult.error;
+    }
     
     if (eventsError) {
       console.error('Events fetch error:', eventsError);

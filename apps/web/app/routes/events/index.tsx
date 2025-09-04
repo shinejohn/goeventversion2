@@ -28,42 +28,43 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     
     console.log('All events in database:', allEvents);
     
-    // Build dynamic query
+    // Build dynamic query - be more permissive for now
     let query = client
       .from('events')
       .select(`
         *,
         venue:venues(name, address, city, state)
-      `)
-      .eq('status', 'published')
-      .gte('start_date', new Date().toISOString());
+      `);
     
-    // Apply filters
-    if (search) {
-      query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
-    }
+    // Try with published status first, then any status if no results
+    const publishedQuery = query.eq('status', 'published').gte('start_date', new Date().toISOString());
     
-    if (category) {
-      query = query.eq('category', category);
-    }
-    
-    if (location) {
-      // Filter by venue location
-      query = query.or(`venue.city.ilike.%${location}%,venue.state.ilike.%${location}%`);
-    }
-    
-    if (dateFrom) {
-      query = query.gte('start_date', dateFrom);
-    }
-    
-    if (dateTo) {
-      query = query.lte('end_date', dateTo);
-    }
-    
-    // Get events with pagination and count
-    const { data: events, error, count } = await query
+    console.log('Trying published query first...');
+    let { data: events, error, count } = await publishedQuery
       .order('start_date', { ascending: true })
       .range(offset, offset + limit - 1);
+      
+    console.log('Published events result:', { events, error, count });
+    
+    // If no published events, try ANY events for debugging
+    if (!events || events.length === 0) {
+      console.log('No published events found, trying ANY events...');
+      const anyQuery = client
+        .from('events')
+        .select(`
+          *,
+          venue:venues(name, address, city, state)
+        `);
+      
+      const anyResult = await anyQuery
+        .order('created_at', { ascending: false })
+        .range(offset, offset + limit - 1);
+        
+      console.log('Any events result:', anyResult);
+      events = anyResult.data;
+      error = anyResult.error;
+      count = anyResult.count;
+    }
     
     if (error) throw error;
     
