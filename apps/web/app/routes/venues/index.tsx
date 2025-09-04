@@ -1,6 +1,7 @@
 // apps/web/app/routes/venues/index.tsx
 import { VenuesPage } from '~/components/magic-patterns/pages/VenuesPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import type { Route } from '~/types/app/routes/venues/index/+types';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
@@ -14,13 +15,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   try {
     let query = client
       .from('venues')
-      .select(`
-        *,
-        _count:events!venue_id(count),
-        upcoming_events:events!venue_id(
-          id, title, start_date
-        )
-      `)
+      .select('*')
       .eq('is_active', true);
     
     if (search) {

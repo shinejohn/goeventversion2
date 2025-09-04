@@ -5,7 +5,6 @@ import { FilterSidebar } from '../components/venue-marketplace/FilterSidebar';
 import { VenueCard } from '../components/venue-marketplace/VenueCard';
 import { VenueListItem } from '../components/venue-marketplace/VenueListItem';
 import { VenueMap } from '../components/venue-marketplace/VenueMap';
-import { mockVenues } from '../mockdata/venues';
 
 type ViewMode = 'grid' | 'list' | 'map';
 type SortOption = 'recommended' | 'popular' | 'newest' | 'price_low' | 'price_high' | 'distance' | 'rating' | 'capacity';
