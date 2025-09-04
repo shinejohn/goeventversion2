@@ -8,15 +8,22 @@ import { useNavigate } from 'react-router';
 import { mockVenues } from '../../mockdata/venues';
 type ViewMode = 'grid' | 'list' | 'map';
 type SortOption = 'recommended' | 'price_low' | 'price_high' | 'distance' | 'capacity' | 'rating' | 'newest';
-export const VenueMarketplacePage = () => {
+
+interface VenueMarketplacePageProps {
+  venues?: any[];
+}
+
+export const VenueMarketplacePage = ({ venues: propVenues }: VenueMarketplacePageProps) => {
   const navigate = useNavigate();
   // State for filters, sorting, and view mode
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [sortOption, setSortOption] = useState<SortOption>('recommended');
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(true);
-  const [venues, setVenues] = useState(mockVenues);
-  const [filteredVenues, setFilteredVenues] = useState(mockVenues);
+  // Use props if available, fallback to mock data
+  const initialVenues = propVenues && propVenues.length > 0 ? propVenues : mockVenues;
+  const [venues, setVenues] = useState(initialVenues);
+  const [filteredVenues, setFilteredVenues] = useState(initialVenues);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [filters, setFilters] = useState({
@@ -38,7 +45,7 @@ export const VenueMarketplacePage = () => {
     setIsLoading(true);
     // Simulate API call delay
     const timer = setTimeout(() => {
-      let results = [...mockVenues];
+      let results = [...initialVenues];
       // Apply search filter if exists
       if (searchQuery) {
         const query = searchQuery.toLowerCase();

@@ -1,7 +1,11 @@
 import React, { Children } from 'react';
 import { useNavigate } from 'react-router';
 import { Music, MapPin, Calendar, DollarSign, Users, Search, Filter, ChevronDown, Star, Clock, MessageSquare, Briefcase, CheckCircle, ArrowRight, FileText, Bell } from 'lucide-react';
-export const GigMarketplacePage = () => {
+interface GigMarketplacePageProps {
+  performers?: any[];
+}
+
+export const GigMarketplacePage = ({ performers: propPerformers }: GigMarketplacePageProps) => {
   const navigate = useNavigate();
   // Sample gig listings
   const featuredGigs = [{

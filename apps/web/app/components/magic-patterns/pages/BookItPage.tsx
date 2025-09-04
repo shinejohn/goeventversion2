@@ -1,7 +1,13 @@
 import React from 'react';
 import { ArrowRightIcon, CalendarIcon, MapPinIcon, MusicIcon, BuildingIcon, CheckCircleIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
-export const BookItPage = () => {
+interface BookItPageProps {
+  venues?: any[];
+  events?: any[];
+  performers?: any[];
+}
+
+export const BookItPage = ({ venues, events, performers }: BookItPageProps) => {
   const navigate = useNavigate();
   const bookingCategories = [{
     title: 'Book a Venue',
@@ -231,6 +237,152 @@ export const BookItPage = () => {
           </div>
         </div>
       </div>
+      
+      {/* Featured Content Sections - Show real data if available */}
+      {venues && venues.length > 0 && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900">Featured Venues</h2>
+            <button 
+              className="text-purple-600 hover:text-purple-800 flex items-center font-medium"
+              onClick={() => handleNavigation('/book-it/venues')}
+            >
+              View all venues
+              <ArrowRightIcon className="ml-1 h-4 w-4" />
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {venues.slice(0, 6).map((venue) => (
+              <div 
+                key={venue.id} 
+                className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
+                onClick={() => handleNavigation(`/book-it/venues/${venue.id}`)}
+              >
+                <div className="h-48 bg-gray-200">
+                  <img 
+                    src={venue.image_url || 'https://images.unsplash.com/photo-1519167758481-83f29c8171c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'} 
+                    alt={venue.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-bold text-lg text-gray-900 mb-2">{venue.name}</h3>
+                  <div className="flex items-center text-sm text-gray-600 mb-2">
+                    <MapPinIcon className="h-4 w-4 mr-1" />
+                    {venue.address || 'Location TBD'}
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-500">Capacity: {venue.capacity || 'TBD'}</span>
+                    {venue.rating && (
+                      <div className="flex items-center">
+                        <span className="text-sm text-gray-600">{venue.rating}</span>
+                        <span className="text-yellow-400 ml-1">★</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {events && events.length > 0 && (
+        <div className="bg-gray-50 py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-900">Upcoming Events</h2>
+              <button 
+                className="text-purple-600 hover:text-purple-800 flex items-center font-medium"
+                onClick={() => handleNavigation('/events')}
+              >
+                View all events
+                <ArrowRightIcon className="ml-1 h-4 w-4" />
+              </button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {events.slice(0, 6).map((event) => {
+                const eventDate = new Date(event.start_date);
+                return (
+                  <div 
+                    key={event.id} 
+                    className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
+                    onClick={() => handleNavigation(`/events/${event.id}`)}
+                  >
+                    <div className="h-48 bg-gray-200">
+                      <img 
+                        src={event.image_url || 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'} 
+                        alt={event.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-bold text-lg text-gray-900 mb-2">{event.title}</h3>
+                      <div className="flex items-center text-sm text-gray-600 mb-2">
+                        <CalendarIcon className="h-4 w-4 mr-1" />
+                        {eventDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <MapPinIcon className="h-4 w-4 mr-1" />
+                        {event.venue?.name || event.location_name || 'TBD'}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {performers && performers.length > 0 && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900">Featured Performers</h2>
+            <button 
+              className="text-purple-600 hover:text-purple-800 flex items-center font-medium"
+              onClick={() => handleNavigation('/book-it/gigs')}
+            >
+              View all performers
+              <ArrowRightIcon className="ml-1 h-4 w-4" />
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {performers.slice(0, 6).map((performer) => (
+              <div 
+                key={performer.id} 
+                className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
+                onClick={() => handleNavigation(`/performers/${performer.id}`)}
+              >
+                <div className="h-48 bg-gray-200">
+                  <img 
+                    src={performer.image_url || 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'} 
+                    alt={performer.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-bold text-lg text-gray-900 mb-2">{performer.name}</h3>
+                  <div className="flex items-center text-sm text-gray-600 mb-2">
+                    <MusicIcon className="h-4 w-4 mr-1" />
+                    {performer.genre || performer.category || 'Performer'}
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-500">{performer.location || 'Available'}</span>
+                    {performer.rating && (
+                      <div className="flex items-center">
+                        <span className="text-sm text-gray-600">{performer.rating}</span>
+                        <span className="text-yellow-400 ml-1">★</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      
       {/* CTA Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
         <h2 className="text-3xl font-bold text-gray-900 mb-4">

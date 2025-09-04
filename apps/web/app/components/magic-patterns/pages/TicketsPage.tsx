@@ -1,7 +1,12 @@
 import React, { useState, createElement } from 'react';
-import { ArrowRightIcon, TicketIcon, CalendarIcon, MapPinIcon, ClockIcon } from 'lucide-react';
+import { ArrowRightIcon, TicketIcon, CalendarIcon, MapPinIcon, ClockIcon, ShareIcon, CheckIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
-export const TicketsPage = () => {
+import { SharePopup } from '../components/ui/SharePopup';
+interface TicketsPageProps {
+  events?: any[];
+}
+
+export const TicketsPage = ({ events: propEvents }: TicketsPageProps) => {
   const navigate = useNavigate();
   const ticketCategories = [{
     title: 'Buy Tickets',
@@ -29,8 +34,61 @@ export const TicketsPage = () => {
     path: '/tickets/groups',
     icon: '👥'
   }];
-  // Sample upcoming events with tickets
-  const upcomingEvents = [{
+  // Transform real events to match UI expectations, fallback to sample data
+  const transformedEvents = propEvents && propEvents.length > 0 
+    ? propEvents.map(event => {
+        // Transform database event to match UI format
+        const eventDate = new Date(event.start_date);
+        const endDate = new Date(event.end_date);
+        
+        // Format date for display
+        const formatDate = (date: Date) => {
+          const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+          const dateStr = date.toLocaleDateString('en-US', options);
+          
+          // Check if event spans multiple days
+          if (endDate.toDateString() !== eventDate.toDateString()) {
+            const endStr = endDate.toLocaleDateString('en-US', options);
+            return `${dateStr} - ${endStr}`;
+          }
+          return dateStr;
+        };
+        
+        // Format time
+        const formatTime = (start: Date) => {
+          const timeOptions: Intl.DateTimeFormatOptions = {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+          };
+          return start.toLocaleTimeString('en-US', timeOptions);
+        };
+        
+        // Determine price display
+        let price = 'Free';
+        if (event.base_price) {
+          if (event.base_price === 0) {
+            price = 'Free';
+          } else {
+            price = `$${event.base_price}`;
+          }
+        }
+        
+        return {
+          id: event.id,
+          title: event.title,
+          image: event.image_url || 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+          date: formatDate(eventDate),
+          time: formatTime(eventDate),
+          venue: event.venue?.name || event.location_name || 'TBD',
+          price: price,
+          status: event.status === 'published' ? 'On Sale' : 'Coming Soon'
+        };
+      })
+    : null;
+
+  // Sample upcoming events with tickets (fallback)
+  const upcomingEvents = transformedEvents || [{
     id: 'event-1',
     title: 'Clearwater Jazz Holiday',
     image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
