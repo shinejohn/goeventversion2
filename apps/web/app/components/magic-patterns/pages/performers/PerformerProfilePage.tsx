@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { mockPerformers } from '../../mockdata/performers';
 import { HeartIcon, ShareIcon, BellIcon, MoreHorizontalIcon, CalendarIcon, ClockIcon, MapPinIcon, MusicIcon, UsersIcon, StarIcon, CheckCircleIcon, MessageCircleIcon, PlayIcon, ShoppingBagIcon, MessageSquareIcon, InfoIcon, ChevronRightIcon, ExternalLinkIcon, ThumbsUpIcon, ThumbsDownIcon, FlagIcon, DownloadIcon, InstagramIcon, TwitterIcon, FacebookIcon, YoutubeIcon, LinkIcon, TicketIcon, ArrowRightIcon, CameraIcon, VideoIcon, MicIcon, FileTextIcon, DollarSignIcon, PlusIcon, MinusIcon, ShoppingCartIcon, HeartIcon as HeartOutlineIcon, AlertCircleIcon } from 'lucide-react';
-type PerformerProfilePageProps = {
-  performerId?: string;
-};
+
+interface PerformerProfilePageProps {
+  performer: any;
+  upcomingEvents?: any[];
+}
 // Enum for the different tabs
 enum ProfileTab {
   Overview = 'overview',
@@ -17,7 +18,8 @@ enum ProfileTab {
   About = 'about',
 }
 export const PerformerProfilePage = ({
-  performerId = 'performer-1'
+  performer,
+  upcomingEvents = []
 }: PerformerProfilePageProps) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<ProfileTab>(ProfileTab.Overview);
@@ -30,8 +32,7 @@ export const PerformerProfilePage = ({
   const [activeReviewFilter, setActiveReviewFilter] = useState('recent');
   const [activeMerchCategory, setActiveMerchCategory] = useState('all');
   const [activeFanZoneTab, setActiveFanZoneTab] = useState('discussions');
-  // Find the performer from mock data
-  const performer = mockPerformers.find(p => p.id === performerId);
+  
   // If performer not found, show error state
   if (!performer) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center">

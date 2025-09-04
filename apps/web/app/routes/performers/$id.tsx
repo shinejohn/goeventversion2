@@ -1,5 +1,5 @@
 import type { Route } from '~/types/app/routes/performers/$id/+types';
-import { PerformerProfilePage } from '~/components/magic-patterns/pages/performers/PerformerProfilePage';
+import { PerformerProfilePage } from '~/components/magic-patterns/pages/performers/PerformerProfilePageSimple';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
