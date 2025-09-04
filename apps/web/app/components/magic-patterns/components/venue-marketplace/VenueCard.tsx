@@ -84,9 +84,9 @@ export const VenueCard = ({
         </div>
         <div className="mt-1 flex items-center text-sm">
           <StarIcon className="h-4 w-4 text-yellow-400 fill-current mr-1" />
-          <span className="font-medium">{venue.rating}</span>
+          <span className="font-medium">{venue.average_rating}</span>
           <span className="text-gray-600 ml-1">
-            ({venue.review_count} reviews)
+            ({venue.total_reviews} reviews)
           </span>
         </div>
         {/* Amenities */}
