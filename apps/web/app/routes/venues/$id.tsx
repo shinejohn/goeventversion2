@@ -18,18 +18,47 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       throw new Response('Venue not found', { status: 404 });
     }
     
+    // Transform the database venue to match UI expectations
+    const transformedVenue = {
+      ...venue,
+      // UI expects 'images' as an array
+      images: venue.gallery_images && venue.gallery_images.length > 0 
+        ? venue.gallery_images 
+        : [venue.image_url || 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'],
+      // UI expects 'location' as an object
+      location: {
+        address: venue.address,
+        coordinates: {
+          lat: venue.latitude || 0,
+          lng: venue.longitude || 0
+        }
+      },
+      // UI expects camelCase
+      venueType: venue.venue_type,
+      capacity: venue.max_capacity,
+      verified: venue.is_verified,
+      // UI expects amenities as an array
+      amenities: venue.amenities 
+        ? Object.keys(venue.amenities).filter(key => venue.amenities[key])
+        : ['Sound System', 'Lighting', 'Parking', 'Wi-Fi', 'Air Conditioning'],
+      // UI expects these fields - set defaults for now
+      rating: 4.5,
+      reviewCount: 0,
+      priceRange: 2
+    };
+    
     // Load upcoming events at this venue
     const { data: events } = await client
       .from('events')
-      .select('id, title, start_datetime, image, image_url, category')
+      .select('id, title, start_date, image_url, category')
       .eq('venue_id', venueId)
       .eq('status', 'published')
-      .gte('start_datetime', new Date().toISOString())
-      .order('start_datetime')
+      .gte('start_date', new Date().toISOString())
+      .order('start_date')
       .limit(6);
     
     return { 
-      venue,
+      venue: transformedVenue,
       upcomingEvents: events || []
     };
     
