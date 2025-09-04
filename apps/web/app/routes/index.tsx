@@ -89,6 +89,12 @@ export const meta = ({ data }: Route.MetaArgs) => {
 };
 
 export default function HomeRoute({ loaderData }: Route.ComponentProps) {
+  console.log('HomeRoute component rendering with data:', {
+    eventsCount: loaderData?.events?.length || 0,
+    venuesCount: loaderData?.venues?.length || 0,
+    performersCount: loaderData?.performers?.length || 0
+  });
+  
   return <HomePage 
     events={loaderData.events} 
     venues={loaderData.venues}
