@@ -56,8 +56,9 @@ export const EventsPage = ({ events }: EventsPageProps) => {
     color: 'bg-red-100 text-red-800',
     activeColor: 'bg-red-600 text-white'
   }];
-  // Featured events (reduced to 4 for 2x2 grid)
-  const featuredEvents = [{
+  
+  // Use props if provided, otherwise fallback to mock data
+  const featuredEvents = events?.slice(0, 4) || [{
     id: 'event-1',
     title: 'Clearwater Jazz Holiday',
     image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
@@ -86,8 +87,8 @@ export const EventsPage = ({ events }: EventsPageProps) => {
     venue: 'Downtown Arts District',
     category: 'Arts'
   }];
-  // Community events with dates for grouping by day
-  const communityEvents = [{
+  // Use props for community events, fallback to mock data
+  const communityEvents = events || [{
     id: 'event-5',
     title: 'Craft Beer Festival',
     image: 'https://images.unsplash.com/photo-1535958636474-b021ee887b13?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',

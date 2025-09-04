@@ -26,13 +26,13 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const { data: relatedEvents } = await client
       .from('events')
       .select(`
-        id, title, start_datetime, image, image_url,
+        id, title, start_date, image_url,
         venue:venues(name, address)
       `)
       .eq('category', event.category)
       .neq('id', eventId)
       .eq('status', 'published')
-      .gte('start_datetime', new Date().toISOString())
+      .gte('start_date', new Date().toISOString())
       .limit(3);
     
     return {

@@ -42,7 +42,32 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     
     console.log('Loaded venues from Railway:', venues?.length || 0, 'venues');
     
-    return { venues: venues || [] };
+    // Transform venues data to match VenueData interface
+    const transformedVenues = (venues || []).map(venue => ({
+      id: venue.id,
+      name: venue.name,
+      description: venue.description,
+      address: venue.address,
+      capacity: venue.capacity,
+      images: venue.images || [],
+      amenities: venue.amenities || [],
+      average_rating: venue.rating || null,
+      total_reviews: venue.reviews || null,
+      slug: venue.slug,
+      community_id: venue.community_id,
+      account_id: venue.account_id,
+      venue_type: venue.venueType || 'Other',
+      price_per_hour: venue.pricePerHour || null,
+      distance: venue.distance || null,
+      listed_date: venue.listedDate || venue.created_at,
+      last_booked_days_ago: venue.lastBookedDaysAgo || null,
+      unavailable_dates: venue.unavailableDates || [],
+      image_url: venue.image_url || (venue.images && venue.images[0]) || null,
+      city: venue.city || '',
+      verified: venue.is_verified || false
+    }));
+    
+    return { venues: transformedVenues };
     
   } catch (error) {
     console.error('Error loading venues:', error);

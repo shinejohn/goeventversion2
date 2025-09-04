@@ -3,7 +3,12 @@ import { useParams } from 'react-router';
 import { MapPinIcon, CalendarIcon, ClockIcon, StarIcon, UsersIcon, HeartIcon, ShareIcon, CheckCircleIcon, ArrowLeftIcon, ExternalLinkIcon, MessageCircleIcon, CheckIcon, XIcon, InfoIcon, MusicIcon, DollarSignIcon, WifiIcon, CameraIcon, LayoutIcon, PhoneIcon, GlobeIcon, TicketIcon, UserIcon, CalendarDaysIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { mockVenues } from '../../mockdata/venues';
-export const VenueDetailPage = () => {
+interface VenueDetailPageProps {
+  venue?: any;
+  upcomingEvents?: any[];
+}
+
+export const VenueDetailPage = ({ venue: propVenue, upcomingEvents: propEvents }: VenueDetailPageProps) => {
   const {
     id
   } = useParams();
@@ -13,10 +18,12 @@ export const VenueDetailPage = () => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showContactForm, setShowContactForm] = useState(false);
-  // Find venue by ID from the URL parameter
-  const venue = mockVenues.find(v => v.id === id) || mockVenues[0];
-  // Mock upcoming events at this venue
-  const upcomingEvents = [{
+  
+  // Use prop venue if available, otherwise fallback to mock data
+  const venue = propVenue || mockVenues.find(v => v.id === id) || mockVenues[0];
+  
+  // Use prop events if available, otherwise fallback to mock data
+  const upcomingEvents = propEvents || [{
     id: 'event-1',
     name: 'Summer Jazz Festival',
     date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),

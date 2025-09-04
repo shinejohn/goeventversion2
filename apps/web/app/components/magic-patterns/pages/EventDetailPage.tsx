@@ -280,28 +280,30 @@ const defaultEventData = {
   }
 };
 
-const EventDetailPageInternal = ({ eventId = 'event-1' }: { eventId?: string }) => {
+const EventDetailPageInternal = ({ eventId = 'event-1', event: propEvent, relatedEvents: propRelatedEvents, attendeeCount: propAttendeeCount }: EventDetailPageProps) => {
   const [isSaved, setIsSaved] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
   const [showTicketModal, setShowTicketModal] = useState(false);
   const navigate = useNavigate();
 
-  // Look up event by ID from mock data, fallback to hardcoded data
-  const mockEvent = mockEvents.find(event => event.id === eventId);
-  const eventData = mockEvent ? {
-    ...mockEvent,
-    // Add missing properties that the component expects
+  // Use prop event data if provided, otherwise fallback to mock data
+  const eventData = propEvent ? {
+    ...propEvent,
+    // Transform database date to JavaScript Date object
+    date: new Date(propEvent.start_date),
+    endDate: new Date(propEvent.end_date),
+    // Add missing properties that the component expects with fallbacks
     lineup: [{
       day: 'Performance Day',
       acts: [{
-        name: 'Featured Performance',
-        startTime: '7:00 PM',
-        endTime: '9:00 PM',
+        name: propEvent.title || 'Featured Performance',
+        startTime: new Date(propEvent.start_date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
+        endTime: new Date(propEvent.end_date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
         stage: 'Main Stage',
-        image: mockEvent.image
+        image: propEvent.image_url || propEvent.image
       }]
     }],
-    amenities: ['Food vendors', 'Restrooms', 'Parking'],
+    amenities: propEvent.amenities ? Object.keys(propEvent.amenities).filter(key => propEvent.amenities[key]) : ['Food vendors', 'Restrooms', 'Parking'],
     parking: [{
       name: 'Main Parking',
       address: 'Near venue',
@@ -313,7 +315,7 @@ const EventDetailPageInternal = ({ eventId = 'event-1' }: { eventId?: string }) 
       condition: 'Clear',
       forecast: 'Perfect weather expected'
     }
-  } : defaultEventData;
+  } : (mockEvents.find(event => event.id === eventId) || defaultEventData);
   // Format date for display
   const formatEventDate = date => {
     return date.toLocaleDateString('en-US', {
@@ -928,10 +930,22 @@ const EventDetailPageInternal = ({ eventId = 'event-1' }: { eventId?: string }) 
     </div>;
 };
 
-export const EventDetailPage = ({ eventId }: { eventId?: string }) => {
+interface EventDetailPageProps {
+  eventId?: string;
+  event?: any;
+  relatedEvents?: any[];
+  attendeeCount?: number;
+}
+
+export const EventDetailPage = ({ eventId, event, relatedEvents, attendeeCount }: EventDetailPageProps) => {
   return (
     <ClientOnly>
-      <EventDetailPageInternal eventId={eventId} />
+      <EventDetailPageInternal 
+        eventId={eventId}
+        event={event}
+        relatedEvents={relatedEvents}
+        attendeeCount={attendeeCount}
+      />
     </ClientOnly>
   );
 };

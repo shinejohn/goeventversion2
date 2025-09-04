@@ -26,7 +26,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         venue:venues(name, address, city, state)
       `)
       .eq('status', 'published')
-      .gte('start_datetime', new Date().toISOString());
+      .gte('start_date', new Date().toISOString());
     
     // Apply filters
     if (search) {
@@ -38,23 +38,78 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     }
     
     if (location) {
+      // Filter by venue location
       query = query.or(`venue.city.ilike.%${location}%,venue.state.ilike.%${location}%`);
     }
     
     if (dateFrom) {
-      query = query.gte('start_datetime', dateFrom);
+      query = query.gte('start_date', dateFrom);
     }
     
     if (dateTo) {
-      query = query.lte('end_datetime', dateTo);
+      query = query.lte('end_date', dateTo);
     }
     
-    // Get events with pagination
+    // Get events with pagination and count
     const { data: events, error, count } = await query
-      .order('start_datetime', { ascending: true })
+      .order('start_date', { ascending: true })
       .range(offset, offset + limit - 1);
     
     if (error) throw error;
+    
+    // Transform events to match component expectations
+    const transformedEvents = (events || []).map(event => {
+      const eventDate = new Date(event.start_date);
+      const endDate = new Date(event.end_date);
+      
+      // Format date for display
+      const formatDate = (date: Date) => {
+        const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
+        const dateStr = date.toLocaleDateString('en-US', options);
+        
+        // Check if event spans multiple days
+        if (endDate.toDateString() !== eventDate.toDateString()) {
+          const endStr = endDate.toLocaleDateString('en-US', options);
+          return `${dateStr}-${endStr.split(' ')[1]}`; // e.g., "Oct 15-18"
+        }
+        return dateStr;
+      };
+      
+      // Format time
+      const formatTime = (start: Date, end: Date) => {
+        const timeOptions: Intl.DateTimeFormatOptions = {
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
+        };
+        const startTime = start.toLocaleTimeString('en-US', timeOptions);
+        const endTime = end.toLocaleTimeString('en-US', timeOptions);
+        return `${startTime} - ${endTime}`;
+      };
+      
+      // Determine price display
+      let price = 'Free';
+      if (event.base_price) {
+        if (event.base_price === 0) {
+          price = 'Free';
+        } else {
+          price = `$${event.base_price}`;
+        }
+      }
+      
+      return {
+        id: event.id,
+        title: event.title,
+        image: event.image_url || 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+        date: formatDate(eventDate),
+        rawDate: eventDate,
+        venue: event.venue?.name || event.location_name || 'TBD',
+        category: event.category || 'Event',
+        price: price,
+        time: formatTime(eventDate, endDate),
+        description: event.description || ''
+      };
+    });
     
     // Get filter options
     const [categoriesResult, locationsResult] = await Promise.all([
@@ -66,7 +121,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     const locations = [...new Set(locationsResult.data?.map(v => `${v.city}, ${v.state}`) || [])];
     
     return {
-      events: events || [],
+      events: transformedEvents,
       totalCount: count || 0,
       currentPage: page,
       totalPages: Math.ceil((count || 0) / limit),
@@ -95,10 +150,6 @@ export default function EventsRoute({ loaderData }: Route.ComponentProps) {
   return (
     <EventsPage
       events={events}
-      totalCount={totalCount}
-      currentPage={currentPage}
-      totalPages={totalPages}
-      filters={filters}
     />
   );
 }

@@ -50,16 +50,35 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     // Load upcoming events at this venue
     const { data: events } = await client
       .from('events')
-      .select('id, title, start_date, image_url, category')
+      .select('id, title, start_date, end_date, image_url, category')
       .eq('venue_id', venueId)
       .eq('status', 'published')
       .gte('start_date', new Date().toISOString())
       .order('start_date')
       .limit(6);
     
+    // Transform events to match UI expectations
+    const transformedEvents = events?.map(event => ({
+      id: event.id,
+      name: event.title,
+      date: new Date(event.start_date),
+      time: `${new Date(event.start_date).toLocaleTimeString('en-US', { 
+        hour: 'numeric', 
+        minute: '2-digit', 
+        hour12: true 
+      })} - ${new Date(event.end_date || event.start_date).toLocaleTimeString('en-US', { 
+        hour: 'numeric', 
+        minute: '2-digit', 
+        hour12: true 
+      })}`,
+      image: event.image_url || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+      ticketPrice: '$25-45', // Default for now - we'll add pricing later
+      ticketStatus: 'Available' // Default for now
+    })) || [];
+    
     return { 
       venue: transformedVenue,
-      upcomingEvents: events || []
+      upcomingEvents: transformedEvents
     };
     
   } catch (error) {
@@ -69,5 +88,5 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
 };
 
 export default function VenueDetailRoute({ loaderData }: Route.ComponentProps) {
-  return <VenueDetailPage venue={loaderData.venue} />;
+  return <VenueDetailPage venue={loaderData.venue} upcomingEvents={loaderData.upcomingEvents} />;
 }

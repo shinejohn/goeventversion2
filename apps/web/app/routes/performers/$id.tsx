@@ -17,9 +17,28 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       throw new Response('Performer not found', { status: 404 });
     }
     
-    // Load upcoming events for this performer (when event_performers table exists)
-    // For now, return empty array
-    const upcomingEvents: any[] = [];
+    // Load upcoming events for this performer
+    // Note: This assumes we have an event_performers table or performer_id in events table
+    // For now, we'll try to load events by checking if the performer name appears in event title or description
+    const { data: events } = await client
+      .from('events')
+      .select(`
+        id, title, start_date,
+        venue:venues(name)
+      `)
+      .or(`title.ilike.%${performer.name}%,description.ilike.%${performer.name}%`)
+      .eq('status', 'published')
+      .gte('start_date', new Date().toISOString())
+      .order('start_date')
+      .limit(6);
+    
+    // Transform to match UI expectations
+    const upcomingEvents = events?.map(event => ({
+      id: event.id,
+      title: event.title,
+      start_datetime: event.start_date,
+      venue: event.venue
+    })) || [];
     
     return { 
       performer,
