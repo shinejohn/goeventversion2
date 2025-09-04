@@ -58,9 +58,9 @@ export const VenueListItem = ({
             </div>
             <div className="mt-1 flex items-center text-sm">
               <StarIcon className="h-4 w-4 text-yellow-400 fill-current mr-1" />
-              <span className="font-medium">{venue.rating}</span>
+              <span className="font-medium">{venue.average_rating}</span>
               <span className="text-gray-600 ml-1">
-                ({venue.reviewCount} reviews)
+                ({venue.total_reviews} reviews)
               </span>
             </div>
             {/* Amenities */}
@@ -79,7 +79,7 @@ export const VenueListItem = ({
           {/* Action Buttons */}
           <div className="mt-4 flex items-center justify-between">
             <div className="text-sm font-medium text-gray-900">
-              {venue.venueType}
+              {venue.venue_type}
             </div>
             <div className="flex space-x-2">
               <button onClick={e => {

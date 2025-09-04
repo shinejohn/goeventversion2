@@ -52,17 +52,17 @@ export const VenueMap = ({
                         <div className="flex items-center mt-1 text-xs">
                           <StarIcon className="h-3 w-3 text-yellow-400 fill-current" />
                           <span className="ml-1 font-medium">
-                            {venue.rating}
+                            {venue.average_rating}
                           </span>
                           <span className="ml-1 text-gray-500">
-                            ({venue.reviewCount})
+                            ({venue.total_reviews})
                           </span>
                         </div>
                         <div className="text-xs text-gray-500 mt-1">
                           Up to {venue.capacity} guests
                         </div>
                         <div className="text-xs font-medium mt-1">
-                          ${venue.pricePerHour}/hour
+                          ${venue.price_per_hour}/hour
                         </div>
                       </div>
                     </div>

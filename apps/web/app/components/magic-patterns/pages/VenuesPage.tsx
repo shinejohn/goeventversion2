@@ -91,9 +91,9 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
       if (!hasAllAmenities) return false;
     }
     // Filter by date availability
-    if (selectedDate && venue.unavailableDates) {
+    if (selectedDate && venue.unavailable_dates) {
       const dateString = selectedDate.toISOString().split('T')[0];
-      if (venue.unavailableDates.includes(dateString)) {
+      if (venue.unavailable_dates.includes(dateString)) {
         return false;
       }
     }
@@ -129,8 +129,8 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
   }).slice(0, 4);
   // Get new venues (added in the last 90 days)
   const newVenues = venuesData.filter(venue => {
-    if (!venue.listedDate) return false;
-    const listedDate = new Date(venue.listedDate);
+    if (!venue.listed_date) return false;
+    const listedDate = new Date(venue.listed_date);
     const ninetyDaysAgo = new Date();
     ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
     return listedDate > ninetyDaysAgo;
@@ -395,7 +395,7 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
                               <div className="flex items-center">
                                 <MusicIcon className="h-4 w-4 text-gray-400 mr-1" />
                                 <span className="text-xs text-gray-500">
-                                  {event.venue.venueType}
+                                  {event.venue.venue_type}
                                 </span>
                               </div>
                               <div className="flex items-center">
@@ -550,7 +550,7 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
                             </div>
                             <div className="flex items-center mt-2 text-sm text-green-600 font-medium">
                               Just added{' '}
-                              {new Date(venue.listedDate).toLocaleDateString('en-US', {
+                              {new Date(venue.listed_date).toLocaleDateString('en-US', {
                         month: 'short',
                         day: 'numeric'
                       })}

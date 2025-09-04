@@ -37,7 +37,7 @@ export const VenueBookingWidget = ({
     const end = parseInt(endTime.split(':')[0]);
     const hours = end > start ? end - start : 24 - start + end;
     // Calculate base cost
-    const baseCost = venue.pricePerHour * hours;
+    const baseCost = venue.price_per_hour * hours;
     // Add fees
     const cleaningFee = venue.additionalFees.find((fee: any) => fee.name === 'Cleaning Fee')?.amount || 0;
     const securityDeposit = venue.additionalFees.find((fee: any) => fee.name === 'Security Deposit')?.amount || 0;
@@ -170,7 +170,7 @@ export const VenueBookingWidget = ({
               <div className="flex justify-between">
                 <span className="text-gray-600">
                   Base rental ({quoteDetails.hours} hours @ $
-                  {venue.pricePerHour}/hr)
+                  {venue.price_per_hour}/hr)
                 </span>
                 <span className="text-gray-900">${quoteDetails.baseCost}</span>
               </div>

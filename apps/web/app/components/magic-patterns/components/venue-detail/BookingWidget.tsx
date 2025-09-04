@@ -44,7 +44,7 @@ export const BookingWidget = ({
     if (hours <= 0) hours += 24; // Handle overnight events
     setDuration(hours);
     // Calculate pricing
-    const basePrice = venue.pricePerHour * hours;
+    const basePrice = venue.price_per_hour * hours;
     setSubtotal(basePrice);
     // Service fee (10%)
     const fee = Math.round(basePrice * 0.1);
@@ -159,7 +159,7 @@ export const BookingWidget = ({
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">
-                ${venue.pricePerHour} × {duration} hours
+                ${venue.price_per_hour} × {duration} hours
               </span>
               <span className="text-gray-900">${subtotal}</span>
             </div>

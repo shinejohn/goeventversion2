@@ -83,10 +83,10 @@ export const PerformerGrid = ({
               <div className="flex items-center">
                 <StarIcon className="h-4 w-4 text-yellow-400 fill-current" />
                 <span className="ml-1 text-sm text-gray-700">
-                  {performer.rating}
+                  {performer.average_rating}
                 </span>
                 <span className="ml-1 text-xs text-gray-500">
-                  ({performer.reviewCount})
+                  ({performer.total_reviews})
                 </span>
               </div>
               <div className="text-sm text-gray-600">

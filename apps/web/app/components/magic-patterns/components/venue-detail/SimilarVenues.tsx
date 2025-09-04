@@ -26,15 +26,15 @@ export const SimilarVenues = ({
             </div>
             <div className="flex items-center mt-1 text-sm">
               <StarIcon className="h-4 w-4 text-yellow-400 fill-current mr-1" />
-              <span className="font-medium">{venue.rating}</span>
-              <span className="text-gray-600 ml-1">({venue.reviewCount})</span>
+              <span className="font-medium">{venue.average_rating}</span>
+              <span className="text-gray-600 ml-1">({venue.total_reviews})</span>
             </div>
             <div className="flex items-center mt-1 text-sm text-gray-600">
               <UsersIcon className="h-4 w-4 mr-1 flex-shrink-0" />
               <span>Up to {venue.capacity} guests</span>
             </div>
             <div className="mt-3 flex justify-between items-center">
-              <div className="font-medium">${venue.pricePerHour}/hour</div>
+              <div className="font-medium">${venue.price_per_hour}/hour</div>
               <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex items-center">
                 View
                 <ArrowRightIcon className="h-4 w-4 ml-1" />

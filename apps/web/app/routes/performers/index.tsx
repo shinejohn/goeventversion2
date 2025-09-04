@@ -11,7 +11,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       .from('performer_profiles')
       .select(`*`)
       .eq('status', 'active')
-      .order('rating', { ascending: false });
+      .order('average_rating', { ascending: false });
     
     if (error) throw error;
     

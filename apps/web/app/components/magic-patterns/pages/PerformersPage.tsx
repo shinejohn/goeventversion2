@@ -37,8 +37,8 @@ export const PerformersPage = () => {
     image: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     category: 'Band',
     genre: 'Indie Rock',
-    rating: 4.8,
-    reviewCount: 42,
+    average_rating: 4.8,
+    total_reviews: 42,
     nextEvent: 'Aug 15 at Capitol Theatre'
   }, {
     id: 'performer-2',
@@ -46,8 +46,8 @@ export const PerformersPage = () => {
     image: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     category: 'DJ',
     genre: 'House / Electronic',
-    rating: 4.7,
-    reviewCount: 38,
+    average_rating: 4.7,
+    total_reviews: 38,
     nextEvent: 'Aug 20 at The District Lounge'
   }, {
     id: 'performer-3',
@@ -55,8 +55,8 @@ export const PerformersPage = () => {
     image: 'https://images.unsplash.com/photo-1549213783-8284d0336c4f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     category: 'Musician',
     genre: 'Folk / Acoustic',
-    rating: 4.9,
-    reviewCount: 29,
+    average_rating: 4.9,
+    total_reviews: 29,
     nextEvent: 'Aug 22 at Clear Sky on Cleveland'
   }, {
     id: 'performer-4',
@@ -64,8 +64,8 @@ export const PerformersPage = () => {
     image: 'https://images.unsplash.com/photo-1527224538127-2104bb71c51b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     category: 'Comedy',
     genre: 'Stand-up / Improv',
-    rating: 4.6,
-    reviewCount: 24,
+    average_rating: 4.6,
+    total_reviews: 24,
     nextEvent: 'Aug 25 at Ruth Eckerd Hall'
   }, {
     id: 'performer-5',
@@ -73,8 +73,8 @@ export const PerformersPage = () => {
     image: 'https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     category: 'Band',
     genre: 'Tribute / Covers',
-    rating: 4.5,
-    reviewCount: 36,
+    average_rating: 4.5,
+    total_reviews: 36,
     nextEvent: 'Sep 2 at Coachman Park'
   }, {
     id: 'performer-6',
@@ -82,8 +82,8 @@ export const PerformersPage = () => {
     image: 'https://images.unsplash.com/photo-1460480278897-2c8dce96d2f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     category: 'Artists',
     genre: 'Visual Arts',
-    rating: 4.7,
-    reviewCount: 31,
+    average_rating: 4.7,
+    total_reviews: 31,
     nextEvent: 'Sep 5 at Downtown Arts District'
   }];
   return <div className="min-h-screen bg-white">
@@ -179,9 +179,9 @@ export const PerformersPage = () => {
                   </div>
                   <div className="flex items-center text-sm text-gray-600 mb-2">
                     <StarIcon className="h-4 w-4 text-yellow-400 fill-current" />
-                    <span className="ml-1">{performer.rating}</span>
+                    <span className="ml-1">{performer.average_rating}</span>
                     <span className="ml-1 text-gray-500">
-                      ({performer.reviewCount} reviews)
+                      ({performer.total_reviews} reviews)
                     </span>
                   </div>
                   <div className="flex items-center text-sm font-medium text-purple-600">
