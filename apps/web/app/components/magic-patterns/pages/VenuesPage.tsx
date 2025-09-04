@@ -59,6 +59,13 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
   // Use provided venues (required prop)
   const venuesData = venues || [];
   
+  useEffect(() => {
+    console.log('VenuesPage received venues:', venues?.length || 0, 'venues');
+    if (venues && venues.length > 0) {
+      console.log('First venue:', venues[0]);
+    }
+  }, [venues]);
+  
   // Filtered venues based on search and filters
   const filteredVenues = venuesData.filter(venue => {
     // Simple search implementation - in a real app this would be more sophisticated
