@@ -78,7 +78,7 @@ const featuresFlagConfig = FeatureFlagsSchema.parse({
     import.meta.env.VITE_ENABLE_TEAM_ACCOUNTS_BILLING,
     false,
   ),
-  languagePriority: (import.meta.env.VITE_LANGUAGE_PRIORITY || 'application') as LanguagePriority,
+  languagePriority: getLanguagePriority(import.meta.env.VITE_LANGUAGE_PRIORITY),
   enableNotifications: getBoolean(
     import.meta.env.VITE_ENABLE_NOTIFICATIONS,
     true,
@@ -101,4 +101,11 @@ function getBoolean(value: unknown, defaultValue: boolean) {
   }
 
   return defaultValue;
+}
+
+function getLanguagePriority(value: unknown): LanguagePriority {
+  if (value === 'user' || value === 'application') {
+    return value;
+  }
+  return 'application';
 }
