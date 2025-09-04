@@ -71,40 +71,19 @@ export const HomePage = ({ events = [], venues = [], performers = [] }: HomePage
     color: 'bg-red-100 text-red-800',
     activeColor: 'bg-red-600 text-white'
   }];
-  // Featured events
-  const featuredEvents = [{
-    id: 'event-1',
-    title: 'Clearwater Jazz Holiday',
-    image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    date: 'Oct 15-18',
-    venue: 'Coachman Park',
-    category: 'Music',
-    price: '$45+'
-  }, {
-    id: 'event-2',
-    title: 'Farmers Market on Cleveland',
-    image: 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    date: 'Every Saturday',
-    venue: 'Cleveland Street District',
-    category: 'Food & Drink',
-    price: 'Free'
-  }, {
-    id: 'event-3',
-    title: 'Sunset Cinema: Summer Series',
-    image: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    date: 'Fridays in June',
-    venue: 'Pier 60',
-    category: 'Entertainment',
-    price: '$12'
-  }, {
-    id: 'event-4',
-    title: 'Downtown Art Walk',
-    image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    date: 'First Friday Monthly',
-    venue: 'Downtown Arts District',
-    category: 'Arts',
-    price: 'Free'
-  }];
+  // Featured events (using REAL data from props)
+  const featuredEvents = events.slice(0, 4).map(event => ({
+    id: event.id,
+    title: event.title,
+    image: event.image || event.image_url || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    date: new Date(event.start_datetime).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric'
+    }),
+    venue: event.location_name || event.venue || 'TBA',
+    category: event.category || 'Event',
+    price: event.price || (event.price_min ? `$${event.price_min}+` : 'Free')
+  }));
   // Featured venues (using data from props)
   const featuredVenues = venues.slice(0, 4).map(venue => ({
     id: venue.id,
@@ -127,93 +106,54 @@ export const HomePage = ({ events = [], venues = [], performers = [] }: HomePage
     homeCity: performer.home_city || performer.location || '',
     upcomingShow: { date: new Date().toISOString() } // Mock for now
   }))
-  // Generate events for the next 7 days
+  // Generate REAL upcoming events from props data
   const generateUpcomingEvents = () => {
-    const events = [];
     const today = new Date();
-    // Event templates to reuse with different dates
-    const eventTemplates = [{
-      title: 'Live Music at The District',
-      image: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      venue: 'The District Lounge',
-      category: 'Music',
-      price: '$10',
-      time: '8:00 PM'
-    }, {
-      title: 'Morning Yoga on the Beach',
-      image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      venue: 'Clearwater Beach',
-      category: 'Sports',
-      price: '$5',
-      time: '7:30 AM'
-    }, {
-      title: 'Local Art Walk',
-      image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      venue: 'Downtown Arts District',
-      category: 'Arts',
-      price: 'Free',
-      time: '6:00 PM'
-    }, {
-      title: 'Craft Beer Tasting',
-      image: 'https://images.unsplash.com/photo-1535958636474-b021ee887b13?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      venue: 'Local Brewery',
-      category: 'Food & Drink',
-      price: '$15',
-      time: '5:00 PM'
-    }, {
-      title: 'Comedy Night',
-      image: 'https://images.unsplash.com/photo-1527224857830-43a7acc85260?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      venue: 'Laugh Factory',
-      category: 'Nightlife',
-      price: '$20',
-      time: '9:00 PM'
-    }, {
-      title: 'Farmers Market',
-      image: 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      venue: 'Cleveland Street',
-      category: 'Food & Drink',
-      price: 'Free',
-      time: '9:00 AM'
-    }, {
-      title: 'Kids Story Time',
-      image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      venue: 'Public Library',
-      category: 'Family',
-      price: 'Free',
-      time: '10:30 AM'
-    }];
-    // Create events for the next 7 days
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      // Format date as "Monday, June 10" (or "Today" for today)
-      const dateString = i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : date.toLocaleDateString('en-US', {
+    const upcomingEvents = events
+      .filter(event => new Date(event.start_datetime) >= today)
+      .sort((a, b) => new Date(a.start_datetime).getTime() - new Date(b.start_datetime).getTime())
+      .slice(0, 21); // Take next 21 events to fill ~7 days
+
+    // Group events by date
+    const eventsByDate = new Map();
+    
+    upcomingEvents.forEach(event => {
+      const eventDate = new Date(event.start_datetime);
+      const daysDiff = Math.floor((eventDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
+      
+      let dateString;
+      if (daysDiff === 0) dateString = 'Today';
+      else if (daysDiff === 1) dateString = 'Tomorrow';
+      else dateString = eventDate.toLocaleDateString('en-US', {
         weekday: 'long',
         month: 'long',
         day: 'numeric'
       });
-      // Generate 2-4 events per day
-      const numEvents = Math.floor(Math.random() * 3) + 2;
-      const dayEvents = [];
-      for (let j = 0; j < numEvents; j++) {
-        // Pick a random event template
-        const template = eventTemplates[Math.floor(Math.random() * eventTemplates.length)];
-        dayEvents.push({
-          id: `event-${i}-${j}`,
-          ...template,
+
+      if (!eventsByDate.has(dateString)) {
+        eventsByDate.set(dateString, {
           date: dateString,
-          rawDate: date // For sorting
+          rawDate: eventDate,
+          events: []
         });
       }
-      events.push({
-        date: dateString,
-        rawDate: date,
-        events: dayEvents
+
+      eventsByDate.get(dateString).events.push({
+        id: event.id,
+        title: event.title,
+        image: event.image || event.image_url || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+        venue: event.location_name || event.venue || 'TBA',
+        category: event.category || 'Event',
+        price: event.price || (event.price_min ? `$${event.price_min}+` : 'Free'),
+        time: new Date(event.start_datetime).toLocaleTimeString('en-US', {
+          hour: 'numeric',
+          minute: '2-digit'
+        }),
+        rawDate: eventDate
       });
-    }
-    // Sort by date
-    events.sort((a, b) => a.rawDate.getTime() - b.rawDate.getTime());
-    return events;
+    });
+
+    return Array.from(eventsByDate.values()).slice(0, 7); // Max 7 days
   };
   const upcomingEventsByDay = generateUpcomingEvents();
   // Handle category selection - navigate to events page with filter
