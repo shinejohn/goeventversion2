@@ -111,10 +111,10 @@ export const HomePage = ({ events = [], venues = [], performers = [] }: HomePage
     name: venue.name,
     image: venue.images?.[0] || venue.image_url || 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205',
     location: venue.city || venue.address?.split(',')[0] || '',
-    rating: venue.average_rating || 0,
-    reviewCount: venue.total_reviews || 0,
+    rating: venue.rating || 0,
+    reviewCount: venue.reviewCount || 0,
     capacity: venue.capacity || 0,
-    venueType: venue.venue_type || 'Venue'
+    venueType: venue.venueType || 'Venue'
   }))
   // Featured performers (using data from props)
   const featuredPerformers = performers.slice(0, 4).map(performer => ({
@@ -122,8 +122,8 @@ export const HomePage = ({ events = [], venues = [], performers = [] }: HomePage
     name: performer.name,
     image: performer.image || 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f',
     genres: performer.genres?.slice(0, 2) || [],
-    rating: performer.average_rating || 0,
-    reviewCount: performer.total_reviews || 0,
+    rating: performer.rating || 0,
+    reviewCount: performer.reviews || 0,
     homeCity: performer.home_city || performer.location || '',
     upcomingShow: { date: new Date().toISOString() } // Mock for now
   }))
