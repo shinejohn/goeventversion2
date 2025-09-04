@@ -5,9 +5,13 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
   
+  // Log environment for debugging
+  console.log('Homepage loader called at:', new Date().toISOString());
+  console.log('NODE_ENV:', process.env.NODE_ENV);
+  
   try {
     // Fetch featured events
-    const { data: events } = await client
+    const { data: events, error: eventsError } = await client
       .from('events')
       .select(`
         *,
@@ -18,8 +22,12 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       .limit(8)
       .order('start_datetime');
     
+    if (eventsError) {
+      console.error('Events fetch error:', eventsError);
+    }
+    
     // Fetch featured venues
-    const { data: venues } = await client
+    const { data: venues, error: venuesError } = await client
       .from('venues')
       .select('*')
       .eq('is_active', true)
@@ -27,14 +35,28 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       .limit(6)
       .order('rating', { ascending: false });
     
+    if (venuesError) {
+      console.error('Venues fetch error:', venuesError);
+    }
+    
     // Fetch featured performers
-    const { data: performers } = await client
+    const { data: performers, error: performersError } = await client
       .from('performers')
       .select('*')
       .eq('available_for_booking', true)
       .eq('is_verified', true)
       .limit(6)
       .order('rating', { ascending: false });
+    
+    if (performersError) {
+      console.error('Performers fetch error:', performersError);
+    }
+    
+    console.log('Homepage data loaded successfully:', {
+      eventsCount: events?.length || 0,
+      venuesCount: venues?.length || 0,
+      performersCount: performers?.length || 0
+    });
     
     return {
       title: 'GoEventCity - Discover Events, Venues & Performers',
@@ -43,9 +65,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       performers: performers || []
     };
   } catch (error) {
-    console.error('Error loading home page data:', error);
-    console.log('Force rebuild at:', new Date().toISOString());
-    console.log('Database permission fix needed');
+    console.error('Homepage loader error:', error);
+    // Still return valid data structure even if queries fail
     return {
       title: 'GoEventCity - Discover Events, Venues & Performers',
       events: [],
