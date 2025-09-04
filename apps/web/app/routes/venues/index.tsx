@@ -27,7 +27,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     }
     
     if (venueType) {
-      query = query.eq('venueType', venueType);
+      query = query.eq('venue_type', venueType);
     }
     
     if (capacity) {

@@ -17,17 +17,17 @@ interface VenueData {
   capacity: number | null;
   images: any;
   amenities: any;
-  rating: number | null;
-  reviewCount: number | null;
+  average_rating: number | null;
+  total_reviews: number | null;
   slug: string;
   community_id: string;
   account_id: string | null;
-  venueType: string;
-  pricePerHour: number | null;
+  venue_type: string;
+  price_per_hour: number | null;
   distance: number | null;
-  listedDate: string | null;
-  lastBookedDaysAgo: number | null;
-  unavailableDates: string[] | null;
+  listed_date: string | null;
+  last_booked_days_ago: number | null;
+  unavailable_dates: string[] | null;
   image_url: string | null;
   city: string | null;
   verified: boolean;
@@ -69,11 +69,11 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
   // Filtered venues based on search and filters
   const filteredVenues = venuesData.filter(venue => {
     // Simple search implementation - in a real app this would be more sophisticated
-    if (searchQuery && !venue.name.toLowerCase().includes(searchQuery.toLowerCase()) && !(venue.description || '').toLowerCase().includes(searchQuery.toLowerCase()) && !(venue.venueType || '').toLowerCase().includes(searchQuery.toLowerCase())) {
+    if (searchQuery && !venue.name.toLowerCase().includes(searchQuery.toLowerCase()) && !(venue.description || '').toLowerCase().includes(searchQuery.toLowerCase()) && !(venue.venue_type || '').toLowerCase().includes(searchQuery.toLowerCase())) {
       return false;
     }
     // Filter by venue type
-    if (filters.venueTypes.length > 0 && !filters.venueTypes.includes(venue.venueType)) {
+    if (filters.venueTypes.length > 0 && !filters.venueTypes.includes(venue.venue_type)) {
       return false;
     }
     // Filter by capacity
@@ -81,7 +81,7 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
       return false;
     }
     // Filter by price
-    if (venue.pricePerHour && (venue.pricePerHour < filters.minPrice || venue.pricePerHour > filters.maxPrice)) {
+    if (venue.price_per_hour && (venue.price_per_hour < filters.minPrice || venue.price_per_hour > filters.maxPrice)) {
       return false;
     }
     // Filter by amenities
@@ -103,28 +103,28 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
   const sortedVenues = [...filteredVenues].sort((a, b) => {
     switch (sortBy) {
       case 'popular':
-        return (b.reviewCount || 0) - (a.reviewCount || 0);
+        return (b.total_reviews || 0) - (a.total_reviews || 0);
       case 'newest':
-        return new Date(b.listedDate || 0).getTime() - new Date(a.listedDate || 0).getTime();
+        return new Date(b.listed_date || 0).getTime() - new Date(a.listed_date || 0).getTime();
       case 'price_low':
-        return (a.pricePerHour || 0) - (b.pricePerHour || 0);
+        return (a.price_per_hour || 0) - (b.price_per_hour || 0);
       case 'price_high':
-        return (b.pricePerHour || 0) - (a.pricePerHour || 0);
+        return (b.price_per_hour || 0) - (a.price_per_hour || 0);
       case 'distance':
         return (a.distance || 0) - (b.distance || 0);
       case 'rating':
-        return (b.rating || 0) - (a.rating || 0);
+        return (b.average_rating || 0) - (a.average_rating || 0);
       case 'capacity':
         return (a.capacity || 0) - (b.capacity || 0);
       default:
         // For 'recommended', use a combination of rating and review count
-        return (b.rating || 0) * 0.7 + (b.reviewCount || 0) * 0.3 - ((a.rating || 0) * 0.7 + (a.reviewCount || 0) * 0.3);
+        return (b.average_rating || 0) * 0.7 + (b.total_reviews || 0) * 0.3 - ((a.average_rating || 0) * 0.7 + (a.total_reviews || 0) * 0.3);
     }
   });
   // Get trending venues (highest review count in the last month)
   const trendingVenues = [...venuesData].sort((a, b) => {
-    const aScore = (b.reviewCount || 0) / Math.max(b.lastBookedDaysAgo || 30, 1);
-    const bScore = (a.reviewCount || 0) / Math.max(a.lastBookedDaysAgo || 30, 1);
+    const aScore = (b.total_reviews || 0) / Math.max(b.last_booked_days_ago || 30, 1);
+    const bScore = (a.total_reviews || 0) / Math.max(a.last_booked_days_ago || 30, 1);
     return aScore - bScore;
   }).slice(0, 4);
   // Get new venues (added in the last 90 days)
@@ -185,22 +185,22 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
   // Venue type categories with counts
   const venueCategories = [{
     title: 'Music Venues',
-    count: venuesData.filter(v => v.venueType === 'Concert Halls').length
+    count: venuesData.filter(v => v.venue_type === 'Concert Halls').length
   }, {
     title: 'Restaurants & Bars',
-    count: venuesData.filter(v => v.venueType === 'Restaurants & Bars').length
+    count: venuesData.filter(v => v.venue_type === 'Restaurants & Bars').length
   }, {
     title: 'Event Spaces',
-    count: venuesData.filter(v => v.venueType === 'Event Spaces').length
+    count: venuesData.filter(v => v.venue_type === 'Event Spaces').length
   }, {
     title: 'Outdoor Venues',
-    count: venuesData.filter(v => v.venueType === 'Outdoor Venues').length
+    count: venuesData.filter(v => v.venue_type === 'Outdoor Venues').length
   }, {
     title: 'Galleries & Museums',
-    count: venuesData.filter(v => v.venueType === 'Galleries & Museums').length
+    count: venuesData.filter(v => v.venue_type === 'Galleries & Museums').length
   }, {
     title: 'Unique Spaces',
-    count: venuesData.filter(v => v.venueType === 'Unique Spaces').length
+    count: venuesData.filter(v => v.venue_type === 'Unique Spaces').length
   }];
   // Handle navigation to venue detail
   const handleViewVenueDetail = (venueId: string) => {
@@ -510,10 +510,10 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
                             <div className="flex items-center mt-2">
                               <StarIcon className="h-4 w-4 text-yellow-400 fill-current" />
                               <span className="ml-1 font-medium">
-                                {venue.rating}
+                                {venue.average_rating}
                               </span>
                               <span className="ml-1 text-gray-500">
-                                ({venue.reviewCount})
+                                ({venue.total_reviews})
                               </span>
                             </div>
                           </div>
