@@ -1,6 +1,6 @@
 // apps/web/app/routes/admin/seed-database.tsx
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { json } from 'react-router';
+import type { Route } from '~/types/app/routes/admin/seed-database/+types';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
@@ -319,19 +319,22 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       }
     }
 
-    return json({ 
+    return { 
       success: true, 
       message: `Successfully seeded ${venueIds.length} venues`, 
       accountId,
       venueIds 
-    });
+    };
 
   } catch (error) {
     console.error('❌ Database seeding failed:', error);
-    return json({ 
+    throw new Response(JSON.stringify({ 
       success: false, 
       message: `Database seeding failed: ${error.message}` 
-    }, { status: 500 });
+    }), { 
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 };
 

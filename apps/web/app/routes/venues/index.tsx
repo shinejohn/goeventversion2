@@ -52,5 +52,17 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 };
 
 export default function VenuesRoute({ loaderData }: Route.ComponentProps) {
-  return <VenuesPage venues={loaderData.venues} />;
+  try {
+    return <VenuesPage venues={loaderData.venues} />;
+  } catch (error) {
+    console.error('Error rendering VenuesPage:', error);
+    return (
+      <div className="p-8">
+        <h1 className="text-2xl font-bold text-red-600">Error Loading Venues Page</h1>
+        <pre className="mt-4 p-4 bg-red-100 rounded">
+          {error instanceof Error ? error.message : 'Unknown error'}
+        </pre>
+      </div>
+    );
+  }
 }

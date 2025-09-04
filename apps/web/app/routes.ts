@@ -139,6 +139,7 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('tickets/marketplace', 'routes/tickets/marketplace/index.tsx'),
   
   // Venues  
+  route('test-venues', 'routes/test-venues.tsx'),
   route('venues', 'routes/venues/index.tsx'),
   route('venues/:id', 'routes/venues/$id.tsx'),
   
