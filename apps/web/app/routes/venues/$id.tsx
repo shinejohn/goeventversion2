@@ -1,6 +1,7 @@
 // apps/web/app/routes/venues/$id.tsx  
 import { VenueDetailPage } from '~/components/magic-patterns/pages/venues/VenueDetailPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import type { Route } from '~/types/app/routes/venues/$id/+types';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
@@ -9,16 +10,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
   try {
     const { data: venue, error } = await client
       .from('venues')
-      .select(`
-        *,
-        events:events!venue_id(
-          id, title, start_date, end_date, image_url
-        ),
-        reviews:venue_reviews(
-          rating, comment,
-          user:auth.users(name, avatar_url)
-        )
-      `)
+      .select('*')
       .eq('id', venueId)
       .single();
       
@@ -26,7 +18,20 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       throw new Response('Venue not found', { status: 404 });
     }
     
-    return { venue };
+    // Load upcoming events at this venue
+    const { data: events } = await client
+      .from('events')
+      .select('id, title, start_datetime, image, image_url, category')
+      .eq('venue_id', venueId)
+      .eq('status', 'published')
+      .gte('start_datetime', new Date().toISOString())
+      .order('start_datetime')
+      .limit(6);
+    
+    return { 
+      venue,
+      upcomingEvents: events || []
+    };
     
   } catch (error) {
     console.error('Error loading venue:', error);

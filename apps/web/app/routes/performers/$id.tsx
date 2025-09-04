@@ -1,28 +1,37 @@
-import type { Route } from '~/types/app/routes/performers/$id';
-
+import type { Route } from '~/types/app/routes/performers/$id/+types';
+import { PerformerProfilePage } from '~/components/magic-patterns/pages/performers/PerformerProfilePage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
   const performerId = params.id;
 
-  // TODO: Load performer data from database
-  const performer = {
-    id: performerId,
-    name: 'Sample Performer',
-    description: 'Professional performer with years of experience',
-    image: '/placeholder-performer.jpg'
-  };
-
-  return { performer };
+  try {
+    const { data: performer, error } = await client
+      .from('performers')
+      .select('*')
+      .eq('id', performerId)
+      .single();
+      
+    if (error || !performer) {
+      throw new Response('Performer not found', { status: 404 });
+    }
+    
+    // Load upcoming events for this performer (when event_performers table exists)
+    // For now, return empty array
+    const upcomingEvents: any[] = [];
+    
+    return { 
+      performer,
+      upcomingEvents 
+    };
+    
+  } catch (error) {
+    console.error('Error loading performer:', error);
+    throw new Response('Performer not found', { status: 404 });
+  }
 };
 
-export default function PerformerDetailPage() {
-  // This will be properly implemented with Magic Patterns components
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold">Performer Detail Page</h1>
-      <p className="text-gray-600">This page will display performer details using Magic Patterns components.</p>
-    </div>
-  );
+export default function PerformerDetailRoute({ loaderData }: Route.ComponentProps) {
+  return <PerformerProfilePage performer={loaderData.performer} upcomingEvents={loaderData.upcomingEvents} />;
 }

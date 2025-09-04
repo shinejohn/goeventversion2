@@ -1,28 +1,19 @@
 // apps/web/app/routes/events/$id.tsx
 import { EventDetailPage } from '~/components/magic-patterns/pages/EventDetailPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import type { Route } from '~/types/app/routes/events/$id/+types';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
   const eventId = params.id;
   
   try {
-    // Load event with all related data
+    // Load event with venue data
     const { data: event, error } = await client
       .from('events')
       .select(`
         *,
-        venue:venues(*),
-        organizer:auth.users(name, avatar_url),
-        performers:event_performers(
-          performer:performers(*)
-        ),
-        tickets:ticket_types(*),
-        reviews:event_reviews(
-          rating,
-          comment,
-          user:auth.users(name, avatar_url)
-        )
+        venue:venues(*)
       `)
       .eq('id', eventId)
       .single();
@@ -35,25 +26,19 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const { data: relatedEvents } = await client
       .from('events')
       .select(`
-        id, title, start_date, image_url,
-        venue:venues(name, city, state)
+        id, title, start_datetime, image, image_url,
+        venue:venues(name, address)
       `)
       .eq('category', event.category)
       .neq('id', eventId)
       .eq('status', 'published')
+      .gte('start_datetime', new Date().toISOString())
       .limit(3);
-    
-    // Load attendance/booking stats
-    const { count: attendeeCount } = await client
-      .from('bookings')
-      .select('*', { count: 'exact', head: true })
-      .eq('event_id', eventId)
-      .eq('status', 'confirmed');
     
     return {
       event,
       relatedEvents: relatedEvents || [],
-      attendeeCount: attendeeCount || 0
+      attendeeCount: 0 // We'll add this later when bookings table exists
     };
     
   } catch (error) {

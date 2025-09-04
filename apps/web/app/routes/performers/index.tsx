@@ -10,8 +10,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     const { data: performers, error } = await client
       .from('performers')
       .select(`*`)
-      .eq('verified', true)
-      .order('rating', { ascending: false });
+      .order('rating', { ascending: false, nullsFirst: false });
     
     if (error) throw error;
     

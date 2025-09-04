@@ -58,8 +58,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     
     // Get filter options
     const [categoriesResult, locationsResult] = await Promise.all([
-      client.from('events').select('category').not('category', 'is', null),
-      client.from('venues').select('city, state').not('city', 'is', null)
+      client.from('events').select('category').not('category', 'is', null).eq('status', 'published'),
+      client.from('venues').select('city, state').not('city', 'is', null).limit(100)
     ]);
     
     const categories = [...new Set(categoriesResult.data?.map(e => e.category) || [])];

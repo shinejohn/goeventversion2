@@ -12,6 +12,7 @@ VITE_SITE_URL=https://goeventversion2-production.up.railway.app
 VITE_PRODUCT_NAME=GoEventCity
 VITE_SITE_TITLE=GoEventCity - Discover Amazing Events in Your City
 VITE_SITE_DESCRIPTION=GoEventCity helps you discover the best events, venues, and entertainment in your city.
+VITE_DEFAULT_LOCALE=en
 ```
 
 ## Feature Flags (All Required)
@@ -32,6 +33,8 @@ VITE_ENABLE_VERSION_UPDATER=false
 ## Other Required Variables
 ```
 VITE_DEFAULT_THEME_MODE=light
+VITE_THEME_COLOR=#ffffff
+VITE_THEME_COLOR_DARK=#0a0a0a
 VITE_AUTH_PASSWORD=true
 VITE_AUTH_MAGIC_LINK=false
 VITE_BILLING_PROVIDER=stripe

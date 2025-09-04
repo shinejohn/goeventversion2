@@ -15,19 +15,18 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   try {
     let query = client
       .from('venues')
-      .select('*')
-      .eq('is_active', true);
+      .select('*');
     
     if (search) {
       query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%`);
     }
     
     if (city) {
-      query = query.eq('city', city);
+      query = query.ilike('address', `%${city}%`);
     }
     
     if (venueType) {
-      query = query.eq('venue_type', venueType);
+      query = query.eq('venueType', venueType);
     }
     
     if (capacity) {
