@@ -1,7 +1,4 @@
 
-> web@ supabase /Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web
-> supabase gen types typescript --project-id gbcjlsnbamjchdtgrquu
-
 export type Json =
   | string
   | number

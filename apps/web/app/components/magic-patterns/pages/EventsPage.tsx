@@ -2,12 +2,17 @@ import React, { useState, createElement } from 'react';
 import { ArrowRightIcon, CalendarIcon, MapPinIcon, MusicIcon, UtensilsIcon, PaletteIcon, UserIcon, HeartIcon, GlassWaterIcon, SunIcon, StarIcon, ClockIcon, ChevronRightIcon, ShareIcon, CheckIcon, SearchIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { LocationSelector } from '../components/ui/LocationSelector';
-export const EventsPage = () => {
+import { SharePopup } from '../components/ui/SharePopup';
+interface EventsPageProps {
+  events?: any[];
+}
+
+export const EventsPage = ({ events }: EventsPageProps) => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [calendarSuccess, setCalendarSuccess] = useState<string | null>(null);
   const [shareSuccess, setShareSuccess] = useState<string | null>(null);
-  const [eventToShare, setEventToShare] = useState(null);
+  const [eventToShare, setEventToShare] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   // Event categories for filtering
   const categories = [{
@@ -413,8 +418,6 @@ export const EventsPage = () => {
                           </div>
                         </div>
                       </div>
-                      {/* Share Popup */}
-                      {eventToShare === event.id && <SharePopup isOpen={true} onClose={() => setEventToShare(null)} title={event.title} description={`${event.title} at ${event.venue} on ${day.date} at ${event.time}`} url={`${window.location.origin}/event/${event.id}`} image={event.image} />}
                     </div>)}
                 </div>
               </div>)}
@@ -448,5 +451,16 @@ export const EventsPage = () => {
           </div>
         </div>
       </div>
+      {/* Share Popup */}
+      {eventToShare && (
+        <SharePopup 
+          isOpen={true} 
+          onClose={() => setEventToShare(null)} 
+          title="Event" 
+          description={`Event details`} 
+          url={`${window.location.origin}/event/${eventToShare}`} 
+          image="" 
+        />
+      )}
     </div>;
 };

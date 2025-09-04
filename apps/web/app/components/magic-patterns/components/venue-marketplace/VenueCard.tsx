@@ -86,7 +86,7 @@ export const VenueCard = ({
           <StarIcon className="h-4 w-4 text-yellow-400 fill-current mr-1" />
           <span className="font-medium">{venue.rating}</span>
           <span className="text-gray-600 ml-1">
-            ({venue.reviewCount} reviews)
+            ({venue.review_count} reviews)
           </span>
         </div>
         {/* Amenities */}
@@ -101,7 +101,7 @@ export const VenueCard = ({
         {/* Action Buttons */}
         <div className="mt-3 flex items-center justify-between">
           <div className="text-sm text-gray-600">
-            <span className="font-medium text-gray-900">{venue.venueType}</span>
+            <span className="font-medium text-gray-900">{venue.venue_type}</span>
           </div>
           <button onClick={e => {
           e.stopPropagation();

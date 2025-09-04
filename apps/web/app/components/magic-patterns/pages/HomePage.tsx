@@ -2,12 +2,17 @@ import React, { useState, createElement } from 'react';
 import { CalendarIcon, MapPinIcon, SearchIcon, ArrowRightIcon, ClockIcon, StarIcon, MicIcon, BuildingIcon, TagIcon, MusicIcon, UtensilsIcon, PaletteIcon, UserIcon, HeartIcon, GlassWaterIcon, SunIcon, CheckIcon, ShareIcon } from 'lucide-react';
 import { useSupabase } from '@kit/supabase/hooks/use-supabase';
 import { useNavigate } from 'react-router';
-import { mockVenues } from '../mockdata/venues';
-import { mockPerformers } from '../mockdata/performers';
+// Mock data imports removed - using real data now
 import { DateSelector } from '../components/home/DateSelector';
 import { SharePopup } from '../components/ui/SharePopup';
 
-export const HomePage = () => {
+interface HomePageProps {
+  events?: any[];
+  venues?: any[];
+  performers?: any[];
+}
+
+export const HomePage = ({ events = [], venues = [], performers = [] }: HomePageProps) => {
   const navigate = useNavigate();
   const navigateTo = (path: string) => navigate(path);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -100,28 +105,28 @@ export const HomePage = () => {
     category: 'Arts',
     price: 'Free'
   }];
-  // Featured venues (using data from mockVenues)
-  const featuredVenues = mockVenues.slice(0, 4).map(venue => ({
+  // Featured venues (using data from props)
+  const featuredVenues = venues.slice(0, 4).map(venue => ({
     id: venue.id,
     name: venue.name,
-    image: venue.images[0],
-    location: venue.location.address.split(',')[0],
-    rating: venue.rating,
-    reviewCount: venue.reviewCount,
-    capacity: venue.capacity,
-    venueType: venue.venueType
-  }));
-  // Featured performers (using data from mockPerformers)
-  const featuredPerformers = mockPerformers.slice(0, 4).map(performer => ({
+    image: venue.images?.[0] || venue.image_url || 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205',
+    location: venue.city || venue.address?.split(',')[0] || '',
+    rating: venue.rating || 0,
+    reviewCount: venue.reviewCount || 0,
+    capacity: venue.capacity || 0,
+    venueType: venue.venueType || 'Venue'
+  }))
+  // Featured performers (using data from props)
+  const featuredPerformers = performers.slice(0, 4).map(performer => ({
     id: performer.id,
     name: performer.name,
-    image: performer.profileImage,
-    genres: performer.genres.slice(0, 2),
-    rating: performer.rating,
-    reviewCount: performer.reviewCount,
-    homeCity: performer.homeCity,
-    upcomingShow: performer.upcomingShows[0]
-  }));
+    image: performer.image || 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f',
+    genres: performer.genres?.slice(0, 2) || [],
+    rating: performer.rating || 0,
+    reviewCount: performer.reviews || 0,
+    homeCity: performer.home_city || performer.location || '',
+    upcomingShow: { date: new Date().toISOString() } // Mock for now
+  }))
   // Generate events for the next 7 days
   const generateUpcomingEvents = () => {
     const events = [];

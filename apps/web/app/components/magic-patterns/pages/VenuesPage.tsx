@@ -18,11 +18,20 @@ interface VenueData {
   capacity: number | null;
   images: any;
   amenities: any;
-  average_rating: number | null;
-  total_reviews: number | null;
+  rating: number | null;
+  reviewCount: number | null;
   slug: string;
   community_id: string;
   account_id: string | null;
+  venueType: string;
+  pricePerHour: number | null;
+  distance: number | null;
+  listedDate: string | null;
+  lastBookedDaysAgo: number | null;
+  unavailableDates: string[] | null;
+  image_url: string | null;
+  city: string | null;
+  verified: boolean;
   // Add other fields as needed
 }
 
@@ -48,13 +57,13 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
     },
     flexibleDates: false
   });
-  // Use provided venues or fall back to mock data
-  const venuesData = venues || mockVenues;
+  // Use provided venues (required prop)
+  const venuesData = venues || [];
   
   // Filtered venues based on search and filters
   const filteredVenues = venuesData.filter(venue => {
     // Simple search implementation - in a real app this would be more sophisticated
-    if (searchQuery && !venue.name.toLowerCase().includes(searchQuery.toLowerCase()) && !(venue.description || '').toLowerCase().includes(searchQuery.toLowerCase()) && !venue.venueType.toLowerCase().includes(searchQuery.toLowerCase())) {
+    if (searchQuery && !venue.name.toLowerCase().includes(searchQuery.toLowerCase()) && !(venue.description || '').toLowerCase().includes(searchQuery.toLowerCase()) && !(venue.venueType || '').toLowerCase().includes(searchQuery.toLowerCase())) {
       return false;
     }
     // Filter by venue type
@@ -62,22 +71,23 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
       return false;
     }
     // Filter by capacity
-    if (venue.capacity < filters.minCapacity || venue.capacity > filters.maxCapacity) {
+    if (venue.capacity && (venue.capacity < filters.minCapacity || venue.capacity > filters.maxCapacity)) {
       return false;
     }
     // Filter by price
-    if (venue.pricePerHour < filters.minPrice || venue.pricePerHour > filters.maxPrice) {
+    if (venue.pricePerHour && (venue.pricePerHour < filters.minPrice || venue.pricePerHour > filters.maxPrice)) {
       return false;
     }
     // Filter by amenities
-    if (filters.amenities.length > 0) {
-      const hasAllAmenities = filters.amenities.every(amenity => venue.amenities.includes(amenity));
+    if (filters.amenities.length > 0 && venue.amenities) {
+      const amenitiesArray = Array.isArray(venue.amenities) ? venue.amenities : [];
+      const hasAllAmenities = filters.amenities.every(amenity => amenitiesArray.includes(amenity));
       if (!hasAllAmenities) return false;
     }
     // Filter by date availability
-    if (selectedDate) {
+    if (selectedDate && venue.unavailableDates) {
       const dateString = selectedDate.toISOString().split('T')[0];
-      if (venue.unavailableDates && venue.unavailableDates.includes(dateString)) {
+      if (venue.unavailableDates.includes(dateString)) {
         return false;
       }
     }
@@ -87,28 +97,33 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
   const sortedVenues = [...filteredVenues].sort((a, b) => {
     switch (sortBy) {
       case 'popular':
-        return b.reviewCount - a.reviewCount;
+        return (b.reviewCount || 0) - (a.reviewCount || 0);
       case 'newest':
-        return new Date(b.listedDate).getTime() - new Date(a.listedDate).getTime();
+        return new Date(b.listedDate || 0).getTime() - new Date(a.listedDate || 0).getTime();
       case 'price_low':
-        return a.pricePerHour - b.pricePerHour;
+        return (a.pricePerHour || 0) - (b.pricePerHour || 0);
       case 'price_high':
-        return b.pricePerHour - a.pricePerHour;
+        return (b.pricePerHour || 0) - (a.pricePerHour || 0);
       case 'distance':
-        return a.distance - b.distance;
+        return (a.distance || 0) - (b.distance || 0);
       case 'rating':
-        return b.rating - a.rating;
+        return (b.rating || 0) - (a.rating || 0);
       case 'capacity':
-        return a.capacity - b.capacity;
+        return (a.capacity || 0) - (b.capacity || 0);
       default:
         // For 'recommended', use a combination of rating and review count
-        return b.rating * 0.7 + b.reviewCount * 0.3 - (a.rating * 0.7 + a.reviewCount * 0.3);
+        return (b.rating || 0) * 0.7 + (b.reviewCount || 0) * 0.3 - ((a.rating || 0) * 0.7 + (a.reviewCount || 0) * 0.3);
     }
   });
   // Get trending venues (highest review count in the last month)
-  const trendingVenues = [...venuesData].sort((a, b) => b.reviewCount / b.lastBookedDaysAgo - a.reviewCount / a.lastBookedDaysAgo).slice(0, 4);
+  const trendingVenues = [...venuesData].sort((a, b) => {
+    const aScore = (b.reviewCount || 0) / Math.max(b.lastBookedDaysAgo || 30, 1);
+    const bScore = (a.reviewCount || 0) / Math.max(a.lastBookedDaysAgo || 30, 1);
+    return aScore - bScore;
+  }).slice(0, 4);
   // Get new venues (added in the last 90 days)
   const newVenues = venuesData.filter(venue => {
+    if (!venue.listedDate) return false;
     const listedDate = new Date(venue.listedDate);
     const ninetyDaysAgo = new Date();
     ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);

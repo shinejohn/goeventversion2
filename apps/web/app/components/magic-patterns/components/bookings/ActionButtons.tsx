@@ -31,12 +31,14 @@ export const ActionButtons = ({
       type: 'text/calendar;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = typeof document !== "undefined" && document.createElement("a") as HTMLAnchorElement;
-    link.href = url;
-    link.setAttribute('download', `booking_${booking.bookingId || 'event'}.ics`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    if (typeof document !== "undefined") {
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute('download', `booking_${booking.bookingId || 'event'}.ics`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
     // Show success message
     setCalendarSuccess(true);
     setTimeout(() => setCalendarSuccess(false), 3000);
@@ -69,12 +71,14 @@ export const ActionButtons = ({
       type: 'text/plain;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = typeof document !== "undefined" && document.createElement("a") as HTMLAnchorElement;
-    link.href = url;
-    link.setAttribute('download', `contract_${booking.bookingId || 'booking'}.txt`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    if (typeof document !== "undefined") {
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute('download', `contract_${booking.bookingId || 'booking'}.txt`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
     // Show success message
     setDownloadSuccess(true);
     setTimeout(() => setDownloadSuccess(false), 3000);

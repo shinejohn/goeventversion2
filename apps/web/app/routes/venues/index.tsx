@@ -32,16 +32,21 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     }
     
     if (venueType) {
-      query = query.eq('venue_type', venueType);
+      query = query.eq('venueType', venueType);
     }
     
     if (capacity) {
-      query = query.gte('max_capacity', parseInt(capacity));
+      query = query.gte('capacity', parseInt(capacity));
     }
     
     const { data: venues, error } = await query.order('name');
     
-    if (error) throw error;
+    if (error) {
+      console.error('Supabase error:', error);
+      throw error;
+    }
+    
+    console.log('Loaded venues from Railway:', venues?.length || 0, 'venues');
     
     return { venues: venues || [] };
     
