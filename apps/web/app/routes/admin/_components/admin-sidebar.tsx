@@ -16,7 +16,7 @@ import {
 } from '@kit/ui/shadcn-sidebar';
 
 import { AppLogo } from '../../../../components/app-logo';
-import { ProfileAccountDropdownContainer } from '~/components/personal-account-dropdown-container';
+import { ProfileAccountDropdownContainer } from '../../../../components/personal-account-dropdown-container';
 
 export function AdminSidebar() {
   const currentPath = useLocation().pathname;
