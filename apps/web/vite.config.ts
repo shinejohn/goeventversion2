@@ -16,8 +16,15 @@ export default defineConfig(({ command }) => ({
     allowedHosts: ALLOWED_HOSTS,
   },
   build: {
+    sourcemap: false, // Disable sourcemaps in production to avoid build errors
+    minify: command === 'build' ? 'esbuild' : false,
     rollupOptions: {
       external: ['fsevents'],
+      // Disable sourcemap warnings
+      onwarn: (warning, warn) => {
+        if (warning.code === 'SOURCEMAP_ERROR') return;
+        warn(warning);
+      },
     },
   },
   optimizeDeps: {
@@ -28,4 +35,6 @@ export default defineConfig(({ command }) => ({
       './app/routes/**/*.tsx',
     ],
   },
+  // Suppress sourcemap warnings entirely
+  logLevel: command === 'build' ? 'warn' : 'info',
 }));

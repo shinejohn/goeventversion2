@@ -1,4 +1,4 @@
-import appConfig from '~/config/app.config';
+import appConfig from '../config/app.config';
 
 const siteUrl = appConfig.url;
 const name = appConfig.name;

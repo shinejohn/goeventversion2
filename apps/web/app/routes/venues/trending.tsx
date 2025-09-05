@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-import { ArrowLeftIcon, TrendingUpIcon, FireIcon, EyeIcon, HeartIcon } from 'lucide-react';
+import { ArrowLeftIcon, TrendingUpIcon, FlameIcon, EyeIcon, HeartIcon } from 'lucide-react';
 
 export default function VenuesTrendingRoute() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export default function VenuesTrendingRoute() {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow p-6 text-center">
-            <FireIcon className="h-12 w-12 text-red-500 mx-auto mb-4" />
+            <FlameIcon className="h-12 w-12 text-red-500 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Hot This Week</h3>
             <p className="text-gray-600">Most booked venues</p>
           </div>

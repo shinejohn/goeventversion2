@@ -39,11 +39,12 @@
 **/__tests__
 **/__mocks__
 
-# Documentation
+# Documentation (exclude general docs but keep marketing route docs)
 *.md
 !README.md
 docs
 **/docs
+!**/routes/marketing/docs
 
 # CI/CD
 .github

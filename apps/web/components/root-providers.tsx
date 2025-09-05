@@ -12,12 +12,12 @@ import { If } from '@kit/ui/if';
 import { Toaster } from '@kit/ui/sonner';
 import { VersionUpdater } from '@kit/ui/version-updater';
 
-import { AnalyticsProvider } from '~/components/analytics-provider';
-import { AuthProvider } from '~/components/auth-provider';
-import authConfig from '~/config/auth.config';
-import featuresFlagConfig from '~/config/feature-flags.config';
-import { i18nResolver } from '~/lib/i18n/i18n.resolver';
-import { getI18nSettings } from '~/lib/i18n/i18n.settings';
+import { AnalyticsProvider } from './analytics-provider';
+import { AuthProvider } from './auth-provider';
+import authConfig from '../config/auth.config';
+import featuresFlagConfig from '../config/feature-flags.config';
+import { i18nResolver } from '../lib/i18n/i18n.resolver';
+import { getI18nSettings } from '../lib/i18n/i18n.settings';
 
 import { ReactQueryProvider } from './react-query-provider';
 

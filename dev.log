@@ -130,3 +130,48 @@ turbo 2.5.6
 [35mweb:dev: [0m6:40:21 AM [react-router] Config saved
 [35mweb:dev: [0m7:54:49 AM [react-router] Config saved
 [35mweb:dev: [0m7:54:49 AM [react-router] Config saved
+[35mweb:dev: [0m9:16:52 AM [react-router] Config saved.
+[35mweb:dev: [0m9:17:17 AM [react-router] Config saved.
+[35mweb:dev: [0m9:18:01 AM [vite] vite.config.ts changed, restarting server...
+[35mweb:dev: [0m9:18:01 AM [vite] (client) Re-optimizing dependencies because vite config has changed
+[35mweb:dev: [0m9:18:02 AM [vite] server restarted.
+[35mweb:dev: [0m9:18:52 AM [vite] (ssr) Error when evaluating SSR module virtual:react-router/server-build: Cannot find module '~/components/root-head' imported from '/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/components/root-error-boundary.tsx'
+[35mweb:dev: [0m      at fetchModule (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/chunks/dep-C6pp_iVS.js:34685:34)
+[35mweb:dev: [0m      at RunnableDevEnvironment.fetchModule (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/chunks/dep-C6pp_iVS.js:35524:10)
+[35mweb:dev: [0m      at fetchModule (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/chunks/dep-C6pp_iVS.js:35493:16)
+[35mweb:dev: [0m      at handleInvoke (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/chunks/dep-C6pp_iVS.js:28792:25)
+[35mweb:dev: [0m      at EventEmitter.listenerForInvokeHandler (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/chunks/dep-C6pp_iVS.js:28853:19)
+[35mweb:dev: [0m      at EventEmitter.emit (node:events:518:28)
+[35mweb:dev: [0m      at Object.send (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/chunks/dep-C6pp_iVS.js:18804:39)
+[35mweb:dev: [0m      at Object.invoke (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/module-runner.js:535:31)
+[35mweb:dev: [0m      at Object.invoke (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/module-runner.js:584:31)
+[35mweb:dev: [0m      at SSRCompatModuleRunner.getModuleInformation (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/module-runner.js:1059:28)
+[35mweb:dev: [0m9:18:52 AM [vite] Internal server error: Cannot find module '~/components/root-head' imported from '/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/components/root-error-boundary.tsx'
+[35mweb:dev: [0m      at fetchModule (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/chunks/dep-C6pp_iVS.js:34685:34)
+[35mweb:dev: [0m      at RunnableDevEnvironment.fetchModule (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/chunks/dep-C6pp_iVS.js:35524:10)
+[35mweb:dev: [0m      at fetchModule (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/chunks/dep-C6pp_iVS.js:35493:16)
+[35mweb:dev: [0m      at handleInvoke (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/chunks/dep-C6pp_iVS.js:28792:25)
+[35mweb:dev: [0m      at EventEmitter.listenerForInvokeHandler (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/chunks/dep-C6pp_iVS.js:28853:19)
+[35mweb:dev: [0m      at EventEmitter.emit (node:events:518:28)
+[35mweb:dev: [0m      at Object.send (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/chunks/dep-C6pp_iVS.js:18804:39)
+[35mweb:dev: [0m      at Object.invoke (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/module-runner.js:535:31)
+[35mweb:dev: [0m      at Object.invoke (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/module-runner.js:584:31)
+[35mweb:dev: [0m      at SSRCompatModuleRunner.getModuleInformation (file:///Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/module-runner.js:1059:28)
+[35mweb:dev: [0m9:20:06 AM [react-router] Config saved.
+[35mweb:dev: [0m9:20:55 AM [vite] vite.config.ts changed, restarting server...
+[35mweb:dev: [0m9:20:55 AM [vite] vite.config.ts changed, restarting server...
+[35mweb:dev: [0m9:20:55 AM [vite] (client) Re-optimizing dependencies because vite config has changed
+[35mweb:dev: [0m9:20:55 AM [vite] server restarted.
+[35mweb:dev: [0m9:23:00 AM [react-router] Config saved.
+[35mweb:dev: [0m11:39:43 AM [vite] vite.config.ts changed, restarting server...
+[35mweb:dev: [0m11:39:43 AM [vite] vite.config.ts changed, restarting server...
+[35mweb:dev: [0m11:39:43 AM [vite] server restarted.
+[35mweb:dev: [0m1:15:15 PM [react-router] Config changed.
+[35mweb:dev: [0m1:15:26 PM [vite] vite.config.ts changed, restarting server...
+[35mweb:dev: [0mfailed to load config from /Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/vite.config.ts
+[35mweb:dev: [0m1:15:26 PM [vite] Cannot find module '/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/misc/true.js' imported from /Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/chunks/dep-C6pp_iVS.js
+[35mweb:dev: [0m1:15:26 PM [vite] server restart failed
+[35mweb:dev: [0m1:16:09 PM [react-router] Config changed.
+[35mweb:dev: [0m1:17:28 PM [react-router] Config changed.
+[35mweb:dev: [0m1:26:33 PM [vite] changed tsconfig file detected: /Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+[35mweb:dev: [0m1:26:33 PM [vite] changed tsconfig file detected: /Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.

@@ -14,10 +14,10 @@ import { Button } from '@kit/ui/button';
 import { Heading } from '@kit/ui/heading';
 import { Trans } from '@kit/ui/trans';
 
-import { RootHead } from '~/components/root-head';
-import { RootProviders } from '~/components/root-providers';
-import { SiteFooter } from '~/routes/marketing/_components/site-footer';
-import { SiteHeader } from '~/routes/marketing/_components/site-header';
+import { RootHead } from './root-head';
+import { RootProviders } from './root-providers';
+import { SiteFooter } from '../app/routes/marketing/_components/site-footer';
+import { SiteHeader } from '../app/routes/marketing/_components/site-header';
 
 export function RootErrorBoundary() {
   const routeError = useRouteError();
