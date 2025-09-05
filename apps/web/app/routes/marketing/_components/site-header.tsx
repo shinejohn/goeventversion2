@@ -3,7 +3,7 @@ import { JwtPayload } from '@supabase/supabase-js';
 
 import { Header } from '@kit/ui/marketing';
 
-import { AppLogo } from '../../../components/app-logo';
+import { AppLogo } from '../../../../components/app-logo';
 
 import { SiteHeaderAccountSection } from './site-header-account-section';
 import { SiteNavigation } from './site-navigation';

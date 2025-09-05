@@ -12,7 +12,7 @@ import {
 } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
 
-import { AppLogo } from '../../../components/app-logo';
+import { AppLogo } from '../../../../components/app-logo';
 import { getTeamAccountSidebarConfig } from '~/config/team-account-navigation.config';
 import { layoutStyleCookie, sidebarStateCookie } from '~/lib/cookies';
 import type { Route } from '~/types/app/routes/home/account/+types/layout';
