@@ -9,7 +9,9 @@
       "Bash(git push:*)",
       "Bash(pnpm dev:*)",
       "Bash(git add:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(cp:*)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }

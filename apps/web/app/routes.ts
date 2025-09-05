@@ -73,17 +73,6 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('booking/calendar', 'routes/booking/calendar.tsx'), // Interactive booking calendar with availability
   route('booking/manage', 'routes/booking/manage.tsx'), // Manage all bookings and reservations
 
-      // PHASE 1: Core Booking Experience (Revenue Critical)
-  layout('routes/book/layout.tsx', [
-    route('book/event-details', 'routes/book/event-details.tsx'),
-    route('book/requirements', 'routes/book/requirements.tsx'),
-    route('book/services', 'routes/book/services.tsx'),
-    route('book/payment', 'routes/book/payment.tsx'),
-    route('book/review', 'routes/book/review.tsx'),
-    route('book/confirmation', 'routes/book/confirmation.tsx'),
-    route('book/success', 'routes/book/success.tsx'),
-  ]),
-  
   // Legacy book routes (maintain compatibility)
   route('book', 'routes/book.tsx'), // Book It page
   route('book/performer', 'routes/book/performer.tsx'), // Book performer
@@ -198,6 +187,17 @@ const teamAccountLayout = layout('routes/home/account/layout.tsx', [
   ),
 ]);
 
+// Book layout that was causing conflicts inside magic patterns layout
+const bookLayout = layout('routes/book/layout.tsx', [
+  route('book/event-details', 'routes/book/event-details.tsx'),
+  route('book/requirements', 'routes/book/requirements.tsx'),
+  route('book/services', 'routes/book/services.tsx'),
+  route('book/payment', 'routes/book/payment.tsx'),
+  route('book/review', 'routes/book/review.tsx'),
+  route('book/confirmation', 'routes/book/confirmation.tsx'),
+  route('book/success', 'routes/book/success.tsx'),
+]);
+
 export default [
   ...rootRoutes,
   ...apiRoutes,
@@ -207,5 +207,6 @@ export default [
   authLayout,
   userAccountLayout,
   teamAccountLayout,
+  bookLayout,
   catchAllRoute, // Place catch-all route at the end
 ] satisfies RouteConfig;

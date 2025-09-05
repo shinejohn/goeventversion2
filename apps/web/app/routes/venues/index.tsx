@@ -41,26 +41,26 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     }
     
     // Transform venues data to match VenueData interface
-    const transformedVenues = (venues || []).map(venue => ({
+    const transformedVenues = (venues || []).filter(venue => venue && venue.id).map(venue => ({
       id: venue.id,
-      name: venue.name,
-      description: venue.description,
-      address: venue.address,
-      capacity: venue.max_capacity,
-      images: venue.gallery_images || [],
+      name: venue.name || 'Unnamed Venue',
+      description: venue.description || '',
+      address: venue.address || '',
+      capacity: venue.max_capacity || 0,
+      images: Array.isArray(venue.gallery_images) ? venue.gallery_images : [],
       amenities: venue.amenities || [],
       average_rating: venue.average_rating || null,
       total_reviews: venue.total_reviews || null,
-      slug: venue.slug,
-      community_id: venue.community_id,
-      account_id: venue.account_id,
+      slug: venue.slug || '',
+      community_id: venue.community_id || null,
+      account_id: venue.account_id || null,
       venue_type: venue.venue_type || 'Other',
       price_per_hour: venue.hourly_rate || null,
       distance: venue.distance || null,
-      listed_date: venue.created_at,
+      listed_date: venue.created_at || new Date().toISOString(),
       last_booked_days_ago: venue.last_booked_days_ago || null,
-      unavailable_dates: venue.unavailable_dates || [],
-      image_url: venue.image_url || (venue.gallery_images && venue.gallery_images[0]) || null,
+      unavailable_dates: Array.isArray(venue.unavailable_dates) ? venue.unavailable_dates : [],
+      image_url: venue.image_url || (Array.isArray(venue.gallery_images) && venue.gallery_images[0]) || null,
       city: venue.city || '',
       verified: venue.is_verified || false
     }));
@@ -68,6 +68,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     return { venues: transformedVenues };
     
   } catch (error) {
+    console.error('Error in venues loader:', error);
     return { venues: [] };
   }
 };

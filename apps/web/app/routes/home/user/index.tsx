@@ -161,23 +161,23 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       .limit(5);
 
     // Transform data to match component expectations
-    const transformedArtists = (followedArtists || []).map(artist => ({
+    const transformedArtists = (followedArtists || []).filter(artist => artist && artist.id).map(artist => ({
       id: artist.id,
-      name: artist.name,
+      name: artist.name || 'Unknown Artist',
       image: artist.image_url || 'https://via.placeholder.com/300',
       location: artist.city || 'Unknown',
       genre: artist.genre || 'Various',
       upcomingShows: 0, // Would need a separate query to count
-      lastActive: artist.created_at,
+      lastActive: artist.created_at || new Date().toISOString(),
       newUpdates: 0,
       isVerified: artist.is_verified || false
     }));
 
-    const transformedShows = (upcomingShows || []).map(show => ({
+    const transformedShows = (upcomingShows || []).filter(show => show && show.id).map(show => ({
       id: show.id,
-      artistName: show.title,
+      artistName: show.title || 'Untitled Event',
       artistImage: show.image_url || 'https://via.placeholder.com/300',
-      date: show.start_date,
+      date: show.start_date || new Date().toISOString(),
       venueName: show.venue?.name || 'TBA',
       venueLocation: show.venue?.address || 'TBA',
       ticketPrice: show.price || 0,
