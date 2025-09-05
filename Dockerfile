@@ -12,13 +12,18 @@ WORKDIR /app
 # Copy all files
 COPY . .
 
+# Debug: List marketing docs directory
+RUN ls -la /app/apps/web/app/routes/marketing/docs/
+
 # Install all dependencies
 RUN pnpm install --no-frozen-lockfile
 
-# Build the web app specifically
-WORKDIR /app/apps/web
-RUN pnpm react-router:typegen
-RUN pnpm build
+# Debug: List again after install
+RUN ls -la /app/apps/web/app/routes/marketing/docs/
+
+# Generate types and build from root using turbo
+RUN cd /app && pnpm --filter web react-router:typegen
+RUN cd /app && pnpm turbo build --filter=web
 
 # Production stage
 FROM node:20-alpine AS production
