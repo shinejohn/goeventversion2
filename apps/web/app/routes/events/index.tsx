@@ -19,15 +19,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   const offset = (page - 1) * limit;
   
   try {
-    console.log('Loading events list with params:', { search, category, location, dateFrom, dateTo, page });
-    
-    // First check if there are any events at all
-    const { data: allEvents, error: countError } = await client
-      .from('events')
-      .select('id, title, status')
-      .limit(5);
-    
-    console.log('All events in database:', allEvents);
+    // Build query for events
     
     // Build dynamic query - be more permissive for now
     let query = client
@@ -40,16 +32,12 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     // Try with published status first, then any status if no results
     const publishedQuery = query.eq('status', 'published').gte('start_date', new Date().toISOString());
     
-    console.log('Trying published query first...');
     let { data: events, error, count } = await publishedQuery
       .order('start_date', { ascending: true })
       .range(offset, offset + limit - 1);
-      
-    console.log('Published events result:', { events, error, count });
     
-    // If no published events, try ANY events for debugging
+    // If no published events, try any events
     if (!events || events.length === 0) {
-      console.log('No published events found, trying ANY events...');
       const anyQuery = client
         .from('events')
         .select(`
@@ -60,8 +48,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       const anyResult = await anyQuery
         .order('created_at', { ascending: false })
         .range(offset, offset + limit - 1);
-        
-      console.log('Any events result:', anyResult);
+      
       events = anyResult.data;
       error = anyResult.error;
       count = anyResult.count;

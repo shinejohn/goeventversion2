@@ -9,15 +9,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const venueId = params.id;
   
   try {
-    console.log('Loading venue with ID:', venueId);
-    
-    // First, let's check if there are any venues at all
-    const { data: allVenues, error: countError } = await client
-      .from('venues')
-      .select('id, name')
-      .limit(5);
-      
-    console.log('Available venues in database:', allVenues);
+    // Load venue details
     
     const { data: venue, error } = await client
       .from('venues')
@@ -25,15 +17,8 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .eq('id', venueId)
       .single();
       
-    console.log('Venue query result:', { venue, error });
-      
     if (error || !venue) {
-      console.error('Venue not found:', error);
-      // If no venues exist, return a helpful message
-      if (allVenues && allVenues.length === 0) {
-        throw new Response('No venues in database. Please add venues first.', { status: 404 });
-      }
-      throw new Response(`Venue not found. Available venues: ${allVenues?.map(v => v.id).join(', ')}`, { status: 404 });
+      throw new Response('Venue not found', { status: 404 });
     }
     
     // Transform the database venue to match UI expectations

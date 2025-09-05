@@ -27,21 +27,18 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     }
     
     if (venueType) {
-      query = query.eq('venueType', venueType);
+      query = query.eq('venue_type', venueType);
     }
     
     if (capacity) {
-      query = query.gte('capacity', parseInt(capacity));
+      query = query.gte('max_capacity', parseInt(capacity));
     }
     
     const { data: venues, error } = await query.order('name');
     
     if (error) {
-      console.error('Supabase error:', error);
       throw error;
     }
-    
-    console.log('Loaded venues from Railway:', venues?.length || 0, 'venues');
     
     // Transform venues data to match VenueData interface
     const transformedVenues = (venues || []).map(venue => ({
@@ -49,21 +46,21 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       name: venue.name,
       description: venue.description,
       address: venue.address,
-      capacity: venue.capacity,
-      images: venue.images || [],
+      capacity: venue.max_capacity,
+      images: venue.gallery_images || [],
       amenities: venue.amenities || [],
-      average_rating: venue.rating || null,
-      total_reviews: venue.reviews || null,
+      average_rating: venue.average_rating || null,
+      total_reviews: venue.total_reviews || null,
       slug: venue.slug,
       community_id: venue.community_id,
       account_id: venue.account_id,
-      venue_type: venue.venueType || 'Other',
-      price_per_hour: venue.pricePerHour || null,
+      venue_type: venue.venue_type || 'Other',
+      price_per_hour: venue.hourly_rate || null,
       distance: venue.distance || null,
-      listed_date: venue.listedDate || venue.created_at,
-      last_booked_days_ago: venue.lastBookedDaysAgo || null,
-      unavailable_dates: venue.unavailableDates || [],
-      image_url: venue.image_url || (venue.images && venue.images[0]) || null,
+      listed_date: venue.created_at,
+      last_booked_days_ago: venue.last_booked_days_ago || null,
+      unavailable_dates: venue.unavailable_dates || [],
+      image_url: venue.image_url || (venue.gallery_images && venue.gallery_images[0]) || null,
       city: venue.city || '',
       verified: venue.is_verified || false
     }));
@@ -71,7 +68,6 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     return { venues: transformedVenues };
     
   } catch (error) {
-    console.error('Error loading venues:', error);
     return { venues: [] };
   }
 };
