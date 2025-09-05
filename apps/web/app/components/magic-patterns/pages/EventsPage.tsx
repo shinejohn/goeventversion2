@@ -160,7 +160,7 @@ export const EventsPage = ({ events = [] }: EventsPageProps) => {
     return {
       title: event.title,
       description: `${event.title} at ${event.venue} on ${event.date}`,
-      url: `${window.location.origin}/event/${event.id}`,
+      url: `${window.location.origin}/events/${event.id}`,
       image: event.image
     };
   };
@@ -288,7 +288,7 @@ export const EventsPage = ({ events = [] }: EventsPageProps) => {
               ? `${selectedCategory} Events` 
               : 'All Upcoming Events'}
           </h2>
-          <button className="text-indigo-600 hover:text-indigo-800 flex items-center font-medium" onClick={() => navigate('/event/create')}>
+          <button className="text-indigo-600 hover:text-indigo-800 flex items-center font-medium" onClick={() => navigate('/events/create')}>
             Submit Event
             <ArrowRightIcon className="ml-1 h-4 w-4" />
           </button>

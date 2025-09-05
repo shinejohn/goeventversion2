@@ -131,6 +131,10 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('test-venues', 'routes/test-venues.tsx'),
   route('venues', 'routes/venues/index.tsx'),
   route('venues/:id', 'routes/venues/$id.tsx'),
+  route('venues/submit', 'routes/venues/submit.tsx'),
+  route('venues/management', 'routes/venues/management.tsx'),
+  route('venues/trending', 'routes/venues/trending.tsx'),
+  route('venues/new', 'routes/venues/new.tsx'),
   
   // Remove the wildcard route from inside the layout
 ]);
