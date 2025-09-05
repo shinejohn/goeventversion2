@@ -66,6 +66,5 @@ EXPOSE 3000
 # Set production environment
 ENV NODE_ENV=production
 
-# Start the application from web directory
-WORKDIR /app/apps/web
-CMD ["pnpm", "start"]
+# Start the application
+CMD ["pnpm", "--filter", "web", "start"]
