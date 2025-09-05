@@ -1,8 +1,8 @@
-import type { ActionFunctionArgs } from 'react-router';
-import { json } from 'react-router';
 import { z } from 'zod';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+
+import type { Route } from '~/types/app/routes/api/+types/checkin';
 
 const CheckinSchema = z.object({
   venue_id: z.string().uuid().optional(),
@@ -16,9 +16,9 @@ const CheckinSchema = z.object({
   privacy: z.enum(['public', 'friends', 'private']).default('friends'),
 });
 
-export async function action({ request }: ActionFunctionArgs) {
+export async function action({ request }: Route.ActionArgs) {
   if (request.method !== 'POST') {
-    throw json({ error: 'Method not allowed' }, { status: 405 });
+    throw new Response('Method not allowed', { status: 405 });
   }
 
   const client = getSupabaseServerClient(request);
@@ -27,12 +27,12 @@ export async function action({ request }: ActionFunctionArgs) {
   const { data: { user }, error: authError } = await client.auth.getUser();
   
   if (authError || !user) {
-    throw json({ error: 'Unauthorized' }, { status: 401 });
+    throw new Response('Unauthorized', { status: 401 });
   }
 
   try {
-    const formData = await request.formData();
-    const data = CheckinSchema.parse(Object.fromEntries(formData));
+    const body = await request.json();
+    const data = CheckinSchema.parse(body);
 
     const { data: checkin, error } = await client
       .from('checkins')
@@ -52,15 +52,18 @@ export async function action({ request }: ActionFunctionArgs) {
       .single();
 
     if (error) {
-      throw json({ error: error.message }, { status: 400 });
+      throw new Response(error.message, { status: 400 });
     }
 
-    return json({ success: true, checkin });
+    return { success: true, checkin };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw json({ error: 'Invalid data', issues: error.issues }, { status: 400 });
+      throw new Response(JSON.stringify({ error: 'Invalid data', issues: error.issues }), { 
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
     
-    throw json({ error: 'Internal server error' }, { status: 500 });
+    throw new Response('Internal server error', { status: 500 });
   }
 }
