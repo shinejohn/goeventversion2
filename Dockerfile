@@ -12,10 +12,12 @@ WORKDIR /app
 # Copy all files
 COPY . .
 
-# Install all dependencies and build
+# Install all dependencies
 RUN pnpm install --no-frozen-lockfile
-# Generate React Router types before building
-RUN cd apps/web && pnpm react-router:typegen
+
+# Build the web app specifically
+WORKDIR /app/apps/web
+RUN pnpm react-router:typegen
 RUN pnpm build
 
 # Production stage
