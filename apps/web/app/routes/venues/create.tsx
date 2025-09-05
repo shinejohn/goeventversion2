@@ -18,19 +18,43 @@ export const action = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
   const formData = await request.formData();
   
+  // Get current user
+  const { data: { user }, error: userError } = await client.auth.getUser();
+  if (!user || userError) {
+    return { error: 'You must be logged in to create a venue' };
+  }
+
+  // Get user's account
+  const { data: account } = await client
+    .from('accounts')
+    .select('id')
+    .eq('primary_owner_user_id', user.id)
+    .eq('is_personal_account', true)
+    .single();
+
+  const lat = parseFloat(formData.get('lat') as string) || null;
+  const lng = parseFloat(formData.get('lng') as string) || null;
+  
   const venueData = {
     name: formData.get('name') as string,
     description: formData.get('description') as string,
     address: formData.get('address') as string,
     venueType: formData.get('venueType') as string,
+    venue_type: formData.get('venueType') as string, // Also add snake_case version
     capacity: parseInt(formData.get('capacity') as string) || 100,
-    lat: parseFloat(formData.get('lat') as string) || 0,
-    lng: parseFloat(formData.get('lng') as string) || 0,
-    amenities: formData.get('amenities')?.toString().split(',').map(a => a.trim()) || [],
+    max_capacity: parseInt(formData.get('capacity') as string) || 100,
+    amenities: {
+      items: formData.get('amenities')?.toString().split(',').map(a => a.trim()) || []
+    },
     rating: 0,
-    totalReviews: 0,
-    priceLevel: parseInt(formData.get('priceLevel') as string) || 2,
-    image: formData.get('image') as string || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=1200'
+    reviewCount: 0,
+    price_range: parseInt(formData.get('priceLevel') as string) || 2,
+    image_url: formData.get('image') as string || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=1200',
+    account_id: account?.id || user.id,
+    community_id: account?.id || user.id, // Using account ID as community_id for now
+    slug: formData.get('name')?.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') || '',
+    location: lat && lng ? `POINT(${lng} ${lat})` : `POINT(0 0)`,
+    pricePerHour: (parseInt(formData.get('priceLevel') as string) || 2) * 50 // Convert price level to hourly rate
   };
   
   const { data, error } = await client

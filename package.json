@@ -12,7 +12,7 @@
   },
   "scripts": {
     "turbo": "turbo",
-    "postinstall": "node -e \"if (process.env.NODE_ENV !== 'production') { require('child_process').execSync('pnpm exec manypkg fix', { stdio: 'inherit' }) }\"",
+    "postinstall": "node -e \"if (process.env.NODE_ENV === 'production') { process.exit(0); } try { require('child_process').execSync('pnpm exec manypkg fix', { stdio: 'inherit' }); } catch (e) { console.log('Skipping manypkg:', e.message); }\"",
     "build": "turbo build --cache-dir=.turbo",
     "start": "pnpm --filter web start",
     "clean": "git clean -xdf node_modules dist",

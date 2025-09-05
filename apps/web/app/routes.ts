@@ -20,6 +20,7 @@ const apiRoutes = [
   route('api/billing/webhook', 'routes/api/billing/webhook.ts'),
   route('api/db/webhook', 'routes/api/db/webhook.ts'),
   route('api/otp/send', 'routes/api/otp/send.ts'),
+  route('api/checkin', 'routes/api/checkin.ts'), // Check-in API
 ];
 
 // Magic Patterns routes with layout wrapper
@@ -89,6 +90,8 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   
   route('c/:communitySlug', 'routes/c.$communitySlug.tsx'),
   route('calendars', 'routes/calendars/index.tsx'),
+  route('calendars/create', 'routes/calendars/create.tsx'), // Create new calendar
+  route('calendars/:slug', 'routes/calendars/$slug.tsx'), // View/manage calendar
   route('calendars/marketplace', 'routes/calendars/marketplace.tsx'),
   route('careers', 'routes/careers/index.tsx'),
   route('community-impact', 'routes/community-impact/index.tsx'),
@@ -125,12 +128,14 @@ const magicPatternsLayout = layout('routes/magic-patterns/layout.tsx', [
   route('tickets', 'routes/tickets/index.tsx'),
   route('tickets/:id', 'routes/tickets/$id/index.tsx'),
   route('tickets/buy', 'routes/tickets/buy.tsx'), // Ticket buying
+  route('tickets/purchase/:eventId', 'routes/tickets/purchase/$eventId.tsx'), // New ticket purchase flow
   route('tickets/marketplace', 'routes/tickets/marketplace/index.tsx'),
   
   // Venues  
   route('test-venues', 'routes/test-venues.tsx'),
   route('venues', 'routes/venues/index.tsx'),
   route('venues/:id', 'routes/venues/$id.tsx'),
+  route('venues/:id/book', 'routes/venues/$id/book.tsx'), // New booking flow
   route('venues/submit', 'routes/venues/submit.tsx'),
   route('venues/management', 'routes/venues/management.tsx'),
   route('venues/trending', 'routes/venues/trending.tsx'),

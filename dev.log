@@ -175,3 +175,28 @@ turbo 2.5.6
 [35mweb:dev: [0m1:17:28 PM [react-router] Config changed.
 [35mweb:dev: [0m1:26:33 PM [vite] changed tsconfig file detected: /Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
 [35mweb:dev: [0m1:26:33 PM [vite] changed tsconfig file detected: /Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+[35mweb:dev: [0m2:21:25 PM [react-router] Config saved
+[35mweb:dev: [0m2:22:08 PM [react-router] Config saved
+[35mweb:dev: [0m2:22:43 PM [react-router] Config saved
+[35mweb:dev: [0m2:23:10 PM [react-router] Config saved
+[35mweb:dev: [0m2:24:03 PM [react-router] Config changed.
+[35mweb:dev: [0m2:24:14 PM [react-router] Config changed.
+[35mweb:dev: [0m2:24:22 PM [react-router] Config changed.
+[35mweb:dev: [0m2:24:41 PM [react-router] Config changed.
+[35mweb:dev: [0m2:30:24 PM [vite] vite.config.ts changed, restarting server...
+[35mweb:dev: [0m2:30:24 PM [vite] changed tsconfig file detected: /Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+[35mweb:dev: [0m2:30:24 PM [vite] changed tsconfig file detected: /Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+[35mweb:dev: [0mfailed to load config from /Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/vite.config.ts
+[35mweb:dev: [0m2:30:24 PM [vite] Cannot find module '/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/misc/true.js' imported from /Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/node_modules/.pnpm/vite@7.1.4_@types+node@24.3.0_jiti@2.5.1_lightningcss@1.30.1_tsx@4.20.5/node_modules/vite/dist/node/chunks/dep-C6pp_iVS.js
+[35mweb:dev: [0m2:30:24 PM [vite] server restart failed
+ ELIFECYCLE  Command failed with exit code 1.
+[35mweb:dev: [0m ELIFECYCLE  Command failed with exit code 143.
+[35mweb:dev: [0mERROR: command finished with error: command (/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web) /usr/local/bin/pnpm run dev exited (143)
+web#dev: command (/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web) /usr/local/bin/pnpm run dev exited (143)
+
+[1m Tasks:    [32m[1m1 successful[0m, 2 total[0m
+[1mCached:    [1m0 cached[0m, 2 total[0m
+[1m  Time:    [1m49h13m51.384s[0m [0m
+[1mFailed:    [31m[1mweb#dev[0m[0m
+
+[31;40m ERROR [0m [31;49mrun failed: command  exited (143)[0m

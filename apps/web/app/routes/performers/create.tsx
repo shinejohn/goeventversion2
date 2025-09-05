@@ -18,16 +18,37 @@ export const action = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
   const formData = await request.formData();
   
+  // Get current user
+  const { data: { user }, error: userError } = await client.auth.getUser();
+  if (!user || userError) {
+    return { error: 'You must be logged in to create a performer profile' };
+  }
+
+  // Get user's account
+  const { data: account } = await client
+    .from('accounts')
+    .select('id')
+    .eq('primary_owner_user_id', user.id)
+    .eq('is_personal_account', true)
+    .single();
+
   const performerData = {
     name: formData.get('name') as string,
     bio: formData.get('bio') as string,
-    genre: formData.get('genre') as string,
+    genres: [formData.get('genre') as string], // Database expects array
     location: formData.get('location') as string,
+    home_city: formData.get('location') as string, // Also populate home_city
     rating: 0,
-    totalReviews: 0,
+    reviews: 0,
+    total_reviews: 0,
     price: formData.get('price') as string,
+    priceRange: formData.get('price') as string, // Also add priceRange field
     image: formData.get('image') as string || 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=1200',
-    nextPerformance: formData.get('nextPerformance') as string || null
+    next_performance: formData.get('nextPerformance') as string || null,
+    account_id: account?.id || user.id,
+    slug: formData.get('name')?.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') || '',
+    availableForBooking: true,
+    verified: false
   };
   
   const { data, error } = await client

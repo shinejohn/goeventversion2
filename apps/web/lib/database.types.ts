@@ -1,4 +1,3 @@
-
 export type Json =
   | string
   | number
@@ -8,17 +7,35 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: "13.0.4"
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   public: {
     Tables: {
       accounts: {
         Row: {
-          account_type: string | null
-          community_id: string | null
           created_at: string | null
           created_by: string | null
           email: string | null
@@ -33,8 +50,6 @@ export type Database = {
           updated_by: string | null
         }
         Insert: {
-          account_type?: string | null
-          community_id?: string | null
           created_at?: string | null
           created_by?: string | null
           email?: string | null
@@ -49,8 +64,6 @@ export type Database = {
           updated_by?: string | null
         }
         Update: {
-          account_type?: string | null
-          community_id?: string | null
           created_at?: string | null
           created_by?: string | null
           email?: string | null
@@ -64,15 +77,7 @@ export type Database = {
           updated_at?: string | null
           updated_by?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "accounts_community_id_fkey"
-            columns: ["community_id"]
-            isOneToOne: false
-            referencedRelation: "communities"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       accounts_memberships: {
         Row: {
@@ -181,136 +186,84 @@ export type Database = {
       }
       bookings: {
         Row: {
-          additional_services: Json | null
-          additional_services_cost: number | null
-          balance_due_date: string | null
-          base_price: number
-          booking_reference: string
-          booking_status: string | null
-          breakdown_cost: number | null
-          breakdown_time: string | null
-          check_in_instructions: string | null
-          contact_person_email: string | null
-          contact_person_name: string | null
-          contact_person_phone: string | null
+          booking_number: string
+          contact_person: Json | null
           created_at: string | null
-          deposit_amount: number | null
-          deposit_date: string | null
-          deposit_paid: boolean | null
-          end_time: string | null
-          event_date: string
-          event_id: string | null
+          date: string
+          end_time: string
           event_name: string
           event_type: string | null
-          final_payment_date: string | null
           guest_count: number | null
-          house_rules: Json | null
           id: string
-          is_venue_owner_booking: boolean | null
-          parking_information: string | null
+          payment_method: string | null
           payment_status: string | null
           performer_id: string | null
+          qr_code: string
           service_fee: number | null
-          setup_cost: number | null
-          setup_time: string | null
+          services: Json | null
+          setup_requirements: string | null
           special_requests: string | null
-          start_time: string | null
-          subtotal: number
-          total: number
+          start_time: string
+          status: string | null
+          subtotal: number | null
+          total_price: number | null
           updated_at: string | null
-          user_id: string | null
+          user_id: string
           venue_id: string | null
         }
         Insert: {
-          additional_services?: Json | null
-          additional_services_cost?: number | null
-          balance_due_date?: string | null
-          base_price: number
-          booking_reference: string
-          booking_status?: string | null
-          breakdown_cost?: number | null
-          breakdown_time?: string | null
-          check_in_instructions?: string | null
-          contact_person_email?: string | null
-          contact_person_name?: string | null
-          contact_person_phone?: string | null
+          booking_number?: string
+          contact_person?: Json | null
           created_at?: string | null
-          deposit_amount?: number | null
-          deposit_date?: string | null
-          deposit_paid?: boolean | null
-          end_time?: string | null
-          event_date: string
-          event_id?: string | null
+          date: string
+          end_time: string
           event_name: string
           event_type?: string | null
-          final_payment_date?: string | null
           guest_count?: number | null
-          house_rules?: Json | null
           id?: string
-          is_venue_owner_booking?: boolean | null
-          parking_information?: string | null
+          payment_method?: string | null
           payment_status?: string | null
           performer_id?: string | null
+          qr_code?: string
           service_fee?: number | null
-          setup_cost?: number | null
-          setup_time?: string | null
+          services?: Json | null
+          setup_requirements?: string | null
           special_requests?: string | null
-          start_time?: string | null
-          subtotal: number
-          total: number
+          start_time: string
+          status?: string | null
+          subtotal?: number | null
+          total_price?: number | null
           updated_at?: string | null
-          user_id?: string | null
+          user_id: string
           venue_id?: string | null
         }
         Update: {
-          additional_services?: Json | null
-          additional_services_cost?: number | null
-          balance_due_date?: string | null
-          base_price?: number
-          booking_reference?: string
-          booking_status?: string | null
-          breakdown_cost?: number | null
-          breakdown_time?: string | null
-          check_in_instructions?: string | null
-          contact_person_email?: string | null
-          contact_person_name?: string | null
-          contact_person_phone?: string | null
+          booking_number?: string
+          contact_person?: Json | null
           created_at?: string | null
-          deposit_amount?: number | null
-          deposit_date?: string | null
-          deposit_paid?: boolean | null
-          end_time?: string | null
-          event_date?: string
-          event_id?: string | null
+          date?: string
+          end_time?: string
           event_name?: string
           event_type?: string | null
-          final_payment_date?: string | null
           guest_count?: number | null
-          house_rules?: Json | null
           id?: string
-          is_venue_owner_booking?: boolean | null
-          parking_information?: string | null
+          payment_method?: string | null
           payment_status?: string | null
           performer_id?: string | null
+          qr_code?: string
           service_fee?: number | null
-          setup_cost?: number | null
-          setup_time?: string | null
+          services?: Json | null
+          setup_requirements?: string | null
           special_requests?: string | null
-          start_time?: string | null
-          subtotal?: number
-          total?: number
+          start_time?: string
+          status?: string | null
+          subtotal?: number | null
+          total_price?: number | null
           updated_at?: string | null
-          user_id?: string | null
+          user_id?: string
           venue_id?: string | null
         }
         Relationships: [
-          {
-            foreignKeyName: "bookings_event_id_fkey"
-            columns: ["event_id"]
-            isOneToOne: false
-            referencedRelation: "events"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "bookings_performer_id_fkey"
             columns: ["performer_id"]
@@ -327,146 +280,155 @@ export type Database = {
           },
         ]
       }
-      check_ins: {
+      calendars: {
         Row: {
-          comments: number | null
+          categories: string[] | null
+          color: string | null
+          contributors: string[] | null
           created_at: string | null
+          description: string | null
+          event_count: number | null
+          id: string
+          is_monetized: boolean | null
+          is_shared: boolean | null
+          name: string
+          one_time_price: number | null
+          owner_id: string
+          slug: string | null
+          subscriber_count: number | null
+          subscription_price: number | null
+          timezone: string | null
+          updated_at: string | null
+          view_count: number | null
+          visibility: string | null
+        }
+        Insert: {
+          categories?: string[] | null
+          color?: string | null
+          contributors?: string[] | null
+          created_at?: string | null
+          description?: string | null
+          event_count?: number | null
+          id?: string
+          is_monetized?: boolean | null
+          is_shared?: boolean | null
+          name: string
+          one_time_price?: number | null
+          owner_id: string
+          slug?: string | null
+          subscriber_count?: number | null
+          subscription_price?: number | null
+          timezone?: string | null
+          updated_at?: string | null
+          view_count?: number | null
+          visibility?: string | null
+        }
+        Update: {
+          categories?: string[] | null
+          color?: string | null
+          contributors?: string[] | null
+          created_at?: string | null
+          description?: string | null
+          event_count?: number | null
+          id?: string
+          is_monetized?: boolean | null
+          is_shared?: boolean | null
+          name?: string
+          one_time_price?: number | null
+          owner_id?: string
+          slug?: string | null
+          subscriber_count?: number | null
+          subscription_price?: number | null
+          timezone?: string | null
+          updated_at?: string | null
+          view_count?: number | null
+          visibility?: string | null
+        }
+        Relationships: []
+      }
+      checkins: {
+        Row: {
+          address: string | null
+          check_in_time: string | null
+          check_out_time: string | null
+          comments_count: number | null
+          created_at: string | null
+          event_details: Json | null
           event_id: string | null
           id: string
           is_active: boolean | null
-          likes: number | null
-          location: unknown | null
-          location_accuracy: number | null
+          latitude: number | null
+          likes_count: number | null
+          longitude: number | null
           mood: string | null
           note: string | null
-          photos: Json | null
+          photos: string[] | null
           privacy: string | null
-          timestamp: string | null
           updated_at: string | null
-          user_id: string | null
+          user_id: string
           venue_id: string | null
           venue_name: string
         }
         Insert: {
-          comments?: number | null
+          address?: string | null
+          check_in_time?: string | null
+          check_out_time?: string | null
+          comments_count?: number | null
           created_at?: string | null
+          event_details?: Json | null
           event_id?: string | null
           id?: string
           is_active?: boolean | null
-          likes?: number | null
-          location?: unknown | null
-          location_accuracy?: number | null
+          latitude?: number | null
+          likes_count?: number | null
+          longitude?: number | null
           mood?: string | null
           note?: string | null
-          photos?: Json | null
+          photos?: string[] | null
           privacy?: string | null
-          timestamp?: string | null
           updated_at?: string | null
-          user_id?: string | null
+          user_id: string
           venue_id?: string | null
           venue_name: string
         }
         Update: {
-          comments?: number | null
+          address?: string | null
+          check_in_time?: string | null
+          check_out_time?: string | null
+          comments_count?: number | null
           created_at?: string | null
+          event_details?: Json | null
           event_id?: string | null
           id?: string
           is_active?: boolean | null
-          likes?: number | null
-          location?: unknown | null
-          location_accuracy?: number | null
+          latitude?: number | null
+          likes_count?: number | null
+          longitude?: number | null
           mood?: string | null
           note?: string | null
-          photos?: Json | null
+          photos?: string[] | null
           privacy?: string | null
-          timestamp?: string | null
           updated_at?: string | null
-          user_id?: string | null
+          user_id?: string
           venue_id?: string | null
           venue_name?: string
         }
         Relationships: [
           {
-            foreignKeyName: "check_ins_event_id_fkey"
+            foreignKeyName: "checkins_event_id_fkey"
             columns: ["event_id"]
             isOneToOne: false
             referencedRelation: "events"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "check_ins_venue_id_fkey"
+            foreignKeyName: "checkins_venue_id_fkey"
             columns: ["venue_id"]
             isOneToOne: false
             referencedRelation: "venues"
             referencedColumns: ["id"]
           },
         ]
-      }
-      communities: {
-        Row: {
-          active_organizers: number | null
-          active_venues: number | null
-          city: string
-          country: string
-          cover_image_url: string | null
-          created_at: string | null
-          default_radius_miles: number | null
-          description: string | null
-          featured_image_url: string | null
-          id: string
-          location: unknown
-          name: string
-          population: number | null
-          slug: string
-          state: string
-          tags: string[] | null
-          timezone: string
-          total_events: number | null
-          updated_at: string | null
-        }
-        Insert: {
-          active_organizers?: number | null
-          active_venues?: number | null
-          city: string
-          country?: string
-          cover_image_url?: string | null
-          created_at?: string | null
-          default_radius_miles?: number | null
-          description?: string | null
-          featured_image_url?: string | null
-          id?: string
-          location: unknown
-          name: string
-          population?: number | null
-          slug: string
-          state: string
-          tags?: string[] | null
-          timezone?: string
-          total_events?: number | null
-          updated_at?: string | null
-        }
-        Update: {
-          active_organizers?: number | null
-          active_venues?: number | null
-          city?: string
-          country?: string
-          cover_image_url?: string | null
-          created_at?: string | null
-          default_radius_miles?: number | null
-          description?: string | null
-          featured_image_url?: string | null
-          id?: string
-          location?: unknown
-          name?: string
-          population?: number | null
-          slug?: string
-          state?: string
-          tags?: string[] | null
-          timezone?: string
-          total_events?: number | null
-          updated_at?: string | null
-        }
-        Relationships: []
       }
       config: {
         Row: {
@@ -491,34 +453,31 @@ export type Database = {
       }
       event_performers: {
         Row: {
-          compensation: number | null
+          billing_order: number | null
           created_at: string | null
-          event_id: string | null
+          event_id: string
           id: string
-          is_headliner: boolean | null
-          performance_order: number | null
-          performer_id: string | null
-          set_duration_minutes: number | null
+          performer_id: string
+          role: string | null
+          updated_at: string | null
         }
         Insert: {
-          compensation?: number | null
+          billing_order?: number | null
           created_at?: string | null
-          event_id?: string | null
+          event_id: string
           id?: string
-          is_headliner?: boolean | null
-          performance_order?: number | null
-          performer_id?: string | null
-          set_duration_minutes?: number | null
+          performer_id: string
+          role?: string | null
+          updated_at?: string | null
         }
         Update: {
-          compensation?: number | null
+          billing_order?: number | null
           created_at?: string | null
-          event_id?: string | null
+          event_id?: string
           id?: string
-          is_headliner?: boolean | null
-          performance_order?: number | null
-          performer_id?: string | null
-          set_duration_minutes?: number | null
+          performer_id?: string
+          role?: string | null
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -539,133 +498,64 @@ export type Database = {
       }
       events: {
         Row: {
-          account_id: string | null
+          account_id: string
+          amenities: Json | null
           capacity: number | null
-          category: string
-          community_id: string
           created_at: string | null
           description: string | null
           end_datetime: string
-          external_url: string | null
-          featured_image_url: string | null
           id: string
-          images: Json | null
-          interested_count: number | null
-          is_virtual: boolean | null
-          location: unknown | null
-          location_address: string | null
-          location_name: string | null
-          meta_description: string | null
+          image_url: string | null
+          lineup: Json | null
           organizer_id: string
           price_max: number | null
           price_min: number | null
-          published_at: string | null
-          recurrence_rule: string | null
-          requires_ticket: boolean | null
-          share_count: number | null
-          slug: string
-          source: string | null
           start_datetime: string
           status: string | null
-          tags: string[] | null
-          temperature: number | null
-          ticket_url: string | null
-          tickets_sold: number | null
-          timezone: string
+          ticket_info: Json | null
           title: string
           updated_at: string | null
           venue_id: string | null
-          view_count: number | null
-          virtual_url: string | null
-          visibility: string | null
-          weather_condition: string | null
-          weather_icon: string | null
         }
         Insert: {
-          account_id?: string | null
+          account_id: string
+          amenities?: Json | null
           capacity?: number | null
-          category: string
-          community_id: string
           created_at?: string | null
           description?: string | null
           end_datetime: string
-          external_url?: string | null
-          featured_image_url?: string | null
           id?: string
-          images?: Json | null
-          interested_count?: number | null
-          is_virtual?: boolean | null
-          location?: unknown | null
-          location_address?: string | null
-          location_name?: string | null
-          meta_description?: string | null
+          image_url?: string | null
+          lineup?: Json | null
           organizer_id: string
           price_max?: number | null
           price_min?: number | null
-          published_at?: string | null
-          recurrence_rule?: string | null
-          requires_ticket?: boolean | null
-          share_count?: number | null
-          slug: string
-          source?: string | null
           start_datetime: string
           status?: string | null
-          tags?: string[] | null
-          temperature?: number | null
-          ticket_url?: string | null
-          tickets_sold?: number | null
-          timezone: string
+          ticket_info?: Json | null
           title: string
           updated_at?: string | null
           venue_id?: string | null
-          view_count?: number | null
-          virtual_url?: string | null
-          visibility?: string | null
-          weather_condition?: string | null
-          weather_icon?: string | null
         }
         Update: {
-          account_id?: string | null
+          account_id?: string
+          amenities?: Json | null
           capacity?: number | null
-          category?: string
-          community_id?: string
           created_at?: string | null
           description?: string | null
           end_datetime?: string
-          external_url?: string | null
-          featured_image_url?: string | null
           id?: string
-          images?: Json | null
-          interested_count?: number | null
-          is_virtual?: boolean | null
-          location?: unknown | null
-          location_address?: string | null
-          location_name?: string | null
-          meta_description?: string | null
+          image_url?: string | null
+          lineup?: Json | null
           organizer_id?: string
           price_max?: number | null
           price_min?: number | null
-          published_at?: string | null
-          recurrence_rule?: string | null
-          requires_ticket?: boolean | null
-          share_count?: number | null
-          slug?: string
-          source?: string | null
           start_datetime?: string
           status?: string | null
-          tags?: string[] | null
-          temperature?: number | null
-          ticket_url?: string | null
-          tickets_sold?: number | null
-          timezone?: string
+          ticket_info?: Json | null
           title?: string
           updated_at?: string | null
           venue_id?: string | null
-          view_count?: number | null
-          virtual_url?: string | null
-          visibility?: string | null
-          weather_condition?: string | null
-          weather_icon?: string | null
         }
         Relationships: [
           {
@@ -690,67 +580,8 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "events_community_id_fkey"
-            columns: ["community_id"]
-            isOneToOne: false
-            referencedRelation: "communities"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "events_venue_id_fkey"
             columns: ["venue_id"]
-            isOneToOne: false
-            referencedRelation: "venues"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      follows: {
-        Row: {
-          created_at: string | null
-          follower_id: string | null
-          following_community_id: string | null
-          following_performer_id: string | null
-          following_user_id: string | null
-          following_venue_id: string | null
-          id: string
-        }
-        Insert: {
-          created_at?: string | null
-          follower_id?: string | null
-          following_community_id?: string | null
-          following_performer_id?: string | null
-          following_user_id?: string | null
-          following_venue_id?: string | null
-          id?: string
-        }
-        Update: {
-          created_at?: string | null
-          follower_id?: string | null
-          following_community_id?: string | null
-          following_performer_id?: string | null
-          following_user_id?: string | null
-          following_venue_id?: string | null
-          id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "follows_following_community_id_fkey"
-            columns: ["following_community_id"]
-            isOneToOne: false
-            referencedRelation: "communities"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "follows_following_performer_id_fkey"
-            columns: ["following_performer_id"]
-            isOneToOne: false
-            referencedRelation: "performers"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "follows_following_venue_id_fkey"
-            columns: ["following_venue_id"]
             isOneToOne: false
             referencedRelation: "venues"
             referencedColumns: ["id"]
@@ -1045,250 +876,79 @@ export type Database = {
       }
       performers: {
         Row: {
-          added_date: string | null
-          available_for_booking: boolean | null
-          available_for_private_events: boolean | null
+          account_id: string
           base_price: number | null
           bio: string | null
-          contact_email: string | null
-          contact_phone: string | null
           created_at: string | null
-          follower_count: number | null
-          genres: string[] | null
-          has_merchandise: boolean | null
-          has_original_music: boolean | null
-          has_samples: boolean | null
-          home_city: string | null
-          id: string
-          introductory_pricing: boolean | null
-          is_family_friendly: boolean | null
-          is_touring_now: boolean | null
-          is_verified: boolean | null
-          name: string
-          offers_meet_and_greet: boolean | null
-          profile_image_url: string | null
-          rating: number | null
-          review_count: number | null
-          shows_played: number | null
-          slug: string
-          social_links: Json | null
-          takes_requests: boolean | null
-          trending_score: number | null
-          updated_at: string | null
-          website_url: string | null
-          years_active: number | null
-        }
-        Insert: {
-          added_date?: string | null
-          available_for_booking?: boolean | null
-          available_for_private_events?: boolean | null
-          base_price?: number | null
-          bio?: string | null
-          contact_email?: string | null
-          contact_phone?: string | null
-          created_at?: string | null
-          follower_count?: number | null
-          genres?: string[] | null
-          has_merchandise?: boolean | null
-          has_original_music?: boolean | null
-          has_samples?: boolean | null
-          home_city?: string | null
-          id?: string
-          introductory_pricing?: boolean | null
-          is_family_friendly?: boolean | null
-          is_touring_now?: boolean | null
-          is_verified?: boolean | null
-          name: string
-          offers_meet_and_greet?: boolean | null
-          profile_image_url?: string | null
-          rating?: number | null
-          review_count?: number | null
-          shows_played?: number | null
-          slug: string
-          social_links?: Json | null
-          takes_requests?: boolean | null
-          trending_score?: number | null
-          updated_at?: string | null
-          website_url?: string | null
-          years_active?: number | null
-        }
-        Update: {
-          added_date?: string | null
-          available_for_booking?: boolean | null
-          available_for_private_events?: boolean | null
-          base_price?: number | null
-          bio?: string | null
-          contact_email?: string | null
-          contact_phone?: string | null
-          created_at?: string | null
-          follower_count?: number | null
-          genres?: string[] | null
-          has_merchandise?: boolean | null
-          has_original_music?: boolean | null
-          has_samples?: boolean | null
-          home_city?: string | null
-          id?: string
-          introductory_pricing?: boolean | null
-          is_family_friendly?: boolean | null
-          is_touring_now?: boolean | null
-          is_verified?: boolean | null
-          name?: string
-          offers_meet_and_greet?: boolean | null
-          profile_image_url?: string | null
-          rating?: number | null
-          review_count?: number | null
-          shows_played?: number | null
-          slug?: string
-          social_links?: Json | null
-          takes_requests?: boolean | null
-          trending_score?: number | null
-          updated_at?: string | null
-          website_url?: string | null
-          years_active?: number | null
-        }
-        Relationships: []
-      }
-      planned_events: {
-        Row: {
-          created_at: string | null
-          event_date: string
-          event_id: string | null
-          event_name: string
-          event_time: string | null
+          created_by: string | null
+          genre: string | null
           id: string
           image_url: string | null
-          notes: string | null
-          reminder_minutes: number | null
-          source: string | null
-          source_id: string | null
+          is_active: boolean | null
+          location: string | null
+          name: string
+          next_performance: string | null
+          price: string | null
+          rating: number | null
+          total_reviews: number | null
           updated_at: string | null
-          user_id: string | null
-          venue_id: string | null
-          venue_name: string
         }
         Insert: {
+          account_id: string
+          base_price?: number | null
+          bio?: string | null
           created_at?: string | null
-          event_date: string
-          event_id?: string | null
-          event_name: string
-          event_time?: string | null
+          created_by?: string | null
+          genre?: string | null
           id?: string
           image_url?: string | null
-          notes?: string | null
-          reminder_minutes?: number | null
-          source?: string | null
-          source_id?: string | null
+          is_active?: boolean | null
+          location?: string | null
+          name: string
+          next_performance?: string | null
+          price?: string | null
+          rating?: number | null
+          total_reviews?: number | null
           updated_at?: string | null
-          user_id?: string | null
-          venue_id?: string | null
-          venue_name: string
         }
         Update: {
+          account_id?: string
+          base_price?: number | null
+          bio?: string | null
           created_at?: string | null
-          event_date?: string
-          event_id?: string | null
-          event_name?: string
-          event_time?: string | null
+          created_by?: string | null
+          genre?: string | null
           id?: string
           image_url?: string | null
-          notes?: string | null
-          reminder_minutes?: number | null
-          source?: string | null
-          source_id?: string | null
+          is_active?: boolean | null
+          location?: string | null
+          name?: string
+          next_performance?: string | null
+          price?: string | null
+          rating?: number | null
+          total_reviews?: number | null
           updated_at?: string | null
-          user_id?: string | null
-          venue_id?: string | null
-          venue_name?: string
         }
         Relationships: [
           {
-            foreignKeyName: "planned_events_event_id_fkey"
-            columns: ["event_id"]
+            foreignKeyName: "performers_account_id_fkey"
+            columns: ["account_id"]
             isOneToOne: false
-            referencedRelation: "events"
+            referencedRelation: "accounts"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "planned_events_venue_id_fkey"
-            columns: ["venue_id"]
+            foreignKeyName: "performers_account_id_fkey"
+            columns: ["account_id"]
             isOneToOne: false
-            referencedRelation: "venues"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      reviews: {
-        Row: {
-          content: string
-          created_at: string | null
-          event_id: string | null
-          helpful_count: number | null
-          id: string
-          is_flagged: boolean | null
-          is_published: boolean | null
-          is_verified_purchase: boolean | null
-          performer_id: string | null
-          photos: Json | null
-          rating: number
-          reviewer_id: string | null
-          title: string | null
-          updated_at: string | null
-          venue_id: string | null
-        }
-        Insert: {
-          content: string
-          created_at?: string | null
-          event_id?: string | null
-          helpful_count?: number | null
-          id?: string
-          is_flagged?: boolean | null
-          is_published?: boolean | null
-          is_verified_purchase?: boolean | null
-          performer_id?: string | null
-          photos?: Json | null
-          rating: number
-          reviewer_id?: string | null
-          title?: string | null
-          updated_at?: string | null
-          venue_id?: string | null
-        }
-        Update: {
-          content?: string
-          created_at?: string | null
-          event_id?: string | null
-          helpful_count?: number | null
-          id?: string
-          is_flagged?: boolean | null
-          is_published?: boolean | null
-          is_verified_purchase?: boolean | null
-          performer_id?: string | null
-          photos?: Json | null
-          rating?: number
-          reviewer_id?: string | null
-          title?: string | null
-          updated_at?: string | null
-          venue_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "reviews_event_id_fkey"
-            columns: ["event_id"]
-            isOneToOne: false
-            referencedRelation: "events"
+            referencedRelation: "user_account_workspace"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "reviews_performer_id_fkey"
-            columns: ["performer_id"]
+            foreignKeyName: "performers_account_id_fkey"
+            columns: ["account_id"]
             isOneToOne: false
-            referencedRelation: "performers"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "reviews_venue_id_fkey"
-            columns: ["venue_id"]
-            isOneToOne: false
-            referencedRelation: "venues"
+            referencedRelation: "user_accounts"
             referencedColumns: ["id"]
           },
         ]
@@ -1331,30 +991,6 @@ export type Database = {
         Update: {
           hierarchy_level?: number
           name?: string
-        }
-        Relationships: []
-      }
-      spatial_ref_sys: {
-        Row: {
-          auth_name: string | null
-          auth_srid: number | null
-          proj4text: string | null
-          srid: number
-          srtext: string | null
-        }
-        Insert: {
-          auth_name?: string | null
-          auth_srid?: number | null
-          proj4text?: string | null
-          srid: number
-          srtext?: string | null
-        }
-        Update: {
-          auth_name?: string | null
-          auth_srid?: number | null
-          proj4text?: string | null
-          srid?: number
-          srtext?: string | null
         }
         Relationships: []
       }
@@ -1490,66 +1126,78 @@ export type Database = {
       }
       tickets: {
         Row: {
-          check_in_code: string | null
+          account_id: string
+          attendee_info: Json | null
           created_at: string | null
-          delivery_method: string | null
-          event_id: string | null
+          event_id: string
           id: string
-          price_per_ticket: number
-          purchase_date: string | null
-          quantity: number
-          refund_amount: number | null
-          refund_date: string | null
+          price: number
+          qr_code: string
+          quantity: number | null
           service_fee: number | null
           status: string | null
           ticket_number: string
           ticket_type: string
-          total_price: number
+          total_amount: number
           updated_at: string | null
-          used_at: string | null
-          user_id: string | null
+          user_id: string
         }
         Insert: {
-          check_in_code?: string | null
+          account_id: string
+          attendee_info?: Json | null
           created_at?: string | null
-          delivery_method?: string | null
-          event_id?: string | null
+          event_id: string
           id?: string
-          price_per_ticket: number
-          purchase_date?: string | null
-          quantity?: number
-          refund_amount?: number | null
-          refund_date?: string | null
+          price: number
+          qr_code?: string
+          quantity?: number | null
           service_fee?: number | null
           status?: string | null
-          ticket_number: string
+          ticket_number?: string
           ticket_type: string
-          total_price: number
+          total_amount: number
           updated_at?: string | null
-          used_at?: string | null
-          user_id?: string | null
+          user_id: string
         }
         Update: {
-          check_in_code?: string | null
+          account_id?: string
+          attendee_info?: Json | null
           created_at?: string | null
-          delivery_method?: string | null
-          event_id?: string | null
+          event_id?: string
           id?: string
-          price_per_ticket?: number
-          purchase_date?: string | null
-          quantity?: number
-          refund_amount?: number | null
-          refund_date?: string | null
+          price?: number
+          qr_code?: string
+          quantity?: number | null
           service_fee?: number | null
           status?: string | null
           ticket_number?: string
           ticket_type?: string
-          total_price?: number
+          total_amount?: number
           updated_at?: string | null
-          used_at?: string | null
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "tickets_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tickets_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_account_workspace"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tickets_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "user_accounts"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "tickets_event_id_fkey"
             columns: ["event_id"]
@@ -1559,217 +1207,90 @@ export type Database = {
           },
         ]
       }
-      user_activity: {
-        Row: {
-          activity_type: string
-          content: string | null
-          created_at: string | null
-          id: string
-          media_url: string | null
-          target_check_in_id: string | null
-          target_event_id: string | null
-          target_performer_id: string | null
-          target_user_id: string | null
-          target_venue_id: string | null
-          user_id: string | null
-        }
-        Insert: {
-          activity_type: string
-          content?: string | null
-          created_at?: string | null
-          id?: string
-          media_url?: string | null
-          target_check_in_id?: string | null
-          target_event_id?: string | null
-          target_performer_id?: string | null
-          target_user_id?: string | null
-          target_venue_id?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          activity_type?: string
-          content?: string | null
-          created_at?: string | null
-          id?: string
-          media_url?: string | null
-          target_check_in_id?: string | null
-          target_event_id?: string | null
-          target_performer_id?: string | null
-          target_user_id?: string | null
-          target_venue_id?: string | null
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_activity_target_check_in_id_fkey"
-            columns: ["target_check_in_id"]
-            isOneToOne: false
-            referencedRelation: "check_ins"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_activity_target_event_id_fkey"
-            columns: ["target_event_id"]
-            isOneToOne: false
-            referencedRelation: "events"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_activity_target_performer_id_fkey"
-            columns: ["target_performer_id"]
-            isOneToOne: false
-            referencedRelation: "performers"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_activity_target_venue_id_fkey"
-            columns: ["target_venue_id"]
-            isOneToOne: false
-            referencedRelation: "venues"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      user_profiles: {
-        Row: {
-          avatar_url: string | null
-          bio: string | null
-          created_at: string | null
-          display_name: string | null
-          events_attended: number | null
-          events_organized: number | null
-          favorite_communities: string[] | null
-          home_community_id: string | null
-          id: string
-          notification_preferences: Json | null
-          points_earned: number | null
-          preferred_radius_miles: number | null
-          privacy_settings: Json | null
-          updated_at: string | null
-          user_type: string | null
-          verification_status: string | null
-        }
-        Insert: {
-          avatar_url?: string | null
-          bio?: string | null
-          created_at?: string | null
-          display_name?: string | null
-          events_attended?: number | null
-          events_organized?: number | null
-          favorite_communities?: string[] | null
-          home_community_id?: string | null
-          id: string
-          notification_preferences?: Json | null
-          points_earned?: number | null
-          preferred_radius_miles?: number | null
-          privacy_settings?: Json | null
-          updated_at?: string | null
-          user_type?: string | null
-          verification_status?: string | null
-        }
-        Update: {
-          avatar_url?: string | null
-          bio?: string | null
-          created_at?: string | null
-          display_name?: string | null
-          events_attended?: number | null
-          events_organized?: number | null
-          favorite_communities?: string[] | null
-          home_community_id?: string | null
-          id?: string
-          notification_preferences?: Json | null
-          points_earned?: number | null
-          preferred_radius_miles?: number | null
-          privacy_settings?: Json | null
-          updated_at?: string | null
-          user_type?: string | null
-          verification_status?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_profiles_home_community_id_fkey"
-            columns: ["home_community_id"]
-            isOneToOne: false
-            referencedRelation: "communities"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       venues: {
         Row: {
-          account_id: string | null
+          account_id: string
           address: string
           amenities: Json | null
-          average_rating: number | null
-          booking_email: string | null
-          booking_phone: string | null
           capacity: number | null
-          community_id: string
+          city: string
           created_at: string | null
+          created_by: string | null
           description: string | null
+          email: string | null
+          gallery_images: string[] | null
           id: string
-          images: Json | null
+          image_url: string | null
+          is_active: boolean | null
           is_verified: boolean | null
-          location: unknown
+          latitude: number | null
+          longitude: number | null
+          max_capacity: number | null
           name: string
-          operating_hours: Json | null
-          slug: string
-          total_events: number | null
-          total_reviews: number | null
+          phone: string | null
+          price_per_hour: number | null
+          price_range: number | null
+          rating: number | null
+          review_count: number | null
+          state: string
           updated_at: string | null
           venue_type: string
-          verified_at: string | null
-          website_url: string | null
         }
         Insert: {
-          account_id?: string | null
+          account_id: string
           address: string
           amenities?: Json | null
-          average_rating?: number | null
-          booking_email?: string | null
-          booking_phone?: string | null
           capacity?: number | null
-          community_id: string
+          city: string
           created_at?: string | null
+          created_by?: string | null
           description?: string | null
+          email?: string | null
+          gallery_images?: string[] | null
           id?: string
-          images?: Json | null
+          image_url?: string | null
+          is_active?: boolean | null
           is_verified?: boolean | null
-          location: unknown
+          latitude?: number | null
+          longitude?: number | null
+          max_capacity?: number | null
           name: string
-          operating_hours?: Json | null
-          slug: string
-          total_events?: number | null
-          total_reviews?: number | null
-          updated_at?: string | null
-          venue_type: string
-          verified_at?: string | null
-          website_url?: string | null
-        }
-        Update: {
-          account_id?: string | null
-          address?: string
-          amenities?: Json | null
-          average_rating?: number | null
-          booking_email?: string | null
-          booking_phone?: string | null
-          capacity?: number | null
-          community_id?: string
-          created_at?: string | null
-          description?: string | null
-          id?: string
-          images?: Json | null
-          is_verified?: boolean | null
-          location?: unknown
-          name?: string
-          operating_hours?: Json | null
-          slug?: string
-          total_events?: number | null
-          total_reviews?: number | null
+          phone?: string | null
+          price_per_hour?: number | null
+          price_range?: number | null
+          rating?: number | null
+          review_count?: number | null
+          state: string
           updated_at?: string | null
           venue_type?: string
-          verified_at?: string | null
-          website_url?: string | null
+        }
+        Update: {
+          account_id?: string
+          address?: string
+          amenities?: Json | null
+          capacity?: number | null
+          city?: string
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          email?: string | null
+          gallery_images?: string[] | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          is_verified?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          max_capacity?: number | null
+          name?: string
+          phone?: string | null
+          price_per_hour?: number | null
+          price_range?: number | null
+          rating?: number | null
+          review_count?: number | null
+          state?: string
+          updated_at?: string | null
+          venue_type?: string
         }
         Relationships: [
           {
@@ -1793,59 +1314,10 @@ export type Database = {
             referencedRelation: "user_accounts"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "venues_community_id_fkey"
-            columns: ["community_id"]
-            isOneToOne: false
-            referencedRelation: "communities"
-            referencedColumns: ["id"]
-          },
         ]
       }
     }
     Views: {
-      geography_columns: {
-        Row: {
-          coord_dimension: number | null
-          f_geography_column: unknown | null
-          f_table_catalog: unknown | null
-          f_table_name: unknown | null
-          f_table_schema: unknown | null
-          srid: number | null
-          type: string | null
-        }
-        Relationships: []
-      }
-      geometry_columns: {
-        Row: {
-          coord_dimension: number | null
-          f_geometry_column: unknown | null
-          f_table_catalog: string | null
-          f_table_name: unknown | null
-          f_table_schema: unknown | null
-          srid: number | null
-          type: string | null
-        }
-        Insert: {
-          coord_dimension?: number | null
-          f_geometry_column?: unknown | null
-          f_table_catalog?: string | null
-          f_table_name?: unknown | null
-          f_table_schema?: unknown | null
-          srid?: number | null
-          type?: string | null
-        }
-        Update: {
-          coord_dimension?: number | null
-          f_geometry_column?: unknown | null
-          f_table_catalog?: string | null
-          f_table_name?: unknown | null
-          f_table_schema?: unknown | null
-          srid?: number | null
-          type?: string | null
-        }
-        Relationships: []
-      }
       user_account_workspace: {
         Row: {
           id: string | null
@@ -1877,120 +1349,6 @@ export type Database = {
       }
     }
     Functions: {
-      _postgis_deprecate: {
-        Args: { newname: string; oldname: string; version: string }
-        Returns: undefined
-      }
-      _postgis_index_extent: {
-        Args: { col: string; tbl: unknown }
-        Returns: unknown
-      }
-      _postgis_pgsql_version: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      _postgis_scripts_pgsql_version: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      _postgis_selectivity: {
-        Args: { att_name: string; geom: unknown; mode?: string; tbl: unknown }
-        Returns: number
-      }
-      _st_3dintersects: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      _st_bestsrid: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      _st_contains: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      _st_containsproperly: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      _st_coveredby: {
-        Args:
-          | { geog1: unknown; geog2: unknown }
-          | { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      _st_covers: {
-        Args:
-          | { geog1: unknown; geog2: unknown }
-          | { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      _st_crosses: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      _st_dwithin: {
-        Args: {
-          geog1: unknown
-          geog2: unknown
-          tolerance: number
-          use_spheroid?: boolean
-        }
-        Returns: boolean
-      }
-      _st_equals: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      _st_intersects: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      _st_linecrossingdirection: {
-        Args: { line1: unknown; line2: unknown }
-        Returns: number
-      }
-      _st_longestline: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      _st_maxdistance: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: number
-      }
-      _st_orderingequals: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      _st_overlaps: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      _st_pointoutside: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      _st_sortablehash: {
-        Args: { geom: unknown }
-        Returns: number
-      }
-      _st_touches: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      _st_voronoi: {
-        Args: {
-          clip?: unknown
-          g1: unknown
-          return_polygons?: boolean
-          tolerance?: number
-        }
-        Returns: unknown
-      }
-      _st_within: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
       accept_invitation: {
         Args: { token: string; user_id: string }
         Returns: string
@@ -2001,85 +1359,6 @@ export type Database = {
           invitations: Database["public"]["CompositeTypes"]["invitation"][]
         }
         Returns: Database["public"]["Tables"]["invitations"]["Row"][]
-      }
-      addauth: {
-        Args: { "": string }
-        Returns: boolean
-      }
-      addgeometrycolumn: {
-        Args:
-          | {
-              catalog_name: string
-              column_name: string
-              new_dim: number
-              new_srid_in: number
-              new_type: string
-              schema_name: string
-              table_name: string
-              use_typmod?: boolean
-            }
-          | {
-              column_name: string
-              new_dim: number
-              new_srid: number
-              new_type: string
-              schema_name: string
-              table_name: string
-              use_typmod?: boolean
-            }
-          | {
-              column_name: string
-              new_dim: number
-              new_srid: number
-              new_type: string
-              table_name: string
-              use_typmod?: boolean
-            }
-        Returns: string
-      }
-      box: {
-        Args: { "": unknown } | { "": unknown }
-        Returns: unknown
-      }
-      box2d: {
-        Args: { "": unknown } | { "": unknown }
-        Returns: unknown
-      }
-      box2d_in: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      box2d_out: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      box2df_in: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      box2df_out: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      box3d: {
-        Args: { "": unknown } | { "": unknown }
-        Returns: unknown
-      }
-      box3d_in: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      box3d_out: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      box3dtobox: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      bytea: {
-        Args: { "": unknown } | { "": unknown }
-        Returns: string
       }
       can_action_account_member: {
         Args: { target_team_account_id: string; target_user_id: string }
@@ -2113,8 +1392,6 @@ export type Database = {
       create_team_account: {
         Args: { account_name: string }
         Returns: {
-          account_type: string | null
-          community_id: string | null
           created_at: string | null
           created_by: string | null
           email: string | null
@@ -2128,272 +1405,6 @@ export type Database = {
           updated_at: string | null
           updated_by: string | null
         }
-      }
-      disablelongtransactions: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      dropgeometrycolumn: {
-        Args:
-          | {
-              catalog_name: string
-              column_name: string
-              schema_name: string
-              table_name: string
-            }
-          | { column_name: string; schema_name: string; table_name: string }
-          | { column_name: string; table_name: string }
-        Returns: string
-      }
-      dropgeometrytable: {
-        Args:
-          | { catalog_name: string; schema_name: string; table_name: string }
-          | { schema_name: string; table_name: string }
-          | { table_name: string }
-        Returns: string
-      }
-      enablelongtransactions: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      equals: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      find_nearest_community: {
-        Args: { lat: number; lng: number; max_distance_miles?: number }
-        Returns: {
-          city: string
-          distance_miles: number
-          id: string
-          name: string
-          slug: string
-          state: string
-        }[]
-      }
-      geography: {
-        Args: { "": string } | { "": unknown }
-        Returns: unknown
-      }
-      geography_analyze: {
-        Args: { "": unknown }
-        Returns: boolean
-      }
-      geography_gist_compress: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      geography_gist_decompress: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      geography_out: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      geography_send: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      geography_spgist_compress_nd: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      geography_typmod_in: {
-        Args: { "": unknown[] }
-        Returns: number
-      }
-      geography_typmod_out: {
-        Args: { "": number }
-        Returns: unknown
-      }
-      geometry: {
-        Args:
-          | { "": string }
-          | { "": string }
-          | { "": unknown }
-          | { "": unknown }
-          | { "": unknown }
-          | { "": unknown }
-          | { "": unknown }
-          | { "": unknown }
-        Returns: unknown
-      }
-      geometry_above: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_analyze: {
-        Args: { "": unknown }
-        Returns: boolean
-      }
-      geometry_below: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_cmp: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: number
-      }
-      geometry_contained_3d: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_contains: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_contains_3d: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_distance_box: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: number
-      }
-      geometry_distance_centroid: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: number
-      }
-      geometry_eq: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_ge: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_gist_compress_2d: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      geometry_gist_compress_nd: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      geometry_gist_decompress_2d: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      geometry_gist_decompress_nd: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      geometry_gist_sortsupport_2d: {
-        Args: { "": unknown }
-        Returns: undefined
-      }
-      geometry_gt: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_hash: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      geometry_in: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      geometry_le: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_left: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_lt: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_out: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      geometry_overabove: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_overbelow: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_overlaps: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_overlaps_3d: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_overleft: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_overright: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_recv: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      geometry_right: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_same: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_same_3d: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometry_send: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      geometry_sortsupport: {
-        Args: { "": unknown }
-        Returns: undefined
-      }
-      geometry_spgist_compress_2d: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      geometry_spgist_compress_3d: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      geometry_spgist_compress_nd: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      geometry_typmod_in: {
-        Args: { "": unknown[] }
-        Returns: number
-      }
-      geometry_typmod_out: {
-        Args: { "": number }
-        Returns: unknown
-      }
-      geometry_within: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      geometrytype: {
-        Args: { "": unknown } | { "": unknown }
-        Returns: string
-      }
-      geomfromewkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      geomfromewkt: {
-        Args: { "": string }
-        Returns: unknown
       }
       get_account_invitations: {
         Args: { account_slug: string }
@@ -2434,25 +1445,9 @@ export type Database = {
         Args: { p_id: string }
         Returns: Json
       }
-      get_proj4_from_srid: {
-        Args: { "": number }
-        Returns: string
-      }
       get_upper_system_role: {
         Args: Record<PropertyKey, never>
         Returns: string
-      }
-      gettransactionid: {
-        Args: Record<PropertyKey, never>
-        Returns: unknown
-      }
-      gidx_in: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      gidx_out: {
-        Args: { "": unknown }
-        Returns: unknown
       }
       has_active_subscription: {
         Args: { target_account_id: string }
@@ -2514,1280 +1509,9 @@ export type Database = {
         Args: { account_id: string; user_id: string }
         Returns: boolean
       }
-      json: {
-        Args: { "": unknown }
-        Returns: Json
-      }
-      jsonb: {
-        Args: { "": unknown }
-        Returns: Json
-      }
-      longtransactionsenabled: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      path: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      pgis_asflatgeobuf_finalfn: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      pgis_asgeobuf_finalfn: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      pgis_asmvt_finalfn: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      pgis_asmvt_serialfn: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      pgis_geometry_clusterintersecting_finalfn: {
-        Args: { "": unknown }
-        Returns: unknown[]
-      }
-      pgis_geometry_clusterwithin_finalfn: {
-        Args: { "": unknown }
-        Returns: unknown[]
-      }
-      pgis_geometry_collect_finalfn: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      pgis_geometry_makeline_finalfn: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      pgis_geometry_polygonize_finalfn: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      pgis_geometry_union_parallel_finalfn: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      pgis_geometry_union_parallel_serialfn: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      point: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      polygon: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      populate_geometry_columns: {
-        Args:
-          | { tbl_oid: unknown; use_typmod?: boolean }
-          | { use_typmod?: boolean }
-        Returns: number
-      }
-      postgis_addbbox: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      postgis_constraint_dims: {
-        Args: { geomcolumn: string; geomschema: string; geomtable: string }
-        Returns: number
-      }
-      postgis_constraint_srid: {
-        Args: { geomcolumn: string; geomschema: string; geomtable: string }
-        Returns: number
-      }
-      postgis_constraint_type: {
-        Args: { geomcolumn: string; geomschema: string; geomtable: string }
-        Returns: string
-      }
-      postgis_dropbbox: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      postgis_extensions_upgrade: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_full_version: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_geos_noop: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      postgis_geos_version: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_getbbox: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      postgis_hasbbox: {
-        Args: { "": unknown }
-        Returns: boolean
-      }
-      postgis_index_supportfn: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      postgis_lib_build_date: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_lib_revision: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_lib_version: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_libjson_version: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_liblwgeom_version: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_libprotobuf_version: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_libxml_version: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_noop: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      postgis_proj_version: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_scripts_build_date: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_scripts_installed: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_scripts_released: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_svn_version: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_type_name: {
-        Args: {
-          coord_dimension: number
-          geomname: string
-          use_new_name?: boolean
-        }
-        Returns: string
-      }
-      postgis_typmod_dims: {
-        Args: { "": number }
-        Returns: number
-      }
-      postgis_typmod_srid: {
-        Args: { "": number }
-        Returns: number
-      }
-      postgis_typmod_type: {
-        Args: { "": number }
-        Returns: string
-      }
-      postgis_version: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      postgis_wagyu_version: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
       revoke_nonce: {
         Args: { p_id: string; p_reason?: string }
         Returns: boolean
-      }
-      spheroid_in: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      spheroid_out: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_3dclosestpoint: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      st_3ddistance: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: number
-      }
-      st_3dintersects: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      st_3dlength: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_3dlongestline: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      st_3dmakebox: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      st_3dmaxdistance: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: number
-      }
-      st_3dperimeter: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_3dshortestline: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      st_addpoint: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      st_angle: {
-        Args:
-          | { line1: unknown; line2: unknown }
-          | { pt1: unknown; pt2: unknown; pt3: unknown; pt4?: unknown }
-        Returns: number
-      }
-      st_area: {
-        Args:
-          | { "": string }
-          | { "": unknown }
-          | { geog: unknown; use_spheroid?: boolean }
-        Returns: number
-      }
-      st_area2d: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_asbinary: {
-        Args: { "": unknown } | { "": unknown }
-        Returns: string
-      }
-      st_asencodedpolyline: {
-        Args: { geom: unknown; nprecision?: number }
-        Returns: string
-      }
-      st_asewkb: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      st_asewkt: {
-        Args: { "": string } | { "": unknown } | { "": unknown }
-        Returns: string
-      }
-      st_asgeojson: {
-        Args:
-          | { "": string }
-          | { geog: unknown; maxdecimaldigits?: number; options?: number }
-          | { geom: unknown; maxdecimaldigits?: number; options?: number }
-          | {
-              geom_column?: string
-              maxdecimaldigits?: number
-              pretty_bool?: boolean
-              r: Record<string, unknown>
-            }
-        Returns: string
-      }
-      st_asgml: {
-        Args:
-          | { "": string }
-          | {
-              geog: unknown
-              id?: string
-              maxdecimaldigits?: number
-              nprefix?: string
-              options?: number
-            }
-          | {
-              geog: unknown
-              id?: string
-              maxdecimaldigits?: number
-              nprefix?: string
-              options?: number
-              version: number
-            }
-          | {
-              geom: unknown
-              id?: string
-              maxdecimaldigits?: number
-              nprefix?: string
-              options?: number
-              version: number
-            }
-          | { geom: unknown; maxdecimaldigits?: number; options?: number }
-        Returns: string
-      }
-      st_ashexewkb: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      st_askml: {
-        Args:
-          | { "": string }
-          | { geog: unknown; maxdecimaldigits?: number; nprefix?: string }
-          | { geom: unknown; maxdecimaldigits?: number; nprefix?: string }
-        Returns: string
-      }
-      st_aslatlontext: {
-        Args: { geom: unknown; tmpl?: string }
-        Returns: string
-      }
-      st_asmarc21: {
-        Args: { format?: string; geom: unknown }
-        Returns: string
-      }
-      st_asmvtgeom: {
-        Args: {
-          bounds: unknown
-          buffer?: number
-          clip_geom?: boolean
-          extent?: number
-          geom: unknown
-        }
-        Returns: unknown
-      }
-      st_assvg: {
-        Args:
-          | { "": string }
-          | { geog: unknown; maxdecimaldigits?: number; rel?: number }
-          | { geom: unknown; maxdecimaldigits?: number; rel?: number }
-        Returns: string
-      }
-      st_astext: {
-        Args: { "": string } | { "": unknown } | { "": unknown }
-        Returns: string
-      }
-      st_astwkb: {
-        Args:
-          | {
-              geom: unknown[]
-              ids: number[]
-              prec?: number
-              prec_m?: number
-              prec_z?: number
-              with_boxes?: boolean
-              with_sizes?: boolean
-            }
-          | {
-              geom: unknown
-              prec?: number
-              prec_m?: number
-              prec_z?: number
-              with_boxes?: boolean
-              with_sizes?: boolean
-            }
-        Returns: string
-      }
-      st_asx3d: {
-        Args: { geom: unknown; maxdecimaldigits?: number; options?: number }
-        Returns: string
-      }
-      st_azimuth: {
-        Args:
-          | { geog1: unknown; geog2: unknown }
-          | { geom1: unknown; geom2: unknown }
-        Returns: number
-      }
-      st_boundary: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_boundingdiagonal: {
-        Args: { fits?: boolean; geom: unknown }
-        Returns: unknown
-      }
-      st_buffer: {
-        Args:
-          | { geom: unknown; options?: string; radius: number }
-          | { geom: unknown; quadsegs: number; radius: number }
-        Returns: unknown
-      }
-      st_buildarea: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_centroid: {
-        Args: { "": string } | { "": unknown }
-        Returns: unknown
-      }
-      st_cleangeometry: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_clipbybox2d: {
-        Args: { box: unknown; geom: unknown }
-        Returns: unknown
-      }
-      st_closestpoint: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      st_clusterintersecting: {
-        Args: { "": unknown[] }
-        Returns: unknown[]
-      }
-      st_collect: {
-        Args: { "": unknown[] } | { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      st_collectionextract: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_collectionhomogenize: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_concavehull: {
-        Args: {
-          param_allow_holes?: boolean
-          param_geom: unknown
-          param_pctconvex: number
-        }
-        Returns: unknown
-      }
-      st_contains: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      st_containsproperly: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      st_convexhull: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_coorddim: {
-        Args: { geometry: unknown }
-        Returns: number
-      }
-      st_coveredby: {
-        Args:
-          | { geog1: unknown; geog2: unknown }
-          | { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      st_covers: {
-        Args:
-          | { geog1: unknown; geog2: unknown }
-          | { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      st_crosses: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      st_curvetoline: {
-        Args: { flags?: number; geom: unknown; tol?: number; toltype?: number }
-        Returns: unknown
-      }
-      st_delaunaytriangles: {
-        Args: { flags?: number; g1: unknown; tolerance?: number }
-        Returns: unknown
-      }
-      st_difference: {
-        Args: { geom1: unknown; geom2: unknown; gridsize?: number }
-        Returns: unknown
-      }
-      st_dimension: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_disjoint: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      st_distance: {
-        Args:
-          | { geog1: unknown; geog2: unknown; use_spheroid?: boolean }
-          | { geom1: unknown; geom2: unknown }
-        Returns: number
-      }
-      st_distancesphere: {
-        Args:
-          | { geom1: unknown; geom2: unknown }
-          | { geom1: unknown; geom2: unknown; radius: number }
-        Returns: number
-      }
-      st_distancespheroid: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: number
-      }
-      st_dump: {
-        Args: { "": unknown }
-        Returns: Database["public"]["CompositeTypes"]["geometry_dump"][]
-      }
-      st_dumppoints: {
-        Args: { "": unknown }
-        Returns: Database["public"]["CompositeTypes"]["geometry_dump"][]
-      }
-      st_dumprings: {
-        Args: { "": unknown }
-        Returns: Database["public"]["CompositeTypes"]["geometry_dump"][]
-      }
-      st_dumpsegments: {
-        Args: { "": unknown }
-        Returns: Database["public"]["CompositeTypes"]["geometry_dump"][]
-      }
-      st_dwithin: {
-        Args: {
-          geog1: unknown
-          geog2: unknown
-          tolerance: number
-          use_spheroid?: boolean
-        }
-        Returns: boolean
-      }
-      st_endpoint: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_envelope: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_equals: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      st_expand: {
-        Args:
-          | { box: unknown; dx: number; dy: number }
-          | { box: unknown; dx: number; dy: number; dz?: number }
-          | { dm?: number; dx: number; dy: number; dz?: number; geom: unknown }
-        Returns: unknown
-      }
-      st_exteriorring: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_flipcoordinates: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_force2d: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_force3d: {
-        Args: { geom: unknown; zvalue?: number }
-        Returns: unknown
-      }
-      st_force3dm: {
-        Args: { geom: unknown; mvalue?: number }
-        Returns: unknown
-      }
-      st_force3dz: {
-        Args: { geom: unknown; zvalue?: number }
-        Returns: unknown
-      }
-      st_force4d: {
-        Args: { geom: unknown; mvalue?: number; zvalue?: number }
-        Returns: unknown
-      }
-      st_forcecollection: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_forcecurve: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_forcepolygonccw: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_forcepolygoncw: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_forcerhr: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_forcesfs: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_generatepoints: {
-        Args:
-          | { area: unknown; npoints: number }
-          | { area: unknown; npoints: number; seed: number }
-        Returns: unknown
-      }
-      st_geogfromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_geogfromwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_geographyfromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_geohash: {
-        Args:
-          | { geog: unknown; maxchars?: number }
-          | { geom: unknown; maxchars?: number }
-        Returns: string
-      }
-      st_geomcollfromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_geomcollfromwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_geometricmedian: {
-        Args: {
-          fail_if_not_converged?: boolean
-          g: unknown
-          max_iter?: number
-          tolerance?: number
-        }
-        Returns: unknown
-      }
-      st_geometryfromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_geometrytype: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      st_geomfromewkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_geomfromewkt: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_geomfromgeojson: {
-        Args: { "": Json } | { "": Json } | { "": string }
-        Returns: unknown
-      }
-      st_geomfromgml: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_geomfromkml: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_geomfrommarc21: {
-        Args: { marc21xml: string }
-        Returns: unknown
-      }
-      st_geomfromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_geomfromtwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_geomfromwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_gmltosql: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_hasarc: {
-        Args: { geometry: unknown }
-        Returns: boolean
-      }
-      st_hausdorffdistance: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: number
-      }
-      st_hexagon: {
-        Args: { cell_i: number; cell_j: number; origin?: unknown; size: number }
-        Returns: unknown
-      }
-      st_hexagongrid: {
-        Args: { bounds: unknown; size: number }
-        Returns: Record<string, unknown>[]
-      }
-      st_interpolatepoint: {
-        Args: { line: unknown; point: unknown }
-        Returns: number
-      }
-      st_intersection: {
-        Args: { geom1: unknown; geom2: unknown; gridsize?: number }
-        Returns: unknown
-      }
-      st_intersects: {
-        Args:
-          | { geog1: unknown; geog2: unknown }
-          | { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      st_isclosed: {
-        Args: { "": unknown }
-        Returns: boolean
-      }
-      st_iscollection: {
-        Args: { "": unknown }
-        Returns: boolean
-      }
-      st_isempty: {
-        Args: { "": unknown }
-        Returns: boolean
-      }
-      st_ispolygonccw: {
-        Args: { "": unknown }
-        Returns: boolean
-      }
-      st_ispolygoncw: {
-        Args: { "": unknown }
-        Returns: boolean
-      }
-      st_isring: {
-        Args: { "": unknown }
-        Returns: boolean
-      }
-      st_issimple: {
-        Args: { "": unknown }
-        Returns: boolean
-      }
-      st_isvalid: {
-        Args: { "": unknown }
-        Returns: boolean
-      }
-      st_isvaliddetail: {
-        Args: { flags?: number; geom: unknown }
-        Returns: Database["public"]["CompositeTypes"]["valid_detail"]
-      }
-      st_isvalidreason: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      st_isvalidtrajectory: {
-        Args: { "": unknown }
-        Returns: boolean
-      }
-      st_length: {
-        Args:
-          | { "": string }
-          | { "": unknown }
-          | { geog: unknown; use_spheroid?: boolean }
-        Returns: number
-      }
-      st_length2d: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_letters: {
-        Args: { font?: Json; letters: string }
-        Returns: unknown
-      }
-      st_linecrossingdirection: {
-        Args: { line1: unknown; line2: unknown }
-        Returns: number
-      }
-      st_linefromencodedpolyline: {
-        Args: { nprecision?: number; txtin: string }
-        Returns: unknown
-      }
-      st_linefrommultipoint: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_linefromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_linefromwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_linelocatepoint: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: number
-      }
-      st_linemerge: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_linestringfromwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_linetocurve: {
-        Args: { geometry: unknown }
-        Returns: unknown
-      }
-      st_locatealong: {
-        Args: { geometry: unknown; leftrightoffset?: number; measure: number }
-        Returns: unknown
-      }
-      st_locatebetween: {
-        Args: {
-          frommeasure: number
-          geometry: unknown
-          leftrightoffset?: number
-          tomeasure: number
-        }
-        Returns: unknown
-      }
-      st_locatebetweenelevations: {
-        Args: { fromelevation: number; geometry: unknown; toelevation: number }
-        Returns: unknown
-      }
-      st_longestline: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      st_m: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_makebox2d: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      st_makeline: {
-        Args: { "": unknown[] } | { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      st_makepolygon: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_makevalid: {
-        Args: { "": unknown } | { geom: unknown; params: string }
-        Returns: unknown
-      }
-      st_maxdistance: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: number
-      }
-      st_maximuminscribedcircle: {
-        Args: { "": unknown }
-        Returns: Record<string, unknown>
-      }
-      st_memsize: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_minimumboundingcircle: {
-        Args: { inputgeom: unknown; segs_per_quarter?: number }
-        Returns: unknown
-      }
-      st_minimumboundingradius: {
-        Args: { "": unknown }
-        Returns: Record<string, unknown>
-      }
-      st_minimumclearance: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_minimumclearanceline: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_mlinefromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_mlinefromwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_mpointfromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_mpointfromwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_mpolyfromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_mpolyfromwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_multi: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_multilinefromwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_multilinestringfromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_multipointfromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_multipointfromwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_multipolyfromwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_multipolygonfromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_ndims: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_node: {
-        Args: { g: unknown }
-        Returns: unknown
-      }
-      st_normalize: {
-        Args: { geom: unknown }
-        Returns: unknown
-      }
-      st_npoints: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_nrings: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_numgeometries: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_numinteriorring: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_numinteriorrings: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_numpatches: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_numpoints: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_offsetcurve: {
-        Args: { distance: number; line: unknown; params?: string }
-        Returns: unknown
-      }
-      st_orderingequals: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      st_orientedenvelope: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_overlaps: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      st_perimeter: {
-        Args: { "": unknown } | { geog: unknown; use_spheroid?: boolean }
-        Returns: number
-      }
-      st_perimeter2d: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_pointfromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_pointfromwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_pointm: {
-        Args: {
-          mcoordinate: number
-          srid?: number
-          xcoordinate: number
-          ycoordinate: number
-        }
-        Returns: unknown
-      }
-      st_pointonsurface: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_points: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_pointz: {
-        Args: {
-          srid?: number
-          xcoordinate: number
-          ycoordinate: number
-          zcoordinate: number
-        }
-        Returns: unknown
-      }
-      st_pointzm: {
-        Args: {
-          mcoordinate: number
-          srid?: number
-          xcoordinate: number
-          ycoordinate: number
-          zcoordinate: number
-        }
-        Returns: unknown
-      }
-      st_polyfromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_polyfromwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_polygonfromtext: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_polygonfromwkb: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_polygonize: {
-        Args: { "": unknown[] }
-        Returns: unknown
-      }
-      st_project: {
-        Args: { azimuth: number; distance: number; geog: unknown }
-        Returns: unknown
-      }
-      st_quantizecoordinates: {
-        Args: {
-          g: unknown
-          prec_m?: number
-          prec_x: number
-          prec_y?: number
-          prec_z?: number
-        }
-        Returns: unknown
-      }
-      st_reduceprecision: {
-        Args: { geom: unknown; gridsize: number }
-        Returns: unknown
-      }
-      st_relate: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: string
-      }
-      st_removerepeatedpoints: {
-        Args: { geom: unknown; tolerance?: number }
-        Returns: unknown
-      }
-      st_reverse: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_segmentize: {
-        Args: { geog: unknown; max_segment_length: number }
-        Returns: unknown
-      }
-      st_setsrid: {
-        Args: { geog: unknown; srid: number } | { geom: unknown; srid: number }
-        Returns: unknown
-      }
-      st_sharedpaths: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      st_shiftlongitude: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_shortestline: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      st_simplifypolygonhull: {
-        Args: { geom: unknown; is_outer?: boolean; vertex_fraction: number }
-        Returns: unknown
-      }
-      st_split: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      st_square: {
-        Args: { cell_i: number; cell_j: number; origin?: unknown; size: number }
-        Returns: unknown
-      }
-      st_squaregrid: {
-        Args: { bounds: unknown; size: number }
-        Returns: Record<string, unknown>[]
-      }
-      st_srid: {
-        Args: { geog: unknown } | { geom: unknown }
-        Returns: number
-      }
-      st_startpoint: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      st_subdivide: {
-        Args: { geom: unknown; gridsize?: number; maxvertices?: number }
-        Returns: unknown[]
-      }
-      st_summary: {
-        Args: { "": unknown } | { "": unknown }
-        Returns: string
-      }
-      st_swapordinates: {
-        Args: { geom: unknown; ords: unknown }
-        Returns: unknown
-      }
-      st_symdifference: {
-        Args: { geom1: unknown; geom2: unknown; gridsize?: number }
-        Returns: unknown
-      }
-      st_symmetricdifference: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: unknown
-      }
-      st_tileenvelope: {
-        Args: {
-          bounds?: unknown
-          margin?: number
-          x: number
-          y: number
-          zoom: number
-        }
-        Returns: unknown
-      }
-      st_touches: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      st_transform: {
-        Args:
-          | { from_proj: string; geom: unknown; to_proj: string }
-          | { from_proj: string; geom: unknown; to_srid: number }
-          | { geom: unknown; to_proj: string }
-        Returns: unknown
-      }
-      st_triangulatepolygon: {
-        Args: { g1: unknown }
-        Returns: unknown
-      }
-      st_union: {
-        Args:
-          | { "": unknown[] }
-          | { geom1: unknown; geom2: unknown }
-          | { geom1: unknown; geom2: unknown; gridsize: number }
-        Returns: unknown
-      }
-      st_voronoilines: {
-        Args: { extend_to?: unknown; g1: unknown; tolerance?: number }
-        Returns: unknown
-      }
-      st_voronoipolygons: {
-        Args: { extend_to?: unknown; g1: unknown; tolerance?: number }
-        Returns: unknown
-      }
-      st_within: {
-        Args: { geom1: unknown; geom2: unknown }
-        Returns: boolean
-      }
-      st_wkbtosql: {
-        Args: { wkb: string }
-        Returns: unknown
-      }
-      st_wkttosql: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      st_wrapx: {
-        Args: { geom: unknown; move: number; wrap: number }
-        Returns: unknown
-      }
-      st_x: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_xmax: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_xmin: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_y: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_ymax: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_ymin: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_z: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_zmax: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_zmflag: {
-        Args: { "": unknown }
-        Returns: number
-      }
-      st_zmin: {
-        Args: { "": unknown }
-        Returns: number
       }
       team_account_workspace: {
         Args: { account_slug: string }
@@ -3803,27 +1527,9 @@ export type Database = {
           subscription_status: Database["public"]["Enums"]["subscription_status"]
         }[]
       }
-      text: {
-        Args: { "": unknown }
-        Returns: string
-      }
       transfer_team_account_ownership: {
         Args: { new_owner_id: string; target_account_id: string }
         Returns: undefined
-      }
-      unlockrows: {
-        Args: { "": string }
-        Returns: number
-      }
-      updategeometrysrid: {
-        Args: {
-          catalogn_name: string
-          column_name: string
-          new_srid_in: number
-          schema_name: string
-          table_name: string
-        }
-        Returns: string
       }
       upsert_order: {
         Args: {
@@ -3917,19 +1623,530 @@ export type Database = {
         | "paused"
     }
     CompositeTypes: {
-      geometry_dump: {
-        path: number[] | null
-        geom: unknown | null
-      }
       invitation: {
         email: string | null
         role: string | null
       }
-      valid_detail: {
-        valid: boolean | null
-        reason: string | null
-        location: unknown | null
+    }
+  }
+  storage: {
+    Tables: {
+      buckets: {
+        Row: {
+          allowed_mime_types: string[] | null
+          avif_autodetection: boolean | null
+          created_at: string | null
+          file_size_limit: number | null
+          id: string
+          name: string
+          owner: string | null
+          owner_id: string | null
+          public: boolean | null
+          type: Database["storage"]["Enums"]["buckettype"]
+          updated_at: string | null
+        }
+        Insert: {
+          allowed_mime_types?: string[] | null
+          avif_autodetection?: boolean | null
+          created_at?: string | null
+          file_size_limit?: number | null
+          id: string
+          name: string
+          owner?: string | null
+          owner_id?: string | null
+          public?: boolean | null
+          type?: Database["storage"]["Enums"]["buckettype"]
+          updated_at?: string | null
+        }
+        Update: {
+          allowed_mime_types?: string[] | null
+          avif_autodetection?: boolean | null
+          created_at?: string | null
+          file_size_limit?: number | null
+          id?: string
+          name?: string
+          owner?: string | null
+          owner_id?: string | null
+          public?: boolean | null
+          type?: Database["storage"]["Enums"]["buckettype"]
+          updated_at?: string | null
+        }
+        Relationships: []
       }
+      buckets_analytics: {
+        Row: {
+          created_at: string
+          format: string
+          id: string
+          type: Database["storage"]["Enums"]["buckettype"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          format?: string
+          id: string
+          type?: Database["storage"]["Enums"]["buckettype"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          format?: string
+          id?: string
+          type?: Database["storage"]["Enums"]["buckettype"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      iceberg_namespaces: {
+        Row: {
+          bucket_id: string
+          created_at: string
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          bucket_id: string
+          created_at?: string
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          bucket_id?: string
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "iceberg_namespaces_bucket_id_fkey"
+            columns: ["bucket_id"]
+            isOneToOne: false
+            referencedRelation: "buckets_analytics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      iceberg_tables: {
+        Row: {
+          bucket_id: string
+          created_at: string
+          id: string
+          location: string
+          name: string
+          namespace_id: string
+          updated_at: string
+        }
+        Insert: {
+          bucket_id: string
+          created_at?: string
+          id?: string
+          location: string
+          name: string
+          namespace_id: string
+          updated_at?: string
+        }
+        Update: {
+          bucket_id?: string
+          created_at?: string
+          id?: string
+          location?: string
+          name?: string
+          namespace_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "iceberg_tables_bucket_id_fkey"
+            columns: ["bucket_id"]
+            isOneToOne: false
+            referencedRelation: "buckets_analytics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "iceberg_tables_namespace_id_fkey"
+            columns: ["namespace_id"]
+            isOneToOne: false
+            referencedRelation: "iceberg_namespaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      migrations: {
+        Row: {
+          executed_at: string | null
+          hash: string
+          id: number
+          name: string
+        }
+        Insert: {
+          executed_at?: string | null
+          hash: string
+          id: number
+          name: string
+        }
+        Update: {
+          executed_at?: string | null
+          hash?: string
+          id?: number
+          name?: string
+        }
+        Relationships: []
+      }
+      objects: {
+        Row: {
+          bucket_id: string | null
+          created_at: string | null
+          id: string
+          last_accessed_at: string | null
+          level: number | null
+          metadata: Json | null
+          name: string | null
+          owner: string | null
+          owner_id: string | null
+          path_tokens: string[] | null
+          updated_at: string | null
+          user_metadata: Json | null
+          version: string | null
+        }
+        Insert: {
+          bucket_id?: string | null
+          created_at?: string | null
+          id?: string
+          last_accessed_at?: string | null
+          level?: number | null
+          metadata?: Json | null
+          name?: string | null
+          owner?: string | null
+          owner_id?: string | null
+          path_tokens?: string[] | null
+          updated_at?: string | null
+          user_metadata?: Json | null
+          version?: string | null
+        }
+        Update: {
+          bucket_id?: string | null
+          created_at?: string | null
+          id?: string
+          last_accessed_at?: string | null
+          level?: number | null
+          metadata?: Json | null
+          name?: string | null
+          owner?: string | null
+          owner_id?: string | null
+          path_tokens?: string[] | null
+          updated_at?: string | null
+          user_metadata?: Json | null
+          version?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "objects_bucketId_fkey"
+            columns: ["bucket_id"]
+            isOneToOne: false
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      prefixes: {
+        Row: {
+          bucket_id: string
+          created_at: string | null
+          level: number
+          name: string
+          updated_at: string | null
+        }
+        Insert: {
+          bucket_id: string
+          created_at?: string | null
+          level?: number
+          name: string
+          updated_at?: string | null
+        }
+        Update: {
+          bucket_id?: string
+          created_at?: string | null
+          level?: number
+          name?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prefixes_bucketId_fkey"
+            columns: ["bucket_id"]
+            isOneToOne: false
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      s3_multipart_uploads: {
+        Row: {
+          bucket_id: string
+          created_at: string
+          id: string
+          in_progress_size: number
+          key: string
+          owner_id: string | null
+          upload_signature: string
+          user_metadata: Json | null
+          version: string
+        }
+        Insert: {
+          bucket_id: string
+          created_at?: string
+          id: string
+          in_progress_size?: number
+          key: string
+          owner_id?: string | null
+          upload_signature: string
+          user_metadata?: Json | null
+          version: string
+        }
+        Update: {
+          bucket_id?: string
+          created_at?: string
+          id?: string
+          in_progress_size?: number
+          key?: string
+          owner_id?: string | null
+          upload_signature?: string
+          user_metadata?: Json | null
+          version?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "s3_multipart_uploads_bucket_id_fkey"
+            columns: ["bucket_id"]
+            isOneToOne: false
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      s3_multipart_uploads_parts: {
+        Row: {
+          bucket_id: string
+          created_at: string
+          etag: string
+          id: string
+          key: string
+          owner_id: string | null
+          part_number: number
+          size: number
+          upload_id: string
+          version: string
+        }
+        Insert: {
+          bucket_id: string
+          created_at?: string
+          etag: string
+          id?: string
+          key: string
+          owner_id?: string | null
+          part_number: number
+          size?: number
+          upload_id: string
+          version: string
+        }
+        Update: {
+          bucket_id?: string
+          created_at?: string
+          etag?: string
+          id?: string
+          key?: string
+          owner_id?: string | null
+          part_number?: number
+          size?: number
+          upload_id?: string
+          version?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "s3_multipart_uploads_parts_bucket_id_fkey"
+            columns: ["bucket_id"]
+            isOneToOne: false
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "s3_multipart_uploads_parts_upload_id_fkey"
+            columns: ["upload_id"]
+            isOneToOne: false
+            referencedRelation: "s3_multipart_uploads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      add_prefixes: {
+        Args: { _bucket_id: string; _name: string }
+        Returns: undefined
+      }
+      can_insert_object: {
+        Args: { bucketid: string; metadata: Json; name: string; owner: string }
+        Returns: undefined
+      }
+      delete_prefix: {
+        Args: { _bucket_id: string; _name: string }
+        Returns: boolean
+      }
+      extension: {
+        Args: { name: string }
+        Returns: string
+      }
+      filename: {
+        Args: { name: string }
+        Returns: string
+      }
+      foldername: {
+        Args: { name: string }
+        Returns: string[]
+      }
+      get_level: {
+        Args: { name: string }
+        Returns: number
+      }
+      get_prefix: {
+        Args: { name: string }
+        Returns: string
+      }
+      get_prefixes: {
+        Args: { name: string }
+        Returns: string[]
+      }
+      get_size_by_bucket: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          bucket_id: string
+          size: number
+        }[]
+      }
+      list_multipart_uploads_with_delimiter: {
+        Args: {
+          bucket_id: string
+          delimiter_param: string
+          max_keys?: number
+          next_key_token?: string
+          next_upload_token?: string
+          prefix_param: string
+        }
+        Returns: {
+          created_at: string
+          id: string
+          key: string
+        }[]
+      }
+      list_objects_with_delimiter: {
+        Args: {
+          bucket_id: string
+          delimiter_param: string
+          max_keys?: number
+          next_token?: string
+          prefix_param: string
+          start_after?: string
+        }
+        Returns: {
+          id: string
+          metadata: Json
+          name: string
+          updated_at: string
+        }[]
+      }
+      operation: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      search: {
+        Args: {
+          bucketname: string
+          levels?: number
+          limits?: number
+          offsets?: number
+          prefix: string
+          search?: string
+          sortcolumn?: string
+          sortorder?: string
+        }
+        Returns: {
+          created_at: string
+          id: string
+          last_accessed_at: string
+          metadata: Json
+          name: string
+          updated_at: string
+        }[]
+      }
+      search_legacy_v1: {
+        Args: {
+          bucketname: string
+          levels?: number
+          limits?: number
+          offsets?: number
+          prefix: string
+          search?: string
+          sortcolumn?: string
+          sortorder?: string
+        }
+        Returns: {
+          created_at: string
+          id: string
+          last_accessed_at: string
+          metadata: Json
+          name: string
+          updated_at: string
+        }[]
+      }
+      search_v1_optimised: {
+        Args: {
+          bucketname: string
+          levels?: number
+          limits?: number
+          offsets?: number
+          prefix: string
+          search?: string
+          sortcolumn?: string
+          sortorder?: string
+        }
+        Returns: {
+          created_at: string
+          id: string
+          last_accessed_at: string
+          metadata: Json
+          name: string
+          updated_at: string
+        }[]
+      }
+      search_v2: {
+        Args: {
+          bucket_name: string
+          levels?: number
+          limits?: number
+          prefix: string
+          start_after?: string
+        }
+        Returns: {
+          created_at: string
+          id: string
+          key: string
+          metadata: Json
+          name: string
+          updated_at: string
+        }[]
+      }
+    }
+    Enums: {
+      buckettype: "STANDARD" | "ANALYTICS"
+    }
+    CompositeTypes: {
+      [_ in never]: never
     }
   }
 }
@@ -4052,6 +2269,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {
       app_permissions: [
@@ -4078,4 +2298,10 @@ export const Constants = {
       ],
     },
   },
+  storage: {
+    Enums: {
+      buckettype: ["STANDARD", "ANALYTICS"],
+    },
+  },
 } as const
+
