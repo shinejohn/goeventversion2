@@ -14,6 +14,8 @@ COPY . .
 
 # Install all dependencies and build
 RUN pnpm install --no-frozen-lockfile
+# Generate React Router types before building
+RUN cd apps/web && pnpm react-router:typegen
 RUN pnpm build
 
 # Production stage
