@@ -54,9 +54,8 @@ RUN pnpm install --no-frozen-lockfile --prod --filter web...
 COPY --from=builder --chown=nodejs:nodejs /app/apps/web/build ./apps/web/build
 COPY --from=builder --chown=nodejs:nodejs /app/apps/web/public ./apps/web/public
 
-# Copy any runtime config files that might be needed
-COPY --from=builder --chown=nodejs:nodejs /app/apps/web/.env* ./apps/web/ || true
-COPY --from=builder --chown=nodejs:nodejs /app/.env* ./ || true
+# Note: Environment variables should be provided at runtime via deployment platform
+# not copied from build stage
 
 # Switch to non-root user
 USER nodejs
