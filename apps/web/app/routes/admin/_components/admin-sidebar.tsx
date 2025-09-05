@@ -1,3 +1,4 @@
+import React from 'react';
 import { NavLink, useLocation } from 'react-router';
 
 import { LayoutDashboard, Users } from 'lucide-react';

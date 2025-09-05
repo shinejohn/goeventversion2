@@ -1,12 +1,13 @@
-import type { Route } from '~/types/app/routes/misc/azzquartetpage';
+import React from 'react';
+import type { Route } from '~/types/app/routes/misc/earpage';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { JazzQuartetPage } from '~/components/magic-patterns/pages/success-stories/JazzQuartetPage';
+import { GearPage } from '~/components/magic-patterns/pages/GearPage';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
   
-  // TODO: Implement data loading for JazzQuartetPage
+  // TODO: Implement data loading for GearPage
   return { data: {} };
 };
 
@@ -14,10 +15,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const client = getSupabaseServerClient(request);
   const formData = await request.formData();
   
-  // TODO: Implement form handling for JazzQuartetPage
+  // TODO: Implement form handling for GearPage
   return { success: true };
 };
 
-export default function JazzQuartetPagePage() {
-  return <JazzQuartetPage />;
+export default function GearPagePage() {
+  return <GearPage />;
 }

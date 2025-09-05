@@ -1,3 +1,4 @@
+import React from 'react';
 import { HomepageShowcasePage } from '~/components/magic-patterns/pages/advertise/HomepageShowcasePage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/advertise/homepage-showcase/+types';

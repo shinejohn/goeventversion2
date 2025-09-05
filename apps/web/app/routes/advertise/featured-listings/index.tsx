@@ -1,3 +1,4 @@
+import React from 'react';
 import { FeaturedListingsPage } from '~/components/magic-patterns/pages/advertise/FeaturedListingsPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/advertise/featured-listings/+types';

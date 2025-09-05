@@ -1,3 +1,4 @@
+import React from 'react';
 import { Outlet } from 'react-router';
 
 // Use Magic Patterns components directly for SSR

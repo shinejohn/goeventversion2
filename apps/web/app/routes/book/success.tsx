@@ -1,3 +1,4 @@
+import React from 'react';
 // apps/web/app/routes/book/success.tsx
 import type { Route } from '~/types/app/routes/book/success/+types';
 import { BookingConfirmation } from '~/components/magic-patterns/components/booking-form/BookingConfirmation';

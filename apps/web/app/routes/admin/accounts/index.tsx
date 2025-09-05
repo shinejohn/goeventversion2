@@ -1,3 +1,4 @@
+import React from 'react';
 import { getSuperAdminUser } from '@kit/admin';
 import {
   banUserAction,

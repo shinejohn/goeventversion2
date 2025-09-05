@@ -1,3 +1,4 @@
+import React from 'react';
 // apps/web/app/routes/venues/$id.tsx  
 import { VenueDetailPage } from '~/components/magic-patterns/pages/venues/VenueDetailPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';

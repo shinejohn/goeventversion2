@@ -1,3 +1,4 @@
+import React from 'react';
 ;
 
 import { CalendarMarketplacePage } from '~/components/magic-patterns/pages/calendars/CalendarMarketplacePage';

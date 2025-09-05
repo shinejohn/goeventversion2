@@ -1,3 +1,4 @@
+import React from 'react';
 // apps/web/app/routes/performers/index.tsx
 import type { Route } from '~/types/app/routes/performers/index/+types';
 import { PerformersPage } from '~/components/magic-patterns/pages/PerformersPage';

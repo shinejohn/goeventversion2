@@ -1,3 +1,4 @@
+import React from 'react';
 import { EventDetailPage } from '~/components/magic-patterns/pages/EventDetailPage';
 import type { Route } from '~/types/app/routes/events/$id/+types';
 

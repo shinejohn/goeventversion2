@@ -1,3 +1,4 @@
+import React from 'react';
 import { PressMediaPage } from '~/components/magic-patterns/pages/PressMediaPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/press/+types';

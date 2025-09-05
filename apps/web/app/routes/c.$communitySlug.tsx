@@ -1,3 +1,4 @@
+import React from 'react';
 import { useParams } from 'react-router';
 
 // Use the existing Magic Patterns hub community page with mock data

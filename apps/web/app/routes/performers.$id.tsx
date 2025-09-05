@@ -1,3 +1,4 @@
+import React from 'react';
 import { PerformerProfilePage } from '~/components/magic-patterns/pages/performers/PerformerProfilePage';
 import type { Route } from '~/types/app/routes/performers/$id/+types';
 

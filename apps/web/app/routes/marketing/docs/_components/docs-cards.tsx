@@ -1,3 +1,4 @@
+import React from 'react';
 import { Cms } from '@kit/cms';
 
 import { DocsCard } from './docs-card';

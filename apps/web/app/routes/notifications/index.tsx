@@ -1,3 +1,4 @@
+import React from 'react';
 import { NotificationsPage } from '~/components/magic-patterns/pages/social/NotificationsPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/notifications/+types';

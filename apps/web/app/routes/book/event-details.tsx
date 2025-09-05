@@ -1,3 +1,4 @@
+import React from 'react';
 // apps/web/app/routes/book/event-details.tsx
 import type { Route } from '~/types/app/routes/book/event-details/+types';
 import { EventDetailsStep } from '~/components/magic-patterns/components/booking/EventDetailsStep';

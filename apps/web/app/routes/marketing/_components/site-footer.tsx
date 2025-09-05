@@ -1,3 +1,4 @@
+import React from 'react';
 import { Footer } from '@kit/ui/marketing';
 import { Trans } from '@kit/ui/trans';
 

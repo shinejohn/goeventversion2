@@ -1,3 +1,4 @@
+import React from 'react';
 import { ContactUsPage } from '~/components/magic-patterns/pages/ContactUsPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/contact/+types';

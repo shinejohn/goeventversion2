@@ -1,3 +1,4 @@
+import React from 'react';
 import { NavLink } from 'react-router';
 
 import { NavigationMenuItem } from '@kit/ui/navigation-menu';

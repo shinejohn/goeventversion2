@@ -7,7 +7,7 @@
     "paths": {
       "~/*": ["./app/*"],
       "~/config/*": ["./config/*"],
-      "~/components/*": ["./components/*"],
+      "~/components/*": ["./app/components/*"],
       "~/lib/*": ["./lib/*"],
       "~/types/*": ["./.react-router/types/*"]
     },

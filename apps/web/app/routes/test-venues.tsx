@@ -1,3 +1,4 @@
+import React from 'react';
 export default function TestVenues() {
   return (
     <div className="p-8">

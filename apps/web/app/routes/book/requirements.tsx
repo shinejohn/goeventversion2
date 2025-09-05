@@ -1,3 +1,4 @@
+import React from 'react';
 // apps/web/app/routes/book/requirements.tsx
 import type { Route } from '~/types/app/routes/book/requirements/+types';
 import { RequirementsStep } from '~/components/magic-patterns/components/booking/RequirementsStep';

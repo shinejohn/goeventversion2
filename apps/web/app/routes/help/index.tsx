@@ -1,3 +1,4 @@
+import React from 'react';
 import { HelpPage } from '~/components/magic-patterns/pages/help';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/help/+types';

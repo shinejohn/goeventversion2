@@ -1,3 +1,4 @@
+import React from 'react';
 import { useParams } from 'react-router';
 import { VenueDetailPage } from '~/components/magic-patterns/pages/venues/VenueDetailPage';
 

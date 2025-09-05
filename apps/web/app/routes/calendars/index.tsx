@@ -1,3 +1,4 @@
+import React from 'react';
 import { CalendarPage } from '~/components/magic-patterns/pages/CalendarPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/calendars/+types';

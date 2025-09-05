@@ -1,3 +1,4 @@
+import React from 'react';
 // apps/web/app/routes/hubs/create.tsx
 import type { Route } from '~/types/app/routes/hubs/create/+types';
 import { SetupWizard } from '~/components/magic-patterns/components/hub-builder/SetupWizard';

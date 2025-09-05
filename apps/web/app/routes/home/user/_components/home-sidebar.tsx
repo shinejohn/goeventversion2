@@ -1,3 +1,4 @@
+import React from 'react';
 import { If } from '@kit/ui/if';
 import {
   Sidebar,

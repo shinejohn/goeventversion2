@@ -1,3 +1,4 @@
+import React from 'react';
 import { NotificationsPopover } from '@kit/notifications/components';
 
 import featuresFlagConfig from '~/config/feature-flags.config';

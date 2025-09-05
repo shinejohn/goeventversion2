@@ -1,3 +1,4 @@
+import React from 'react';
 // apps/web/app/routes/book/layout.tsx
 import { Outlet } from 'react-router';
 import type { Route } from '~/types/app/routes/book/+types/layout';

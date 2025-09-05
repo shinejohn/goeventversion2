@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Route } from '~/types/app/routes/performers/$id/+types';
 import { PerformerProfilePage } from '~/components/magic-patterns/pages/performers/PerformerProfilePage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';

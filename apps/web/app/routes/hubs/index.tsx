@@ -1,3 +1,4 @@
+import React from 'react';
 // apps/web/app/routes/hubs/index.tsx
 import type { Route } from '~/types/app/routes/hubs/index/+types';
 import HubsDiscoveryPage from '~/components/magic-patterns/pages/hubs/index';

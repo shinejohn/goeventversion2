@@ -1,3 +1,4 @@
+import React from 'react';
 import { CommunityImpactPage } from '~/components/magic-patterns/pages/CommunityImpactPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/community-impact/+types';

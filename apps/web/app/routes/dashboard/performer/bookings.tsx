@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Route } from '~/types/app/routes/dashboard/performer/bookings';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';

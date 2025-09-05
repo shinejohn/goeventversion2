@@ -1,3 +1,4 @@
+import React from 'react';
 import { ProductDetailPage } from '~/components/magic-patterns/pages/ProductDetailPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/shop/product/$id/+types';

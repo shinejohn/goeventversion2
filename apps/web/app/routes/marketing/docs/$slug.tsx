@@ -1,3 +1,4 @@
+import React from 'react';
 import { data, redirect } from 'react-router';
 
 import { Cms, ContentRenderer, createCmsClient } from '@kit/cms';

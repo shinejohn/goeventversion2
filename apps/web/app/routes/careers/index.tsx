@@ -1,3 +1,4 @@
+import React from 'react';
 import { CareersPage } from '~/components/magic-patterns/pages/CareersPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/careers/+types';

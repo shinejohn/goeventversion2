@@ -1,3 +1,4 @@
+import React from 'react';
 import { PageHeader } from '@kit/ui/page';
 
 export function HomeLayoutPageHeader(

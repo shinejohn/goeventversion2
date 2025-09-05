@@ -1,3 +1,4 @@
+import React from 'react';
 ;
 
 import { BookPerformerPage } from '~/components/magic-patterns/pages/book/BookPerformerPage';

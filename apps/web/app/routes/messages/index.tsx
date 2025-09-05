@@ -1,3 +1,4 @@
+import React from 'react';
 import { MessagesPage } from '~/components/magic-patterns/pages/social/MessagesPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/messages/+types';

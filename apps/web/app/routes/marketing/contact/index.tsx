@@ -1,3 +1,4 @@
+import React from 'react';
 import { Heading } from '@kit/ui/heading';
 import { Trans } from '@kit/ui/trans';
 

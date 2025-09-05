@@ -1,3 +1,4 @@
+import React from 'react';
 import { BookingConfirmationPage } from '~/components/magic-patterns/pages/bookings/BookingConfirmationPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/bookings/confirmation/+types';

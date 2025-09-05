@@ -1,3 +1,4 @@
+import React from 'react';
 import { BookingMarketplacePage } from '~/components/magic-patterns/pages/BookingMarketplacePage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/bookings/+types';

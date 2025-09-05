@@ -1,3 +1,4 @@
+import React from 'react';
 // apps/web/app/routes/book/review.tsx
 import type { Route } from '~/types/app/routes/book/review/+types';
 import { ReviewStep } from '~/components/magic-patterns/components/booking/ReviewStep';

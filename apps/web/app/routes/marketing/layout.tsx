@@ -1,3 +1,4 @@
+import React from 'react';
 import { LoaderFunctionArgs, Outlet, useLoaderData } from 'react-router';
 
 import { requireUser } from '@kit/supabase/require-user';

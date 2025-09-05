@@ -1,3 +1,4 @@
+import React from 'react';
 import { EventPromotionPage } from '~/components/magic-patterns/pages/advertise/EventPromotionPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/advertise/event-promotion/+types';

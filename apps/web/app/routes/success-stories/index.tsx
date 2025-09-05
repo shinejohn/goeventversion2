@@ -1,3 +1,4 @@
+import React from 'react';
 import { SuccessStoriesPage } from '~/components/magic-patterns/pages/SuccessStoriesPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/success-stories/+types';

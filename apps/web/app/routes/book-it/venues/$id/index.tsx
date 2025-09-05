@@ -1,3 +1,4 @@
+import React from 'react';
 import { VenueDetailPage } from '~/components/magic-patterns/pages/book-it/venues/VenueDetailPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/book-it/venues/$id/+types';

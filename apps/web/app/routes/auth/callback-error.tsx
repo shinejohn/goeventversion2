@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link, redirect } from 'react-router';
 
 import { AuthError } from '@supabase/supabase-js';

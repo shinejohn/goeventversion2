@@ -1,12 +1,13 @@
-import type { Route } from '~/types/app/routes/misc/unsetmusicfestivalpage';
+import React from 'react';
+import type { Route } from '~/types/app/routes/misc/areerspage';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { SunsetMusicFestivalPage } from '~/components/magic-patterns/pages/success-stories/SunsetMusicFestivalPage';
+import { CareersPage } from '~/components/magic-patterns/pages/CareersPage';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
   
-  // TODO: Implement data loading for SunsetMusicFestivalPage
+  // TODO: Implement data loading for CareersPage
   return { data: {} };
 };
 
@@ -14,10 +15,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const client = getSupabaseServerClient(request);
   const formData = await request.formData();
   
-  // TODO: Implement form handling for SunsetMusicFestivalPage
+  // TODO: Implement form handling for CareersPage
   return { success: true };
 };
 
-export default function SunsetMusicFestivalPagePage() {
-  return <SunsetMusicFestivalPage />;
+export default function CareersPagePage() {
+  return <CareersPage />;
 }

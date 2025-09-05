@@ -1,3 +1,4 @@
+import React from 'react';
 import { getSuperAdminUser } from '@kit/admin';
 import { loadAdminDashboard } from '@kit/admin/api';
 import { AdminDashboard } from '@kit/admin/components/admin-dashboard';

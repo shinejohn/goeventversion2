@@ -1,3 +1,4 @@
+import React from 'react';
 import { Cms, createCmsClient } from '@kit/cms';
 import { getLogger } from '@kit/shared/logger';
 import { If } from '@kit/ui/if';

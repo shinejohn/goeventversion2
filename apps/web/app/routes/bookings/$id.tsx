@@ -1,3 +1,4 @@
+import React from 'react';
 // apps/web/app/routes/bookings/$id.tsx
 import type { Route } from '~/types/app/routes/bookings/$id/+types';
 import { BookingSummaryCard } from '~/components/magic-patterns/components/bookings/BookingSummaryCard';

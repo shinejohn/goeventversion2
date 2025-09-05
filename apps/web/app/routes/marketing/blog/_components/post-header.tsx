@@ -1,3 +1,4 @@
+import React from 'react';
 import { Cms } from '@kit/cms';
 import { If } from '@kit/ui/if';
 import { cn } from '@kit/ui/utils';

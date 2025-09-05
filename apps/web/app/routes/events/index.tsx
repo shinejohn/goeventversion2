@@ -1,3 +1,4 @@
+import React from 'react';
 // apps/web/app/routes/events/index.tsx
 import type { Route } from '~/types/app/routes/events/index/+types';
 import { EventsPage } from '~/components/magic-patterns/pages/EventsPage';

@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Route } from '~/types/app/routes/+types/book';;
 
 import { BookItPage } from '~/components/magic-patterns/pages/BookItPage';

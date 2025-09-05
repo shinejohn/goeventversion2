@@ -1,3 +1,4 @@
+import React from 'react';
 import appConfig from '~/config/app.config';
 
 const robots = {

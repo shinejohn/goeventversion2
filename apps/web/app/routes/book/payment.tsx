@@ -1,3 +1,4 @@
+import React from 'react';
 // apps/web/app/routes/book/payment.tsx
 import type { Route } from '~/types/app/routes/book/payment/+types';
 import { ContactPaymentForm } from '~/components/magic-patterns/components/booking-form/ContactPaymentForm';

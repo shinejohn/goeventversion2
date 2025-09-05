@@ -1,3 +1,4 @@
+import React from 'react';
 import { deletePersonalAccountAction } from '@kit/accounts/actions';
 import { PersonalAccountSettingsContainer } from '@kit/accounts/personal-account-settings';
 import { DeletePersonalAccountSchema } from '@kit/accounts/schema';

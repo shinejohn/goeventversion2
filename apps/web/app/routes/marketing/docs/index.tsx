@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRouteLoaderData } from 'react-router';
 
 import { Cms } from '@kit/cms';

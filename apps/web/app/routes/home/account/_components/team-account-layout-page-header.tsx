@@ -1,3 +1,4 @@
+import React from 'react';
 import { PageHeader } from '@kit/ui/page';
 import { Header } from '~/components/magic-patterns/components/layout/Header';
 

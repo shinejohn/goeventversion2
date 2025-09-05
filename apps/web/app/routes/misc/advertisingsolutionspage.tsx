@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Route } from '~/types/app/routes/misc/dvertisingsolutionspage';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';

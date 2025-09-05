@@ -1,3 +1,4 @@
+import React from 'react';
 import { createCmsClient } from '@kit/cms';
 
 import appConfig from '~/config/app.config';

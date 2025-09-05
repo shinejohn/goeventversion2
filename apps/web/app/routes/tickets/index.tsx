@@ -1,3 +1,4 @@
+import React from 'react';
 import { TicketsPage } from '~/components/magic-patterns/pages/TicketsPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/tickets/+types';
