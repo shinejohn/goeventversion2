@@ -13,13 +13,13 @@ import { CsrfTokenMeta } from '@kit/csrf/client';
 import { createCsrfProtect } from '@kit/csrf/server';
 import { cn } from '@kit/ui/utils';
 
-import { RootErrorBoundary } from '~/components/root-error-boundary';
-import { RootHead } from '~/components/root-head';
-import { RootProviders } from '~/components/root-providers';
-import appConfig from '~/config/app.config';
-import { themeCookie } from '~/lib/cookies';
-import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import type { Route } from '~/types/app/+types/root';
+import { RootErrorBoundary } from '../components/root-error-boundary';
+import { RootHead } from '../components/root-head';
+import { RootProviders } from '../components/root-providers';
+import appConfig from './config/app.config';
+import { themeCookie } from '../lib/cookies';
+import { createI18nServerInstance } from '../lib/i18n/i18n.server';
+import type { Route } from './types/+types/root';
 
 import styles from '../styles/global.css?url';
 
