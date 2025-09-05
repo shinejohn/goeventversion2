@@ -1,5 +1,5 @@
 import type { Route } from '~/types/app/routes/calendars/+types/$slug';
-import { json } from 'react-router';
+// json helper removed - using plain objects for React Router 7
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -12,10 +12,10 @@ export async function loader({ params }: Route.LoaderArgs) {
     .single();
 
   if (error || !calendar) {
-    throw json({ error: 'Calendar not found' }, { status: 404 });
+    throw new Response('Calendar not found', { status: 404 });
   }
 
-  return json({ calendar });
+  return { calendar };
 }
 
 export default function CalendarPage({ loaderData }: Route.ComponentProps) {

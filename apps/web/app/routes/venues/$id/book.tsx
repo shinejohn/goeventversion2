@@ -1,5 +1,5 @@
 import type { Route } from '~/types/app/routes/venues/+types/$id/book';
-import { json } from 'react-router';
+// json helper removed - using plain objects for React Router 7
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -24,10 +24,10 @@ export async function loader({ params }: Route.LoaderArgs) {
     .single();
 
   if (error || !venue) {
-    throw json({ error: 'Venue not found' }, { status: 404 });
+    throw new Response('Venue not found', { status: 404 });
   }
 
-  return json({ venue });
+  return { venue };
 }
 
 export default function VenueBookingPage({ loaderData }: Route.ComponentProps) {

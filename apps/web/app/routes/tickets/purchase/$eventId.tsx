@@ -1,5 +1,5 @@
 import type { Route } from '~/types/app/routes/tickets/purchase/+types/$eventId';
-import { json } from 'react-router';
+// json helper removed - using plain objects for React Router 7
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -19,10 +19,10 @@ export async function loader({ params }: Route.LoaderArgs) {
     .single();
 
   if (error || !event) {
-    throw json({ error: 'Event not found' }, { status: 404 });
+    throw new Response('Event not found', { status: 404 });
   }
 
-  return json({ event });
+  return { event };
 }
 
 export default function TicketPurchasePage({ loaderData }: Route.ComponentProps) {
