@@ -4,7 +4,7 @@ import {
   BorderedNavigationMenuItem,
 } from '@kit/ui/bordered-navigation-menu';
 
-import { AppLogo } from '~/components/app-logo';
+import { AppLogo } from '../../../../components/app-logo';
 import { ProfileAccountDropdownContainer } from '~/components/personal-account-dropdown-container';
 import pathsConfig from '~/config/paths.config';
 import { getTeamAccountSidebarConfig } from '~/config/team-account-navigation.config';

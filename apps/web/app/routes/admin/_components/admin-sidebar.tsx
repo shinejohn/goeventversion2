@@ -15,7 +15,7 @@ import {
   SidebarMenuButton,
 } from '@kit/ui/shadcn-sidebar';
 
-import { AppLogo } from '~/components/app-logo';
+import { AppLogo } from '../../../components/app-logo';
 import { ProfileAccountDropdownContainer } from '~/components/personal-account-dropdown-container';
 
 export function AdminSidebar() {

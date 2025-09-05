@@ -2,7 +2,7 @@ import React from 'react';
 import { UpdatePasswordForm } from '@kit/auth/password-reset';
 import { AuthLayoutShell } from '@kit/auth/shared';
 
-import { AppLogo } from '~/components/app-logo';
+import { AppLogo } from '../components/app-logo';
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import type { Route } from '~/types/app/routes/+types/update-password';
