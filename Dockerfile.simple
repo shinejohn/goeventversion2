@@ -12,18 +12,12 @@ WORKDIR /app
 # Copy all files
 COPY . .
 
-# Debug: List marketing docs directory
-RUN ls -la /app/apps/web/app/routes/marketing/docs/
-
 # Install all dependencies
 RUN pnpm install --no-frozen-lockfile
 
-# Debug: List again after install
-RUN ls -la /app/apps/web/app/routes/marketing/docs/
-
-# Generate types and build with SSR enabled
+# Generate types and build
 RUN pnpm --filter web react-router:typegen
-RUN pnpm --filter web build
+RUN pnpm turbo build --filter=web
 
 # Production stage
 FROM node:20-alpine AS production
@@ -54,9 +48,6 @@ RUN pnpm install --no-frozen-lockfile --prod --filter web...
 COPY --from=builder --chown=nodejs:nodejs /app/apps/web/build ./apps/web/build
 COPY --from=builder --chown=nodejs:nodejs /app/apps/web/public ./apps/web/public
 
-# Note: Environment variables should be provided at runtime via deployment platform
-# not copied from build stage
-
 # Switch to non-root user
 USER nodejs
 
@@ -66,5 +57,8 @@ EXPOSE 3000
 # Set production environment
 ENV NODE_ENV=production
 
-# Start the application using npx to ensure react-router-serve is found
-CMD ["npx", "react-router-serve", "apps/web/build/server/index.js"]
+# Install cross-env globally for production
+RUN npm install -g cross-env
+
+# Start the application using react-router-serve
+CMD ["cross-env", "NODE_ENV=production", "react-router-serve", "apps/web/build/server/index.js"]

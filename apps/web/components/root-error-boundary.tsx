@@ -16,8 +16,9 @@ import { Trans } from '@kit/ui/trans';
 
 import { RootHead } from './root-head';
 import { RootProviders } from './root-providers';
-import { SiteFooter } from '../app/routes/marketing/_components/site-footer';
-import { SiteHeader } from '../app/routes/marketing/_components/site-header';
+// Use Magic Patterns components instead of MakerKit
+import { MainHeader } from '../app/components/magic-patterns/components/layout/MainHeader';
+import { Footer } from '../app/components/magic-patterns/components/layout/Footer';
 
 export function RootErrorBoundary() {
   const routeError = useRouteError();
@@ -44,7 +45,7 @@ export function RootErrorBoundary() {
 
         <body data-test={'root-error-boundary'}>
           <div className={'flex h-screen flex-1 flex-col'}>
-            <SiteHeaderContainer />
+            <MainHeader />
 
             <div
               className={
