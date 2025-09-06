@@ -66,5 +66,5 @@ EXPOSE 3000
 # Set production environment
 ENV NODE_ENV=production
 
-# Start the application using npx to ensure react-router-serve is found
-CMD ["npx", "react-router-serve", "apps/web/build/server/index.js"]
+# Start the application using the root package.json script
+CMD ["pnpm", "start"]
