@@ -125,7 +125,8 @@
     "./multi-step-form": "./src/makerkit/multi-step-form.tsx",
     "./empty-state": "./src/makerkit/empty-state.tsx",
     "./app-breadcrumbs": "./src/makerkit/app-breadcrumbs.tsx",
-    "./marketing": "./src/makerkit/marketing/index.tsx"
+    "./marketing": "./src/makerkit/marketing/index.tsx",
+    "./makerkit/entity-image": "./src/makerkit/entity-image.tsx"
   },
   "typesVersions": {
     "*": {
