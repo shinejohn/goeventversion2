@@ -110,15 +110,15 @@ export const HomePage = ({ events = [], venues = [], performers = [] }: HomePage
   const generateUpcomingEvents = () => {
     const today = new Date();
     const upcomingEvents = events
-      .filter(event => new Date(event.start_datetime) >= today)
-      .sort((a, b) => new Date(a.start_datetime).getTime() - new Date(b.start_datetime).getTime())
+      .filter(event => new Date(event.start_date) >= today)
+      .sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime())
       .slice(0, 21); // Take next 21 events to fill ~7 days
 
     // Group events by date
     const eventsByDate = new Map();
     
     upcomingEvents.forEach(event => {
-      const eventDate = new Date(event.start_datetime);
+      const eventDate = new Date(event.start_date);
       const daysDiff = Math.floor((eventDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
       
       let dateString;
@@ -145,7 +145,7 @@ export const HomePage = ({ events = [], venues = [], performers = [] }: HomePage
         venue: event.location_name || event.venue?.name || 'TBA',
         category: event.category || 'Event',
         price: event.price || (event.price_min ? `$${event.price_min}+` : 'Free'),
-        time: new Date(event.start_datetime).toLocaleTimeString('en-US', {
+        time: new Date(event.start_date).toLocaleTimeString('en-US', {
           hour: 'numeric',
           minute: '2-digit'
         }),
