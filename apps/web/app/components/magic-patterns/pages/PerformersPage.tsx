@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRightIcon, MusicIcon, CalendarIcon, MapPinIcon, StarIcon, SearchIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { LocationSelector } from '../components/ui/LocationSelector';
+import { EntityImage } from '@kit/ui/makerkit/entity-image';
 interface PerformersPageProps {
   performers?: any[];
 }
@@ -122,7 +123,13 @@ export const PerformersPage = ({ performers = [] }: PerformersPageProps) => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredPerformers.map(performer => <div key={performer.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate(`/performers/${performer.id}`)}>
                 <div className="h-48 overflow-hidden">
-                  <img src={performer.image} alt={performer.name} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+                  <EntityImage 
+                    src={performer.image}
+                    alt={performer.name}
+                    entityType="performer"
+                    entityCategory={performer.category}
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
                 </div>
                 <div className="p-4">
                   <div className="flex justify-between items-start">

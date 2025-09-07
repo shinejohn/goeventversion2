@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircleIcon, HeartIcon, MapPinIcon, UsersIcon, StarIcon, ArrowRightIcon, CalendarIcon, InfoIcon } from 'lucide-react';
+import { EntityImage } from '@kit/ui/makerkit/entity-image';
 type VenueCardProps = {
   venue: any;
   selectedDate: Date | null;
@@ -29,7 +30,13 @@ export const VenueCard = ({
   return <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 hover:shadow-md transition-shadow cursor-pointer" onClick={onViewDetails}>
       {/* Image Carousel */}
       <div className="relative h-48 bg-gray-200">
-        <img src={venue.images[currentImageIndex]} alt={venue.name} className="w-full h-full object-cover" />
+        <EntityImage 
+          src={venue.images?.[currentImageIndex] || venue.image_url}
+          alt={venue.name}
+          entityType="venue"
+          entityCategory={venue.venue_type}
+          className="w-full h-full object-cover"
+        />
         {/* Image Navigation */}
         {venue.images.length > 1 && <>
             <button onClick={prevImage} className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-1 shadow-sm hover:bg-opacity-100">
