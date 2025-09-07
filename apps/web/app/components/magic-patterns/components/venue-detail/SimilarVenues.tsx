@@ -20,9 +20,13 @@ export const SimilarVenues = ({
             </div>
             <div className="flex items-center mt-1 text-sm text-gray-600">
               <MapPinIcon className="h-4 w-4 mr-1 flex-shrink-0" />
-              <span>{venue.location.neighborhood}</span>
-              <span className="mx-1">•</span>
-              <span>{venue.distance} miles away</span>
+              <span>{venue.city || 'Location'}</span>
+              {venue.distance && (
+                <>
+                  <span className="mx-1">•</span>
+                  <span>{venue.distance} miles away</span>
+                </>
+              )}
             </div>
             <div className="flex items-center mt-1 text-sm">
               <StarIcon className="h-4 w-4 text-yellow-400 fill-current mr-1" />

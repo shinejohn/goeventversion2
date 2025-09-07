@@ -473,7 +473,7 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
                             </h3>
                             <div className="flex items-center text-sm text-gray-600">
                               <MapPinIcon className="h-4 w-4 mr-1" />
-                              {venue.location.neighborhood}
+                              {venue.city || 'Location'}
                             </div>
                             <div className="flex items-center mt-2">
                               <StarIcon className="h-4 w-4 text-yellow-400 fill-current" />
@@ -514,7 +514,7 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
                             </h3>
                             <div className="flex items-center text-sm text-gray-600">
                               <MapPinIcon className="h-4 w-4 mr-1" />
-                              {venue.location.neighborhood}
+                              {venue.city || 'Location'}
                             </div>
                             <div className="flex items-center mt-2 text-sm text-green-600 font-medium">
                               Just added{' '}

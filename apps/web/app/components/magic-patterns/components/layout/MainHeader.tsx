@@ -94,7 +94,7 @@ export const MainHeader = () => {
     }
   }, {
     title: 'Tickets',
-    href: '/tickets/buy',
+    href: '/tickets',
     icon: <TicketIcon className="h-4 w-4" />
   }, {
     title: 'Book It',

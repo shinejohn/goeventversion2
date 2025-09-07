@@ -1,6 +1,7 @@
 import React, { useState, createElement } from 'react';
 import { MapPinIcon, ClockIcon, HeartIcon, ShareIcon, TicketIcon, TagIcon, AlertCircleIcon, CalendarIcon, CheckIcon } from 'lucide-react';
 import { SharePopup } from '../ui/SharePopup';
+import { useNavigate } from 'react-router';
 type Event = {
   id: string;
   title: string;
@@ -43,6 +44,7 @@ type EventCardProps = {
 export const EventCard = ({
   event
 }: EventCardProps) => {
+  const navigate = useNavigate();
   const [shareSuccess, setShareSuccess] = useState<boolean>(false);
   const [calendarSuccess, setCalendarSuccess] = useState<boolean>(false);
   const [showSharePopup, setShowSharePopup] = useState<boolean>(false);
@@ -134,7 +136,7 @@ export const EventCard = ({
     }
     return null;
   };
-  return <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+  return <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate(`/events/${event.id}`)}>
       {/* Event Image */}
       <div className="relative h-48">
         <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
@@ -163,7 +165,7 @@ export const EventCard = ({
           <div className="flex items-center text-sm">
             <MapPinIcon className="h-4 w-4 mr-2 flex-shrink-0 text-gray-600" />
             <div>
-              <a href={`/venues/${event.venue.id}/${event.venue.slug}`} className="text-indigo-600 hover:text-indigo-800">
+              <a href={`/venues/${event.venue.id}`} className="text-indigo-600 hover:text-indigo-800">
                 {event.venue.name}
               </a>
               <span className="text-gray-500 text-xs ml-2">
@@ -213,6 +215,6 @@ export const EventCard = ({
         </div>
       </div>
       {/* Share Popup */}
-      {showSharePopup && <SharePopup isOpen={showSharePopup} onClose={() => setShowSharePopup(false)} title={event.title} description={`${event.title} at ${event.venue.name} on ${formatEventDate(event.date)}`} url={`${window.location.origin}/event/${event.id}`} image={event.image} />}
+      {showSharePopup && <SharePopup isOpen={showSharePopup} onClose={() => setShowSharePopup(false)} title={event.title} description={`${event.title} at ${event.venue.name} on ${formatEventDate(event.date)}`} url={`${window.location.origin}/events/${event.id}`} image={event.image} />}
     </div>;
 };

@@ -5,7 +5,6 @@ import { VenueCard } from '../../components/venue-marketplace/VenueCard';
 import { VenueListItem } from '../../components/venue-marketplace/VenueListItem';
 import { MapView } from '../../components/venue-marketplace/MapView';
 import { useNavigate } from 'react-router';
-import { mockVenues } from '../../mockdata/venues';
 type ViewMode = 'grid' | 'list' | 'map';
 type SortOption = 'recommended' | 'price_low' | 'price_high' | 'distance' | 'capacity' | 'rating' | 'newest';
 
@@ -20,8 +19,8 @@ export const VenueMarketplacePage = ({ venues: propVenues }: VenueMarketplacePag
   const [sortOption, setSortOption] = useState<SortOption>('recommended');
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(true);
-  // Use props if available, fallback to mock data
-  const initialVenues = propVenues && propVenues.length > 0 ? propVenues : mockVenues;
+  // Use props venues
+  const initialVenues = propVenues || [];
   const [venues, setVenues] = useState(initialVenues);
   const [filteredVenues, setFilteredVenues] = useState(initialVenues);
   const [isLoading, setIsLoading] = useState(false);
@@ -49,16 +48,16 @@ export const VenueMarketplacePage = ({ venues: propVenues }: VenueMarketplacePag
       // Apply search filter if exists
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
-        results = results.filter(venue => venue.name.toLowerCase().includes(query) || venue.location.neighborhood.toLowerCase().includes(query) || venue.eventTypes.some(type => type.toLowerCase().includes(query)));
+        results = results.filter(venue => venue.name.toLowerCase().includes(query) || (venue.city && venue.city.toLowerCase().includes(query)));
       }
       // Apply venue type filters
       if (filters.venueTypes.length > 0) {
-        results = results.filter(venue => filters.venueTypes.some(type => venue.venueType === type));
+        results = results.filter(venue => filters.venueTypes.some(type => venue.venue_type === type));
       }
       // Apply capacity filter
       results = results.filter(venue => venue.capacity >= filters.minCapacity && venue.capacity <= filters.maxCapacity);
       // Apply price filter
-      results = results.filter(venue => venue.pricePerHour >= filters.minPrice && venue.pricePerHour <= filters.maxPrice);
+      results = results.filter(venue => (venue.price_per_hour || 0) >= filters.minPrice && (venue.price_per_hour || 0) <= filters.maxPrice);
       // Apply amenities filter
       if (filters.amenities.length > 0) {
         results = results.filter(venue => filters.amenities.every(amenity => venue.amenities.includes(amenity)));
@@ -66,10 +65,10 @@ export const VenueMarketplacePage = ({ venues: propVenues }: VenueMarketplacePag
       // Apply sort
       switch (sortOption) {
         case 'price_low':
-          results.sort((a, b) => a.pricePerHour - b.pricePerHour);
+          results.sort((a, b) => (a.price_per_hour || 0) - (b.price_per_hour || 0));
           break;
         case 'price_high':
-          results.sort((a, b) => b.pricePerHour - a.pricePerHour);
+          results.sort((a, b) => (b.price_per_hour || 0) - (a.price_per_hour || 0));
           break;
         case 'distance':
           results.sort((a, b) => a.distance - b.distance);
@@ -78,14 +77,14 @@ export const VenueMarketplacePage = ({ venues: propVenues }: VenueMarketplacePag
           results.sort((a, b) => a.capacity - b.capacity);
           break;
         case 'rating':
-          results.sort((a, b) => b.rating - a.rating);
+          results.sort((a, b) => (b.average_rating || 0) - (a.average_rating || 0));
           break;
         case 'newest':
-          results.sort((a, b) => new Date(b.listedDate).getTime() - new Date(a.listedDate).getTime());
+          results.sort((a, b) => new Date(b.listed_date || 0).getTime() - new Date(a.listed_date || 0).getTime());
           break;
         default:
           // Recommended - a combination of rating and relevance
-          results.sort((a, b) => b.rating - a.rating);
+          results.sort((a, b) => (b.average_rating || 0) - (a.average_rating || 0));
       }
       setFilteredVenues(results);
       setIsLoading(false);
@@ -137,7 +136,7 @@ export const VenueMarketplacePage = ({ venues: propVenues }: VenueMarketplacePag
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-gray-600">
             <div className="flex items-center">
               <span className="font-semibold text-indigo-600 mr-2">
-                {mockVenues.length}
+                {venues.length}
               </span>
               Venues Available
             </div>
@@ -147,7 +146,7 @@ export const VenueMarketplacePage = ({ venues: propVenues }: VenueMarketplacePag
             </div>
             <div className="flex items-center">
               <span className="font-semibold text-indigo-600 mr-2">
-                {mockVenues.filter(v => v.verified).length}
+                {venues.filter(v => v.verified).length}
               </span>
               Verified Venues
             </div>
@@ -180,7 +179,7 @@ export const VenueMarketplacePage = ({ venues: propVenues }: VenueMarketplacePag
             </button>
             <div className="flex items-center text-sm text-gray-500">
               <span className="mr-2">
-                Showing {filteredVenues.length} of {mockVenues.length} venues
+                Showing {filteredVenues.length} of {venues.length} venues
               </span>
             </div>
           </div>
@@ -212,7 +211,7 @@ export const VenueMarketplacePage = ({ venues: propVenues }: VenueMarketplacePag
               <div className="flex items-center space-x-2">
                 <div className="hidden lg:flex items-center text-sm text-gray-500 mr-4">
                   <span>
-                    Showing {filteredVenues.length} of {mockVenues.length}{' '}
+                    Showing {filteredVenues.length} of {venues.length}{' '}
                     venues
                   </span>
                 </div>

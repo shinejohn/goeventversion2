@@ -55,9 +55,23 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       eventsCount: events?.length || 0
     });
     
+    // Transform venue data to match component expectations
+    const transformedVenue = {
+      ...venueResult.data,
+      location: {
+        address: venueResult.data.address || '',
+        neighborhood: venueResult.data.city || '',
+        coordinates: {
+          lat: venueResult.data.latitude || 27.9659,
+          lng: venueResult.data.longitude || -82.8001
+        }
+      },
+      pricePerHour: venueResult.data.hourly_rate || venueResult.data.price_per_hour || 0
+    };
+    
     return {
       title: `Book ${venueResult.data.name} - GoEventCity`,
-      venue: venueResult.data,
+      venue: transformedVenue,
       upcomingEvents: events || []
     };
   } catch (error) {

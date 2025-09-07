@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { ArrowLeftIcon, CalendarIcon, ClockIcon, UsersIcon, MapPinIcon, DollarSignIcon, CheckIcon, InfoIcon, HomeIcon, ChevronRightIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
-import { mockVenues } from '../../../mockdata/venues';
-export const BookingRequestPage = () => {
+interface BookingRequestPageProps {
+  venue: any;
+}
+
+export const BookingRequestPage = ({ venue }: BookingRequestPageProps) => {
   const navigate = useNavigate();
-  // In a real app, we would extract the venueId from the URL
-  // For this example, we'll assume it's venue-1
-  const venueId = currentPath.split('/')[3] || 'venue-1';
-  const venue = mockVenues.find(v => v.id === venueId) || mockVenues[0];
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);

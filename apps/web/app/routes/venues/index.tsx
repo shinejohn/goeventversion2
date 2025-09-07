@@ -1,90 +1,215 @@
 import React from 'react';
-// apps/web/app/routes/venues/index.tsx
-import { VenuesPage } from '~/components/magic-patterns/pages/VenuesPage';
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/venues/index/+types';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import { z } from 'zod';
+
+// Magic Patterns imports
+import { VenuesPage } from '~/components/magic-patterns/pages/VenuesPage';
+import { createMagicPatternsRoute } from '~/lib/magic-patterns/route-wrapper';
+import { transformVenuesList } from '~/lib/magic-patterns/data-transformers';
+import { getLogger } from '@kit/shared/logger';
+
+/**
+ * Venues Route - Core entity of the system
+ * Venues are physical spaces where events happen and performers perform
+ */
+
+// Query parameter schema with venue-specific filters
+const VenuesQuerySchema = z.object({
+  search: z.string().max(100).optional().default(''),
+  city: z.string().max(50).optional().default(''),
+  type: z.enum(['music', 'theater', 'sports', 'conference', 'wedding', 'outdoor', 'other']).optional(),
+  capacity: z.coerce.number().min(0).max(100000).optional(),
+  minPrice: z.coerce.number().min(0).optional(),
+  maxPrice: z.coerce.number().max(10000).optional(),
+  amenities: z.string().optional(), // comma-separated list
+  availability: z.string().optional(), // date for availability check
+  page: z.coerce.number().min(1).optional().default(1),
+  limit: z.coerce.number().min(1).max(100).optional().default(20),
+  sort: z.enum(['name', 'price', 'capacity', 'rating', 'distance']).optional().default('name'),
+});
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
-  const client = getSupabaseServerClient(request);
-  const url = new URL(request.url);
-  
-  const search = url.searchParams.get('search') || '';
-  const city = url.searchParams.get('city') || '';
-  const venueType = url.searchParams.get('type') || '';
-  const capacity = url.searchParams.get('capacity') || '';
+  const logger = await getLogger();
+  const startTime = Date.now();
   
   try {
+    // Parse and validate query parameters
+    const url = new URL(request.url);
+    const queryParams = Object.fromEntries(url.searchParams);
+    const params = VenuesQuerySchema.parse(queryParams);
+    
+    logger.info({ 
+      loader: 'venues',
+      params 
+    }, 'Loading venues - core system entity');
+    
+    const client = getSupabaseServerClient(request);
+    
+    // Build optimized query for venues
     let query = client
       .from('venues')
-      .select('*');
+      .select('*', { count: 'exact' })
+      .eq('is_active', true);
     
-    if (search) {
-      query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%`);
+    // Apply search filters
+    if (params.search) {
+      query = query.or(
+        `name.ilike.%${params.search}%,description.ilike.%${params.search}%`
+      );
     }
     
-    if (city) {
-      query = query.ilike('address', `%${city}%`);
+    // Location filter
+    if (params.city) {
+      query = query.or(`city.ilike.%${params.city}%,state.ilike.%${params.city}%`);
     }
     
-    if (venueType) {
-      query = query.eq('venue_type', venueType);
+    // Venue type filter
+    if (params.type) {
+      query = query.eq('venue_type', params.type);
     }
     
-    if (capacity) {
-      query = query.gte('max_capacity', parseInt(capacity));
+    // Capacity filter
+    if (params.capacity) {
+      query = query.gte('max_capacity', params.capacity);
     }
     
-    const { data: venues, error } = await query.order('name');
+    // Price range filters
+    if (params.minPrice) {
+      query = query.gte('base_hourly_rate', params.minPrice);
+    }
+    if (params.maxPrice) {
+      query = query.lte('base_hourly_rate', params.maxPrice);
+    }
+    
+    // Amenities filter - simplified for now
+    // TODO: Implement amenities filter with JSONB query
+    
+    // Availability filter - simplified for now
+    // TODO: Implement availability check with blackout_dates JSONB
+    
+    // Apply sorting
+    switch (params.sort) {
+      case 'price':
+        query = query.order('base_hourly_rate', { ascending: true, nullsFirst: false });
+        break;
+      case 'capacity':
+        query = query.order('max_capacity', { ascending: false });
+        break;
+      case 'rating':
+        // TODO: Implement rating sort once reviews are joined
+        query = query.order('name', { ascending: true });
+        break;
+      case 'distance':
+        // Would need user location for this
+        query = query.order('name', { ascending: true });
+        break;
+      default:
+        query = query.order('created_at', { ascending: false })
+          .order('name', { ascending: true });
+    }
+    
+    // Apply pagination
+    const offset = (params.page - 1) * params.limit;
+    query = query.range(offset, offset + params.limit - 1);
+    
+    // Execute query with count
+    const { data: venues, error, count } = await query;
     
     if (error) {
+      logger.error({ 
+        error, 
+        loader: 'venues',
+        params 
+      }, 'Failed to load venues');
       throw error;
     }
     
-    // Transform venues data to match VenueData interface
-    const transformedVenues = (venues || []).filter(venue => venue && venue.id).map(venue => ({
-      id: venue.id,
-      name: venue.name || 'Unnamed Venue',
-      description: venue.description || '',
-      address: venue.address || '',
-      capacity: venue.max_capacity || 0,
-      images: Array.isArray(venue.gallery_images) ? venue.gallery_images : [],
-      amenities: venue.amenities || [],
-      average_rating: venue.average_rating || null,
-      total_reviews: venue.total_reviews || null,
-      slug: venue.slug || '',
-      community_id: venue.community_id || null,
-      account_id: venue.account_id || null,
-      venue_type: venue.venue_type || 'Other',
-      price_per_hour: venue.hourly_rate || null,
-      distance: venue.distance || null,
-      listed_date: venue.created_at || new Date().toISOString(),
-      last_booked_days_ago: venue.last_booked_days_ago || null,
-      unavailable_dates: Array.isArray(venue.unavailable_dates) ? venue.unavailable_dates : [],
-      image_url: venue.image_url || (Array.isArray(venue.gallery_images) && venue.gallery_images[0]) || null,
-      city: venue.city || '',
-      verified: venue.is_verified || false
-    }));
+    // Transform data for Magic Patterns component
+    const transformedVenues = transformVenuesList(venues || []);
     
-    return { venues: transformedVenues };
+    // Calculate additional metrics
+    const venueMetrics = {
+      totalVenues: count || 0,
+      averagePrice: venues?.reduce((sum, v) => sum + (v.base_hourly_rate || 0), 0) / (venues?.length || 1),
+      popularCities: [...new Set(venues?.map(v => v.city).filter(Boolean))].slice(0, 5),
+    };
+    
+    const duration = Date.now() - startTime;
+    logger.info({ 
+      loader: 'venues',
+      duration,
+      count: transformedVenues.length,
+      totalCount: count,
+      metrics: venueMetrics
+    }, 'Venues loaded successfully');
+    
+    return {
+      venues: transformedVenues,
+      pagination: {
+        page: params.page,
+        limit: params.limit,
+        total: count || 0,
+        totalPages: Math.ceil((count || 0) / params.limit),
+        hasMore: count ? offset + params.limit < count : false,
+      },
+      filters: params,
+      metrics: venueMetrics,
+    };
     
   } catch (error) {
-    console.error('Error in venues loader:', error);
-    return { venues: [] };
+    logger.error({ 
+      error, 
+      loader: 'venues',
+      url: request.url 
+    }, 'Error in venues loader');
+    
+    // Return empty state with error
+    return {
+      venues: [],
+      pagination: {
+        page: 1,
+        limit: 20,
+        total: 0,
+        totalPages: 0,
+        hasMore: false,
+      },
+      filters: VenuesQuerySchema.parse({}),
+      metrics: {
+        totalVenues: 0,
+        averagePrice: 0,
+        popularCities: [],
+      },
+      error: error instanceof Error ? error.message : 'Failed to load venues',
+    };
   }
 };
 
-export default function VenuesRoute({ loaderData }: Route.ComponentProps) {
-  try {
-    return <VenuesPage venues={loaderData.venues} />;
-  } catch (error) {
-    console.error('Error rendering VenuesPage:', error);
-    return (
-      <div className="p-8">
-        <h1 className="text-2xl font-bold text-red-600">Error Loading Venues Page</h1>
-        <pre className="mt-4 p-4 bg-red-100 rounded">
-          {error instanceof Error ? error.message : 'Unknown error'}
-        </pre>
-      </div>
-    );
-  }
-}
+// Component using the Magic Patterns wrapper
+export default createMagicPatternsRoute({
+  component: VenuesPage,
+  transformData: (loaderData) => ({
+    venues: loaderData.venues,
+    pagination: loaderData.pagination,
+    filters: loaderData.filters,
+    metrics: loaderData.metrics,
+    error: loaderData.error,
+  }),
+});
+
+// SEO meta tags
+export const meta = () => {
+  return [
+    { title: 'Find Venues for Your Events - When The Fun' },
+    { name: 'description', content: 'Discover and book amazing venues for concerts, weddings, conferences, and more. Browse thousands of spaces perfect for your next event.' },
+    { property: 'og:title', content: 'Find Venues for Your Events - When The Fun' },
+    { property: 'og:description', content: 'Book the perfect venue for your next event' },
+  ];
+};
+
+// Cache headers for better performance
+export const headers = () => {
+  return {
+    'Cache-Control': 'public, max-age=300, s-maxage=3600',
+  };
+};

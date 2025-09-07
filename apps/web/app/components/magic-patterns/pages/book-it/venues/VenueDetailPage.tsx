@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CheckCircleIcon, MapPinIcon, CalendarIcon, ClockIcon, StarIcon, UsersIcon, HeartIcon, ShareIcon, ArrowLeftIcon, ChevronRightIcon, ChevronLeftIcon, ExternalLinkIcon, MessageCircleIcon, CheckIcon, XIcon, InfoIcon, HomeIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
-import { mockVenues } from '../../../mockdata/venues';
 import { ImageGallery } from '../../../components/venue-detail/ImageGallery';
 import { BookingWidget } from '../../../components/venue-detail/BookingWidget';
 import { AmenitiesSection } from '../../../components/venue-detail/AmenitiesSection';
@@ -13,11 +12,14 @@ import { ReviewsSection } from '../../../components/venue-detail/ReviewsSection'
 import { SimilarVenues } from '../../../components/venue-detail/SimilarVenues';
 import { BookingRequestPopup, BookingFormData } from '../../../components/venue-detail/BookingRequestPopup';
 import { BookingConfirmationPopup } from '../../../components/venue-detail/BookingConfirmationPopup';
-export const VenueDetailPage = () => {
-  // In a real app, we would fetch the venue by ID from the URL
-  // For this example, we'll just use the first venue from our mock data
+interface VenueDetailPageProps {
+  venue: any;
+  upcomingEvents?: any[];
+}
+
+export const VenueDetailPage = ({ venue: propVenue, upcomingEvents = [] }: VenueDetailPageProps) => {
   const venue = {
-    ...mockVenues[0],
+    ...propVenue,
     // Add additional fields needed for this detailed view
     verifiedDate: 'May 2023',
     responseRate: 98,

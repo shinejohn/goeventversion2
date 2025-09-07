@@ -75,7 +75,7 @@ export const VenueCard = ({
         <div className="mt-1 flex items-center text-sm text-gray-600">
           <MapPinIcon className="h-4 w-4 mr-1 flex-shrink-0" />
           <span className="line-clamp-1">
-            {venue.location.neighborhood}, {venue.distance} miles away
+            {venue.city || 'Location'}{venue.distance ? `, ${venue.distance} miles away` : ''}
           </span>
         </div>
         <div className="mt-1 flex items-center text-sm text-gray-600">

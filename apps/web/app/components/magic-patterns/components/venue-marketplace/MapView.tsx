@@ -54,10 +54,10 @@ export const MapView = ({
                   <div className="p-3">
                     <h4 className="font-medium text-gray-900">{venue.name}</h4>
                     <p className="text-sm text-gray-600">
-                      {venue.location.neighborhood}
+                      {venue.city || 'Location'}
                     </p>
                     <p className="text-sm font-medium mt-1">
-                      ${venue.pricePerHour}/hour
+                      ${venue.price_per_hour || 0}/hour
                     </p>
                     <button className="mt-2 w-full py-1 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded" onClick={() => handleVenueSelect(venue.id)}>
                       View Details

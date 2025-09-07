@@ -34,7 +34,7 @@ const HubsDiscoveryPage = () => {
     location: 'St. Petersburg, FL'
   }];
   const handleCommunityClick = communityId => {
-    navigate(`/hub/${communityId}/community`);
+    navigate(`/c/${communityId}`);
   };
   return <div className="min-h-screen bg-gray-50">
       <main className="flex-grow">

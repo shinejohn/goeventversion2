@@ -1,0 +1,1515 @@
+{
+  "total_pages": 106,
+  "pages_with_routes": 5,
+  "pages_without_routes": 101,
+  "results": [
+    {
+      "index": 1,
+      "page": "AboutPage.tsx",
+      "name": "AboutPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 2,
+      "page": "AdvertisePage.tsx",
+      "name": "AdvertisePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /advertise/packages",
+        "Navigate to: /advertise/contact",
+        "Navigate to: /advertise/packages",
+        "Navigate to: /advertise/packages",
+        "Navigate to: /advertise/targeting",
+        "Navigate to: /advertise/packages/${plan.name.toLowerCase()}",
+        "Navigate to: /advertise/contact",
+        "Navigate to: /advertise/analytics",
+        "Navigate to: /advertise/packages",
+        "Navigate to: /checkout/details?plan=professional-advertising"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 3,
+      "page": "AdvertisingSolutionsPage.tsx",
+      "name": "AdvertisingSolutionsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /advertise/packages",
+        "Navigate to: /advertise/contact",
+        "Navigate to: /advertise/packages",
+        "Navigate to: /advertise/contact",
+        "Navigate to: /advertise/packages",
+        "Navigate to: /advertise/contact"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 4,
+      "page": "BookItPage.tsx",
+      "name": "BookItPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Props required: () => handleNavigation('/book-it/how-it-works')"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 5,
+      "page": "BookingMarketplacePage.tsx",
+      "name": "BookingMarketplacePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /book-it/venues",
+        "Navigate to: /book-it/performers",
+        "Navigate to: /book-it/venues",
+        "Navigate to: /book-it/performers",
+        "Navigate to: /venues/submit",
+        "Navigate to: /performers/register",
+        "Navigate to: /book-it/venues",
+        "Navigate to: /book-it/performers"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 6,
+      "page": "CalendarPage.tsx",
+      "name": "CalendarPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 7,
+      "page": "CareersPage.tsx",
+      "name": "CareersPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: #open-positions",
+        "Navigate to: /careers/apply/${job.id}",
+        "Navigate to: /careers/general-application"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 8,
+      "page": "CommunityImpactPage.tsx",
+      "name": "CommunityImpactPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /partner-with-us",
+        "Navigate to: /community-stories",
+        "Navigate to: /partner-with-us",
+        "Navigate to: /contact"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 9,
+      "page": "ContactUsPage.tsx",
+      "name": "ContactUsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /faq",
+        "Navigate to: /help",
+        "Navigate to: /support/chat",
+        "Link to: /privacy"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 10,
+      "page": "EventDetailPage.tsx",
+      "name": "EventDetailPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /events",
+        "Navigate to: /tickets/${eventData.id}",
+        "Navigate to: /organizers/${eventData.organizer.id}",
+        "Props required: attendeeCount"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 11,
+      "page": "EventOrganizerHubPage.tsx",
+      "name": "EventOrganizerHubPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /events/create",
+        "Navigate to: /organizer-hub/demo",
+        "Navigate to: /events",
+        "Navigate to: /events/create",
+        "Navigate to: /events/create",
+        "Navigate to: /contact"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 12,
+      "page": "EventPromotionPage.tsx",
+      "name": "EventPromotionPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 13,
+      "page": "EventsPage.tsx",
+      "name": "EventsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /calendar",
+        "Navigate to: /calendar",
+        "Navigate to: /events/${event.id}",
+        "Navigate to: /events/create",
+        "Navigate to: /events/${event.id}",
+        "Navigate to: /events/${event.id}",
+        "Navigate to: /events/create",
+        "Navigate to: /advertise",
+        "Props required: ...getEventDetails(eventToShare)!"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 14,
+      "page": "FeaturedListingsPage.tsx",
+      "name": "FeaturedListingsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 15,
+      "page": "GearPage.tsx",
+      "name": "GearPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Props required: () => handleNavigation('/shop/vendor-info')"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 16,
+      "page": "HomePage.tsx",
+      "name": "HomePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /events",
+        "Navigate to: /calendar",
+        "Navigate to: /events",
+        "Navigate to: /events/${event.id}",
+        "Navigate to: /events/${event.id}",
+        "Navigate to: /advertise/event-promotion",
+        "Navigate to: /venues",
+        "Navigate to: /advertise/featured-listings",
+        "Navigate to: /performers",
+        "Navigate to: /advertise/featured-listings",
+        "Navigate to: /calendar",
+        "Navigate to: /events/${event.id}",
+        "Navigate to: /events/${event.id}",
+        "Navigate to: /calendar",
+        "Navigate to: /login",
+        "Props required: sharePopupState.image"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 17,
+      "page": "HowItWorksPage.tsx",
+      "name": "HowItWorksPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /signup",
+        "Navigate to: /events",
+        "Navigate to: /events",
+        "Navigate to: /venues/submit",
+        "Navigate to: /signup"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 18,
+      "page": "ListYourVenuePage.tsx",
+      "name": "ListYourVenuePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /venues/submit",
+        "Navigate to: /partner-with-us",
+        "Navigate to: /venues/submit",
+        "Navigate to: /venues/submit",
+        "Navigate to: /contact"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 19,
+      "page": "LoginPage.tsx",
+      "name": "LoginPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 20,
+      "page": "NotFoundPage.tsx",
+      "name": "NotFoundPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /",
+        "Navigate to: /directory"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 21,
+      "page": "PageDirectory.tsx",
+      "name": "PageDirectory",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 22,
+      "page": "PartnerWithUsPage.tsx",
+      "name": "PartnerWithUsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /contact"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 23,
+      "page": "PerformerProfilePage.tsx",
+      "name": "PerformerProfilePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 24,
+      "page": "PerformerToolsPage.tsx",
+      "name": "PerformerToolsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /performers/register",
+        "Navigate to: /performers/tools/demo",
+        "Navigate to: /performers",
+        "Navigate to: /performers/register",
+        "Navigate to: /performers/register",
+        "Navigate to: /contact"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 25,
+      "page": "PerformersPage.tsx",
+      "name": "PerformersPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /performers/join",
+        "Navigate to: /performers",
+        "Navigate to: /performers/${performer.id}",
+        "Navigate to: /performers/join",
+        "Navigate to: /book/performer",
+        "Props required: () => navigate('/book/performer')"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 26,
+      "page": "PressMediaPage.tsx",
+      "name": "PressMediaPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /press/kit",
+        "Navigate to: /contact",
+        "Navigate to: /press/releases",
+        "Navigate to: /contact"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 27,
+      "page": "ProductDetailPage.tsx",
+      "name": "ProductDetailPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Props required: relatedProduct.price"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 28,
+      "page": "ShoppingCartPage.tsx",
+      "name": "ShoppingCartPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /shop/checkout",
+        "Navigate to: /gear",
+        "Navigate to: /gear",
+        "Navigate to: /gear"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 29,
+      "page": "SuccessStoriesPage.tsx",
+      "name": "SuccessStoriesPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /success-stories/categories",
+        "Navigate to: /contact",
+        "Navigate to: /success-stories/emerald-room",
+        "Navigate to: /success-stories/all",
+        "Navigate to: /contact"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 30,
+      "page": "TicketsPage.tsx",
+      "name": "TicketsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /tickets/buy",
+        "Navigate to: /profile/tickets",
+        "Navigate to: /tickets/buy",
+        "Navigate to: /tickets/${event.id}/select",
+        "Navigate to: /tickets/${event.id}/select",
+        "Navigate to: /help/tickets",
+        "Props required: () => navigate('/help/tickets')"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 31,
+      "page": "VenuesPage.tsx",
+      "name": "VenuesPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /venues/${venueId}",
+        "Navigate to: /venues/submit",
+        "Navigate to: /venues/management",
+        "Navigate to: /venues/trending",
+        "Navigate to: /venues/new",
+        "Navigate to: /events/${eventId}",
+        "Navigate to: /events"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 32,
+      "page": "advertise/AdPackagesPage.tsx",
+      "name": "AdPackagesPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /advertise/contact",
+        "Navigate to: /checkout/details?plan=professional-advertising",
+        "Navigate to: /advertise/contact"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 33,
+      "page": "advertise/AdvertisingContactPage.tsx",
+      "name": "AdvertisingContactPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /advertise/packages"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 34,
+      "page": "advertise/EmailCampaignsPage.tsx",
+      "name": "EmailCampaignsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /advertise/packages"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 35,
+      "page": "advertise/EventPromotionPage.tsx",
+      "name": "EventPromotionPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /advertise/packages"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 36,
+      "page": "advertise/FeaturedListingsPage.tsx",
+      "name": "FeaturedListingsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /advertise/packages"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 37,
+      "page": "advertise/HomepageShowcasePage.tsx",
+      "name": "HomepageShowcasePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /advertise/packages"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 38,
+      "page": "auth/EmailVerificationPage.tsx",
+      "name": "EmailVerificationPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Link to: /calendar",
+        "Link to: /settings",
+        "Link to: /login",
+        "Link to: /help/verification"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 39,
+      "page": "auth/ForgotPasswordPage.tsx",
+      "name": "ForgotPasswordPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /login",
+        "Navigate to: /login",
+        "Navigate to: /register"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 40,
+      "page": "auth/RegisterPage.tsx",
+      "name": "RegisterPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /auth/verify-email",
+        "Navigate to: /login"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 41,
+      "page": "auth/ResetPasswordPage.tsx",
+      "name": "ResetPasswordPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /auth/forgot-password",
+        "Navigate to: /auth/forgot-password",
+        "Navigate to: /login",
+        "Navigate to: /login"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 42,
+      "page": "book-it/GigCreatorPage.tsx",
+      "name": "GigCreatorPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /book-it/gig-confirmation",
+        "Navigate to: /book"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 43,
+      "page": "book-it/GigMarketplacePage.tsx",
+      "name": "GigMarketplacePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /book-it/create-gig",
+        "Navigate to: /performers",
+        "Navigate to: /book-it/gigs/featured",
+        "Navigate to: /book-it/gigs/${gig.id}",
+        "Navigate to: /book-it/gigs/recent",
+        "Navigate to: /book-it/gigs/${gig.id}",
+        "Navigate to: /performers/register",
+        "Navigate to: /performers/tools",
+        "Navigate to: /book-it/create-gig",
+        "Navigate to: /book-it/how-it-works",
+        "Props required: 2"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 44,
+      "page": "book-it/GigsMarketplacePage.tsx",
+      "name": "GigsMarketplacePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /book-it/gigs/${gigId}",
+        "Navigate to: /book-it/create-gig",
+        "Navigate to: /book-it/create-gig"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 45,
+      "page": "book-it/VenueMarketplacePage.tsx",
+      "name": "VenueMarketplacePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /",
+        "Navigate to: /book",
+        "Navigate to: /book-it/venues/${id}",
+        "Navigate to: /book-it/venues/${venue.id}",
+        "Navigate to: /book-it/venues/${venue.id}",
+        "Props required: 2"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 46,
+      "page": "book-it/venues/BookingRequestPage.tsx",
+      "name": "BookingRequestPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /book-it/venues/${venueId}",
+        "Navigate to: /bookings/confirmed",
+        "Navigate to: /book-it/venues/${venueId}",
+        "Navigate to: /",
+        "Navigate to: /book-it/venues",
+        "Navigate to: /book-it/venues/${venueId}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 47,
+      "page": "book-it/venues/VenueDetailPage.tsx",
+      "name": "VenueDetailPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /book-it/venues",
+        "Navigate to: /",
+        "Navigate to: /book",
+        "Navigate to: /book-it/venues",
+        "Navigate to: /book-it/venues/${venueId}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 48,
+      "page": "book/BookPerformerPage.tsx",
+      "name": "BookPerformerPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /performers/${performerId}",
+        "Navigate to: /book/start"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 49,
+      "page": "book/BookVenuePage.tsx",
+      "name": "BookVenuePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /book-it/venues/${venueId}",
+        "Navigate to: /book/start"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 50,
+      "page": "bookings/BookingConfirmationPage.tsx",
+      "name": "BookingConfirmationPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /messages",
+        "Navigate to: /bookings/manage/${booking.bookingId}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 51,
+      "page": "calendar/[id]/edit.tsx",
+      "name": "edit",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /calendar/${calendarData.id}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 52,
+      "page": "calendar/[slug].tsx",
+      "name": "[slug]",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /event/${event.id}",
+        "Navigate to: /calendars"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 53,
+      "page": "calendars/CalendarMarketplacePage.tsx",
+      "name": "CalendarMarketplacePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 54,
+      "page": "calendars/create.tsx",
+      "name": "create",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /calendars"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 55,
+      "page": "checkout/CheckoutConfirmationPage.tsx",
+      "name": "CheckoutConfirmationPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /tickets/select",
+        "Navigate to: /profile/tickets",
+        "Navigate to: /events"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 56,
+      "page": "checkout/CheckoutDetailsPage.tsx",
+      "name": "CheckoutDetailsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /tickets/select",
+        "Navigate to: /checkout/confirmation",
+        "Navigate to: /checkout/payment"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 57,
+      "page": "checkout/CheckoutPaymentPage.tsx",
+      "name": "CheckoutPaymentPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /tickets/select",
+        "Navigate to: /checkout/confirmation"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 58,
+      "page": "dashboard/calendars.tsx",
+      "name": "calendars",
+      "routes_found": [
+        "calendars/create.tsx",
+        "calendars/$slug.tsx"
+      ],
+      "has_route": true,
+      "navigation_issues": [
+        "Navigate to: /calendar/${id}/edit",
+        "Navigate to: /calendar/${id}",
+        "Navigate to: /calendars/create",
+        "Navigate to: /profile/settings",
+        "Navigate to: /calendars/create"
+      ],
+      "status": "OK"
+    },
+    {
+      "index": 59,
+      "page": "events/TicketCreatorPage.tsx",
+      "name": "TicketCreatorPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /events"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 60,
+      "page": "help.tsx",
+      "name": "help",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /help/articles/${article.id}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 61,
+      "page": "hub/[id]/edit.tsx",
+      "name": "edit",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /hub/${hubData?.slug}",
+        "Navigate to: /hubs",
+        "Navigate to: /hub/${hubData.slug}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 62,
+      "page": "hub/[slug]/analytics.tsx",
+      "name": "analytics",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /hubs/${slug}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 63,
+      "page": "hub/[slug]/articles.tsx",
+      "name": "articles",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /hub/${slug}/submit-article",
+        "Navigate to: /hubs/${slug}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 64,
+      "page": "hub/[slug]/community.tsx",
+      "name": "community",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /hub/${slug}/new-thread",
+        "Navigate to: /hub/${slug}/thread/${threadId}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 65,
+      "page": "hub/[slug]/events.tsx",
+      "name": "events",
+      "routes_found": [
+        "index.tsx",
+        "test-magic-ssr.tsx",
+        "home/user/index.tsx",
+        "tickets/index.tsx",
+        "tickets/purchase.tsx",
+        "tickets/purchase/$eventId.tsx",
+        "venues/$id.tsx",
+        "book/confirmation.tsx",
+        "book/requirements.tsx",
+        "book/payment.tsx",
+        "book/services.tsx",
+        "book/review.tsx",
+        "book/event-details.tsx",
+        "book-it/index.tsx",
+        "book-it/venues/$id/index.tsx",
+        "events/index.tsx",
+        "events/$id.tsx",
+        "events/create.tsx",
+        "performers/$id.tsx"
+      ],
+      "has_route": true,
+      "navigation_issues": [
+        "Navigate to: /hub/${slug}/submit-event",
+        "Navigate to: /hubs/${slug}"
+      ],
+      "status": "OK"
+    },
+    {
+      "index": 66,
+      "page": "hub/[slug]/gallery.tsx",
+      "name": "gallery",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /hubs/${slug}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 67,
+      "page": "hub/[slug]/performers.tsx",
+      "name": "performers",
+      "routes_found": [
+        "index.tsx",
+        "home/user/index.tsx",
+        "book-it/index.tsx",
+        "book-it/gigs/index.tsx",
+        "performers/index.tsx",
+        "performers/$id.tsx",
+        "performers/create.tsx"
+      ],
+      "has_route": true,
+      "navigation_issues": [
+        "Navigate to: /hub/${slug}/submit-performer",
+        "Navigate to: /hubs/${slug}",
+        "Navigate to: /performers/${performer.id}"
+      ],
+      "status": "OK"
+    },
+    {
+      "index": 68,
+      "page": "hub/[slug]/venues.tsx",
+      "name": "venues",
+      "routes_found": [
+        "index.tsx",
+        "venues/index.tsx",
+        "venues/$id.tsx",
+        "venues/create.tsx",
+        "venues/$id/book.tsx",
+        "book/confirmation.tsx",
+        "book/requirements.tsx",
+        "book/payment.tsx",
+        "book/services.tsx",
+        "book/review.tsx",
+        "book/event-details.tsx",
+        "book-it/index.tsx",
+        "book-it/venues/index.tsx",
+        "book-it/venues/$id/index.tsx",
+        "events/index.tsx",
+        "events/create.tsx"
+      ],
+      "has_route": true,
+      "navigation_issues": [
+        "Navigate to: /hub/${slug}/submit-venue",
+        "Navigate to: /hubs/${slug}",
+        "Navigate to: /venues/${venue.id}"
+      ],
+      "status": "OK"
+    },
+    {
+      "index": 69,
+      "page": "hub/create.tsx",
+      "name": "create",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /hub/${hubData.slug}",
+        "Navigate to: /hubs"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 70,
+      "page": "hubs/index.tsx",
+      "name": "index",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /c/${communityId}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 71,
+      "page": "logout.tsx",
+      "name": "logout",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /",
+        "Navigate to: /login",
+        "Navigate to: /"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 72,
+      "page": "my/FanDashboardPage.tsx",
+      "name": "FanDashboardPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /performers/${artist.id}",
+        "Navigate to: /performers"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 73,
+      "page": "my/calendar.tsx",
+      "name": "calendar",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /event?id=${getSelectedEvent()?.id}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 74,
+      "page": "my/dashboard.tsx",
+      "name": "dashboard",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /my/calendar",
+        "Navigate to: /events",
+        "Navigate to: /event?id=${event.id}",
+        "Navigate to: /profile/tickets",
+        "Navigate to: /${entity.type}s/${entity.id}",
+        "Navigate to: /event?id=${event.id}",
+        "Navigate to: /profile/tickets",
+        "Navigate to: /tickets/${event.id}",
+        "Navigate to: /events",
+        "Navigate to: /${entity.type}s/${entity.id}",
+        "Navigate to: /${entity.type}s/${entity.id}/events",
+        "Navigate to: /discover",
+        "Navigate to: /event?id=${event.id}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 75,
+      "page": "my/venues.tsx",
+      "name": "venues",
+      "routes_found": [
+        "index.tsx",
+        "venues/index.tsx",
+        "venues/$id.tsx",
+        "venues/create.tsx",
+        "venues/$id/book.tsx",
+        "book/confirmation.tsx",
+        "book/requirements.tsx",
+        "book/payment.tsx",
+        "book/services.tsx",
+        "book/review.tsx",
+        "book/event-details.tsx",
+        "book-it/index.tsx",
+        "book-it/venues/index.tsx",
+        "book-it/venues/$id/index.tsx",
+        "events/index.tsx",
+        "events/create.tsx"
+      ],
+      "has_route": true,
+      "navigation_issues": [
+        "Navigate to: /venues/${venueId}/events/${eventId}",
+        "Navigate to: /my/venues/lists/${listId}",
+        "Navigate to: /my/venues/lists/create",
+        "Navigate to: /venues/${venueId}/review",
+        "Navigate to: /venues/${venueId}/photos/upload",
+        "Navigate to: /venues",
+        "Navigate to: /venues",
+        "Navigate to: /calendar",
+        "Navigate to: /events",
+        "Navigate to: /venues"
+      ],
+      "status": "OK"
+    },
+    {
+      "index": 76,
+      "page": "performers/BookPerformerPage.tsx",
+      "name": "BookPerformerPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /performers/${performerId}",
+        "Navigate to: /performers"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 77,
+      "page": "performers/MarketReportPage.tsx",
+      "name": "MarketReportPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /book-it/gigs",
+        "Navigate to: /performers/profile/edit"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 78,
+      "page": "performers/PerformerDiscoveryPage.tsx",
+      "name": "PerformerDiscoveryPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /performers/${performerId}",
+        "Navigate to: /performers/${performerId}",
+        "Navigate to: /performers/${performerId}",
+        "Navigate to: /performers/${performerId}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 79,
+      "page": "performers/PerformerManagementPage.tsx",
+      "name": "PerformerManagementPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /performers",
+        "Navigate to: /performers/${performerId}",
+        "Navigate to: /",
+        "Navigate to: /performers"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 80,
+      "page": "performers/PerformerOnboardingPage.tsx",
+      "name": "PerformerOnboardingPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /performers/setup-profile"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 81,
+      "page": "performers/PerformerProfilePage.tsx",
+      "name": "PerformerProfilePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /performers",
+        "Navigate to: /messages?to=${performer.id}",
+        "Navigate to: /messages?to=${performer.id}",
+        "Navigate to: /events/${event.id}",
+        "Navigate to: /book/performer/${performer.id}",
+        "Navigate to: /events/${event.id}",
+        "Navigate to: /tickets/${event.id}",
+        "Navigate to: /book/performer/${performer.id}",
+        "Props required: selectedMediaItem.description"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 82,
+      "page": "performers/PerformerProfilePageSimple.tsx",
+      "name": "PerformerProfilePageSimple",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /performers",
+        "Navigate to: /events/${event.id}",
+        "Props required: event.venue?.name || 'Venue TBA'"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 83,
+      "page": "profile/TicketsPage.tsx",
+      "name": "TicketsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /tickets/${ticketId}",
+        "Navigate to: /events",
+        "Navigate to: /events"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 84,
+      "page": "profile/UserProfilePage.tsx",
+      "name": "UserProfilePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /performers/management",
+        "Navigate to: /profile/settings"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 85,
+      "page": "profile/UserProfileSettingsPage.tsx",
+      "name": "UserProfileSettingsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /profile/${userData.username}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 86,
+      "page": "settings/AccountSettingsPage.tsx",
+      "name": "AccountSettingsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 87,
+      "page": "social/FeedPage.tsx",
+      "name": "FeedPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /profile/alexjohnson",
+        "Navigate to: /social/feed",
+        "Navigate to: /social/groups",
+        "Navigate to: /social/messages",
+        "Navigate to: /social/events",
+        "Navigate to: /social/saved",
+        "Navigate to: /social/search?q=${encodeURIComponent(topic.tag)}",
+        "Navigate to: /venues/search?q=${encodeURIComponent(post.location)}",
+        "Navigate to: /events/${post.event.id}",
+        "Navigate to: /social/post/${post.id}",
+        "Navigate to: /social/discover",
+        "Navigate to: /events/${event.id}",
+        "Navigate to: /events",
+        "Navigate to: /social/groups/${group.id}",
+        "Navigate to: /social/groups"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 88,
+      "page": "social/FriendsPage.tsx",
+      "name": "FriendsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /profile/${friend.username}",
+        "Navigate to: /social/messages/${friend.id}",
+        "Navigate to: /profile/${request.username}",
+        "Navigate to: /profile/${suggestion.username}",
+        "Navigate to: /profile/${request.username}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 89,
+      "page": "social/GroupsPage.tsx",
+      "name": "GroupsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /social/groups/create",
+        "Navigate to: /social/groups/${group.id}",
+        "Navigate to: /social/groups/${group.id}",
+        "Navigate to: /social/groups/${group.id}"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 90,
+      "page": "social/MessagesPage.tsx",
+      "name": "MessagesPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /social/messages/new",
+        "Navigate to: /social/messages/new"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 91,
+      "page": "social/NotificationsPage.tsx",
+      "name": "NotificationsPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /events/${notification.target.id}",
+        "Navigate to: /social/groups/${notification.target.id}",
+        "Navigate to: /profile/settings/notifications"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 92,
+      "page": "social/SocialFeedPage.tsx",
+      "name": "SocialFeedPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /profile/alexjohnson",
+        "Navigate to: /social/friends",
+        "Navigate to: /social/groups",
+        "Navigate to: /calendar",
+        "Navigate to: /venues",
+        "Navigate to: /performers",
+        "Navigate to: /social/saved",
+        "Navigate to: /social/groups",
+        "Navigate to: /social/post/${post.id}",
+        "Navigate to: /events/${event.id}",
+        "Navigate to: /events",
+        "Navigate to: /social/friends/suggestions"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 93,
+      "page": "success-stories/JazzQuartetPage.tsx",
+      "name": "JazzQuartetPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /success-stories",
+        "Navigate to: /performers/tools",
+        "Navigate to: /success-stories/sunset-music-festival",
+        "Navigate to: /success-stories/urban-loft",
+        "Navigate to: /success-stories/dj-collective",
+        "Navigate to: /performers/register",
+        "Navigate to: /performers/tools"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 94,
+      "page": "success-stories/SunsetMusicFestivalPage.tsx",
+      "name": "SunsetMusicFestivalPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /success-stories",
+        "Navigate to: /organizer-hub",
+        "Navigate to: /success-stories/urban-loft",
+        "Navigate to: /success-stories/jazz-quartet",
+        "Navigate to: /success-stories/downtown-revival",
+        "Navigate to: /events/create",
+        "Navigate to: /contact"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 95,
+      "page": "success-stories/UrbanLoftPage.tsx",
+      "name": "UrbanLoftPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /success-stories",
+        "Navigate to: /venues/submit",
+        "Navigate to: /success-stories/sunset-music-festival",
+        "Navigate to: /success-stories/jazz-quartet",
+        "Navigate to: /success-stories/food-festival",
+        "Navigate to: /venues/submit",
+        "Navigate to: /contact"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 96,
+      "page": "tickets/TicketDetailPage.tsx",
+      "name": "TicketDetailPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /profile/tickets",
+        "Navigate to: /profile/tickets",
+        "Navigate to: /help"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 97,
+      "page": "tickets/TicketMarketplacePage.tsx",
+      "name": "TicketMarketplacePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /",
+        "Navigate to: /tickets",
+        "Navigate to: /tickets/${ticket.id}/select",
+        "Navigate to: /tickets/${ticket.id}/select",
+        "Navigate to: /tickets/${ticket.id}/select",
+        "Navigate to: /tickets/${ticket.id}/select"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 98,
+      "page": "tickets/TicketPurchasePage.tsx",
+      "name": "TicketPurchasePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /login?redirect=/tickets/purchase",
+        "Navigate to: /events"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 99,
+      "page": "tickets/TicketSelectionPage.tsx",
+      "name": "TicketSelectionPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /checkout/details",
+        "Navigate to: /tickets"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 100,
+      "page": "venues/NewVenuesPage.tsx",
+      "name": "NewVenuesPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /book-it/venues/${venueId}",
+        "Navigate to: /",
+        "Navigate to: /venues",
+        "Navigate to: /book-it/venues",
+        "Navigate to: /venues/submit"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 101,
+      "page": "venues/SubmitVenuePage.tsx",
+      "name": "SubmitVenuePage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /venues",
+        "Navigate to: /",
+        "Navigate to: /venues",
+        "Navigate to: /venues",
+        "Navigate to: /venues/management",
+        "Navigate to: /venues"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 102,
+      "page": "venues/TrendingVenuesPage.tsx",
+      "name": "TrendingVenuesPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /book-it/venues/${venueId}",
+        "Navigate to: /",
+        "Navigate to: /venues",
+        "Navigate to: /book-it/venues",
+        "Navigate to: /book/start"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 103,
+      "page": "venues/VenueDetailPage.tsx",
+      "name": "VenueDetailPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /venues",
+        "Navigate to: /venues/${venue.id}/book",
+        "Navigate to: /venues",
+        "Navigate to: /events/${event.id}",
+        "Props required: () => setShowContactForm(false)"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 104,
+      "page": "venues/VenueManagementPage.tsx",
+      "name": "VenueManagementPage",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /venues",
+        "Navigate to: /venues/submit",
+        "Navigate to: /venues/${venueId}",
+        "Navigate to: /",
+        "Navigate to: /venues"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 105,
+      "page": "venues/[venueId]/[venueSlug].tsx",
+      "name": "[venueSlug]",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /book-it/venues/${venue.id}/request",
+        "Navigate to: /",
+        "Navigate to: /venues",
+        "Navigate to: /venues/${venueId}/venue-name"
+      ],
+      "status": "NO ROUTE"
+    },
+    {
+      "index": 106,
+      "page": "venues/[venueId]/book.tsx",
+      "name": "book",
+      "routes_found": [],
+      "has_route": false,
+      "navigation_issues": [
+        "Navigate to: /venues",
+        "Navigate to: /my/bookings",
+        "Navigate to: /venues"
+      ],
+      "status": "NO ROUTE"
+    }
+  ]
+}

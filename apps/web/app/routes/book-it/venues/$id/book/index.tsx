@@ -2,80 +2,69 @@ import React from 'react';
 import { BookingRequestPage } from '~/components/magic-patterns/pages/book-it/venues/BookingRequestPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/book-it/venues/$id/book/+types';
-import { redirect } from 'react-router';
-import { MarginEventAds } from '~/components/magic-patterns/components/ads/MarginEventAds';
-import { EventCard } from '~/components/magic-patterns/components/calendar/EventCard';
-import { EventList } from '~/components/magic-patterns/components/calendar/EventList';
-import { PlannedEventsWidget } from '~/components/magic-patterns/components/check-in/PlannedEventsWidget';
-import { ContentTabs } from '~/components/magic-patterns/components/events/ContentTabs';
-import { EventHero } from '~/components/magic-patterns/components/events/EventHero';
-import { EventSuggestionModal } from '~/components/magic-patterns/components/events/EventSuggestionModal';
-import { RelatedEvents } from '~/components/magic-patterns/components/events/RelatedEvents';
-import { VenueMap } from '~/components/magic-patterns/components/venue-marketplace/VenueMap';
-import { RevenueReports } from '~/components/magic-patterns/components/hub/analytics/RevenueReports';
-import { EnhancedEventCard } from '~/components/magic-patterns/components/hub/events/EnhancedEventCard';
-import { EventFilters } from '~/components/magic-patterns/components/hub/events/EventFilters';
-import { EventViewToggle } from '~/components/magic-patterns/components/hub/events/EventViewToggle';
-import { ListView } from '~/components/magic-patterns/components/hub/events/ListView';
-import { SimilarVenues } from '~/components/magic-patterns/components/venue-detail/SimilarVenues';
-import { VenueCard } from '~/components/magic-patterns/components/venue-marketplace/VenueCard';
-import { VenueListItem } from '~/components/magic-patterns/components/venue-marketplace/VenueListItem';
-import { mockEvents } from '~/components/magic-patterns/mockdata/events';
-import { mockVenues } from '~/components/magic-patterns/mockdata/venues';
-import { EventDetailPage } from '~/components/magic-patterns/pages/EventDetailPage';
-import { EventOrganizerHubPage } from '~/components/magic-patterns/pages/EventOrganizerHubPage';
-import { EventsPage } from '~/components/magic-patterns/pages/EventsPage';
-import { ListYourVenuePage } from '~/components/magic-patterns/pages/ListYourVenuePage';
-import { VenuesPage } from '~/components/magic-patterns/pages/VenuesPage';
-import { EventPromotionPage } from '~/components/magic-patterns/pages/advertise/EventPromotionPage';
-import { BookVenuePage } from '~/components/magic-patterns/pages/book/BookVenuePage';
-import { VenueMarketplacePage } from '~/components/magic-patterns/pages/book-it/VenueMarketplacePage';
-import { VenueDetailPage } from '~/components/magic-patterns/pages/venues/VenueDetailPage';
-import { TicketCreatorPage } from '~/components/magic-patterns/pages/events/TicketCreatorPage';
-import { HubEventsPage } from '~/components/magic-patterns/pages/hub/[slug]/events';
-import { venues } from '~/components/magic-patterns/pages/my/venues';
-import { NewVenuesPage } from '~/components/magic-patterns/pages/venues/NewVenuesPage';
-import { SubmitVenuePage } from '~/components/magic-patterns/pages/venues/SubmitVenuePage';
-import { TrendingVenuesPage } from '~/components/magic-patterns/pages/venues/TrendingVenuesPage';
-import { VenueManagementPage } from '~/components/magic-patterns/pages/venues/VenueManagementPage';
-// Note: Components with bracket notation in paths need proper mapping
-// import { VenueSlugPage } from '~/components/magic-patterns/pages/venues/[venueId]/[venueSlug]';
-// import { BookVenuePage } from '~/components/magic-patterns/pages/venues/[venueId]/book';
 
-export const loader = async ({ request }: Route.LoaderArgs) => {
-  // Future: Add data fetching logic here
-  return {
-    title: 'BookingRequest - GoEventCity',
-  };
+export const loader = async ({ request, params }: Route.LoaderArgs) => {
+  const client = getSupabaseServerClient(request);
+  const venueId = params.id;
+  
+  try {
+    // Load venue details for booking
+    const { data: venue, error } = await client
+      .from('venues')
+      .select('*')
+      .eq('id', venueId)
+      .single();
+      
+    if (error || !venue) {
+      throw new Response('Venue not found', { status: 404 });
+    }
+    
+    // Transform venue data to match component expectations
+    const transformedVenue = {
+      ...venue,
+      id: venue.id,
+      name: venue.name,
+      images: venue.gallery_images || [venue.image_url],
+      address: venue.address,
+      capacity: venue.max_capacity || 0,
+      pricePerHour: venue.hourly_rate || 0,
+      venueType: venue.venue_type,
+      amenities: venue.amenities || [],
+      description: venue.description,
+      // Add location object for compatibility
+      location: {
+        address: venue.address || '',
+        neighborhood: venue.city || '',
+        coordinates: {
+          lat: venue.latitude || 27.9659,
+          lng: venue.longitude || -82.8001
+        }
+      }
+    };
+    
+    return {
+      title: `Book ${venue.name} - GoEventCity`,
+      venue: transformedVenue
+    };
+    
+  } catch (error) {
+    console.error('Error loading venue for booking:', error);
+    throw new Response('Venue not found', { status: 404 });
+  }
 };
 
 export const meta = ({ data }: Route.MetaArgs) => {
   return [
     {
-      title: data?.title || 'GoEventCity',
+      title: data?.title || 'Book Venue - GoEventCity',
     },
     {
       name: 'description',
-      content: 'Discover amazing events and experiences in your city',
+      content: 'Book this amazing venue for your next event',
     },
   ];
 };
 
-// SSR-safe pattern using props.loaderData
-
-export const action = async ({ request }: Route.ActionArgs) => {
-  const formData = await request.formData();
-  const data = Object.fromEntries(formData);
-  
-  // TODO: Implement booking logic
-  // const supabase = getSupabaseServerClient(request);
-  // const { data: booking, error } = await supabase.from('bookings').insert(data);
-  
-  return redirect('/bookings/confirmation');
-};
-
-export default function BookingRequestRoute(props: Route.ComponentProps) {
-  const data = props.loaderData;
-  
-  return <BookingRequestPage />;
+export default function BookingRequestRoute({ loaderData }: Route.ComponentProps) {
+  return <BookingRequestPage venue={loaderData.venue} />;
 }

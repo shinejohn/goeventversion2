@@ -34,8 +34,8 @@ export const VenueMap = ({
           {/* Venue pins */}
           <div className="absolute inset-0">
             {venues.map(venue => <div key={venue.id} className={`absolute cursor-pointer transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ${selectedVenue === venue.id ? 'z-10 scale-125' : 'z-0 hover:scale-110'}`} style={{
-          left: `${(venue.location.coordinates.lng + 82.8) / 0.2 * 100}%`,
-          top: `${(venue.location.coordinates.lat - 27.9) / 0.2 * 100}%`
+          left: `${Math.random() * 80 + 10}%`,
+          top: `${Math.random() * 80 + 10}%`
         }} onClick={() => handleVenueClick(venue.id)}>
                 <div className={`p-1 rounded-full ${venue.verified ? 'bg-blue-500' : 'bg-indigo-500'}`}>
                   <MapPinIcon className="h-6 w-6 text-white" />
