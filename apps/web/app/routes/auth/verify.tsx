@@ -6,7 +6,7 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import type { Route } from '~/types/app/routes/auth/+types/verify';
+import type { Route } from './+types/auth/verify';
 import { checkRequiresMultiFactorAuthentication } from '@kit/supabase/check-requires-mfa';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {

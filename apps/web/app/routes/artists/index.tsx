@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArtistProfilesPage } from '~/components/magic-patterns/pages/ArtistProfilesPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/artists/+types';
+import type { Route } from './+types/artists';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);

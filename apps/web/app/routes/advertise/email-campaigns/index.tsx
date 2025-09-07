@@ -1,7 +1,7 @@
 import React from 'react';
 import { EmailCampaignsPage } from '~/components/magic-patterns/pages/advertise/EmailCampaignsPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/advertise/email-campaigns/+types';
+import type { Route } from './+types/email-campaigns';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   // Future: Add data fetching logic here

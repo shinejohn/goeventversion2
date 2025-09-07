@@ -1,7 +1,7 @@
 import React from 'react';
 import { TicketMarketplacePage } from '~/components/magic-patterns/pages/tickets/TicketMarketplacePage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/tickets/marketplace/+types';
+import type { Route } from './+types/marketplace';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   // Future: Add data fetching logic here

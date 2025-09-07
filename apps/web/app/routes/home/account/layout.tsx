@@ -15,7 +15,7 @@ import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
 import { AppLogo } from '../../../../components/app-logo';
 import { getTeamAccountSidebarConfig } from '~/config/team-account-navigation.config';
 import { layoutStyleCookie, sidebarStateCookie } from '~/lib/cookies';
-import type { Route } from '~/types/app/routes/home/account/+types/layout';
+import type { Route } from './+types/account/layout';
 
 import { TeamAccountLayoutMobileNavigation } from './_components/team-account-layout-mobile-navigation';
 import { TeamAccountLayoutSidebar } from './_components/team-account-layout-sidebar';

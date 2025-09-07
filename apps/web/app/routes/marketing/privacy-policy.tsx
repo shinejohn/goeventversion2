@@ -1,7 +1,7 @@
 import React from 'react';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { SitePageHeader } from '~/routes/marketing/_components/site-page-header';
-import type { Route } from '~/types/app/routes/marketing/+types/privacy-policy';
+import type { Route } from './+types/marketing/privacy-policy';
 
 export const meta = ({ data }: Route.MetaArgs) => {
   return [

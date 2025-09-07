@@ -1,6 +1,6 @@
 import React from 'react';
 // apps/web/app/routes/hubs/create.tsx
-import type { Route } from '~/types/app/routes/hubs/create/+types';
+import type { Route } from './+types/create';
 import { SetupWizard } from '~/components/magic-patterns/components/hub-builder/SetupWizard';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { redirect } from 'react-router';

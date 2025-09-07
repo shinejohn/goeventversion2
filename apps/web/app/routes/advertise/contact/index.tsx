@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Route } from '~/types/app/routes/advertise/contact/+types/index';
+import type { Route } from './+types/contact/index';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { AdvertisingContactPage } from '~/components/magic-patterns/pages/advertise/AdvertisingContactPage';

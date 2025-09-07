@@ -1,7 +1,7 @@
 import React from 'react';
 import { CommunityImpactPage } from '~/components/magic-patterns/pages/CommunityImpactPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/community-impact/+types';
+import type { Route } from './+types/community-impact';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   // Future: Add data fetching logic here

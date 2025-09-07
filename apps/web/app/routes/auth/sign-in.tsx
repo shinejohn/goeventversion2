@@ -8,7 +8,7 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import authConfig from '~/config/auth.config';
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import type { Route } from '~/types/app/routes/auth/+types/sign-in';
+import type { Route } from './+types/auth/sign-in';
 
 // Inline Magic Patterns components
 const SocialLoginButtons = () => {

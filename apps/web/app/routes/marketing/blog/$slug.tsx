@@ -3,7 +3,7 @@ import { redirect } from 'react-router';
 
 import { Cms, createCmsClient } from '@kit/cms';
 
-import type { Route } from '~/types/app/routes/marketing/blog/+types/$slug';
+import type { Route } from './+types/blog/$slug';
 
 import { Post } from './_components/post';
 

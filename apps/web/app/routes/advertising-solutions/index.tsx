@@ -1,7 +1,7 @@
 import React from 'react';
 import { AdvertisingSolutionsPage } from '~/components/magic-patterns/pages/AdvertisingSolutionsPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/advertising-solutions/+types';
+import type { Route } from './+types/advertising-solutions';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   // Future: Add data fetching logic here

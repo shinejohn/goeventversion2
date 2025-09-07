@@ -1,6 +1,6 @@
 import React from 'react';
 // apps/web/app/routes/book/confirmation.tsx
-import type { Route } from '~/types/app/routes/book/confirmation/+types';
+import type { Route } from './+types/confirmation';
 import { ConfirmationStep } from '~/components/magic-patterns/components/booking/ConfirmationStep';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { redirect } from 'react-router';

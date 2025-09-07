@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { CheckIcon, ArrowRightIcon } from 'lucide-react';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import type { Route } from '~/types/app/routes/marketing/+types/pricing';
+import type { Route } from './+types/marketing/pricing';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { t } = await createI18nServerInstance(request);

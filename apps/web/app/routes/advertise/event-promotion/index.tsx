@@ -1,7 +1,7 @@
 import React from 'react';
 import { EventPromotionPage } from '~/components/magic-patterns/pages/advertise/EventPromotionPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/advertise/event-promotion/+types';
+import type { Route } from './+types/event-promotion';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   // Future: Add data fetching logic here

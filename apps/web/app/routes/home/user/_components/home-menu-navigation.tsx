@@ -8,7 +8,7 @@ import { AppLogo } from '../../../../../components/app-logo';
 import { ProfileAccountDropdownContainer } from '~/components/personal-account-dropdown-container';
 import pathsConfig from '~/config/paths.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
-import { Route } from '~/types/app/routes/home/user/+types/layout';
+import { Route } from './+types/user/layout';
 
 // home imports
 import { HomeAccountSelector } from './home-account-selector';

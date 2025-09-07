@@ -1,5 +1,5 @@
 import React from 'react';
-import { HubVenuesPage } from '~/components/magic-patterns/pages/hub/[slug]/venues';
+import HubVenuesPage from '~/components/magic-patterns/pages/hub/[slug]/venues';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/hub/$slug/venues/+types';
 

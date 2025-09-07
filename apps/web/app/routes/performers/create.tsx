@@ -1,4 +1,4 @@
-import type { Route } from '~/types/app/routes/performers/create/+types';
+import type { Route } from './+types/create';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { redirect } from 'react-router';
 import { useState } from 'react';

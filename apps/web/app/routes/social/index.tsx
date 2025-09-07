@@ -1,6 +1,6 @@
 import React from 'react';
 // apps/web/app/routes/social/index.tsx  
-import type { Route } from '~/types/app/routes/social/index/+types';
+import type { Route } from './+types/index';
 import SocialFeedPage from '~/components/magic-patterns/pages/social/SocialFeedPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 

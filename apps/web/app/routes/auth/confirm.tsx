@@ -5,7 +5,7 @@ import { createAuthCallbackService } from '@kit/supabase/auth';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import pathsConfig from '~/config/paths.config';
-import type { Route } from '~/types/app/routes/auth/+types/confirm';
+import type { Route } from './+types/auth/confirm';
 import { ConfirmationStep } from '~/components/magic-patterns/components/booking/ConfirmationStep';
 import { BookingConfirmation } from '~/components/magic-patterns/components/booking-form/BookingConfirmation';
 import { TicketPurchaseConfirmation } from '~/components/magic-patterns/components/tickets/TicketPurchaseConfirmation';

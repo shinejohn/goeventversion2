@@ -4,7 +4,7 @@ import { Trans } from '@kit/ui/trans';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { SitePageHeader } from '~/routes/marketing/_components/site-page-header';
-import type { Route } from '~/types/app/routes/marketing/contact/+types';
+import type { Route } from './+types/contact';
 
 import { ContactForm } from './_components/contact-form';
 import { ContactEmailSchema } from './_lib/contact-email.schema';

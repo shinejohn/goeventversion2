@@ -18,7 +18,7 @@ import { Trans } from '@kit/ui/trans';
 import { AppLogo } from '../../components/app-logo';
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import type { Route } from '~/types/app/routes/+types/join';
+import type { Route } from './+types/join';
 
 export const meta = ({ data }: Route.MetaArgs) => {
   return [

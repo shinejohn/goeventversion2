@@ -24,8 +24,8 @@ import { Trans } from '@kit/ui/trans';
 import featureFlagsConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import type { Route as AccountWorkspaceRoute } from '~/types/app/routes/home/account/+types/layout';
-import type { Route } from '~/types/app/routes/home/account/+types/settings';
+import type { Route as AccountWorkspaceRoute } from './+types/account/layout';
+import type { Route } from './+types/account/settings';
 
 import { TeamAccountLayoutPageHeader } from './_components/team-account-layout-page-header';
 import { LikedVenues } from '~/components/magic-patterns/components/profile/LikedVenues';

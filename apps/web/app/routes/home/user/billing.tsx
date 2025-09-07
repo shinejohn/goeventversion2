@@ -17,7 +17,7 @@ import billingConfig from '~/config/billing.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { requireUserLoader } from '~/lib/require-user-loader';
 import { HomeLayoutPageHeader } from '~/routes/home/user/_components/home-page-header';
-import type { Route } from '~/types/app/routes/home/user/+types/billing';
+import type { Route } from './+types/user/billing';
 
 import { PersonalAccountCheckoutForm } from './_components/personal-account-checkout-form';
 import { loadPersonalAccountBillingPageData } from './_lib/load-personal-account-billing.server';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { PartnerWithUsPage } from '~/components/magic-patterns/pages/PartnerWithUsPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/partner/+types';
+import type { Route } from './+types/partner';
 import { redirect } from 'react-router';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {

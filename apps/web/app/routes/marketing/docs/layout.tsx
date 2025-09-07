@@ -5,7 +5,7 @@ import { Cms } from '@kit/cms';
 import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import type { Route } from '~/types/app/routes/marketing/docs/+types/layout';
+import type { Route } from './+types/docs/layout';
 
 // local imports
 import { DocsNavigation } from './_components/docs-navigation';

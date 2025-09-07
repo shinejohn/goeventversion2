@@ -24,7 +24,7 @@ import {
 import { verifyCsrfToken } from '@kit/csrf/server';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
-import type { Route } from '~/types/app/routes/admin/accounts/+types/$account';
+import type { Route } from './+types/accounts/$account';
 
 export const meta = () => [
   {

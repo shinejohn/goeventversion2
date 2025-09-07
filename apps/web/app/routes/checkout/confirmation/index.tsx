@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Route } from '~/types/app/routes/checkout/confirmation/+types/index';
+import type { Route } from './+types/confirmation/index';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { CheckoutConfirmationPage } from '~/components/magic-patterns/pages/checkout/CheckoutConfirmationPage';

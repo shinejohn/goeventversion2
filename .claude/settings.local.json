@@ -12,7 +12,8 @@
       "Bash(find:*)",
       "Bash(cp:*)",
       "Bash(mv:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(pnpm --filter web typecheck)"
     ],
     "deny": []
   }

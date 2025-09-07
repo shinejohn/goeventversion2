@@ -1,7 +1,7 @@
 import React from 'react';
 import { BookItPage } from '~/components/magic-patterns/pages/BookItPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/book-it/+types';
+import type { Route } from './+types/book-it';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);

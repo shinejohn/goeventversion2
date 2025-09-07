@@ -1,7 +1,7 @@
 import React from 'react';
 import { SubmitEventPage } from '~/components/magic-patterns/pages/SubmitEventPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/submit-event/+types';
+import type { Route } from './+types/submit-event';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);

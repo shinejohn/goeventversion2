@@ -1,4 +1,4 @@
-import type { Route } from '~/types/app/routes/venues/+types/$id/book';
+import type { Route } from './+types/venues/$id/book';
 import { BookingRequestPage } from '~/components/magic-patterns/pages/book-it/venues/BookingRequestPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 

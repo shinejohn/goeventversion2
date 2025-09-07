@@ -1,6 +1,6 @@
 import React from 'react';
 // apps/web/app/routes/book/services.tsx
-import type { Route } from '~/types/app/routes/book/services/+types';
+import type { Route } from './+types/services';
 import { ServicesAddonsForm } from '~/components/magic-patterns/components/booking-form/ServicesAddonsForm';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { redirect } from 'react-router';

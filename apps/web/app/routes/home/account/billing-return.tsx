@@ -12,7 +12,7 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import billingConfig from '~/config/billing.config';
 import { Database } from '~/lib/database.types';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import type { Route } from '~/types/app/routes/home/account/+types/billing-return';
+import type { Route } from './+types/account/billing-return';
 
 export const meta = ({ data }: Route.MetaArgs) => {
   return [

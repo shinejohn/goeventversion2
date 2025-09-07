@@ -9,7 +9,7 @@ import { Button } from '@kit/ui/button';
 import { Trans } from '@kit/ui/trans';
 
 import pathsConfig from '~/config/paths.config';
-import type { Route } from '~/types/app/routes/auth/+types/callback-error';
+import type { Route } from './+types/auth/callback-error';
 
 export const loader = ({ request }: Route.LoaderArgs) => {
   const searchParams = new URL(request.url).searchParams;

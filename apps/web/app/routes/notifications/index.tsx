@@ -1,7 +1,7 @@
 import React from 'react';
 import { NotificationsPage } from '~/components/magic-patterns/pages/social/NotificationsPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/notifications/+types';
+import type { Route } from './+types/notifications';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   // Future: Add data fetching logic here

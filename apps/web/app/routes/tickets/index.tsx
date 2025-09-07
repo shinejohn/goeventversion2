@@ -1,7 +1,7 @@
 import React from 'react';
 import { TicketsPage } from '~/components/magic-patterns/pages/TicketsPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/tickets/+types';
+import type { Route } from './+types/tickets';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);

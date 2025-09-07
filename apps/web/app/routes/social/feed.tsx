@@ -1,7 +1,7 @@
 import React from 'react';
-import { SocialFeedPage } from '~/components/magic-patterns/pages/social/SocialFeedPage';
+import SocialFeedPage from '~/components/magic-patterns/pages/social/SocialFeedPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/social/feed/+types';
+import type { Route } from './+types/feed';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);

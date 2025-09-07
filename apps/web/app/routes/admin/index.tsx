@@ -6,7 +6,7 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { AppBreadcrumbs } from '@kit/ui/app-breadcrumbs';
 import { PageBody, PageHeader } from '@kit/ui/page';
 
-import type { Route } from '~/types/app/routes/admin/+types';
+import type { Route } from './+types/admin';
 
 export const meta = () => [
   {

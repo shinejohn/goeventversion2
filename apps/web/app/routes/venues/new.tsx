@@ -4,9 +4,9 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { redirect } from 'react-router';
 import { z } from 'zod';
 
-// Magic Patterns imports
-import { CreateVenuePage } from '~/components/magic-patterns/pages/CreateVenuePage';
-import { createMagicPatternsRoute } from '~/lib/magic-patterns/route-wrapper';
+// Magic Patterns imports - proper paths
+import { SubmitVenuePage } from '../../components/magic-patterns/pages/venues/SubmitVenuePage';
+import { createMagicPatternsRoute } from '../../lib/magic-patterns/route-wrapper';
 import { getLogger } from '@kit/shared/logger';
 
 /**
@@ -111,7 +111,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     // Get user's existing venues to extract common patterns
     const { data: userVenues } = await client
       .from('venues')
-      .select('city, state, country, amenities')
+      .select('city, state, amenities')
       .eq('account_id', user.id)
       .limit(10);
     
@@ -222,26 +222,16 @@ export const action = async ({ request }: Route.ActionArgs) => {
         venue_type: venueData.venueType,
         address: venueData.address,
         city: venueData.city,
-        state: venueData.state,
-        country: venueData.country,
-        postal_code: venueData.postalCode,
+        state: venueData.state || '',
         latitude: venueData.latitude,
         longitude: venueData.longitude,
-        max_capacity: venueData.maxCapacity,
+        capacity: venueData.maxCapacity,
         amenities: venueData.amenities,
-        equipment: venueData.equipment,
-        accessibility_features: venueData.accessibilityFeatures,
         image_url: venueData.imageUrl,
         gallery_images: venueData.galleryImages,
-        virtual_tour_url: venueData.virtualTourUrl,
-        base_hourly_rate: venueData.baseHourlyRate,
-        setup_fee: venueData.setupFee,
-        cleaning_fee: venueData.cleaningFee,
-        operating_hours: venueData.operatingHours,
-        blackout_dates: venueData.blackoutDates,
-        contact_email: venueData.contactEmail,
-        contact_phone: venueData.contactPhone,
-        website_url: venueData.websiteUrl,
+        price_per_hour: venueData.baseHourlyRate,
+        email: venueData.contactEmail,
+        phone: venueData.contactPhone,
         is_active: venueData.isActive,
         created_by: user.id,
       })
@@ -277,8 +267,8 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 // Component using the Magic Patterns wrapper
 export default createMagicPatternsRoute({
-  component: CreateVenuePage,
-  transformData: (loaderData) => ({
+  component: SubmitVenuePage,
+  transformData: (loaderData: any) => ({
     amenityOptions: loaderData.amenityOptions,
     accessibilityOptions: loaderData.accessibilityOptions,
     commonCities: loaderData.commonCities,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BookPerformerPage } from '~/components/magic-patterns/pages/book/BookPerformerPage';
-import type { Route } from '~/types/app/routes/book/performer/+types/$id';
+import type { Route } from './+types/performer/$id';
 
 export const loader = async ({ params }: Route.LoaderArgs) => {
   // Future: Load specific performer data based on params.id

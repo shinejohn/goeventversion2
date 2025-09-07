@@ -1,6 +1,6 @@
 import React from 'react';
 // apps/web/app/routes/book/event-details.tsx
-import type { Route } from '~/types/app/routes/book/event-details/+types';
+import type { Route } from './+types/event-details';
 import { EventDetailsStep } from '~/components/magic-patterns/components/booking/EventDetailsStep';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { redirect } from 'react-router';

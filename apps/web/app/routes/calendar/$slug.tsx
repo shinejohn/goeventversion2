@@ -1,7 +1,7 @@
 import React from 'react';
 import { CalendarSlugPage } from '~/components/magic-patterns/pages/calendar/[slug]';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/calendar/$slug/+types';
+import type { Route } from './+types/$slug';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);

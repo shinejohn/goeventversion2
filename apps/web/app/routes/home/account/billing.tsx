@@ -21,7 +21,7 @@ import { cn } from '@kit/ui/utils';
 import billingConfig from '~/config/billing.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { requireUserLoader } from '~/lib/require-user-loader';
-import type { Route } from '~/types/app/routes/home/account/+types/billing';
+import type { Route } from './+types/account/billing';
 
 import { TeamAccountCheckoutForm } from './_components/team-account-checkout-form';
 import { TeamAccountLayoutPageHeader } from './_components/team-account-layout-page-header';

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Route } from '~/types/app/routes/home/account/+types/billing-return';
+import type { Route } from './+types/account/billing-return';
 
 import * as ReturnPage from '../account/billing-return';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import HubCreatePage from '~/components/magic-patterns/pages/hub/create';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/hub/create/+types';
+import type { Route } from './+types/create';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);

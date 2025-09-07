@@ -5,7 +5,7 @@ import { getI18n } from 'react-i18next';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/home/user/+types';
+import type { Route } from './+types/user';
 
 import { UserWorkspace } from './_lib/load-user-workspace.server';
 import { 

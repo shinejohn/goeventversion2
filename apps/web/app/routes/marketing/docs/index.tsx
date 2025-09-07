@@ -5,7 +5,7 @@ import { Cms } from '@kit/cms';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { SitePageHeader } from '~/routes/marketing/_components/site-page-header';
-import type { Route } from '~/types/app/routes/marketing/docs/+types';
+import type { Route } from './+types/docs';
 
 import { DocsCards } from './_components/docs-cards';
 import type { loader as docsLoader } from './layout';

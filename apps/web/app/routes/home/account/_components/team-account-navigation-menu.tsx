@@ -9,7 +9,7 @@ import { ProfileAccountDropdownContainer } from '~/components/personal-account-d
 import pathsConfig from '~/config/paths.config';
 import { getTeamAccountSidebarConfig } from '~/config/team-account-navigation.config';
 import { TeamAccountAccountsSelector } from '~/routes/home/account/_components/team-account-accounts-selector';
-import { Route } from '~/types/app/routes/home/account/+types/layout';
+import { Route } from './+types/account/layout';
 
 // local imports
 import { TeamAccountNotifications } from './team-account-notifications';

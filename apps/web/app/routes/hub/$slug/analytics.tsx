@@ -1,5 +1,5 @@
 import React from 'react';
-import { HubAnalyticsPage } from '~/components/magic-patterns/pages/hub/[slug]/analytics';
+import HubAnalyticsPage from '~/components/magic-patterns/pages/hub/[slug]/analytics';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/hub/$slug/analytics/+types';
 

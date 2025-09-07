@@ -18,7 +18,7 @@ import { Trans } from '@kit/ui/trans';
 
 import featuresFlagConfig from '~/config/feature-flags.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
-import { Route } from '~/types/app/routes/home/user/+types/layout';
+import { Route } from './+types/user/layout';
 
 // home imports
 import { HomeAccountSelector } from './home-account-selector';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { GigMarketplacePage } from '~/components/magic-patterns/pages/book-it/GigMarketplacePage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/book-it/gigs/+types';
+import type { Route } from './+types/gigs';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);

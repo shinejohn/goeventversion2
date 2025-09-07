@@ -1,7 +1,7 @@
 import React from 'react';
 import { LiveStreamingEventsPage } from '~/components/magic-patterns/pages/LiveStreamingEventsPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/streaming/live/+types';
+import type { Route } from './+types/live';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { HubGalleryPage } from '~/components/magic-patterns/pages/hub/[slug]/gallery';
+import HubGalleryPage from '~/components/magic-patterns/pages/hub/[slug]/gallery';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from '~/types/app/routes/hub/$slug/gallery/+types';
 

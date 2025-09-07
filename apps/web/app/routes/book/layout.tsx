@@ -1,7 +1,7 @@
 import React from 'react';
 // apps/web/app/routes/book/layout.tsx
 import { Outlet } from 'react-router';
-import type { Route } from '~/types/app/routes/book/+types/layout';
+import type { Route } from './+types/book/layout';
 import { ProgressIndicator } from '~/components/magic-patterns/components/booking/ProgressIndicator';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 

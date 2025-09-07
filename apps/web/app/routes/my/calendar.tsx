@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Route } from '~/types/app/routes/my/calendar';
+import type { Route } from './+types/calendar';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { z } from 'zod';
 

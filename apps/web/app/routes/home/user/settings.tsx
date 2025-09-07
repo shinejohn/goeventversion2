@@ -12,7 +12,7 @@ import featureFlagsConfig from '~/config/feature-flags.config';
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { requireUserLoader } from '~/lib/require-user-loader';
-import type { Route } from '~/types/app/routes/home/user/+types/settings';
+import type { Route } from './+types/user/settings';
 
 import { HomeLayoutPageHeader } from './_components/home-page-header';
 

@@ -1,4 +1,4 @@
-import type { Route } from '~/types/app/routes/tickets/purchase/+types/$eventId';
+import type { Route } from './+types/purchase/$eventId';
 // json helper removed - using plain objects for React Router 7
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 

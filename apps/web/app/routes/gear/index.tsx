@@ -1,7 +1,7 @@
 import React from 'react';
 import { GearPage } from '~/components/magic-patterns/pages/GearPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/gear/+types';
+import type { Route } from './+types/gear';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);

@@ -6,7 +6,7 @@ import { If } from '@kit/ui/if';
 import { Separator } from '@kit/ui/separator';
 
 import { SitePageHeader } from '~/routes/marketing/_components/site-page-header';
-import type { Route } from '~/types/app/routes/marketing/docs/+types/$slug';
+import type { Route } from './+types/docs/$slug';
 
 import { DocsCards } from './_components/docs-cards';
 

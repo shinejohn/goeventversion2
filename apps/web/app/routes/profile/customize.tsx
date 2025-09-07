@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Route } from '~/types/app/routes/profile/customize';
+import type { Route } from './+types/customize';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { z } from 'zod';
 

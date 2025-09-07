@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Route } from '~/types/app/routes/shop/cart/+types/index';
+import type { Route } from './+types/cart/index';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { ShoppingCartPage } from '~/components/magic-patterns/pages/ShoppingCartPage';

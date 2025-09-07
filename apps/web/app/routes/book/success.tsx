@@ -1,6 +1,6 @@
 import React from 'react';
 // apps/web/app/routes/book/success.tsx
-import type { Route } from '~/types/app/routes/book/success/+types';
+import type { Route } from './+types/success';
 import { BookingConfirmation } from '~/components/magic-patterns/components/booking-form/BookingConfirmation';
 import { ConfettiCelebration } from '~/components/magic-patterns/components/bookings/ConfettiCelebration';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';

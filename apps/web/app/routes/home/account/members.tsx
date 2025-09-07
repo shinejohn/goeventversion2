@@ -41,8 +41,8 @@ import { Trans } from '@kit/ui/trans';
 import { Database } from '~/lib/database.types';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { TeamAccountLayoutPageHeader } from '~/routes/home/account/_components/team-account-layout-page-header';
-import type { Route as AccountWorkspaceRoute } from '~/types/app/routes/home/account/+types/layout';
-import type { Route } from '~/types/app/routes/home/account/+types/members';
+import type { Route as AccountWorkspaceRoute } from './+types/account/layout';
+import type { Route } from './+types/account/members';
 
 import { loadMembersPageData } from './_lib/members-page-loader';
 

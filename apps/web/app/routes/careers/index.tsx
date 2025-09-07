@@ -1,7 +1,7 @@
 import React from 'react';
 import { CareersPage } from '~/components/magic-patterns/pages/CareersPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/careers/+types';
+import type { Route } from './+types/careers';
 import { redirect } from 'react-router';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {

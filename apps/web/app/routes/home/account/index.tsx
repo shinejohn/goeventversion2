@@ -6,7 +6,7 @@ import { PageBody } from '@kit/ui/page';
 import { Trans } from '@kit/ui/trans';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import type { Route } from '~/types/app/routes/home/account/+types';
+import type { Route } from './+types/account';
 
 import { TeamAccountLayoutPageHeader } from './_components/team-account-layout-page-header';
 

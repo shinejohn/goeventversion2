@@ -1,7 +1,7 @@
 import React from 'react';
 import { AdvertisePage } from '~/components/magic-patterns/pages/AdvertisePage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/advertise/+types';
+import type { Route } from './+types/advertise';
 import { redirect } from 'react-router';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {

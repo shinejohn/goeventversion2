@@ -14,7 +14,7 @@ import { ProfileAccountDropdownContainer } from '~/components/personal-account-d
 import featuresFlagConfig from '~/config/feature-flags.config';
 import { personalAccountNavigationConfig } from '~/config/personal-account-navigation.config';
 import { UserNotifications } from '~/routes/home/user/_components/user-notifications';
-import { Route } from '~/types/app/routes/home/user/+types/layout';
+import { Route } from './+types/user/layout';
 
 // home imports
 import { HomeAccountSelector } from './home-account-selector';

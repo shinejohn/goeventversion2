@@ -1,6 +1,6 @@
 import React from 'react';
 // apps/web/app/routes/bookings/$id.tsx
-import type { Route } from '~/types/app/routes/bookings/$id/+types';
+import type { Route } from './+types/$id';
 import { BookingSummaryCard } from '~/components/magic-patterns/components/bookings/BookingSummaryCard';
 import { ActionButtons } from '~/components/magic-patterns/components/bookings/ActionButtons';
 import { VenueInformation } from '~/components/magic-patterns/components/bookings/VenueInformation';

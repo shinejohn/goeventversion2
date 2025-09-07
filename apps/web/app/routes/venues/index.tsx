@@ -1,12 +1,12 @@
 import React from 'react';
-import type { Route } from '~/types/app/routes/venues/index/+types';
+import type { Route } from './+types/index';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { z } from 'zod';
 
-// Magic Patterns imports
-import { VenuesPage } from '~/components/magic-patterns/pages/VenuesPage';
-import { createMagicPatternsRoute } from '~/lib/magic-patterns/route-wrapper';
-import { transformVenuesList } from '~/lib/magic-patterns/data-transformers';
+// Magic Patterns imports - fix the import paths
+import { VenuesPage } from '../../components/magic-patterns/pages/VenuesPage';
+import { createMagicPatternsRoute } from '../../lib/magic-patterns/route-wrapper';
+import { transformVenuesList } from '../../lib/magic-patterns/data-transformers';
 import { getLogger } from '@kit/shared/logger';
 
 /**
@@ -71,15 +71,15 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     
     // Capacity filter
     if (params.capacity) {
-      query = query.gte('max_capacity', params.capacity);
+      query = query.gte('capacity', params.capacity);
     }
     
     // Price range filters
     if (params.minPrice) {
-      query = query.gte('base_hourly_rate', params.minPrice);
+      query = query.gte('price_per_hour', params.minPrice);
     }
     if (params.maxPrice) {
-      query = query.lte('base_hourly_rate', params.maxPrice);
+      query = query.lte('price_per_hour', params.maxPrice);
     }
     
     // Amenities filter - simplified for now
@@ -91,10 +91,10 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     // Apply sorting
     switch (params.sort) {
       case 'price':
-        query = query.order('base_hourly_rate', { ascending: true, nullsFirst: false });
+        query = query.order('price_per_hour', { ascending: true, nullsFirst: false });
         break;
       case 'capacity':
-        query = query.order('max_capacity', { ascending: false });
+        query = query.order('capacity', { ascending: false });
         break;
       case 'rating':
         // TODO: Implement rating sort once reviews are joined
@@ -131,7 +131,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     // Calculate additional metrics
     const venueMetrics = {
       totalVenues: count || 0,
-      averagePrice: venues?.reduce((sum, v) => sum + (v.base_hourly_rate || 0), 0) / (venues?.length || 1),
+      averagePrice: venues?.reduce((sum, v) => sum + (v.price_per_hour || 0), 0) / (venues?.length || 1),
       popularCities: [...new Set(venues?.map(v => v.city).filter(Boolean))].slice(0, 5),
     };
     
@@ -188,7 +188,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 // Component using the Magic Patterns wrapper
 export default createMagicPatternsRoute({
   component: VenuesPage,
-  transformData: (loaderData) => ({
+  transformData: (loaderData: any) => ({
     venues: loaderData.venues,
     pagination: loaderData.pagination,
     filters: loaderData.filters,

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Route } from '~/types/app/routes/+types/$';;
+import type { Route } from './+types/$';;
 
 import { NotFoundPage } from '~/components/magic-patterns/pages/NotFoundPage';
 

@@ -4,7 +4,7 @@ import { useRouteLoaderData, useNavigate } from 'react-router';
 import { getI18n } from 'react-i18next';
 
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import type { Route } from '~/types/app/routes/home/user/+types';
+import type { Route } from './+types/user';
 
 import { UserWorkspace } from './_lib/load-user-workspace.server';
 import { 
