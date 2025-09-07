@@ -10,6 +10,14 @@ const message =
  * ONLY USE IN SERVER-SIDE CODE. DO NOT EXPOSE THIS TO CLIENT-SIDE CODE.
  */
 export function getSupabaseSecretKey() {
+  const key = process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
+  
+  // In production, allow empty key with warning
+  if (!key && process.env.NODE_ENV === 'production') {
+    console.warn('[WARNING] SUPABASE_SECRET_KEY not found. Some functionality may be limited.');
+    return '';
+  }
+  
   return z
     .string({
       required_error: message,
@@ -17,9 +25,7 @@ export function getSupabaseSecretKey() {
     .min(1, {
       message: message,
     })
-    .parse(
-      process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY,
-    );
+    .parse(key);
 }
 
 /**

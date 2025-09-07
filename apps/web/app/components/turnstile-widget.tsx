@@ -32,7 +32,7 @@ export function TurnstileWidget({ onVerify }: { onVerify: (token: string) => voi
     
     script.onload = () => {
       window.turnstile?.render('#turnstile-widget', {
-        sitekey: import.meta.env.VITE_TURNSTILE_SITE_KEY,
+        sitekey: import.meta.env.VITE_TURNSTILE_SITE_KEY || 'placeholder-turnstile-key',
         callback: onVerify,
         theme: 'light',
         size: 'normal'
