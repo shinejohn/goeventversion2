@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Route } from './+types/$id';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { notFound } from 'react-router';
+// import { notFound } from 'react-router'; // React Router 7 doesn't export notFound
 
 // Magic Patterns imports
 import { VenueDetailPage } from '~/components/magic-patterns/pages/venues/VenueDetailPage';
@@ -80,7 +80,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     
     if (venueError || !venue) {
       logger.error({ error: venueError, venueId: id }, 'Venue not found');
-      throw notFound();
+      throw new Response('Venue not found', { status: 404 });
     }
     
     // Transform the venue data
@@ -141,7 +141,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       throw error;
     }
     
-    throw notFound();
+    throw new Response('Venue not found', { status: 404 });
   }
 };
 
