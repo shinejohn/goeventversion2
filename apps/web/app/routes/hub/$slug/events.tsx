@@ -16,7 +16,8 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .single();
       
     if (hubError || !hub) {
-      throw new Response('Hub not found', { status: 404 });
+      console.warn('Hub not found:', { error: hubError, hubSlug });
+      return { hub: null, events: [] };
     }
     
     // Load events for this hub
@@ -38,7 +39,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     
   } catch (error) {
     console.error('Hub events loader error:', error);
-    throw new Response('Hub not found', { status: 404 });
+    return { hub: null, events: [] };
   }
 };
 

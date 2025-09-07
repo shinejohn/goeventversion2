@@ -25,14 +25,15 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .single();
       
     if (!booking) {
-      throw new Response('Booking not found', { status: 404 });
+      console.warn('Booking not found:', bookingId);
+      return { booking: null };
     }
     
     return { booking };
     
   } catch (error) {
     console.error('Error loading booking:', error);
-    throw new Response('Error loading booking', { status: 500 });
+    return { booking: null };
   }
 };
 
@@ -74,6 +75,23 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
 export default function BookingDetailRoute({ loaderData, actionData }: Route.ComponentProps) {
   const { booking } = loaderData;
   
+  if (!booking) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900">Booking Not Found</h2>
+          <p className="mt-2 text-gray-600">The booking you're looking for doesn't exist or has been removed.</p>
+          <button
+            onClick={() => window.location.href = '/bookings'}
+            className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+          >
+            View All Bookings
+          </button>
+        </div>
+      </div>
+    );
+  }
+  
   return (
     <div className="booking-detail-container">
       <div className="max-w-4xl mx-auto p-6">
@@ -81,27 +99,27 @@ export default function BookingDetailRoute({ loaderData, actionData }: Route.Com
           <div className="space-y-6">
             <BookingSummaryCard 
               booking={booking}
-              event={booking.event}
+              event={booking?.event}
             />
             
             <VenueInformation
-              venue={booking.venue}
-              event={booking.event}
+              venue={booking?.venue}
+              event={booking?.event}
             />
           </div>
           
           <div className="space-y-6">
             <FinancialBreakdown
               booking={booking}
-              venue={booking.venue}
-              event={booking.event}
+              venue={booking?.venue}
+              event={booking?.event}
             />
             
             <ActionButtons
               bookingId={booking.id}
               booking={booking}
-              venue={booking.venue}
-              event={booking.event}
+              venue={booking?.venue}
+              event={booking?.event}
             />
           </div>
         </div>

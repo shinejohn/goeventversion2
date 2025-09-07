@@ -3,7 +3,13 @@ import { useParams, useNavigate } from 'react-router';
 import { MainHeader } from '../../../components/layout/MainHeader';
 import { Footer } from '../../../components/layout/Footer';
 import { ArrowLeftIcon, PlusIcon, SearchIcon, FilterIcon, MessageCircleIcon, UsersIcon, TagIcon, ChevronDownIcon, CheckIcon, XIcon, MessageSquareIcon, HelpCircleIcon, InfoIcon, AlertCircleIcon, BriefcaseIcon } from 'lucide-react';
-export default function HubCommunityPage() {
+interface HubCommunityPageProps {
+  hub?: any;
+  members?: any[];
+  activities?: any[];
+}
+
+export default function HubCommunityPage({ hub, members = [], activities = [] }: HubCommunityPageProps) {
   const {
     slug
   } = useParams();
@@ -155,6 +161,28 @@ export default function HubCommunityPage() {
       window.location.href = path;
     }
   };
+  // Handle null hub
+  if (!hub && !isLoading) {
+    return (
+      <>
+        <MainHeader />
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-gray-900">Hub Not Found</h2>
+            <p className="mt-2 text-gray-600">The hub you're looking for doesn't exist or has been removed.</p>
+            <button
+              onClick={() => navigate('/hubs')}
+              className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+            >
+              Browse All Hubs
+            </button>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
   if (isLoading) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>

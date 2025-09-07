@@ -12,7 +12,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   const bookingId = url.searchParams.get('bookingId');
   
   if (!bookingId) {
-    throw new Response('Booking not found', { status: 404 });
+    console.warn('Booking ID not provided in success page');
+    return { booking: null };
   }
   
   try {
@@ -28,14 +29,15 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       .single();
       
     if (!booking) {
-      throw new Response('Booking not found', { status: 404 });
+      console.warn('Booking not found:', bookingId);
+      return { booking: null };
     }
     
     return { booking };
     
   } catch (error) {
     console.error('Error loading booking confirmation:', error);
-    throw new Response('Error loading booking', { status: 500 });
+    return { booking: null };
   }
 };
 

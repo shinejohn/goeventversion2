@@ -79,8 +79,26 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const { count: totalBookings } = bookingsCountQuery;
     
     if (venueError || !venue) {
-      logger.error({ error: venueError, venueId: id }, 'Venue not found');
-      throw new Response('Venue not found', { status: 404 });
+      logger.warn({ error: venueError, venueId: id }, 'Venue not found');
+      // Return null venue data instead of throwing error
+      return {
+        venue: null,
+        upcomingEvents: [],
+        similarVenues: [],
+        metrics: {
+          totalBookings: 0,
+          occupancyRate: 0,
+          popularDays: [],
+          averageEventDuration: 0,
+          upcomingEventsCount: 0,
+          isAvailableNow: false,
+        },
+        operatingHours: [],
+        user: user ? {
+          id: user.id,
+          email: user.email,
+        } : null,
+      };
     }
     
     // Transform the venue data
@@ -137,11 +155,22 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       url: request.url 
     }, 'Error loading venue details');
     
-    if (error instanceof Response) {
-      throw error;
-    }
-    
-    throw new Response('Venue not found', { status: 404 });
+    // Log error but return empty data instead of throwing
+    return {
+      venue: null,
+      upcomingEvents: [],
+      similarVenues: [],
+      metrics: {
+        totalBookings: 0,
+        occupancyRate: 0,
+        popularDays: [],
+        averageEventDuration: 0,
+        upcomingEventsCount: 0,
+        isAvailableNow: false,
+      },
+      operatingHours: [],
+      user: null,
+    };
   }
 };
 

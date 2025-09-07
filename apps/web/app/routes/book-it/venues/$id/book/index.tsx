@@ -16,7 +16,11 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .single();
       
     if (error || !venue) {
-      throw new Response('Venue not found', { status: 404 });
+      console.warn('Venue not found for booking:', { error, venueId });
+      return {
+        title: 'Venue Not Found - GoEventCity',
+        venue: null
+      };
     }
     
     // Transform venue data to match component expectations
@@ -49,7 +53,10 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     
   } catch (error) {
     console.error('Error loading venue for booking:', error);
-    throw new Response('Venue not found', { status: 404 });
+    return {
+      title: 'Venue Not Found - GoEventCity',
+      venue: null
+    };
   }
 };
 

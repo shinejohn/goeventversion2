@@ -8,6 +8,23 @@ interface BookingRequestPageProps {
 export const BookingRequestPage = ({ venue }: BookingRequestPageProps) => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  
+  if (!venue) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900">Venue Not Found</h2>
+          <p className="mt-2 text-gray-600">The venue you're trying to book doesn't exist or has been removed.</p>
+          <button
+            onClick={() => navigate('/venues')}
+            className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+          >
+            Browse All Venues
+          </button>
+        </div>
+      </div>
+    );
+  }
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());

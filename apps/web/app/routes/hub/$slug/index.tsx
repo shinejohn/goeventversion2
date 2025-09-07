@@ -20,7 +20,13 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .single();
       
     if (error || !hub) {
-      throw new Response('Hub not found', { status: 404 });
+      console.warn('Hub not found:', { error, hubSlug });
+      // Return empty hub data instead of throwing error
+      return {
+        hub: null,
+        members: [],
+        activities: []
+      };
     }
     
     // Load hub members/followers
@@ -55,7 +61,12 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     
   } catch (error) {
     console.error('Hub loader error:', error);
-    throw new Response('Hub not found', { status: 404 });
+    // Return empty data instead of throwing
+    return {
+      hub: null,
+      members: [],
+      activities: []
+    };
   }
 };
 

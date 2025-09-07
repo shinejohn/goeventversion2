@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Route } from './+types/$id';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { notFound } from 'react-router';
 
 // Magic Patterns imports
 import { EventDetailPage } from '~/components/magic-patterns/pages/EventDetailPage';
@@ -101,8 +100,26 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const { data: userBooking } = bookingsQuery;
     
     if (eventError || !event) {
-      logger.error({ error: eventError, eventId: id }, 'Event not found');
-      throw notFound();
+      logger.warn({ error: eventError, eventId: id }, 'Event not found');
+      // Return null event data instead of throwing error
+      return {
+        event: null,
+        performers: [],
+        similarEvents: [],
+        userBooking: null,
+        metrics: {
+          daysUntilEvent: 0,
+          duration: 0,
+          isUpcoming: false,
+          isPast: true,
+          isHappening: false,
+          availableSpots: 0,
+        },
+        user: user ? {
+          id: user.id,
+          email: user.email,
+        } : null,
+      };
     }
     
     // Transform the event data
@@ -158,11 +175,22 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       url: request.url 
     }, 'Error loading event details');
     
-    if (error instanceof Response) {
-      throw error;
-    }
-    
-    throw notFound();
+    // Return empty data instead of throwing
+    return {
+      event: null,
+      performers: [],
+      similarEvents: [],
+      userBooking: null,
+      metrics: {
+        daysUntilEvent: 0,
+        duration: 0,
+        isUpcoming: false,
+        isPast: true,
+        isHappening: false,
+        availableSpots: 0,
+      },
+      user: null,
+    };
   }
 };
 

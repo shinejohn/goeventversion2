@@ -1,6 +1,7 @@
 import React from 'react';
 import SocialFeedPage from '~/components/magic-patterns/pages/social/SocialFeedPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import { redirect } from 'react-router';
 import type { Route } from './+types/feed';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
@@ -8,7 +9,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   
   const { data: { user } } = await client.auth.getUser();
   if (!user) {
-    throw new Response('Unauthorized', { status: 401 });
+    // Redirect to login instead of throwing error
+    throw redirect('/auth/login?redirect=/social/feed');
   }
   
   try {

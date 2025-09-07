@@ -16,13 +16,15 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .single();
       
     if (hubError || !hub) {
-      throw new Response('Hub not found', { status: 404 });
+      console.warn('Hub not found:', { error: hubError, hubSlug });
+      return { hub: null, analytics: null };
     }
     
     // Check user has permission to view analytics
     const { data: { user } } = await client.auth.getUser();
     if (!user) {
-      throw new Response('Unauthorized', { status: 401 });
+      console.warn('Unauthorized access to analytics');
+      return { hub, analytics: null };
     }
     
     // Get analytics data
@@ -58,7 +60,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     
   } catch (error) {
     console.error('Hub analytics loader error:', error);
-    throw new Response('Hub not found', { status: 404 });
+    return { hub: null, analytics: null };
   }
 };
 

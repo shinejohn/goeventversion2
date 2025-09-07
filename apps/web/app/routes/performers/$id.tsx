@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Route } from './+types/$id';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { notFound } from 'react-router';
 
 // Magic Patterns imports
 import { PerformerProfilePage } from '~/components/magic-patterns/pages/performers/PerformerProfilePage';
@@ -93,8 +92,33 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const { data: similarPerformers } = similarPerformersQuery;
     
     if (performerError || !performer) {
-      logger.error({ error: performerError, performerId: id }, 'Performer not found');
-      throw notFound();
+      logger.warn({ error: performerError, performerId: id }, 'Performer not found');
+      // Return null performer data instead of throwing error
+      return {
+        performer: null,
+        upcomingEvents: [],
+        portfolio: [],
+        similarPerformers: [],
+        metrics: {
+          totalPerformances: 0,
+          upcomingPerformances: 0,
+          completedPerformances: 0,
+          averageRating: 0,
+          responseTime: 'N/A',
+          bookingAcceptance: 'N/A',
+          yearsActive: 0,
+        },
+        mediaContent: {
+          videos: [],
+          audio: [],
+          images: [],
+          socialLinks: [],
+        },
+        user: user ? {
+          id: user.id,
+          email: user.email,
+        } : null,
+      };
     }
     
     // Transform the performer data
@@ -183,11 +207,29 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       url: request.url 
     }, 'Error loading performer profile');
     
-    if (error instanceof Response) {
-      throw error;
-    }
-    
-    throw notFound();
+    // Return empty data instead of throwing
+    return {
+      performer: null,
+      upcomingEvents: [],
+      portfolio: [],
+      similarPerformers: [],
+      metrics: {
+        totalPerformances: 0,
+        upcomingPerformances: 0,
+        completedPerformances: 0,
+        averageRating: 0,
+        responseTime: 'N/A',
+        bookingAcceptance: 'N/A',
+        yearsActive: 0,
+      },
+      mediaContent: {
+        videos: [],
+        audio: [],
+        images: [],
+        socialLinks: [],
+      },
+      user: null,
+    };
   }
 };
 
