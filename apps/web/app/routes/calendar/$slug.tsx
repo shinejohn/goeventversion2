@@ -20,13 +20,14 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .single();
       
     if (error || !calendar) {
-      throw new Response('Calendar not found', { status: 404 });
+      console.warn('Calendar not found:', { error, calendarSlug });
+      return { calendar: null };
     }
     
     return { calendar };
   } catch (error) {
     console.error('Calendar loader error:', error);
-    throw new Response('Calendar not found', { status: 404 });
+    return { calendar: null };
   }
 };
 

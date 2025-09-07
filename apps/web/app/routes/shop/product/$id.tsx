@@ -17,7 +17,8 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .single();
       
     if (error || !product) {
-      throw new Response('Product not found', { status: 404 });
+      console.warn('Product not found:', { error, productId });
+      return { product: null, relatedProducts: [] };
     }
     
     // Load related products (same category, excluding current product)
@@ -68,10 +69,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     
   } catch (error) {
     console.error('Error loading product:', error);
-    if (error instanceof Response) {
-      throw error;
-    }
-    throw new Response('Product not found', { status: 404 });
+    return { product: null, relatedProducts: [] };
   }
 };
 

@@ -18,7 +18,8 @@ export async function loader({ request, params }: { request: Request; params: an
     .single();
 
   if (!event) {
-    throw new Response('Event not found', { status: 404 });
+    console.warn('Event not found for ticket purchase:', eventId);
+    return { event: null };
   }
 
   return { event };
@@ -31,7 +32,8 @@ export async function action({ request }: { request: Request }) {
   // Get current user
   const { data: { user } } = await client.auth.getUser();
   if (!user) {
-    throw new Response('Unauthorized', { status: 401 });
+    console.warn('Unauthorized ticket purchase attempt');
+    return { error: 'You must be logged in to purchase tickets' };
   }
 
   // Get user's account

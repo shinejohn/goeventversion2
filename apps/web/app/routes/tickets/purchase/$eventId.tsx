@@ -19,7 +19,8 @@ export async function loader({ params }: Route.LoaderArgs) {
     .single();
 
   if (error || !event) {
-    throw new Response('Event not found', { status: 404 });
+    console.warn('Event not found for ticket purchase:', { error, eventId: params.eventId });
+    return { event: null };
   }
 
   return { event };
@@ -27,6 +28,23 @@ export async function loader({ params }: Route.LoaderArgs) {
 
 export default function TicketPurchasePage({ loaderData }: Route.ComponentProps) {
   const { event } = loaderData;
+
+  if (!event) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900">Event Not Found</h2>
+          <p className="mt-2 text-gray-600">The event you're trying to purchase tickets for doesn't exist.</p>
+          <button
+            onClick={() => window.location.href = '/events'}
+            className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+          >
+            Browse All Events
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
