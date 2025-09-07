@@ -71,15 +71,15 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     
     // Capacity filter
     if (params.capacity) {
-      query = query.gte('capacity', params.capacity);
+      query = query.gte('max_capacity', params.capacity);
     }
     
     // Price range filters
     if (params.minPrice) {
-      query = query.gte('price_per_hour', params.minPrice);
+      query = query.gte('base_hourly_rate', params.minPrice);
     }
     if (params.maxPrice) {
-      query = query.lte('price_per_hour', params.maxPrice);
+      query = query.lte('base_hourly_rate', params.maxPrice);
     }
     
     // Amenities filter - simplified for now
@@ -91,10 +91,10 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     // Apply sorting
     switch (params.sort) {
       case 'price':
-        query = query.order('price_per_hour', { ascending: true, nullsFirst: false });
+        query = query.order('base_hourly_rate', { ascending: true, nullsFirst: false });
         break;
       case 'capacity':
-        query = query.order('capacity', { ascending: false });
+        query = query.order('max_capacity', { ascending: false });
         break;
       case 'rating':
         // TODO: Implement rating sort once reviews are joined
@@ -122,7 +122,24 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         loader: 'venues',
         params 
       }, 'Failed to load venues');
-      throw error;
+      // Return empty data instead of throwing error
+      return {
+        venues: [],
+        pagination: {
+          page: params.page,
+          limit: params.limit,
+          total: 0,
+          totalPages: 0,
+          hasMore: false,
+        },
+        filters: params,
+        metrics: {
+          totalVenues: 0,
+          averagePrice: 0,
+          popularCities: [],
+        },
+        error: 'Failed to load venues',
+      };
     }
     
     // Transform data for Magic Patterns component
@@ -131,7 +148,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     // Calculate additional metrics
     const venueMetrics = {
       totalVenues: count || 0,
-      averagePrice: venues?.reduce((sum, v) => sum + (v.price_per_hour || 0), 0) / (venues?.length || 1),
+      averagePrice: venues?.reduce((sum, v) => sum + (v.base_hourly_rate || 0), 0) / (venues?.length || 1),
       popularCities: [...new Set(venues?.map(v => v.city).filter(Boolean))].slice(0, 5),
     };
     
