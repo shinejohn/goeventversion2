@@ -60,8 +60,9 @@ COPY --from=builder --chown=nodejs:nodejs /app/apps/web/public ./apps/web/public
 # Switch to non-root user
 USER nodejs
 
-# Expose port
-EXPOSE 3000
+# Railway provides PORT environment variable at runtime
+# Don't hardcode the port number
+EXPOSE ${PORT:-3000}
 
 # Set production environment
 ENV NODE_ENV=production

@@ -9,4 +9,4 @@ healthcheckTimeout = 300
 
 [environment]
 NODE_ENV = "production"
-PORT = { fromService = "web" }
+# Railway provides PORT automatically, don't override it
