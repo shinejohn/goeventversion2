@@ -5,50 +5,38 @@ type LanguagePriority = 'user' | 'application';
 const FeatureFlagsSchema = z.object({
   enableThemeToggle: z.boolean({
     description: 'Enable theme toggle in the user interface.',
-    required_error: 'Provide the variable VITE_ENABLE_THEME_TOGGLE',
   }),
   enableAccountDeletion: z.boolean({
     description: 'Enable personal account deletion.',
-    required_error:
-      'Provide the variable VITE_ENABLE_PERSONAL_ACCOUNT_DELETION',
   }),
   enableTeamDeletion: z.boolean({
     description: 'Enable team deletion.',
-    required_error: 'Provide the variable VITE_ENABLE_TEAM_DELETION',
   }),
   enableTeamAccounts: z.boolean({
     description: 'Enable team accounts.',
-    required_error: 'Provide the variable VITE_ENABLE_TEAM_ACCOUNTS_DELETION',
   }),
   enableTeamCreation: z.boolean({
     description: 'Enable team creation.',
-    required_error: 'Provide the variable VITE_ENABLE_TEAM_ACCOUNTS_CREATION',
   }),
   enablePersonalAccountBilling: z.boolean({
     description: 'Enable personal account billing.',
-    required_error: 'Provide the variable VITE_ENABLE_PERSONAL_ACCOUNT_BILLING',
   }),
   enableTeamAccountBilling: z.boolean({
     description: 'Enable team account billing.',
-    required_error: 'Provide the variable VITE_ENABLE_TEAM_ACCOUNTS_BILLING',
   }),
   languagePriority: z
     .enum(['user', 'application'], {
-      required_error: 'Provide the variable VITE_LANGUAGE_PRIORITY',
       description: `If set to user, use the user's preferred language. If set to application, use the application's default language.`,
     })
     .default('application'),
   enableNotifications: z.boolean({
     description: 'Enable notifications functionality',
-    required_error: 'Provide the variable VITE_ENABLE_NOTIFICATIONS',
   }),
   realtimeNotifications: z.boolean({
     description: 'Enable realtime for the notifications functionality',
-    required_error: 'Provide the variable VITE_REALTIME_NOTIFICATIONS',
   }),
   enableVersionUpdater: z.boolean({
     description: 'Enable version updater',
-    required_error: 'Provide the variable VITE_ENABLE_VERSION_UPDATER',
   }),
 });
 

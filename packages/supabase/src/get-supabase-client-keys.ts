@@ -10,9 +10,10 @@ export function getSupabaseClientKeys() {
       publicKey: z.string().min(1),
     })
     .parse({
-      url: import.meta.env.VITE_SUPABASE_URL,
+      url: import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co',
       publicKey:
         import.meta.env.VITE_SUPABASE_PUBLIC_KEY ??
-        import.meta.env.VITE_SUPABASE_ANON_KEY,
+        import.meta.env.VITE_SUPABASE_ANON_KEY ??
+        'placeholder-key',
     });
 }

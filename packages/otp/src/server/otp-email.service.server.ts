@@ -5,18 +5,14 @@ import { getMailer } from '@kit/mailers';
 import { getLogger } from '@kit/shared/logger';
 
 const EMAIL_SENDER = z
-  .string({
-    required_error: 'EMAIL_SENDER is required',
-  })
+  .string()
   .min(1)
-  .parse(process.env.EMAIL_SENDER);
+  .parse(process.env.EMAIL_SENDER || 'noreply@goeventcity.com');
 
 const PRODUCT_NAME = z
-  .string({
-    required_error: 'VITE_PRODUCT_NAME is required',
-  })
+  .string()
   .min(1)
-  .parse(import.meta.env.VITE_PRODUCT_NAME);
+  .parse(import.meta.env.VITE_PRODUCT_NAME || 'GoEventCity');
 
 /**
  * @name createOtpEmailService
