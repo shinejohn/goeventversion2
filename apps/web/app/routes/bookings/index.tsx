@@ -4,7 +4,7 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { z } from 'zod';
 
 // Magic Patterns imports
-import { BookingMarketplacePage } from '~/components/magic-patterns/pages/BookingMarketplacePage';
+import { BookingsPage } from '~/components/magic-patterns/pages/BookingsPage';
 import { createMagicPatternsRoute } from '~/lib/magic-patterns/route-wrapper';
 import { transformBookingsList } from '~/lib/magic-patterns/data-transformers';
 import { getLogger } from '@kit/shared/logger';
@@ -309,7 +309,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
 // Component using the Magic Patterns wrapper
 export default createMagicPatternsRoute({
-  component: BookingMarketplacePage,
+  component: BookingsPage,
   transformData: (loaderData) => ({
     bookings: loaderData.bookings,
     pagination: loaderData.pagination,

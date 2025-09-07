@@ -2,6 +2,7 @@ import React from 'react';
 import { HomePage } from '~/components/magic-patterns/pages/HomePage';
 import type { Route } from '~/types/app/routes/+types';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import { createMagicPatternsRoute } from '~/lib/magic-patterns/route-wrapper';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
@@ -107,16 +108,12 @@ export const meta = ({ data }: Route.MetaArgs) => {
   ];
 };
 
-export default function HomeRoute({ loaderData }: Route.ComponentProps) {
-  console.log('HomeRoute component rendering with data:', {
-    eventsCount: loaderData?.events?.length || 0,
-    venuesCount: loaderData?.venues?.length || 0,
-    performersCount: loaderData?.performers?.length || 0
-  });
-  
-  return <HomePage 
-    events={loaderData.events} 
-    venues={loaderData.venues}
-    performers={loaderData.performers}
-  />;
-}
+// Component using the Magic Patterns wrapper
+export default createMagicPatternsRoute({
+  component: HomePage,
+  transformData: (loaderData) => ({
+    events: loaderData.events,
+    venues: loaderData.venues,
+    performers: loaderData.performers,
+  }),
+});

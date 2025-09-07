@@ -4,7 +4,7 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { z } from 'zod';
 
 // Magic Patterns imports
-import { ShopPage } from '~/components/magic-patterns/pages/ShopPage';
+import { GearPage } from '~/components/magic-patterns/pages/GearPage';
 import { createMagicPatternsRoute } from '~/lib/magic-patterns/route-wrapper';
 import { getLogger } from '@kit/shared/logger';
 
@@ -308,7 +308,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
 // Component using the Magic Patterns wrapper
 export default createMagicPatternsRoute({
-  component: ShopPage,
+  component: GearPage,
   transformData: (loaderData) => ({
     products: loaderData.products,
     pagination: loaderData.pagination,

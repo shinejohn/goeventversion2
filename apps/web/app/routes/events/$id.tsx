@@ -1,63 +1,210 @@
 import React from 'react';
-// apps/web/app/routes/events/$id.tsx
-import { EventDetailPage } from '~/components/magic-patterns/pages/EventDetailPage';
+import type { Route } from './+types/$id';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/events/$id/+types';
+import { notFound } from 'react-router';
+
+// Magic Patterns imports
+import { EventDetailPage } from '~/components/magic-patterns/pages/EventDetailPage';
+import { createMagicPatternsRoute } from '~/lib/magic-patterns/route-wrapper';
+import { transformEventData, transformPerformerData, transformVenueData } from '~/lib/magic-patterns/data-transformers';
+import { getLogger } from '@kit/shared/logger';
+
+/**
+ * Event Detail Route - Experience the magic!
+ * Shows full event information, venue details, performers, and booking options
+ * 
+ * Get ready for an amazing experience! 🎉✨
+ */
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
-  const client = getSupabaseServerClient(request);
-  const eventId = params.id;
+  const logger = await getLogger();
+  const startTime = Date.now();
   
   try {
-    // Load event with venue data
+    const { id } = params;
+    logger.info({ loader: 'events/$id', eventId: id }, '🎯 Loading event details');
     
-    // Load event with venue data
-    const { data: event, error } = await client
-      .from('events')
-      .select(`
-        *,
-        venue:venues(*)
-      `)
-      .eq('id', eventId)
-      .single();
+    const client = getSupabaseServerClient(request);
+    
+    // Get current user for personalization
+    const { data: { user } } = await client.auth.getUser();
+    
+    // Parallel data fetching for performance 🚀
+    const [eventQuery, performersQuery, similarEventsQuery, bookingsQuery] = await Promise.all([
+      // Main event data with venue info
+      client
+        .from('events')
+        .select(`
+          *,
+          venues!venue_id (
+            id,
+            name,
+            address,
+            city,
+            state,
+            latitude,
+            longitude,
+            max_capacity,
+            amenities,
+            profile_image_url,
+            base_hourly_rate
+          )
+        `)
+        .eq('id', id)
+        .single(),
       
-    if (error || !event) {
-      throw new Response('Event not found', { status: 404 });
+      // Get performers for this event
+      client
+        .from('event_performers')
+        .select(`
+          performer:performers!performer_id (
+            id,
+            stage_name,
+            category,
+            bio,
+            profile_image_url,
+            genres,
+            base_rate
+          )
+        `)
+        .eq('event_id', id),
+      
+      // Get similar events (same category, nearby dates)
+      client
+        .from('events')
+        .select(`
+          *,
+          venues!venue_id (
+            id,
+            name,
+            city,
+            profile_image_url
+          )
+        `)
+        .eq('status', 'published')
+        .neq('id', id)
+        .limit(4),
+      
+      // Check if user has already booked this event
+      user ? client
+        .from('bookings')
+        .select('id, status')
+        .eq('event_id', id)
+        .eq('account_id', user.id)
+        .maybeSingle()
+        : Promise.resolve({ data: null }),
+    ]);
+    
+    const { data: event, error: eventError } = eventQuery;
+    const { data: eventPerformers } = performersQuery;
+    const { data: similarEvents } = similarEventsQuery;
+    const { data: userBooking } = bookingsQuery;
+    
+    if (eventError || !event) {
+      logger.error({ error: eventError, eventId: id }, 'Event not found');
+      throw notFound();
     }
     
-    // Load related events
-    const { data: relatedEvents } = await client
-      .from('events')
-      .select(`
-        id, title, start_date, image_url,
-        venue:venues(name, address)
-      `)
-      .eq('category', event.category)
-      .neq('id', eventId)
-      .eq('status', 'published')
-      .gte('start_date', new Date().toISOString())
-      .limit(3);
+    // Transform the event data
+    const transformedEvent = transformEventData(event);
+    
+    // Transform performers
+    const performers = eventPerformers?.map(ep => 
+      ep.performer ? transformPerformerData(ep.performer) : null
+    ).filter(Boolean) || [];
+    
+    // Transform similar events
+    const transformedSimilarEvents = (similarEvents || []).map(transformEventData);
+    
+    // Calculate event metrics
+    const eventMetrics = {
+      daysUntilEvent: Math.ceil((new Date(event.start_date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)),
+      duration: Math.ceil((new Date(event.end_date).getTime() - new Date(event.start_date).getTime()) / (1000 * 60 * 60)),
+      isUpcoming: new Date(event.start_date) > new Date(),
+      isPast: new Date(event.end_date) < new Date(),
+      isHappening: new Date() >= new Date(event.start_date) && new Date() <= new Date(event.end_date),
+      availableSpots: event.max_capacity ? event.max_capacity - (event.current_attendees || 0) : null,
+    };
+    
+    const duration = Date.now() - startTime;
+    logger.info({ 
+      loader: 'events/$id',
+      duration,
+      eventId: id,
+      performerCount: performers.length,
+      metrics: eventMetrics,
+    }, '🎊 Event details loaded successfully');
     
     return {
-      event,
-      relatedEvents: relatedEvents || [],
-      attendeeCount: 0 // We'll add this later when bookings table exists
+      event: {
+        ...transformedEvent,
+        venue: event.venues ? transformVenueData(event.venues) : null,
+      },
+      performers,
+      similarEvents: transformedSimilarEvents,
+      userBooking,
+      metrics: eventMetrics,
+      user: user ? {
+        id: user.id,
+        email: user.email,
+      } : null,
     };
     
   } catch (error) {
-    console.error('Error loading event:', error);
-    throw new Response('Event not found', { status: 404 });
+    logger.error({ 
+      error, 
+      loader: 'events/$id',
+      eventId: params.id,
+      url: request.url 
+    }, 'Error loading event details');
+    
+    if (error instanceof Response) {
+      throw error;
+    }
+    
+    throw notFound();
   }
 };
 
-export default function EventDetailRoute({ loaderData }: Route.ComponentProps) {
-  const { event, relatedEvents, attendeeCount } = loaderData;
+// Component using the Magic Patterns wrapper
+export default createMagicPatternsRoute({
+  component: EventDetailPage,
+  transformData: (loaderData) => ({
+    event: loaderData.event,
+    performers: loaderData.performers,
+    similarEvents: loaderData.similarEvents,
+    userBooking: loaderData.userBooking,
+    metrics: loaderData.metrics,
+    user: loaderData.user,
+  }),
+});
+
+// SEO meta tags 🎯
+export const meta = ({ data }: Route.MetaArgs) => {
+  const event = data?.event;
   
-  return (
-    <EventDetailPage
-      event={event}
-      relatedEvents={relatedEvents}
-      attendeeCount={attendeeCount}
-    />
-  );
-}
+  if (!event) {
+    return [{ title: 'Event Not Found | When The Fun' }];
+  }
+  
+  return [
+    { title: `${event.title} | When The Fun` },
+    { 
+      name: 'description', 
+      content: event.description || `Experience ${event.title} - an amazing event you won't want to miss!` 
+    },
+    { property: 'og:title', content: event.title },
+    { property: 'og:description', content: event.description || 'Join us for this incredible event!' },
+    { property: 'og:type', content: 'event' },
+    { property: 'og:image', content: event.imageUrl || '/default-event.jpg' },
+    { property: 'event:start_time', content: event.startDate },
+    { property: 'event:end_time', content: event.endDate },
+  ];
+};
+
+// Cache headers 🚀
+export const headers = () => {
+  return {
+    'Cache-Control': 'public, max-age=300, s-maxage=3600', // 5 min client, 1 hour CDN
+  };
+};
