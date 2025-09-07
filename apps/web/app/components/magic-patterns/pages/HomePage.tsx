@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 // Mock data imports removed - using real data now
 import { DateSelector } from '../components/home/DateSelector';
 import { SharePopup } from '../components/ui/SharePopup';
+import { EntityImage } from '@kit/ui/makerkit/entity-image';
 
 interface HomePageProps {
   events?: any[];
@@ -104,6 +105,7 @@ export const HomePage = ({ events = [], venues = [], performers = [] }: HomePage
     rating: performer.rating || 0,
     reviewCount: performer.reviews || 0,
     homeCity: performer.home_city || performer.location || '',
+    category: performer.category || 'Band', // Add category for EntityImage
     upcomingShow: { date: new Date().toISOString() } // Mock for now
   }))
   // Generate REAL upcoming events from props data
@@ -281,7 +283,13 @@ export const HomePage = ({ events = [], venues = [], performers = [] }: HomePage
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {featuredEvents.map(event => <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate(`/events/${event.id}`)}>
                 <div className="h-48 overflow-hidden relative">
-                  <img src={event.image} alt={event.title} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+                  <EntityImage 
+                    src={event.image}
+                    alt={event.title}
+                    entityType="event"
+                    entityCategory={event.category}
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
                   <div className="absolute top-2 right-2">
                     <span className="px-2 py-1 bg-black/30 backdrop-blur-sm text-white text-xs rounded-full">
                       {event.category}
@@ -349,7 +357,13 @@ export const HomePage = ({ events = [], venues = [], performers = [] }: HomePage
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {featuredVenues.map(venue => <div key={venue.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/venues/' + venue.id)}>
                 <div className="h-48 overflow-hidden relative">
-                  <img src={venue.image} alt={venue.name} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+                  <EntityImage 
+                    src={venue.image}
+                    alt={venue.name}
+                    entityType="venue"
+                    entityCategory={venue.venueType}
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
                   <div className="absolute top-2 right-2">
                     <span className="px-2 py-1 bg-black/30 backdrop-blur-sm text-white text-xs rounded-full">
                       {venue.venueType}
@@ -411,7 +425,13 @@ export const HomePage = ({ events = [], venues = [], performers = [] }: HomePage
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {featuredPerformers.map(performer => <div key={performer.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/performers/' + performer.id)}>
                 <div className="h-48 overflow-hidden relative">
-                  <img src={performer.image} alt={performer.name} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+                  <EntityImage 
+                    src={performer.image}
+                    alt={performer.name}
+                    entityType="performer"
+                    entityCategory={performer.category}
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
                     <h3 className="font-bold text-lg text-white">
                       {performer.name}

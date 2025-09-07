@@ -15,7 +15,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     // Fetch featured events - be more permissive
     console.log('Fetching events from homepage...');
     
-    // First try published events with start_date column  
+    // First try published events with start_datetime column  
     let { data: events, error: eventsError } = await client
       .from('events')
       .select(`
@@ -23,9 +23,9 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         venue:venues(name, address)
       `)
       .eq('status', 'published')
-      .gte('start_date', new Date().toISOString())
+      .gte('start_datetime', new Date().toISOString())
       .limit(8)
-      .order('start_date');
+      .order('start_datetime');
     
     console.log('Published events result:', { events, eventsError });
     
