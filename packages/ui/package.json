@@ -126,7 +126,8 @@
     "./empty-state": "./src/makerkit/empty-state.tsx",
     "./app-breadcrumbs": "./src/makerkit/app-breadcrumbs.tsx",
     "./marketing": "./src/makerkit/marketing/index.tsx",
-    "./makerkit/entity-image": "./src/makerkit/entity-image.tsx"
+    "./makerkit/entity-image": "./src/makerkit/entity-image.tsx",
+    "./cn": "./src/lib/utils/cn.ts"
   },
   "typesVersions": {
     "*": {
