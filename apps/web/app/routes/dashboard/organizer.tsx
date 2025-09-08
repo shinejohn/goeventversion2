@@ -281,7 +281,7 @@ export async function action({ request }: Route.ActionArgs) {
         throw new Response(error.message, { status: 400 });
       }
 
-      return { success: true });
+      return { success: true };
     }
 
     if (action === 'cancel-event') {
@@ -300,7 +300,7 @@ export async function action({ request }: Route.ActionArgs) {
 
       // TODO: Notify attendees and process refunds
 
-      return { success: true });
+      return { success: true };
     }
 
     throw new Response('Invalid action', { status: 400 });
