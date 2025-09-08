@@ -51,15 +51,11 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       .from('venues')
       .select(`
         *,
-        capacity:max_capacity,
         average_rating:rating,
-        total_reviews:rating,
-        price_per_hour:base_hourly_rate,
-        venue_type:category,
+        total_reviews:review_count,
         listed_date:created_at,
-        verified:is_active,
-        distance:rating,
-        last_booked_days_ago:rating
+        verified:is_verified,
+        images:gallery_images
       `, { count: 'exact' });
     
     // Apply search filters
@@ -76,20 +72,20 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     
     // Venue type filter
     if (params.type) {
-      query = query.eq('category', params.type);
+      query = query.eq('venue_type', params.type);
     }
     
     // Capacity filter
     if (params.capacity) {
-      query = query.gte('max_capacity', params.capacity);
+      query = query.gte('capacity', params.capacity);
     }
     
     // Price range filters
     if (params.minPrice) {
-      query = query.gte('base_hourly_rate', params.minPrice);
+      query = query.gte('price_per_hour', params.minPrice);
     }
     if (params.maxPrice) {
-      query = query.lte('base_hourly_rate', params.maxPrice);
+      query = query.lte('price_per_hour', params.maxPrice);
     }
     
     // Amenities filter - simplified for now
@@ -101,14 +97,13 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     // Apply sorting
     switch (params.sort) {
       case 'price':
-        query = query.order('base_hourly_rate', { ascending: true, nullsFirst: false });
+        query = query.order('price_per_hour', { ascending: true, nullsFirst: false });
         break;
       case 'capacity':
-        query = query.order('max_capacity', { ascending: false });
+        query = query.order('capacity', { ascending: false });
         break;
       case 'rating':
-        // TODO: Implement rating sort once reviews are joined
-        query = query.order('name', { ascending: true });
+        query = query.order('rating', { ascending: false, nullsFirst: false });
         break;
       case 'distance':
         // Would need user location for this
@@ -156,26 +151,23 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     const transformedVenues = (venues || []).map(venue => ({
       ...venue,
       // Make sure UI gets the fields it expects
-      images: venue.images || [],
+      images: venue.images || venue.gallery_images || [],
       amenities: venue.amenities || [],
-      unavailable_dates: venue.blackout_dates || [],
-      image_url: venue.image_url || venue.images?.[0] || 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205',
+      unavailable_dates: [], // TODO: Add unavailable_dates field to venues table
+      image_url: venue.image_url || (venue.images || venue.gallery_images || [])[0] || 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205',
       // These fields are computed via aliases in select statement
-      capacity: venue.capacity || venue.max_capacity,
       average_rating: venue.average_rating || venue.rating || 0,
-      total_reviews: venue.total_reviews || 0,
-      price_per_hour: venue.price_per_hour || venue.base_hourly_rate || 0,
-      venue_type: venue.venue_type || venue.category || 'Other',
+      total_reviews: venue.total_reviews || venue.review_count || 0,
       listed_date: venue.listed_date || venue.created_at,
-      verified: venue.verified ?? venue.is_active ?? true,
-      distance: venue.distance || null,
-      last_booked_days_ago: venue.last_booked_days_ago || null
+      verified: venue.verified ?? venue.is_verified ?? true,
+      distance: null, // Placeholder for distance calculation
+      last_booked_days_ago: null // Placeholder for booking history
     }));
     
     // Calculate additional metrics
     const venueMetrics = {
       totalVenues: count || 0,
-      averagePrice: venues?.reduce((sum, v) => sum + (v.base_hourly_rate || 0), 0) / (venues?.length || 1),
+      averagePrice: venues?.reduce((sum, v) => sum + (v.price_per_hour || 0), 0) / (venues?.length || 1),
       popularCities: [...new Set(venues?.map(v => v.city).filter(Boolean))].slice(0, 5),
     };
     

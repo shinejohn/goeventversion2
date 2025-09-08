@@ -1,6 +1,6 @@
 import React from 'react';
-import { json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { json } from 'react-router';
+import { useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/dashboard/venue-owner';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { VenueOwnerDashboard } from '~/components/magic-patterns/components/bookings/VenueOwnerDashboard';

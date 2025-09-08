@@ -1,5 +1,5 @@
-import { json, type LoaderFunctionArgs } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { json, type LoaderFunctionArgs } from 'react-router';
+import { useLoaderData } from 'react-router';
 import { MessagesPage } from '~/components/magic-patterns/pages/social/MessagesPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getLogger } from '@kit/shared/logger';

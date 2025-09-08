@@ -77,7 +77,7 @@ export function getDefaultImage<T extends EntityType>(
   }
 
   if (category && category in entityDefaults) {
-    return entityDefaults[category as EntityCategory<T>];
+    return (entityDefaults as any)[category];
   }
 
   return entityDefaults.default;

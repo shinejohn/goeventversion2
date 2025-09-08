@@ -1,6 +1,6 @@
 import React from 'react';
-import { json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { json } from 'react-router';
+import { useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/social/friends';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { FriendsPage } from '~/components/magic-patterns/pages/social/FriendsPage';
