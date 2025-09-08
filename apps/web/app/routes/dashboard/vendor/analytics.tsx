@@ -1,6 +1,5 @@
 import React from 'react';
-import { json, redirect } from 'react-router';
-import { useLoaderData } from 'react-router';
+import { redirect, useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/dashboard/vendor/analytics';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getLogger } from '@kit/shared/logger';
@@ -245,7 +244,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       period
     };
 
-    return json({
+    return {
       vendor: {
         id: vendorProfile.id,
         businessName: vendorProfile.business_name,
@@ -255,11 +254,11 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         totalRevenue: vendorProfile.total_revenue
       },
       analytics
-    });
+    };
 
   } catch (error) {
     logger.error({ error }, 'Error loading vendor analytics');
-    return json({
+    return {
       vendor: null,
       analytics: {
         summary: {
@@ -277,7 +276,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         recentReviews: [],
         period: '30d'
       }
-    });
+    };
   }
 };
 
@@ -291,7 +290,7 @@ export async function action({ request }: Route.ActionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Unauthorized' }, { status: 401 });
+      throw new Response('Unauthorized', { status: 401 });
     }
 
     // Get vendor profile
@@ -302,7 +301,7 @@ export async function action({ request }: Route.ActionArgs) {
       .single();
 
     if (!vendorProfile) {
-      return json({ success: false, error: 'Vendor profile not found' }, { status: 404 });
+      throw new Response('Vendor profile not found', { status: 404 });
     }
 
     if (action === 'export-analytics') {
@@ -312,11 +311,11 @@ export async function action({ request }: Route.ActionArgs) {
       // TODO: Generate analytics report
       // This would typically create a file and return a download URL
       
-      return json({ 
+      return { 
         success: true, 
         message: 'Analytics export started. You will receive an email when ready.',
         exportId: `export-${Date.now()}`
-      });
+      };
     }
 
     if (action === 'update-analytics-preferences') {
@@ -340,17 +339,17 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error updating analytics preferences');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    throw new Response('Invalid action', { status: 400 });
 
   } catch (error) {
     logger.error({ error }, 'Error processing analytics action');
-    return json({ success: false, error: 'Server error' }, { status: 500 });
+    throw new Response('Server error', { status: 500 });
   }
 }
 

@@ -1,10 +1,10 @@
-import { json, type LoaderFunctionArgs, type ActionFunctionArgs } from 'react-router';
 import { useLoaderData } from 'react-router';
+import type { Route } from './+types/notifications';
 import { NotificationsPage } from '~/components/magic-patterns/pages/social/NotificationsPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getLogger } from '@kit/shared/logger';
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export async function loader({ request }: Route.LoaderArgs) {
   const logger = await getLogger();
   const client = getSupabaseServerClient(request);
   
@@ -13,7 +13,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ notifications: [] });
+      return { notifications: [] };
     }
 
     // Fetch notifications for the user
@@ -26,18 +26,18 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
     if (error) {
       logger.error({ error }, 'Error fetching notifications');
-      return json({ notifications: [] });
+      return { notifications: [] };
     }
 
-    return json({ notifications: notifications || [] });
+    return { notifications: notifications || [] };
 
   } catch (error) {
     logger.error({ error }, 'Error loading notifications');
-    return json({ notifications: [] });
+    return { notifications: [] };
   }
 }
 
-export async function action({ request }: ActionFunctionArgs) {
+export async function action({ request }: Route.ActionArgs) {
   const logger = await getLogger();
   const client = getSupabaseServerClient(request);
   const formData = await request.formData();
@@ -47,7 +47,7 @@ export async function action({ request }: ActionFunctionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Unauthorized' }, { status: 401 });
+      throw new Response('Unauthorized', { status: 401 });
     }
 
     if (action === 'mark-read') {
@@ -64,10 +64,10 @@ export async function action({ request }: ActionFunctionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error marking notification as read');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 400 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'mark-all-read') {
@@ -82,10 +82,10 @@ export async function action({ request }: ActionFunctionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error marking all notifications as read');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 400 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'delete') {
@@ -99,17 +99,17 @@ export async function action({ request }: ActionFunctionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error deleting notification');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 400 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    throw new Response('Invalid action', { status: 400 });
 
   } catch (error) {
     logger.error({ error }, 'Error processing notification action');
-    return json({ success: false, error: 'Server error' }, { status: 500 });
+    throw new Response('Server error', { status: 500 });
   }
 }
 

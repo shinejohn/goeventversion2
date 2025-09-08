@@ -1,6 +1,5 @@
 import React from 'react';
-import { json, redirect } from 'react-router';
-import { useLoaderData } from 'react-router';
+import { redirect, useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/dashboard/vendor/orders';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getLogger } from '@kit/shared/logger';
@@ -182,7 +181,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       monthlyRevenue: totalRevenue
     };
 
-    return json({
+    return {
       vendor: {
         id: vendorProfile.id,
         businessName: vendorProfile.business_name,
@@ -200,11 +199,11 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         status,
         search
       }
-    });
+    };
 
   } catch (error) {
     logger.error({ error }, 'Error loading vendor orders');
-    return json({
+    return {
       vendor: null,
       orders: [],
       stats: {
@@ -215,7 +214,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       },
       pagination: { page: 1, limit: 20, total: 0, totalPages: 0 },
       filters: { status: 'all', search: '' }
-    });
+    };
   }
 };
 
@@ -229,7 +228,7 @@ export async function action({ request }: Route.ActionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Unauthorized' }, { status: 401 });
+      throw new Response('Unauthorized', { status: 401 });
     }
 
     // Get vendor profile
@@ -240,7 +239,7 @@ export async function action({ request }: Route.ActionArgs) {
       .single();
 
     if (!vendorProfile) {
-      return json({ success: false, error: 'Vendor profile not found' }, { status: 404 });
+      throw new Response('Vendor profile not found', { status: 404 });
     }
 
     if (action === 'fulfill-order') {
@@ -261,7 +260,7 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (itemError) {
         logger.error({ error: itemError }, 'Error fulfilling order item');
-        return json({ success: false, error: itemError.message });
+        throw new Response(itemError.message, { status: 500 });
       }
 
       // Update main order tracking if provided
@@ -285,7 +284,7 @@ export async function action({ request }: Route.ActionArgs) {
 
       // TODO: Send notification to customer
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'update-tracking') {
@@ -301,7 +300,7 @@ export async function action({ request }: Route.ActionArgs) {
         .single();
 
       if (!orderItem) {
-        return json({ success: false, error: 'Order item not found' });
+        throw new Response('Order item not found', { status: 404 });
       }
 
       // Update order tracking
@@ -315,10 +314,10 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error updating tracking');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'mark-delivered') {
@@ -333,7 +332,7 @@ export async function action({ request }: Route.ActionArgs) {
         .single();
 
       if (!orderItem) {
-        return json({ success: false, error: 'Order item not found' });
+        throw new Response('Order item not found', { status: 404 });
       }
 
       // Update order delivery status
@@ -346,10 +345,10 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error marking as delivered');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'add-order-note') {
@@ -365,7 +364,7 @@ export async function action({ request }: Route.ActionArgs) {
         .single();
 
       if (!orderItem) {
-        return json({ success: false, error: 'Order item not found' });
+        throw new Response('Order item not found', { status: 404 });
       }
 
       const currentMetadata = orderItem.metadata || {};
@@ -383,10 +382,10 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error adding order note');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'bulk-fulfill') {
@@ -403,17 +402,17 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error bulk fulfilling orders');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
-      return json({ success: true, fulfilled: orderItemIds.length });
+      return { success: true, fulfilled: orderItemIds.length };
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    throw new Response('Invalid action', { status: 400 });
 
   } catch (error) {
     logger.error({ error }, 'Error processing order action');
-    return json({ success: false, error: 'Server error' }, { status: 500 });
+    throw new Response('Server error', { status: 500 });
   }
 }
 

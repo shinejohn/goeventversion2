@@ -1,6 +1,5 @@
 import React from 'react';
-import { json, redirect } from 'react-router';
-import { useLoaderData } from 'react-router';
+import { redirect, useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/dashboard/vendor/payouts';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getLogger } from '@kit/shared/logger';
@@ -116,7 +115,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       totalPayouts: count || 0
     };
 
-    return json({
+    return {
       vendor: {
         id: vendorProfile.id,
         businessName: vendorProfile.business_name,
@@ -133,11 +132,11 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         totalPages: Math.ceil((count || 0) / limit)
       },
       filters: { status }
-    });
+    };
 
   } catch (error) {
     logger.error({ error }, 'Error loading vendor payouts');
-    return json({
+    return {
       vendor: null,
       payouts: [],
       stats: {
@@ -148,7 +147,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       },
       pagination: { page: 1, limit: 20, total: 0, totalPages: 0 },
       filters: { status: 'all' }
-    });
+    };
   }
 };
 
@@ -162,7 +161,7 @@ export async function action({ request }: Route.ActionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Unauthorized' }, { status: 401 });
+      throw new Response('Unauthorized', { status: 401 });
     }
 
     // Get vendor profile
@@ -173,7 +172,7 @@ export async function action({ request }: Route.ActionArgs) {
       .single();
 
     if (!vendorProfile) {
-      return json({ success: false, error: 'Vendor profile not found' }, { status: 404 });
+      throw new Response('Vendor profile not found', { status: 404 });
     }
 
     if (action === 'update-payout-settings') {
@@ -198,20 +197,20 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error updating payout settings');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'connect-stripe') {
       // TODO: Integrate with Stripe Connect
       // This would redirect to Stripe's OAuth flow
       
-      return json({ 
+      return { 
         success: true, 
         redirectUrl: 'https://connect.stripe.com/oauth/authorize?...'
-      });
+      };
     }
 
     if (action === 'request-payout') {
@@ -226,17 +225,11 @@ export async function action({ request }: Route.ActionArgs) {
       const pendingTotal = pendingEarnings?.reduce((sum, item) => sum + (item.vendor_commission || 0), 0) || 0;
 
       if (pendingTotal < 10) { // Minimum $10 payout
-        return json({ 
-          success: false, 
-          error: 'Minimum payout amount is $10' 
-        });
+        throw new Response('Minimum payout amount is $10', { status: 400 });
       }
 
       if (!vendorProfile.stripe_account_id) {
-        return json({ 
-          success: false, 
-          error: 'Please connect your Stripe account first' 
-        });
+        throw new Response('Please connect your Stripe account first', { status: 400 });
       }
 
       // Create payout request
@@ -260,7 +253,7 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error creating payout request');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
       // TODO: Process with Stripe
@@ -270,14 +263,14 @@ export async function action({ request }: Route.ActionArgs) {
         .update({ status: 'processing' })
         .eq('id', payout.id);
 
-      return json({ success: true, payoutId: payout.id });
+      return { success: true, payoutId: payout.id };
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    throw new Response('Invalid action', { status: 400 });
 
   } catch (error) {
     logger.error({ error }, 'Error processing payout action');
-    return json({ success: false, error: 'Server error' }, { status: 500 });
+    throw new Response('Server error', { status: 500 });
   }
 }
 

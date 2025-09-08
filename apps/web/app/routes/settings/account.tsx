@@ -1,6 +1,5 @@
 import React from 'react';
-import { json, redirect } from 'react-router';
-import { useLoaderData } from 'react-router';
+import { redirect, useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/settings/account';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getLogger } from '@kit/shared/logger';
@@ -135,11 +134,11 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       lastLoginAt: user.last_sign_in_at
     };
 
-    return json({ account: accountData });
+    return { account: accountData };
 
   } catch (error) {
     logger.error({ error }, 'Error loading account settings');
-    return json({ account: null });
+    return { account: null };
   }
 };
 
@@ -153,7 +152,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Unauthorized' }, { status: 401 });
+      throw new Response('Unauthorized', { status: 401 });
     }
 
     if (action === 'update-profile') {
@@ -174,10 +173,12 @@ export const action = async ({ request }: Route.ActionArgs) => {
       }).safeParse(profileData);
 
       if (!result.success) {
-        return json({ 
-          success: false, 
+        throw new Response(JSON.stringify({ 
           error: 'Invalid profile data',
           errors: result.error.flatten()
+        }), { 
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
         });
       }
 
@@ -198,10 +199,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
       if (error) {
         logger.error({ error }, 'Error updating profile');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'update-preferences') {
@@ -218,10 +219,12 @@ export const action = async ({ request }: Route.ActionArgs) => {
       const result = AccountPreferencesSchema.shape.preferences.safeParse(prefsData);
 
       if (!result.success) {
-        return json({ 
-          success: false, 
+        throw new Response(JSON.stringify({ 
           error: 'Invalid preferences data',
           errors: result.error.flatten()
+        }), { 
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
         });
       }
 
@@ -252,10 +255,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
       if (profileError || notifyError) {
         logger.error({ profileError, notifyError }, 'Error updating preferences');
-        return json({ success: false, error: 'Failed to update preferences' });
+        throw new Response('Failed to update preferences', { status: 500 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'change-password') {
@@ -263,10 +266,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
       const newPassword = formData.get('newPassword') as string;
 
       if (!newPassword || newPassword.length < 8) {
-        return json({ 
-          success: false, 
-          error: 'Password must be at least 8 characters long' 
-        });
+        throw new Response('Password must be at least 8 characters long', { status: 400 });
       }
 
       const { error } = await client.auth.updateUser({
@@ -275,10 +275,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
       if (error) {
         logger.error({ error }, 'Error changing password');
-        return json({ success: false, error: 'Failed to change password' });
+        throw new Response('Failed to change password', { status: 500 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'delete-account') {
@@ -286,10 +286,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
       const confirmText = formData.get('confirmText') as string;
       
       if (confirmText !== 'DELETE MY ACCOUNT') {
-        return json({ 
-          success: false, 
-          error: 'Please type "DELETE MY ACCOUNT" to confirm' 
-        });
+        throw new Response('Please type "DELETE MY ACCOUNT" to confirm', { status: 400 });
       }
 
       // In a real implementation, this would:
@@ -298,17 +295,14 @@ export const action = async ({ request }: Route.ActionArgs) => {
       // 3. Clean up all user data
       // 4. Send confirmation email
       
-      return json({ 
-        success: false, 
-        error: 'Account deletion requires additional verification steps' 
-      });
+      throw new Response('Account deletion requires additional verification steps', { status: 403 });
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    throw new Response('Invalid action', { status: 400 });
 
   } catch (error) {
     logger.error({ error }, 'Error processing account action');
-    return json({ success: false, error: 'Server error' }, { status: 500 });
+    throw new Response('Server error', { status: 500 });
   }
 };
 

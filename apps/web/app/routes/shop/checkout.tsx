@@ -1,6 +1,5 @@
 import React from 'react';
-import { json, redirect } from 'react-router';
-import { useLoaderData } from 'react-router';
+import { redirect, useLoaderData } from 'react-router';
 import type { Route } from './+types/checkout';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -137,7 +136,7 @@ export async function loader({ request }: Route.LoaderArgs) {
       shippingClass: item.product.shipping_class || 'standard'
     }));
 
-    return json({
+    return {
       items: transformedItems,
       subtotal,
       taxAmount,
@@ -147,7 +146,7 @@ export async function loader({ request }: Route.LoaderArgs) {
       savedAddresses: savedAddresses || [],
       savedPaymentMethods: savedPaymentMethods || [],
       userEmail: user.email || '',
-    });
+    };
 
   } catch (error) {
     logger.error({ error }, 'Error loading checkout page');
@@ -165,7 +164,7 @@ export async function action({ request }: Route.ActionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Please log in to continue' }, { status: 401 });
+      throw new Response('Please log in to continue', { status: 401 });
     }
 
     if (action === 'place-order') {
@@ -185,10 +184,12 @@ export async function action({ request }: Route.ActionArgs) {
 
       const addressResult = ShippingAddressSchema.safeParse(shippingData);
       if (!addressResult.success) {
-        return json({ 
-          success: false, 
+        throw new Response(JSON.stringify({ 
           error: 'Invalid shipping address',
           errors: addressResult.error.flatten() 
+        }), { 
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
         });
       }
 
@@ -217,16 +218,13 @@ export async function action({ request }: Route.ActionArgs) {
         .eq('user_id', user.id);
 
       if (!cartItems || cartItems.length === 0) {
-        return json({ success: false, error: 'Cart is empty' });
+        throw new Response('Cart is empty', { status: 400 });
       }
 
       // Validate inventory again
       for (const item of cartItems) {
         if (item.product.track_inventory && item.product.inventory_count < item.quantity) {
-          return json({ 
-            success: false, 
-            error: `Not enough inventory for ${item.product.name}` 
-          });
+          throw new Response(`Not enough inventory for ${item.product.name}`, { status: 400 });
         }
       }
 
@@ -266,7 +264,7 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (orderError || !order) {
         logger.error({ error: orderError }, 'Error creating order');
-        return json({ success: false, error: 'Failed to create order' });
+        throw new Response('Failed to create order', { status: 500 });
       }
 
       // Create order items
@@ -297,7 +295,7 @@ export async function action({ request }: Route.ActionArgs) {
       if (itemsError) {
         logger.error({ error: itemsError }, 'Error creating order items');
         // Should rollback order creation here
-        return json({ success: false, error: 'Failed to create order items' });
+        throw new Response('Failed to create order items', { status: 500 });
       }
 
       // Update inventory
@@ -363,17 +361,17 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error saving address');
-        return json({ success: false, error: 'Failed to save address' });
+        throw new Response('Failed to save address', { status: 500 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    throw new Response('Invalid action', { status: 400 });
 
   } catch (error) {
     logger.error({ error }, 'Error processing checkout');
-    return json({ success: false, error: 'Failed to process checkout' }, { status: 500 });
+    throw new Response('Failed to process checkout', { status: 500 });
   }
 }
 

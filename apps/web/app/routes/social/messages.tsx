@@ -1,5 +1,5 @@
-import { json, type LoaderFunctionArgs } from 'react-router';
 import { useLoaderData } from 'react-router';
+import type { Route } from './+types/messages';
 import { MessagesPage } from '~/components/magic-patterns/pages/social/MessagesPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getLogger } from '@kit/shared/logger';
@@ -22,7 +22,7 @@ interface Conversation {
   unread_count: number;
 }
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export async function loader({ request }: Route.LoaderArgs) {
   const logger = await getLogger();
   const client = getSupabaseServerClient(request);
   
@@ -31,7 +31,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ conversations: [], messages: [] });
+      return { conversations: [], messages: [] };
     }
 
     // Fetch all conversations (messages grouped by sender/recipient)
@@ -86,20 +86,20 @@ export async function loader({ request }: LoaderFunctionArgs) {
         }
       });
 
-      return json({ 
+      return { 
         conversations: Array.from(conversationMap.values()),
         messages: messages || []
-      });
+      };
     }
 
-    return json({ 
+    return { 
       conversations: conversations || [],
       messages: []
-    });
+    };
 
   } catch (error) {
     logger.error({ error }, 'Error loading messages');
-    return json({ conversations: [], messages: [] });
+    return { conversations: [], messages: [] };
   }
 }
 

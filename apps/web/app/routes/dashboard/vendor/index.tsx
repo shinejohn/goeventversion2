@@ -1,6 +1,5 @@
 import React from 'react';
-import { json, redirect } from 'react-router';
-import { useLoaderData } from 'react-router';
+import { redirect, useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/dashboard/vendor/index';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getLogger } from '@kit/shared/logger';
@@ -25,7 +24,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       .single();
 
     if (!vendorProfile) {
-      return json({ 
+      return { 
         needsVendorProfile: true,
         vendor: null,
         stats: {
@@ -38,7 +37,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         recentOrders: [],
         topProducts: [],
         recentPayouts: []
-      });
+      };
     }
 
     // Get vendor statistics
@@ -176,7 +175,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       processedAt: payout.processed_at
     }));
 
-    return json({
+    return {
       vendor: {
         id: vendorProfile.id,
         businessName: vendorProfile.business_name,
@@ -193,11 +192,11 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       recentOrders: transformedRecentOrders,
       topProducts: transformedTopProducts,
       recentPayouts: transformedRecentPayouts
-    });
+    };
 
   } catch (error) {
     logger.error({ error }, 'Error loading vendor dashboard');
-    return json({ 
+    return { 
       vendor: null,
       stats: {
         totalProducts: 0,
@@ -209,7 +208,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       recentOrders: [],
       topProducts: [],
       recentPayouts: []
-    });
+    };
   }
 };
 
@@ -223,7 +222,7 @@ export async function action({ request }: Route.ActionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Unauthorized' }, { status: 401 });
+      throw new Response('Unauthorized', { status: 401 });
     }
 
     if (action === 'create-vendor-profile') {
@@ -245,10 +244,10 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error creating vendor profile');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
-      return json({ success: true, vendor: data });
+      return { success: true, vendor: data };
     }
 
     if (action === 'update-vendor-profile') {
@@ -268,17 +267,17 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error updating vendor profile');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    throw new Response('Invalid action', { status: 400 });
 
   } catch (error) {
     logger.error({ error }, 'Error processing vendor action');
-    return json({ success: false, error: 'Server error' }, { status: 500 });
+    throw new Response('Server error', { status: 500 });
   }
 }
 

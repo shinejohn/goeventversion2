@@ -1,6 +1,5 @@
 import React from 'react';
-import { json, redirect } from 'react-router';
-import { useLoaderData } from 'react-router';
+import { redirect, useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/dashboard/vendor/products';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getLogger } from '@kit/shared/logger';
@@ -204,7 +203,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
     const uniqueCategories = [...new Set(categories?.map(c => c.category) || [])];
 
-    return json({
+    return {
       vendor: {
         id: vendorProfile.id,
         businessName: vendorProfile.business_name,
@@ -223,17 +222,17 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         category,
         status
       }
-    });
+    };
 
   } catch (error) {
     logger.error({ error }, 'Error loading vendor products');
-    return json({
+    return {
       vendor: null,
       products: [],
       categories: [],
       pagination: { page: 1, limit: 20, total: 0, totalPages: 0 },
       filters: { search: '', category: '', status: 'all' }
-    });
+    };
   }
 };
 
@@ -247,7 +246,7 @@ export async function action({ request }: Route.ActionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Unauthorized' }, { status: 401 });
+      throw new Response('Unauthorized', { status: 401 });
     }
 
     // Get vendor profile
@@ -258,7 +257,7 @@ export async function action({ request }: Route.ActionArgs) {
       .single();
 
     if (!vendorProfile) {
-      return json({ success: false, error: 'Vendor profile not found' }, { status: 404 });
+      throw new Response('Vendor profile not found', { status: 404 });
     }
 
     if (action === 'create-product') {
@@ -287,10 +286,12 @@ export async function action({ request }: Route.ActionArgs) {
 
       const result = ProductSchema.safeParse(productData);
       if (!result.success) {
-        return json({ 
-          success: false, 
+        throw new Response(JSON.stringify({ 
           error: 'Invalid product data',
           errors: result.error.flatten()
+        }), { 
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
         });
       }
 
@@ -335,10 +336,10 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error creating product');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
-      return json({ success: true, product: data });
+      return { success: true, product: data };
     }
 
     if (action === 'update-product') {
@@ -363,10 +364,10 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error updating product');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'delete-product') {
@@ -384,10 +385,10 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error deleting product');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'bulk-update-inventory') {
@@ -404,14 +405,14 @@ export async function action({ request }: Route.ActionArgs) {
           .eq('vendor_id', vendorProfile.id);
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    throw new Response('Invalid action', { status: 400 });
 
   } catch (error) {
     logger.error({ error }, 'Error processing product action');
-    return json({ success: false, error: 'Server error' }, { status: 500 });
+    throw new Response('Server error', { status: 500 });
   }
 }
 

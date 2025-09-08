@@ -1,5 +1,4 @@
 import React from 'react';
-import { json } from 'react-router';
 import { useLoaderData } from 'react-router';
 import type { Route } from './+types';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -228,7 +227,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       { id: 'eventpro', name: 'EventPro', count: 0 },
     ];
 
-    return json({
+    return {
       products: transformedProducts,
       featured: featuredProducts?.map(p => ({
         id: p.id,
@@ -246,12 +245,12 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         total: count || 0,
         totalPages: Math.ceil((count || 0) / params.limit)
       }
-    });
+    };
     
   } catch (error) {
     logger.error({ error }, 'Failed to load shop page');
     
-    return json({
+    return {
       products: [],
       featured: [],
       categories: [],
@@ -264,7 +263,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         total: 0,
         totalPages: 0
       }
-    });
+    };
   }
 };
 
@@ -278,7 +277,7 @@ export async function action({ request }: Route.ActionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Please log in to continue' }, { status: 401 });
+      throw new Response('Please log in to continue', { status: 401 });
     }
 
     if (action === 'add-to-cart') {
@@ -293,11 +292,11 @@ export async function action({ request }: Route.ActionArgs) {
         .single();
 
       if (!product) {
-        return json({ success: false, error: 'Product not found' });
+        throw new Response('Product not found', { status: 404 });
       }
 
       if (!product.in_stock || product.stock_count < quantity) {
-        return json({ success: false, error: 'Product is out of stock' });
+        throw new Response('Product is out of stock', { status: 400 });
       }
 
       // Add to cart (stored in user's cart table or session)
@@ -315,10 +314,10 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error adding to cart');
-        return json({ success: false, error: 'Failed to add to cart' });
+        throw new Response('Failed to add to cart', { status: 500 });
       }
 
-      return json({ success: true, message: 'Added to cart' });
+      return { success: true, message: 'Added to cart' };
     }
 
     if (action === 'add-to-wishlist') {
@@ -336,17 +335,17 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error adding to wishlist');
-        return json({ success: false, error: 'Failed to add to wishlist' });
+        throw new Response('Failed to add to wishlist', { status: 500 });
       }
 
-      return json({ success: true, message: 'Added to wishlist' });
+      return { success: true, message: 'Added to wishlist' };
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    throw new Response('Invalid action', { status: 400 });
 
   } catch (error) {
     logger.error({ error }, 'Error processing shop action');
-    return json({ success: false, error: 'Server error' }, { status: 500 });
+    throw new Response('Server error', { status: 500 });
   }
 }
 

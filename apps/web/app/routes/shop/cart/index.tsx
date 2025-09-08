@@ -1,6 +1,5 @@
 import React from 'react';
-import { json, redirect } from 'react-router';
-import { useLoaderData } from 'react-router';
+import { redirect, useLoaderData } from 'react-router';
 import type { Route } from './+types/cart/index';
 
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -16,7 +15,7 @@ export async function loader({ request }: Route.LoaderArgs) {
     
     // For guests, cart is managed client-side
     if (!user) {
-      return json({ 
+      return { 
         items: [],
         subtotal: 0,
         tax: 0,
@@ -24,7 +23,7 @@ export async function loader({ request }: Route.LoaderArgs) {
         marketplaceFee: 0,
         total: 0,
         isAuthenticated: false
-      });
+      };
     }
 
     // Load cart items for authenticated user
@@ -61,7 +60,7 @@ export async function loader({ request }: Route.LoaderArgs) {
       .order('added_at', { ascending: false });
 
     if (!cartItems || cartItems.length === 0) {
-      return json({ 
+      return { 
         items: [],
         subtotal: 0,
         tax: 0,
@@ -69,7 +68,7 @@ export async function loader({ request }: Route.LoaderArgs) {
         marketplaceFee: 0,
         total: 0,
         isAuthenticated: true
-      });
+      };
     }
 
     // Calculate totals
@@ -97,7 +96,7 @@ export async function loader({ request }: Route.LoaderArgs) {
       vendorId: item.product.vendor_id
     }));
 
-    return json({ 
+    return { 
       items: transformedItems,
       subtotal,
       tax,
@@ -105,11 +104,11 @@ export async function loader({ request }: Route.LoaderArgs) {
       marketplaceFee,
       total,
       isAuthenticated: true
-    });
+    };
 
   } catch (error) {
     logger.error({ error }, 'Error loading cart');
-    return json({ 
+    return { 
       items: [],
       subtotal: 0,
       tax: 0,
@@ -117,7 +116,7 @@ export async function loader({ request }: Route.LoaderArgs) {
       marketplaceFee: 0,
       total: 0,
       isAuthenticated: false
-    });
+    };
   }
 }
 
@@ -131,7 +130,7 @@ export async function action({ request }: Route.ActionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Please log in to continue' }, { status: 401 });
+      throw new Response('Please log in to continue', { status: 401 });
     }
 
     if (action === 'update-quantity') {
@@ -161,7 +160,7 @@ export async function action({ request }: Route.ActionArgs) {
         if (error) throw error;
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'remove-item') {
@@ -175,7 +174,7 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) throw error;
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'clear-cart') {
@@ -186,7 +185,7 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) throw error;
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'checkout') {
@@ -206,16 +205,13 @@ export async function action({ request }: Route.ActionArgs) {
         .eq('user_id', user.id);
 
       if (!cartItems || cartItems.length === 0) {
-        return json({ success: false, error: 'Cart is empty' });
+        throw new Response('Cart is empty', { status: 400 });
       }
 
       // Check inventory
       for (const item of cartItems) {
         if (item.product.track_inventory && item.product.inventory_count < item.quantity) {
-          return json({ 
-            success: false, 
-            error: `Not enough inventory for ${item.product.name}` 
-          });
+          throw new Response(`Not enough inventory for ${item.product.name}`, { status: 400 });
         }
       }
 
@@ -224,11 +220,11 @@ export async function action({ request }: Route.ActionArgs) {
       return redirect('/shop/checkout');
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    throw new Response('Invalid action', { status: 400 });
 
   } catch (error) {
     logger.error({ error }, 'Error processing cart action');
-    return json({ success: false, error: 'Failed to update cart' }, { status: 500 });
+    throw new Response('Failed to update cart', { status: 500 });
   }
 }
 

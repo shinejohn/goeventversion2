@@ -1,5 +1,4 @@
 import React from 'react';
-import { json } from 'react-router';
 import { useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/social/friends';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -23,7 +22,7 @@ export async function loader({ request }: Route.LoaderArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ friends: [], pendingRequests: [] });
+      return { friends: [], pendingRequests: [] };
     }
 
     // Get all friendships where user is either the requester or receiver
@@ -42,7 +41,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
     if (error) {
       logger.error({ error }, 'Error fetching friendships');
-      return json({ friends: [], pendingRequests: [] });
+      return { friends: [], pendingRequests: [] };
     }
 
     // Process friendships into friends and pending requests
@@ -73,7 +72,7 @@ export async function loader({ request }: Route.LoaderArgs) {
       }
     });
 
-    return json({ friends, pendingRequests });
+    return { friends, pendingRequests };
 
   } catch (error) {
     logger.error({ error }, 'Error loading friends');
@@ -91,7 +90,7 @@ export async function action({ request }: Route.ActionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Unauthorized' }, { status: 401 });
+      throw new Response('Unauthorized', { status: 401 });
     }
 
     if (action === 'send-request') {
@@ -106,7 +105,7 @@ export async function action({ request }: Route.ActionArgs) {
         .single();
 
       if (existing) {
-        return json({ success: false, error: 'Friend request already exists' });
+        throw new Response('Friend request already exists', { status: 400 });
       }
 
       // Create friend request
@@ -120,7 +119,7 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error sending friend request');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
       // Create notification
@@ -134,7 +133,7 @@ export async function action({ request }: Route.ActionArgs) {
           link: '/social/friends'
         });
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'accept-request') {
@@ -148,7 +147,7 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error accepting friend request');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
       // Create notification
@@ -162,7 +161,7 @@ export async function action({ request }: Route.ActionArgs) {
           link: '/social/friends'
         });
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'decline-request' || action === 'remove-friend') {
@@ -176,17 +175,17 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error removing friend');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 500 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    throw new Response('Invalid action', { status: 400 });
 
   } catch (error) {
     logger.error({ error }, 'Error processing friend action');
-    return json({ success: false, error: 'Server error' }, { status: 500 });
+    throw new Response('Server error', { status: 500 });
   }
 }
 
