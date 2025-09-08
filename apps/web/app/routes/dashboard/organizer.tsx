@@ -258,7 +258,7 @@ export async function action({ request }: Route.ActionArgs) {
         throw new Response(error.message, { status: 400 });
       }
 
-      return { success: true, event: data });
+      return { success: true, event: data };
     }
 
     if (action === 'update-event') {
