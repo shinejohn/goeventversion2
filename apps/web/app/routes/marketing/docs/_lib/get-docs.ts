@@ -1,4 +1,4 @@
-import { createCmsClient } from '@kit/cms';
+import { createCmsClient } from '@kit/cms/server';
 import { getLogger } from '@kit/shared/logger';
 
 export const getDocs = async (language: string | undefined) => {

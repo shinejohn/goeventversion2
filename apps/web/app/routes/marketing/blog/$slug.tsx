@@ -1,7 +1,8 @@
 import React from 'react';
 import { redirect } from 'react-router';
 
-import { Cms, createCmsClient } from '@kit/cms';
+import { Cms } from '@kit/cms';
+import { createCmsClient } from '@kit/cms/server';
 
 import type { Route } from './+types/blog/$slug';
 

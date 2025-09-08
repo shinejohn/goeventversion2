@@ -1,7 +1,9 @@
 import React from 'react';
 import { data, redirect } from 'react-router';
 
-import { Cms, ContentRenderer, createCmsClient } from '@kit/cms';
+import { Cms } from '@kit/cms';
+import { createCmsClient } from '@kit/cms/server';
+import { ContentRenderer } from '@kit/cms/client';
 import { If } from '@kit/ui/if';
 import { Separator } from '@kit/ui/separator';
 

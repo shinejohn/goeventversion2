@@ -5,7 +5,7 @@ import type { Cms } from '@kit/cms';
 import { PostHeader } from './post-header';
 
 const ContentRenderer = lazy(() => {
-  return import('@kit/cms').then((mod) => ({ default: mod.ContentRenderer }));
+  return import('@kit/cms/client').then((mod) => ({ default: mod.ContentRenderer }));
 });
 
 export function Post({

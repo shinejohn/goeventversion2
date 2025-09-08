@@ -1,5 +1,6 @@
 import React from 'react';
-import { Cms, createCmsClient } from '@kit/cms';
+import { Cms } from '@kit/cms';
+import { createCmsClient } from '@kit/cms/server';
 import { getLogger } from '@kit/shared/logger';
 import { If } from '@kit/ui/if';
 import { Trans } from '@kit/ui/trans';
