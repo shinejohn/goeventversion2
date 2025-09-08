@@ -13,7 +13,9 @@
       "Bash(cp:*)",
       "Bash(mv:*)",
       "Bash(mkdir:*)",
-      "Bash(pnpm --filter web typecheck)"
+      "Bash(pnpm --filter web typecheck)",
+      "Bash(npx tsx:*)",
+      "Bash(/dev/null)"
     ],
     "deny": []
   }

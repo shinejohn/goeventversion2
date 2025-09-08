@@ -54,13 +54,18 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     
     // Parallel data fetching for better performance 🚀
     const [eventsQuery, venuesQuery, categoryCounts] = await Promise.all([
-      // Main events query
+      // Main events query with computed fields for UI
       (async () => {
         let query = client
           .from('events')
           .select(`
             *,
-            venues!venue_id (
+            date:start_datetime,
+            start_date:start_datetime,
+            rawDate:start_datetime,
+            location_name:venues!venue_id(name),
+            location:venues!venue_id(city),
+            venue:venues!venue_id (
               id,
               name,
               address,
@@ -69,7 +74,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
             )
           `, { count: 'exact' })
           .eq('status', 'published')
-          .gte('start_date', new Date().toISOString());
+          .gte('start_datetime', new Date().toISOString());
         
         // Apply filters
         if (params.search) {
@@ -91,34 +96,34 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         }
         
         if (params.startDate) {
-          query = query.gte('start_date', params.startDate);
+          query = query.gte('start_datetime', params.startDate);
         }
         
         if (params.endDate) {
-          query = query.lte('end_date', params.endDate);
+          query = query.lte('end_datetime', params.endDate);
         }
         
         if (params.minPrice !== undefined) {
-          query = query.gte('base_price', params.minPrice);
+          query = query.gte('price_min', params.minPrice);
         }
         
         if (params.maxPrice !== undefined) {
-          query = query.lte('base_price', params.maxPrice);
+          query = query.lte('price_max', params.maxPrice);
         }
         
         // Apply sorting
         switch (params.sort) {
           case 'date':
-            query = query.order('start_date', { ascending: true });
+            query = query.order('start_datetime', { ascending: true });
             break;
           case 'name':
             query = query.order('title', { ascending: true });
             break;
           case 'price':
-            query = query.order('base_price', { ascending: true, nullsFirst: true });
+            query = query.order('price_min', { ascending: true, nullsFirst: true });
             break;
           case 'popularity':
-            query = query.order('current_bookings', { ascending: false });
+            query = query.order('created_at', { ascending: false });
             break;
         }
         
@@ -142,7 +147,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         .from('events')
         .select('category')
         .eq('status', 'published')
-        .gte('start_date', new Date().toISOString())
+        .gte('start_datetime', new Date().toISOString())
     ]);
     
     const { data: events, error, count } = eventsQuery;
@@ -159,7 +164,23 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     }
     
     // Transform data for Magic Patterns component
-    const transformedEvents = transformEventsList(events || []);
+    const transformedEvents = (events || []).map(event => ({
+      ...event,
+      // UI expects these specific fields
+      date: event.date ? new Date(event.date).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric'
+      }) : '',
+      time: event.start_datetime ? new Date(event.start_datetime).toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit'
+      }) : '',
+      location_name: event.location_name?.name || event.venue?.name || 'TBA',
+      location: event.location?.city || event.venue?.city || '',
+      price: event.price || (event.price_min ? `$${event.price_min}+` : 'Free'),
+      rawDate: event.rawDate ? new Date(event.rawDate) : new Date(),
+      image: event.image || event.image_url || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819'
+    }));
     
     // Calculate category distribution
     const categoryStats = categoryData?.reduce((acc, event) => {
@@ -173,17 +194,17 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     const eventMetrics = {
       totalEvents: count || 0,
       upcomingToday: events?.filter(e => {
-        const eventDate = new Date(e.start_date);
+        const eventDate = new Date(e.start_datetime);
         const today = new Date();
         return eventDate.toDateString() === today.toDateString();
       }).length || 0,
       thisWeek: events?.filter(e => {
-        const eventDate = new Date(e.start_date);
+        const eventDate = new Date(e.start_datetime);
         const weekFromNow = new Date();
         weekFromNow.setDate(weekFromNow.getDate() + 7);
         return eventDate <= weekFromNow;
       }).length || 0,
-      averagePrice: events?.reduce((sum, e) => sum + (e.base_price || 0), 0) / (events?.length || 1),
+      averagePrice: events?.reduce((sum, e) => sum + (e.price_min || 0), 0) / (events?.length || 1),
       popularCities: [...new Set(events?.map(e => e.city).filter(Boolean))].slice(0, 5),
       categoryDistribution: categoryStats,
     };

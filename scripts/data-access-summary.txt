@@ -1,0 +1,163 @@
+DATA ACCESS ANALYSIS SUMMARY
+===========================
+
+TABLE: accounts
+Columns: *, allow_calendar_sharing, allow_calendar_sharing
+          ), id, notification_preferences
+          ), show_liked_performers, show_liked_venues, url
+          ), visibility_level
+
+TABLE: artists
+Columns: *, genres
+Relations: upcoming_events:events
+
+TABLE: booking_sessions
+Columns: *
+
+TABLE: bookings
+Columns: *, address, address
+            ), category, category
+            ), city, city
+            ), city
+            )
+          ), end_date, id, image_url, image_url
+            ), image_url
+          ), name, payment_status, profile_image_url
+            ), stage_name, stage_name
+            ), start_date, start_date
+        ), status, title, total_amount, venue_id
+Relations: event:events, user:auth, venue:venues
+
+TABLE: calendar_shares
+Columns: *, category, created_by, end_date, image_url, picture_url
+            )
+          ), start_date, title
+
+TABLE: calendars
+Columns: *, address)), picture_url)
+Relations: owner:accounts, venue:venues
+
+TABLE: checkins
+Columns: 
+
+TABLE: community_hubs
+Columns: *, avatar_url), current_members, description, id, logo_url, name, role
+            ), visibility
+Relations: _count:hub_members, owner:auth
+
+TABLE: event_comments
+Columns: content, created_at, id, image_url
+          ), rating, title
+
+TABLE: event_performers
+Columns: base_rate
+          ), bio, category, city, city
+            )
+          ), genres, image_url, name, profile_image_url, profile_image_url
+            )
+          ), stage_name, start_date, title
+Relations: event:events, performer:performers
+
+TABLE: event_reminders
+Columns: *
+
+TABLE: events
+Columns: *, address, address
+        ), address), amenities, base_hourly_rate
+          ), category, city, city
+            ), city
+          ), city), genre, id, image_url, image_url)
+      ), latitude, longitude, max_capacity, max_capacity
+            ), name, price, profile_image_url, profile_image_url
+            )
+          ), profile_image_url
+          ), stage_name, start_date, state, state), status, tags, title
+Relations: performers:event_performers, stream:live_streams, venue:venues
+
+TABLE: friendships
+Columns: id
+
+TABLE: get_account_invitations
+Columns: 
+
+TABLE: get_account_members
+Columns: 
+
+TABLE: hub_activities
+Columns: *
+
+TABLE: hub_gallery
+Columns: *
+
+TABLE: hub_members
+Columns: email), id, joined_at, role
+Relations: user:auth
+
+TABLE: hub_memberships
+Columns: hub_id, joined_at, role
+
+TABLE: hubs
+Columns: *, description, id, name, slug
+
+TABLE: is_account_team_member
+Columns: 
+
+TABLE: liked_performers
+Columns: bio, categories, city, id, name, profile_image_url, rating
+          )
+
+TABLE: liked_venues
+Columns: address, category, city, id, image_url, name, rating
+          )
+
+TABLE: live_streams
+Columns: *, description), picture_url)
+Relations: event:events, host:accounts
+
+TABLE: messages
+Columns: content, created_at, email), from_user_id, id, thread_id, to_user_id
+Relations: from_user:auth, to_user:auth
+
+TABLE: performers
+Columns: *, address)
+        )
+      ), average_rating, category, city, content, created_at, genre, genres, id, image_url, is_verified, name, picture_url)
+      ), profile_image_url, rating, stage_name, start_datetime, title, total_performances, venue_id
+Relations: events:performers_events, reviews:reviews
+
+TABLE: product_categories
+Columns: *
+
+TABLE: products
+Columns: *
+
+TABLE: shared_calendars
+Columns: *, created_at, description, id, name, subscriber_count, visibility
+
+TABLE: social_links
+Columns: 
+
+TABLE: social_posts
+Columns: *, avatar_url), avatar_url)
+        ), category, city
+              )
+            ), content, created_at, id, image_url), location, name, picture_url
+              )
+            ), picture_url
+            ), picture_url
+          ), picture_url), start_date, title
+Relations: author:accounts, author:auth, comments:post_comments, comments:social_comments, event:events, likes:post_likes, likes:social_likes
+
+TABLE: tickets
+Columns: 
+
+TABLE: user_preferences
+Columns: 
+
+TABLE: venues
+Columns: *, address, amenities, available_tickets
+      ), capacity, category, city, content, created_at, end_datetime, id, image_url, is_active, max_capacity, name, picture_url)
+      ), price_max, price_max
+      ), price_min, rating, start_datetime, state, title
+Relations: events:events, reviews:reviews
+

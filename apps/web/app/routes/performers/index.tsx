@@ -59,13 +59,18 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       (async () => {
         let query = client
           .from('performers')
-          .select('*', { count: 'exact' })
-          .eq('is_available', true);
+          .select(`
+            *,
+            stage_name:name,
+            average_rating:rating,
+            total_reviews:rating,
+            is_verified:is_active
+          `, { count: 'exact' });
         
         // Apply filters
         if (params.search) {
           query = query.or(
-            `stage_name.ilike.%${params.search}%,real_name.ilike.%${params.search}%,bio.ilike.%${params.search}%`
+            `name.ilike.%${params.search}%,bio.ilike.%${params.search}%`
           );
         }
         
@@ -135,10 +140,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       // Get top-rated performers for featured section
       client
         .from('performers')
-        .select('id, stage_name, category, average_rating, total_performances, profile_image_url')
-        .eq('is_available', true)
-        .eq('is_verified', true)
-        .order('average_rating', { ascending: false })
+        .select('id, name, category, rating, profile_image_url')
+        .order('rating', { ascending: false, nullsFirst: false })
         .limit(5)
     ]);
     

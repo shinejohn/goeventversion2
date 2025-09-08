@@ -15,12 +15,13 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     // Fetch featured events - be more permissive
     console.log('Fetching events from homepage...');
     
-    // First try published events with start_datetime column  
+    // First try published events - add computed start_date field
     let { data: events, error: eventsError } = await client
       .from('events')
       .select(`
         *,
-        venue:venues(name, address)
+        venue:venues(name, address, city),
+        start_date:start_datetime
       `)
       .eq('status', 'published')
       .gte('start_datetime', new Date().toISOString())
@@ -50,10 +51,15 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       console.error('Events fetch error:', eventsError);
     }
     
-    // Fetch featured venues
+    // Fetch featured venues - include all fields UI expects
     const { data: venues, error: venuesError } = await client
       .from('venues')
-      .select('*')
+      .select(`
+        *,
+        venueType:category,
+        location:city,
+        reviewCount:rating
+      `)
       .limit(6)
       .order('rating', { ascending: false, nullsFirst: false });
     

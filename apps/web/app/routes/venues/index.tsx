@@ -46,11 +46,21 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     
     const client = getSupabaseServerClient(request);
     
-    // Build optimized query for venues
+    // Build optimized query for venues with computed fields for UI
     let query = client
       .from('venues')
-      .select('*', { count: 'exact' })
-      .eq('is_active', true);
+      .select(`
+        *,
+        capacity:max_capacity,
+        average_rating:rating,
+        total_reviews:rating,
+        price_per_hour:base_hourly_rate,
+        venue_type:category,
+        listed_date:created_at,
+        verified:is_active,
+        distance:rating,
+        last_booked_days_ago:rating
+      `, { count: 'exact' });
     
     // Apply search filters
     if (params.search) {
@@ -66,7 +76,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     
     // Venue type filter
     if (params.type) {
-      query = query.eq('venue_type', params.type);
+      query = query.eq('category', params.type);
     }
     
     // Capacity filter
@@ -143,7 +153,24 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     }
     
     // Transform data for Magic Patterns component
-    const transformedVenues = transformVenuesList(venues || []);
+    const transformedVenues = (venues || []).map(venue => ({
+      ...venue,
+      // Make sure UI gets the fields it expects
+      images: venue.images || [],
+      amenities: venue.amenities || [],
+      unavailable_dates: venue.blackout_dates || [],
+      image_url: venue.image_url || venue.images?.[0] || 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205',
+      // These fields are computed via aliases in select statement
+      capacity: venue.capacity || venue.max_capacity,
+      average_rating: venue.average_rating || venue.rating || 0,
+      total_reviews: venue.total_reviews || 0,
+      price_per_hour: venue.price_per_hour || venue.base_hourly_rate || 0,
+      venue_type: venue.venue_type || venue.category || 'Other',
+      listed_date: venue.listed_date || venue.created_at,
+      verified: venue.verified ?? venue.is_active ?? true,
+      distance: venue.distance || null,
+      last_booked_days_ago: venue.last_booked_days_ago || null
+    }));
     
     // Calculate additional metrics
     const venueMetrics = {

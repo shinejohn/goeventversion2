@@ -1,0 +1,2441 @@
+{
+  "timestamp": "2025-09-08T01:10:25.638Z",
+  "totalQueries": 172,
+  "tables": [
+    {
+      "name": "events",
+      "expectedColumns": [
+        "*",
+        "id",
+        "title",
+        "start_date",
+        "category",
+        "image_url",
+        "city\n          )",
+        "address)",
+        "stage_name",
+        "profile_image_url\n            )\n          )",
+        "name",
+        "address",
+        "city",
+        "state)",
+        "genre",
+        "image_url)\n      )",
+        "city)",
+        "status",
+        "price",
+        "address\n        )",
+        "tags",
+        "max_capacity\n            )",
+        "state",
+        "latitude",
+        "longitude",
+        "max_capacity",
+        "amenities",
+        "profile_image_url",
+        "base_hourly_rate\n          )",
+        "profile_image_url\n          )",
+        "city\n            )"
+      ],
+      "expectedRelations": [
+        "venue:venues",
+        "performers:event_performers",
+        "stream:live_streams"
+      ]
+    },
+    {
+      "name": "venues",
+      "expectedColumns": [
+        "id",
+        "name",
+        "is_active",
+        "*",
+        "city",
+        "state",
+        "amenities",
+        "address",
+        "rating",
+        "title",
+        "content",
+        "created_at",
+        "picture_url)\n      )",
+        "start_datetime",
+        "image_url",
+        "category",
+        "price_min",
+        "price_max\n      )",
+        "end_datetime",
+        "price_max",
+        "capacity",
+        "available_tickets\n      )",
+        "max_capacity"
+      ],
+      "expectedRelations": [
+        "reviews:reviews",
+        "events:events"
+      ]
+    },
+    {
+      "name": "social_posts",
+      "expectedColumns": [
+        "*",
+        "name",
+        "picture_url\n            )",
+        "title",
+        "start_date",
+        "category",
+        "city\n              )\n            )",
+        "content",
+        "created_at",
+        "picture_url\n              )\n            )",
+        "id",
+        "location",
+        "picture_url\n          )",
+        "avatar_url)",
+        "avatar_url)\n        )",
+        "picture_url)",
+        "image_url)"
+      ],
+      "expectedRelations": [
+        "author:accounts",
+        "event:events",
+        "likes:post_likes",
+        "comments:post_comments",
+        "author:auth",
+        "likes:social_likes",
+        "comments:social_comments"
+      ]
+    },
+    {
+      "name": "friendships",
+      "expectedColumns": [
+        "id"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "is_account_team_member",
+      "expectedColumns": [],
+      "expectedRelations": []
+    },
+    {
+      "name": "performers",
+      "expectedColumns": [
+        "*",
+        "id",
+        "genres",
+        "stage_name",
+        "category",
+        "average_rating",
+        "total_performances",
+        "profile_image_url",
+        "rating",
+        "title",
+        "content",
+        "created_at",
+        "name",
+        "picture_url)\n      )",
+        "start_datetime",
+        "image_url",
+        "venue_id",
+        "address)\n        )\n      )",
+        "city",
+        "genre",
+        "is_verified"
+      ],
+      "expectedRelations": [
+        "reviews:reviews",
+        "events:performers_events"
+      ]
+    },
+    {
+      "name": "accounts",
+      "expectedColumns": [
+        "id",
+        "*",
+        "visibility_level",
+        "show_liked_venues",
+        "show_liked_performers",
+        "allow_calendar_sharing",
+        "notification_preferences\n          )",
+        "url\n          )",
+        "allow_calendar_sharing\n          )"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "bookings",
+      "expectedColumns": [
+        "id",
+        "*",
+        "title",
+        "start_date",
+        "category",
+        "image_url",
+        "city\n            )\n          )",
+        "end_date",
+        "address",
+        "start_date\n        )",
+        "status",
+        "image_url\n            )",
+        "name",
+        "address\n            )",
+        "stage_name\n            )",
+        "category\n            )",
+        "city\n            )",
+        "stage_name",
+        "profile_image_url\n            )",
+        "payment_status",
+        "total_amount",
+        "venue_id",
+        "city",
+        "image_url\n          )"
+      ],
+      "expectedRelations": [
+        "event:events",
+        "venue:venues",
+        "user:auth"
+      ]
+    },
+    {
+      "name": "tickets",
+      "expectedColumns": [],
+      "expectedRelations": []
+    },
+    {
+      "name": "live_streams",
+      "expectedColumns": [
+        "*",
+        "description)",
+        "picture_url)"
+      ],
+      "expectedRelations": [
+        "event:events",
+        "host:accounts"
+      ]
+    },
+    {
+      "name": "products",
+      "expectedColumns": [
+        "*"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "liked_venues",
+      "expectedColumns": [
+        "id",
+        "name",
+        "address",
+        "city",
+        "category",
+        "image_url",
+        "rating\n          )"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "liked_performers",
+      "expectedColumns": [
+        "id",
+        "name",
+        "bio",
+        "profile_image_url",
+        "categories",
+        "city",
+        "rating\n          )"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "shared_calendars",
+      "expectedColumns": [
+        "id",
+        "name",
+        "description",
+        "visibility",
+        "created_at",
+        "subscriber_count",
+        "*"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "user_preferences",
+      "expectedColumns": [],
+      "expectedRelations": []
+    },
+    {
+      "name": "social_links",
+      "expectedColumns": [],
+      "expectedRelations": []
+    },
+    {
+      "name": "event_comments",
+      "expectedColumns": [
+        "id",
+        "content",
+        "rating",
+        "created_at",
+        "title",
+        "image_url\n          )"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "event_performers",
+      "expectedColumns": [
+        "name",
+        "city",
+        "profile_image_url\n            )\n          )",
+        "title",
+        "start_date",
+        "image_url",
+        "city\n            )\n          )",
+        "stage_name",
+        "category",
+        "bio",
+        "profile_image_url",
+        "genres",
+        "base_rate\n          )"
+      ],
+      "expectedRelations": [
+        "event:events",
+        "performer:performers"
+      ]
+    },
+    {
+      "name": "calendar_shares",
+      "expectedColumns": [
+        "*",
+        "title",
+        "start_date",
+        "end_date",
+        "category",
+        "image_url",
+        "created_by",
+        "picture_url\n            )\n          )"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "event_reminders",
+      "expectedColumns": [
+        "*"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "messages",
+      "expectedColumns": [
+        "id",
+        "thread_id",
+        "content",
+        "created_at",
+        "from_user_id",
+        "to_user_id",
+        "email)"
+      ],
+      "expectedRelations": [
+        "from_user:auth",
+        "to_user:auth"
+      ]
+    },
+    {
+      "name": "community_hubs",
+      "expectedColumns": [
+        "*",
+        "avatar_url)",
+        "role\n            )",
+        "id",
+        "name",
+        "description",
+        "logo_url",
+        "current_members",
+        "visibility"
+      ],
+      "expectedRelations": [
+        "owner:auth",
+        "_count:hub_members"
+      ]
+    },
+    {
+      "name": "hubs",
+      "expectedColumns": [
+        "id",
+        "name",
+        "slug",
+        "*",
+        "description"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "hub_members",
+      "expectedColumns": [
+        "id",
+        "email)",
+        "role",
+        "joined_at"
+      ],
+      "expectedRelations": [
+        "user:auth"
+      ]
+    },
+    {
+      "name": "hub_activities",
+      "expectedColumns": [
+        "*"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "hub_gallery",
+      "expectedColumns": [
+        "*"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "get_account_members",
+      "expectedColumns": [],
+      "expectedRelations": []
+    },
+    {
+      "name": "get_account_invitations",
+      "expectedColumns": [],
+      "expectedRelations": []
+    },
+    {
+      "name": "product_categories",
+      "expectedColumns": [
+        "*"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "hub_memberships",
+      "expectedColumns": [
+        "hub_id",
+        "role",
+        "joined_at"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "calendars",
+      "expectedColumns": [
+        "*",
+        "picture_url)",
+        "address))"
+      ],
+      "expectedRelations": [
+        "owner:accounts",
+        "venue:venues"
+      ]
+    },
+    {
+      "name": "booking_sessions",
+      "expectedColumns": [
+        "*"
+      ],
+      "expectedRelations": []
+    },
+    {
+      "name": "artists",
+      "expectedColumns": [
+        "*",
+        "genres"
+      ],
+      "expectedRelations": [
+        "upcoming_events:events"
+      ]
+    },
+    {
+      "name": "checkins",
+      "expectedColumns": [],
+      "expectedRelations": []
+    }
+  ],
+  "queries": [
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/test-magic-ssr.tsx",
+      "lineNumber": 11,
+      "query": "// const { data: events } = await client.from('events').select('*');",
+      "table": "events",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/submit-event.tsx",
+      "lineNumber": 17,
+      "query": "client.from('venues').select('id, name').eq('is_active', true).order('name'),\n    client.from('event_categories').select('id, name, slug').order('name')",
+      "table": "venues",
+      "columns": [
+        "id",
+        "name",
+        "is_active"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/submit-event.tsx",
+      "lineNumber": 43,
+      "query": "const { data, error } = await client.from('events').insert(eventData).select().single();",
+      "table": "events",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/social.tsx",
+      "lineNumber": 75,
+      "query": ".from('social_posts')\n          .select(`\n            *,\n            author:accounts!user_id (\n              id,\n              name,\n              picture_url\n            ),\n            event:events!event_id (\n              id,\n              title,\n              start_date,\n              category,\n              venues!venue_id (\n                name,\n                city\n              )\n            ),\n            likes:post_likes(count),\n            comments:post_comments(\n              id,\n              content,\n              created_at,\n              author:accounts!user_id (\n                name,\n                picture_url\n              )\n            )\n          `, { count: 'exact' });",
+      "table": "social_posts",
+      "columns": [
+        "*",
+        "name",
+        "picture_url\n            )",
+        "title",
+        "start_date",
+        "category",
+        "city\n              )\n            )",
+        "content",
+        "created_at",
+        "picture_url\n              )\n            )"
+      ],
+      "joins": [
+        "author:accounts",
+        "event:events",
+        "likes:post_likes",
+        "comments:post_comments"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/social.tsx",
+      "lineNumber": 140,
+      "query": ".from('friendships')\n        .select('id', { count: 'exact' })",
+      "table": "friendships",
+      "columns": [
+        "id"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/social.tsx",
+      "lineNumber": 148,
+      "query": ".from('events')\n        .select(`\n          id,\n          title,\n          start_date,\n          category,\n          image_url,\n          venues!venue_id (\n            name,\n            city\n          )\n        `)",
+      "table": "events",
+      "columns": [
+        "id",
+        "title",
+        "start_date",
+        "category",
+        "image_url",
+        "city\n          )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/social.tsx",
+      "lineNumber": 167,
+      "query": ".from('social_posts')\n        .select(`\n          id,\n          content,\n          location,\n          author:accounts!user_id (\n            name,\n            picture_url\n          )\n        `)",
+      "table": "social_posts",
+      "columns": [
+        "id",
+        "content",
+        "location",
+        "picture_url\n          )"
+      ],
+      "joins": [
+        "author:accounts"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/join.tsx",
+      "lineNumber": 76,
+      "query": "const { data: isAlreadyTeamMember } = await client.rpc(\n    'is_account_team_member',\n    {\n      target_account_id: invitation.account.id,\n    },\n  );",
+      "table": "is_account_team_member",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/index.tsx",
+      "lineNumber": 20,
+      "query": ".from('events')\n      .select(`\n        *,\n        venue:venues(name, address)\n      `)",
+      "table": "events",
+      "columns": [
+        "*",
+        "address)"
+      ],
+      "joins": [
+        "venue:venues"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/index.tsx",
+      "lineNumber": 36,
+      "query": ".from('events')\n        .select(`\n          *,\n          venue:venues(name, address)\n        `)",
+      "table": "events",
+      "columns": [
+        "*",
+        "address)"
+      ],
+      "joins": [
+        "venue:venues"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/index.tsx",
+      "lineNumber": 55,
+      "query": ".from('venues')\n      .select('*')",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/index.tsx",
+      "lineNumber": 66,
+      "query": ".from('performers')\n      .select('*')",
+      "table": "performers",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/new.tsx",
+      "lineNumber": 113,
+      "query": ".from('venues')\n      .select('city, state, amenities')",
+      "table": "venues",
+      "columns": [
+        "city",
+        "state",
+        "amenities"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/new.tsx",
+      "lineNumber": 217,
+      "query": ".from('venues')\n      .insert({\n        account_id: user.id,\n        name: venueData.name,\n        description: venueData.description,\n        venue_type: venueData.venueType,\n        address: venueData.address,\n        city: venueData.city,\n        state: venueData.state || '',\n        latitude: venueData.latitude,\n        longitude: venueData.longitude,\n        capacity: venueData.maxCapacity,\n        amenities: venueData.amenities,\n        image_url: venueData.imageUrl,\n        gallery_images: venueData.galleryImages,\n        price_per_hour: venueData.baseHourlyRate,\n        email: venueData.contactEmail,\n        phone: venueData.contactPhone,\n        is_active: venueData.isActive,\n        created_by: user.id,\n      })",
+      "table": "venues",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/listings.tsx",
+      "lineNumber": 10,
+      "query": ".from('venues')\n    .select('*')",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/list-your-venue.tsx",
+      "lineNumber": 16,
+      "query": ".from('venues')\n    .select('id, name, address, city')",
+      "table": "venues",
+      "columns": [
+        "id",
+        "name",
+        "address",
+        "city"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/list-your-venue.tsx",
+      "lineNumber": 50,
+      "query": ".from('venues')\n    .insert(venueData)",
+      "table": "venues",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/index.tsx",
+      "lineNumber": 51,
+      "query": ".from('venues')\n      .select('*', { count: 'exact' })",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/create.tsx",
+      "lineNumber": 29,
+      "query": ".from('accounts')\n    .select('id')",
+      "table": "accounts",
+      "columns": [
+        "id"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/create.tsx",
+      "lineNumber": 61,
+      "query": ".from('venues')\n    .insert(venueData)",
+      "table": "venues",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/$venueId.tsx",
+      "lineNumber": 19,
+      "query": ".from('venues')\n    .select(`\n      *,\n      reviews:reviews(\n        id,\n        rating,\n        title,\n        content,\n        created_at,\n        reviewer:account_id(id, name, picture_url)\n      ),\n      events:events(\n        id,\n        title,\n        start_datetime,\n        image_url,\n        category,\n        price_min,\n        price_max\n      )\n    `)",
+      "table": "venues",
+      "columns": [
+        "*",
+        "rating",
+        "title",
+        "content",
+        "created_at",
+        "name",
+        "picture_url)\n      )",
+        "start_datetime",
+        "image_url",
+        "category",
+        "price_min",
+        "price_max\n      )"
+      ],
+      "joins": [
+        "reviews:reviews",
+        "events:events"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/$venueId.book.tsx",
+      "lineNumber": 37,
+      "query": ".from('accounts')\n    .select('id')",
+      "table": "accounts",
+      "columns": [
+        "id"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/$venueId.book.tsx",
+      "lineNumber": 66,
+      "query": ".from('bookings')\n      .insert({\n        venue_id: bookingData.venue_id,\n        user_id: user.id,\n        account_id: account?.id || user.id,\n        event_name: bookingData.event_name,\n        event_type: bookingData.event_type,\n        date: bookingData.date,\n        start_time: bookingData.start_time,\n        end_time: bookingData.end_time,\n        guest_count: bookingData.guest_count,\n        setup_requirements: bookingData.setup_requirements,\n        services: bookingData.services,\n        contact_person: bookingData.contact_person,\n        special_requests: bookingData.special_requests,\n        subtotal: bookingData.subtotal,\n        payment_method: bookingData.payment_method,\n        status: 'pending'\n      })",
+      "table": "bookings",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/$id.tsx",
+      "lineNumber": 36,
+      "query": ".from('venues')\n        .select('*')",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/$id.tsx",
+      "lineNumber": 43,
+      "query": ".from('events')\n        .select(`\n          *,\n          performers:event_performers(\n            performer:performers!performer_id(\n              id,\n              stage_name,\n              profile_image_url\n            )\n          )\n        `)",
+      "table": "events",
+      "columns": [
+        "*",
+        "stage_name",
+        "profile_image_url\n            )\n          )"
+      ],
+      "joins": [
+        "performers:event_performers"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/$id.tsx",
+      "lineNumber": 62,
+      "query": ".from('venues')\n        .select('*')",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/$id.tsx",
+      "lineNumber": 70,
+      "query": ".from('bookings')\n        .select('id', { count: 'exact', head: true })",
+      "table": "bookings",
+      "columns": [
+        "id"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/venues/$id/book.tsx",
+      "lineNumber": 9,
+      "query": ".from('venues')\n    .select(`\n      *,\n      events(\n        id,\n        title,\n        start_datetime,\n        end_datetime,\n        price_min,\n        price_max,\n        capacity,\n        available_tickets\n      )\n    `)",
+      "table": "venues",
+      "columns": [
+        "*",
+        "title",
+        "start_datetime",
+        "end_datetime",
+        "price_min",
+        "price_max",
+        "capacity",
+        "available_tickets\n      )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/tickets/purchase.tsx",
+      "lineNumber": 12,
+      "query": ".from('events')\n    .select(`\n      *,\n      venue:venues(id, name, address, city, state)\n    `)",
+      "table": "events",
+      "columns": [
+        "*",
+        "name",
+        "address",
+        "city",
+        "state)"
+      ],
+      "joins": [
+        "venue:venues"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/tickets/purchase.tsx",
+      "lineNumber": 41,
+      "query": ".from('accounts')\n    .select('id')",
+      "table": "accounts",
+      "columns": [
+        "id"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/tickets/purchase.tsx",
+      "lineNumber": 58,
+      "query": ".from('tickets')\n    .insert({\n      event_id: eventId,\n      user_id: user.id,\n      account_id: account?.id || user.id,\n      ticket_type: ticketType,\n      price,\n      service_fee: serviceFee,\n      total_amount: totalAmount,\n      quantity,\n      attendee_info: attendees,\n      status: 'active'\n    })",
+      "table": "tickets",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/tickets/purchase.tsx",
+      "lineNumber": 82,
+      "query": ".from('tickets')\n    .update({ status: 'active' })",
+      "table": "tickets",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/tickets/index.tsx",
+      "lineNumber": 14,
+      "query": ".from('events')\n      .select(`\n        *,\n        venue:venues(name, address, city, state)\n      `)",
+      "table": "events",
+      "columns": [
+        "*",
+        "address",
+        "city",
+        "state)"
+      ],
+      "joins": [
+        "venue:venues"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/tickets/index.tsx",
+      "lineNumber": 33,
+      "query": ".from('events')\n        .select(`\n          *,\n          venue:venues(name, address, city, state)\n        `)",
+      "table": "events",
+      "columns": [
+        "*",
+        "address",
+        "city",
+        "state)"
+      ],
+      "joins": [
+        "venue:venues"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/tickets/purchase/$eventId.tsx",
+      "lineNumber": 9,
+      "query": ".from('events')\n    .select(`\n      *,\n      venue:venues(name, city, state),\n      performers:event_performers(\n        role,\n        performer:performers(name, genre, image_url)\n      )\n    `)",
+      "table": "events",
+      "columns": [
+        "*",
+        "city",
+        "state)",
+        "genre",
+        "image_url)\n      )"
+      ],
+      "joins": [
+        "venue:venues",
+        "performers:event_performers"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/streaming/live.tsx",
+      "lineNumber": 12,
+      "query": ".from('events')\n      .select(`\n        *,\n        venue:venues(name, address),\n        stream:live_streams(*)\n      `)",
+      "table": "events",
+      "columns": [
+        "*",
+        "address)"
+      ],
+      "joins": [
+        "venue:venues",
+        "stream:live_streams"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/streaming/index.tsx",
+      "lineNumber": 12,
+      "query": ".from('live_streams')\n      .select(`\n        *,\n        event:events(title, description),\n        host:accounts(name, picture_url)\n      `)",
+      "table": "live_streams",
+      "columns": [
+        "*",
+        "description)",
+        "picture_url)"
+      ],
+      "joins": [
+        "event:events",
+        "host:accounts"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/social/index.tsx",
+      "lineNumber": 12,
+      "query": ".from('social_posts')\n      .select(`\n        *,\n        author:auth.users(name, avatar_url),\n        likes:post_likes(count),\n        comments:post_comments(\n          content,\n          author:auth.users(name, avatar_url)\n        )\n      `)",
+      "table": "social_posts",
+      "columns": [
+        "*",
+        "avatar_url)",
+        "avatar_url)\n        )"
+      ],
+      "joins": [
+        "author:auth",
+        "likes:post_likes",
+        "comments:post_comments"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/social/feed.tsx",
+      "lineNumber": 19,
+      "query": ".from('social_posts')\n      .select(`\n        *,\n        author:accounts(name, picture_url),\n        event:events(title, image_url),\n        likes:social_likes(count),\n        comments:social_comments(count)\n      `)",
+      "table": "social_posts",
+      "columns": [
+        "*",
+        "picture_url)",
+        "image_url)"
+      ],
+      "joins": [
+        "author:accounts",
+        "event:events",
+        "likes:social_likes",
+        "comments:social_comments"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/shop/product/$id.tsx",
+      "lineNumber": 13,
+      "query": ".from('products')\n      .select('*')",
+      "table": "products",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/shop/product/$id.tsx",
+      "lineNumber": 26,
+      "query": ".from('products')\n      .select('*')",
+      "table": "products",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/edit.tsx",
+      "lineNumber": 57,
+      "query": ".from('accounts')\n        .select(`\n          *,\n          user_preferences (\n            interests,\n            visibility_level,\n            show_liked_venues,\n            show_liked_performers,\n            allow_calendar_sharing,\n            notification_preferences\n          ),\n          social_links (\n            platform,\n            url\n          )\n        `)",
+      "table": "accounts",
+      "columns": [
+        "*",
+        "visibility_level",
+        "show_liked_venues",
+        "show_liked_performers",
+        "allow_calendar_sharing",
+        "notification_preferences\n          )",
+        "url\n          )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/edit.tsx",
+      "lineNumber": 78,
+      "query": ".from('liked_venues')\n        .select('id', { count: 'exact' })",
+      "table": "liked_venues",
+      "columns": [
+        "id"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/edit.tsx",
+      "lineNumber": 84,
+      "query": ".from('liked_performers')\n        .select('id', { count: 'exact' })",
+      "table": "liked_performers",
+      "columns": [
+        "id"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/edit.tsx",
+      "lineNumber": 90,
+      "query": ".from('shared_calendars')\n        .select('id', { count: 'exact' })",
+      "table": "shared_calendars",
+      "columns": [
+        "id"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/edit.tsx",
+      "lineNumber": 214,
+      "query": ".from('accounts')\n          .update({\n            ...(validatedData.name && { name: validatedData.name }),\n            ...(validatedData.bio && { bio: validatedData.bio }),\n            ...(validatedData.location && { location: validatedData.location }),\n            ...(validatedData.website !== undefined && { website: validatedData.website }),\n            updated_at: new Date().toISOString(),\n          })",
+      "table": "accounts",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/edit.tsx",
+      "lineNumber": 235,
+      "query": ".from('user_preferences')\n          .upsert({\n            user_id: user.id,\n            ...(validatedData.interests && { interests: validatedData.interests }),\n            ...(validatedData.visibility_level && { visibility_level: validatedData.visibility_level }),\n            ...(validatedData.show_liked_venues !== undefined && { show_liked_venues: validatedData.show_liked_venues }),\n            ...(validatedData.show_liked_performers !== undefined && { show_liked_performers: validatedData.show_liked_performers }),\n            ...(validatedData.allow_calendar_sharing !== undefined && { allow_calendar_sharing: validatedData.allow_calendar_sharing }),\n            updated_at: new Date().toISOString(),\n          })",
+      "table": "user_preferences",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/edit.tsx",
+      "lineNumber": 254,
+      "query": ".from('social_links')\n          .delete()",
+      "table": "social_links",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/edit.tsx",
+      "lineNumber": 271,
+      "query": ".from('social_links')\n            .insert(socialLinksArray)",
+      "table": "social_links",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/customize.tsx",
+      "lineNumber": 52,
+      "query": ".from('accounts')\n        .select(`\n          *,\n          user_preferences (\n            interests,\n            visibility_level,\n            show_liked_venues,\n            show_liked_performers,\n            allow_calendar_sharing\n          ),\n          social_links (\n            platform,\n            url\n          )\n        `)",
+      "table": "accounts",
+      "columns": [
+        "*",
+        "visibility_level",
+        "show_liked_venues",
+        "show_liked_performers",
+        "allow_calendar_sharing\n          )",
+        "url\n          )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/customize.tsx",
+      "lineNumber": 72,
+      "query": ".from('friendships')\n        .select('id', { count: 'exact' })",
+      "table": "friendships",
+      "columns": [
+        "id"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/customize.tsx",
+      "lineNumber": 79,
+      "query": ".from('bookings')\n        .select(`\n          *,\n          events!event_id (\n            id,\n            title,\n            start_date,\n            category,\n            image_url,\n            venues!venue_id (\n              name,\n              city\n            )\n          )\n        `)",
+      "table": "bookings",
+      "columns": [
+        "*",
+        "title",
+        "start_date",
+        "category",
+        "image_url",
+        "city\n            )\n          )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/customize.tsx",
+      "lineNumber": 101,
+      "query": ".from('liked_venues')\n        .select(`\n          id,\n          venues!venue_id (\n            id,\n            name,\n            address,\n            city,\n            category,\n            image_url,\n            rating\n          )\n        `)",
+      "table": "liked_venues",
+      "columns": [
+        "id",
+        "name",
+        "address",
+        "city",
+        "category",
+        "image_url",
+        "rating\n          )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/customize.tsx",
+      "lineNumber": 119,
+      "query": ".from('liked_performers')\n        .select(`\n          id,\n          performers!performer_id (\n            id,\n            name,\n            bio,\n            profile_image_url,\n            categories,\n            city,\n            rating\n          )\n        `)",
+      "table": "liked_performers",
+      "columns": [
+        "id",
+        "name",
+        "bio",
+        "profile_image_url",
+        "categories",
+        "city",
+        "rating\n          )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/customize.tsx",
+      "lineNumber": 137,
+      "query": ".from('event_comments')\n        .select(`\n          id,\n          content,\n          rating,\n          created_at,\n          events!event_id (\n            id,\n            title,\n            image_url\n          )\n        `)",
+      "table": "event_comments",
+      "columns": [
+        "id",
+        "content",
+        "rating",
+        "created_at",
+        "title",
+        "image_url\n          )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/customize.tsx",
+      "lineNumber": 155,
+      "query": ".from('shared_calendars')\n        .select(`\n          id,\n          name,\n          description,\n          visibility,\n          created_at,\n          subscriber_count\n        `)",
+      "table": "shared_calendars",
+      "columns": [
+        "id",
+        "name",
+        "description",
+        "visibility",
+        "created_at",
+        "subscriber_count"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/customize.tsx",
+      "lineNumber": 310,
+      "query": ".from('user_preferences')\n          .upsert({\n            user_id: user.id,\n            visibility_level: visibility,\n            updated_at: new Date().toISOString(),\n          })",
+      "table": "user_preferences",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/customize.tsx",
+      "lineNumber": 323,
+      "query": ".from('user_preferences')\n          .upsert({\n            user_id: user.id,\n            allow_calendar_sharing: allowSharing,\n            updated_at: new Date().toISOString(),\n          })",
+      "table": "user_preferences",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/profile/customize.tsx",
+      "lineNumber": 336,
+      "query": ".from('accounts')\n          .update({\n            bio: bio.slice(0, 500), // Limit bio length\n            updated_at: new Date().toISOString(),\n          })",
+      "table": "accounts",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/performers/new.tsx",
+      "lineNumber": 114,
+      "query": ".from('performers')\n      .select('id')",
+      "table": "performers",
+      "columns": [
+        "id"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/performers/new.tsx",
+      "lineNumber": 212,
+      "query": ".from('performers')\n      .insert({\n        account_id: user.id,\n        stage_name: performerData.stageName,\n        real_name: performerData.realName,\n        bio: performerData.bio,\n        category: performerData.category,\n        genres: performerData.genres,\n        instruments: performerData.instruments,\n        performance_duration_min: performerData.performanceDurationMin,\n        setup_time_min: performerData.setupTimeMin,\n        profile_image_url: performerData.profileImageUrl,\n        gallery_images: performerData.galleryImages,\n        demo_videos: performerData.demoVideos,\n        audio_samples: performerData.audioSamples,\n        base_rate: performerData.baseRate,\n        travel_fee: performerData.travelFee,\n        equipment_fee: performerData.equipmentFee,\n        technical_requirements: performerData.technicalRequirements,\n        space_requirements: performerData.spaceRequirements,\n        booking_email: performerData.bookingEmail,\n        booking_phone: performerData.bookingPhone,\n        website_url: performerData.websiteUrl,\n        social_media: performerData.socialMedia,\n        is_available: performerData.isAvailable,\n        created_by: user.id,\n      })",
+      "table": "performers",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/performers/index.tsx",
+      "lineNumber": 61,
+      "query": ".from('performers')\n          .select('*', { count: 'exact' })",
+      "table": "performers",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/performers/index.tsx",
+      "lineNumber": 130,
+      "query": ".from('performers')\n        .select('genres')",
+      "table": "performers",
+      "columns": [
+        "genres"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/performers/index.tsx",
+      "lineNumber": 137,
+      "query": ".from('performers')\n        .select('id, stage_name, category, average_rating, total_performances, profile_image_url')",
+      "table": "performers",
+      "columns": [
+        "id",
+        "stage_name",
+        "category",
+        "average_rating",
+        "total_performances",
+        "profile_image_url"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/performers/create.tsx",
+      "lineNumber": 29,
+      "query": ".from('accounts')\n    .select('id')",
+      "table": "accounts",
+      "columns": [
+        "id"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/performers/create.tsx",
+      "lineNumber": 55,
+      "query": ".from('performers')\n    .insert(performerData)",
+      "table": "performers",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/performers/$performerId.tsx",
+      "lineNumber": 19,
+      "query": ".from('performers')\n    .select(`\n      *,\n      reviews:reviews(\n        id,\n        rating,\n        title,\n        content,\n        created_at,\n        reviewer:account_id(id, name, picture_url)\n      ),\n      events:performers_events(\n        event:event_id(\n          id,\n          title,\n          start_datetime,\n          image_url,\n          category,\n          venue_id,\n          venues(name, address)\n        )\n      )\n    `)",
+      "table": "performers",
+      "columns": [
+        "*",
+        "rating",
+        "title",
+        "content",
+        "created_at",
+        "name",
+        "picture_url)\n      )",
+        "start_datetime",
+        "image_url",
+        "category",
+        "venue_id",
+        "address)\n        )\n      )"
+      ],
+      "joins": [
+        "reviews:reviews",
+        "events:performers_events"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/performers/$id.tsx",
+      "lineNumber": 35,
+      "query": ".from('performers')\n        .select('*')",
+      "table": "performers",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/performers/$id.tsx",
+      "lineNumber": 42,
+      "query": ".from('event_performers')\n        .select(`\n          event:events!event_id (\n            *,\n            venues!venue_id (\n              id,\n              name,\n              city,\n              profile_image_url\n            )\n          )\n        `)",
+      "table": "event_performers",
+      "columns": [
+        "name",
+        "city",
+        "profile_image_url\n            )\n          )"
+      ],
+      "joins": [
+        "event:events"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/performers/$id.tsx",
+      "lineNumber": 62,
+      "query": ".from('event_performers')\n        .select(`\n          event:events!event_id (\n            id,\n            title,\n            start_date,\n            image_url,\n            venues!venue_id (\n              name,\n              city\n            )\n          )\n        `)",
+      "table": "event_performers",
+      "columns": [
+        "title",
+        "start_date",
+        "image_url",
+        "city\n            )\n          )"
+      ],
+      "joins": [
+        "event:events"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/performers/$id.tsx",
+      "lineNumber": 82,
+      "query": ".from('performers')\n        .select('*')",
+      "table": "performers",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/my/calendar.tsx",
+      "lineNumber": 85,
+      "query": ".from('bookings')\n        .select(`\n          *,\n          events!event_id (\n            id,\n            title,\n            start_date,\n            end_date,\n            category,\n            image_url,\n            venues!venue_id (\n              name,\n              address,\n              city\n            )\n          )\n        `)",
+      "table": "bookings",
+      "columns": [
+        "*",
+        "title",
+        "start_date",
+        "end_date",
+        "category",
+        "image_url",
+        "address",
+        "city\n            )\n          )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/my/calendar.tsx",
+      "lineNumber": 109,
+      "query": ".from('calendar_shares')\n        .select(`\n          *,\n          events!event_id (\n            id,\n            title,\n            start_date,\n            end_date,\n            category,\n            image_url,\n            created_by,\n            accounts!created_by (\n              name,\n              picture_url\n            )\n          )\n        `)",
+      "table": "calendar_shares",
+      "columns": [
+        "*",
+        "title",
+        "start_date",
+        "end_date",
+        "category",
+        "image_url",
+        "created_by",
+        "picture_url\n            )\n          )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/my/calendar.tsx",
+      "lineNumber": 133,
+      "query": ".from('shared_calendars')\n        .select('*')",
+      "table": "shared_calendars",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/my/calendar.tsx",
+      "lineNumber": 139,
+      "query": ".from('event_reminders')\n        .select('*')",
+      "table": "event_reminders",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/messages/index.tsx",
+      "lineNumber": 19,
+      "query": ".from('messages')\n      .select(`\n        id,\n        thread_id,\n        content,\n        created_at,\n        from_user_id,\n        to_user_id,\n        from_user:auth.users!messages_from_user_id_fkey(id, email),\n        to_user:auth.users!messages_to_user_id_fkey(id, email)\n      `)",
+      "table": "messages",
+      "columns": [
+        "id",
+        "thread_id",
+        "content",
+        "created_at",
+        "from_user_id",
+        "to_user_id",
+        "email)"
+      ],
+      "joins": [
+        "from_user:auth",
+        "to_user:auth"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/hubs/index.tsx",
+      "lineNumber": 12,
+      "query": ".from('community_hubs')\n      .select(`\n        *,\n        owner:auth.users(name, avatar_url),\n        _count:hub_members(count)\n      `)",
+      "table": "community_hubs",
+      "columns": [
+        "*",
+        "avatar_url)"
+      ],
+      "joins": [
+        "owner:auth",
+        "_count:hub_members"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/hubs/create.tsx",
+      "lineNumber": 22,
+      "query": ".from('community_hubs')\n      .insert(hubData)",
+      "table": "community_hubs",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/hub/$slug/venues.tsx",
+      "lineNumber": 13,
+      "query": ".from('hubs')\n      .select('id, name, slug')",
+      "table": "hubs",
+      "columns": [
+        "id",
+        "name",
+        "slug"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/hub/$slug/venues.tsx",
+      "lineNumber": 25,
+      "query": ".from('venues')\n      .select('*')",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/hub/$slug/index.tsx",
+      "lineNumber": 13,
+      "query": ".from('hubs')\n      .select(`\n        *,\n        hub_members(count),\n        events(count)\n      `)",
+      "table": "hubs",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/hub/$slug/index.tsx",
+      "lineNumber": 34,
+      "query": ".from('hub_members')\n      .select(`\n        id,\n        user:auth.users(id, email),\n        role,\n        joined_at\n      `)",
+      "table": "hub_members",
+      "columns": [
+        "id",
+        "email)",
+        "role",
+        "joined_at"
+      ],
+      "joins": [
+        "user:auth"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/hub/$slug/index.tsx",
+      "lineNumber": 46,
+      "query": ".from('hub_activities')\n      .select('*')",
+      "table": "hub_activities",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/hub/$slug/gallery.tsx",
+      "lineNumber": 13,
+      "query": ".from('hubs')\n      .select('*')",
+      "table": "hubs",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/hub/$slug/gallery.tsx",
+      "lineNumber": 25,
+      "query": ".from('hub_gallery')\n      .select('*')",
+      "table": "hub_gallery",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/hub/$slug/events.tsx",
+      "lineNumber": 13,
+      "query": ".from('hubs')\n      .select('id, name, slug, description')",
+      "table": "hubs",
+      "columns": [
+        "id",
+        "name",
+        "slug",
+        "description"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/hub/$slug/events.tsx",
+      "lineNumber": 25,
+      "query": ".from('events')\n      .select(`\n        *,\n        venue:venues(name, address, city)\n      `)",
+      "table": "events",
+      "columns": [
+        "*",
+        "address",
+        "city)"
+      ],
+      "joins": [
+        "venue:venues"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/hub/$slug/analytics.tsx",
+      "lineNumber": 13,
+      "query": ".from('hubs')\n      .select('*')",
+      "table": "hubs",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/hub/$slug/analytics.tsx",
+      "lineNumber": 36,
+      "query": ".from('events')\n      .select('id, start_date, status')",
+      "table": "events",
+      "columns": [
+        "id",
+        "start_date",
+        "status"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/hub/$slug/analytics.tsx",
+      "lineNumber": 43,
+      "query": ".from('hub_members')\n      .select('id, joined_at')",
+      "table": "hub_members",
+      "columns": [
+        "id",
+        "joined_at"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/home/user/index.tsx",
+      "lineNumber": 116,
+      "query": ".from('performers')\n      .select(`\n        id,\n        name,\n        image_url,\n        city,\n        genre,\n        is_verified,\n        created_at\n      `)",
+      "table": "performers",
+      "columns": [
+        "id",
+        "name",
+        "image_url",
+        "city",
+        "genre",
+        "is_verified",
+        "created_at"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/home/user/index.tsx",
+      "lineNumber": 130,
+      "query": ".from('events')\n      .select(`\n        id,\n        title,\n        start_date,\n        price,\n        status,\n        image_url,\n        venue:venues(\n          id,\n          name,\n          address\n        )\n      `)",
+      "table": "events",
+      "columns": [
+        "id",
+        "title",
+        "start_date",
+        "price",
+        "status",
+        "image_url",
+        "name",
+        "address\n        )"
+      ],
+      "joins": [
+        "venue:venues"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/home/user/index.tsx",
+      "lineNumber": 151,
+      "query": ".from('bookings')\n      .select(`\n        id,\n        event:events(\n          id,\n          title,\n          start_date\n        )\n      `)",
+      "table": "bookings",
+      "columns": [
+        "id",
+        "title",
+        "start_date\n        )"
+      ],
+      "joins": [
+        "event:events"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/home/account/_lib/members-page-loader.ts",
+      "lineNumber": 47,
+      "query": "const { data, error } = await client.rpc('get_account_members', {\n    account_slug: account,\n  });",
+      "table": "get_account_members",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/home/account/_lib/members-page-loader.ts",
+      "lineNumber": 68,
+      "query": "const { data, error } = await client.rpc('get_account_invitations', {\n    account_slug: account,\n  });",
+      "table": "get_account_invitations",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/gear/index.tsx",
+      "lineNumber": 12,
+      "query": ".from('product_categories')\n      .select('*')",
+      "table": "product_categories",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/gear/index.tsx",
+      "lineNumber": 23,
+      "query": ".from('products')\n      .select('*')",
+      "table": "products",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/events/new.tsx",
+      "lineNumber": 83,
+      "query": ".from('venues')\n        .select('id, name, address, city, max_capacity')",
+      "table": "venues",
+      "columns": [
+        "id",
+        "name",
+        "address",
+        "city",
+        "max_capacity"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/events/new.tsx",
+      "lineNumber": 91,
+      "query": ".from('performers')\n        .select('id, stage_name, category, genres')",
+      "table": "performers",
+      "columns": [
+        "id",
+        "stage_name",
+        "category",
+        "genres"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/events/new.tsx",
+      "lineNumber": 99,
+      "query": ".from('events')\n        .select('category, tags')",
+      "table": "events",
+      "columns": [
+        "category",
+        "tags"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/events/new.tsx",
+      "lineNumber": 188,
+      "query": ".from('events')\n      .insert({\n        account_id: user.id,\n        title: eventData.title,\n        description: eventData.description,\n        category: eventData.category,\n        status: eventData.status,\n        start_date: eventData.startDate,\n        end_date: eventData.endDate,\n        timezone: eventData.timezone,\n        venue_id: eventData.venueId,\n        location_name: eventData.locationName,\n        address: eventData.address,\n        city: eventData.city,\n        state: eventData.state,\n        country: eventData.country,\n        postal_code: eventData.postalCode,\n        latitude: eventData.latitude,\n        longitude: eventData.longitude,\n        image_url: eventData.imageUrl,\n        gallery_images: eventData.galleryImages,\n        base_price: eventData.basePrice,\n        max_capacity: eventData.maxCapacity,\n        requirements: eventData.requirements,\n        amenities: eventData.amenities,\n        tags: eventData.tags,\n        is_public: eventData.isPublic,\n        is_featured: eventData.isFeatured,\n        created_by: user.id,\n      })",
+      "table": "events",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/events/index.tsx",
+      "lineNumber": 60,
+      "query": ".from('events')\n          .select(`\n            *,\n            venues!venue_id (\n              id,\n              name,\n              address,\n              city,\n              max_capacity\n            )\n          `, { count: 'exact' })",
+      "table": "events",
+      "columns": [
+        "*",
+        "name",
+        "address",
+        "city",
+        "max_capacity\n            )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/events/index.tsx",
+      "lineNumber": 134,
+      "query": ".from('venues')\n        .select('id, name, city')",
+      "table": "venues",
+      "columns": [
+        "id",
+        "name",
+        "city"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/events/index.tsx",
+      "lineNumber": 142,
+      "query": ".from('events')\n        .select('category')",
+      "table": "events",
+      "columns": [
+        "category"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/events/create.tsx",
+      "lineNumber": 23,
+      "query": ".from('venues')\n    .select('id, name, address')",
+      "table": "venues",
+      "columns": [
+        "id",
+        "name",
+        "address"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/events/create.tsx",
+      "lineNumber": 42,
+      "query": ".from('accounts')\n    .select('id')",
+      "table": "accounts",
+      "columns": [
+        "id"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/events/create.tsx",
+      "lineNumber": 69,
+      "query": ".from('events')\n    .insert(eventData)",
+      "table": "events",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/events/$id.tsx",
+      "lineNumber": 35,
+      "query": ".from('events')\n        .select(`\n          *,\n          venues!venue_id (\n            id,\n            name,\n            address,\n            city,\n            state,\n            latitude,\n            longitude,\n            max_capacity,\n            amenities,\n            profile_image_url,\n            base_hourly_rate\n          )\n        `)",
+      "table": "events",
+      "columns": [
+        "*",
+        "name",
+        "address",
+        "city",
+        "state",
+        "latitude",
+        "longitude",
+        "max_capacity",
+        "amenities",
+        "profile_image_url",
+        "base_hourly_rate\n          )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/events/$id.tsx",
+      "lineNumber": 57,
+      "query": ".from('event_performers')\n        .select(`\n          performer:performers!performer_id (\n            id,\n            stage_name,\n            category,\n            bio,\n            profile_image_url,\n            genres,\n            base_rate\n          )\n        `)",
+      "table": "event_performers",
+      "columns": [
+        "stage_name",
+        "category",
+        "bio",
+        "profile_image_url",
+        "genres",
+        "base_rate\n          )"
+      ],
+      "joins": [
+        "performer:performers"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/events/$id.tsx",
+      "lineNumber": 73,
+      "query": ".from('events')\n        .select(`\n          *,\n          venues!venue_id (\n            id,\n            name,\n            city,\n            profile_image_url\n          )\n        `)",
+      "table": "events",
+      "columns": [
+        "*",
+        "name",
+        "city",
+        "profile_image_url\n          )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/events/$id.tsx",
+      "lineNumber": 89,
+      "query": ".from('bookings')\n        .select('id, status')",
+      "table": "bookings",
+      "columns": [
+        "id",
+        "status"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/community/index.tsx",
+      "lineNumber": 57,
+      "query": ".from('community_hubs')\n          .select(`\n            *,\n            hub_memberships!inner (\n              user_id,\n              role\n            )\n          `, { count: 'exact' })",
+      "table": "community_hubs",
+      "columns": [
+        "*",
+        "role\n            )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/community/index.tsx",
+      "lineNumber": 128,
+      "query": ".from('hub_memberships')\n        .select(`\n          hub_id,\n          role,\n          joined_at\n        `)",
+      "table": "hub_memberships",
+      "columns": [
+        "hub_id",
+        "role",
+        "joined_at"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/community/index.tsx",
+      "lineNumber": 140,
+      "query": ".from('community_hubs')\n        .select('id, name, description, logo_url, current_members, visibility')",
+      "table": "community_hubs",
+      "columns": [
+        "id",
+        "name",
+        "description",
+        "logo_url",
+        "current_members",
+        "visibility"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/calendars/index.tsx",
+      "lineNumber": 63,
+      "query": ".from('events')\n          .select(`\n            *,\n            venues!venue_id (\n              id,\n              name,\n              address,\n              city\n            )\n          `)",
+      "table": "events",
+      "columns": [
+        "*",
+        "name",
+        "address",
+        "city\n            )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/calendars/index.tsx",
+      "lineNumber": 82,
+      "query": ".from('bookings')\n          .select(`\n            *,\n            events!event_id (\n              id,\n              title,\n              category,\n              image_url\n            ),\n            venues!venue_id (\n              id,\n              name,\n              address\n            ),\n            performers!performer_id (\n              id,\n              stage_name\n            )\n          `)",
+      "table": "bookings",
+      "columns": [
+        "*",
+        "title",
+        "category",
+        "image_url\n            )",
+        "name",
+        "address\n            )",
+        "stage_name\n            )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/calendars/index.tsx",
+      "lineNumber": 111,
+      "query": ".from('bookings')\n          .select(`\n            *,\n            events!event_id (\n              id,\n              title,\n              category,\n              image_url\n            ),\n            venues!venue_id (\n              id,\n              name,\n              address\n            )\n          `)",
+      "table": "bookings",
+      "columns": [
+        "*",
+        "title",
+        "category",
+        "image_url\n            )",
+        "name",
+        "address\n            )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/calendars/create.tsx",
+      "lineNumber": 28,
+      "query": ".from('accounts')\n    .select('id')",
+      "table": "accounts",
+      "columns": [
+        "id"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/calendars/create.tsx",
+      "lineNumber": 51,
+      "query": ".from('calendars')\n      .insert({\n        owner_id: user.id,\n        account_id: account?.id || user.id,\n        ...calendarData,\n        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone\n      })",
+      "table": "calendars",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/calendars/$slug.tsx",
+      "lineNumber": 9,
+      "query": ".from('calendars')\n    .select('*')",
+      "table": "calendars",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/calendar/$slug.tsx",
+      "lineNumber": 13,
+      "query": ".from('calendars')\n      .select(`\n        *,\n        owner:accounts(name, picture_url),\n        events(*, venue:venues(name, address))\n      `)",
+      "table": "calendars",
+      "columns": [
+        "*",
+        "picture_url)",
+        "address))"
+      ],
+      "joins": [
+        "owner:accounts",
+        "venue:venues"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/bookings/index.tsx",
+      "lineNumber": 66,
+      "query": ".from('bookings')\n          .select(`\n            *,\n            events!event_id (\n              id,\n              title,\n              start_date,\n              end_date,\n              image_url,\n              category\n            ),\n            venues!venue_id (\n              id,\n              name,\n              address,\n              city\n            ),\n            performers!performer_id (\n              id,\n              stage_name,\n              profile_image_url\n            )\n          `, { count: 'exact' })",
+      "table": "bookings",
+      "columns": [
+        "*",
+        "title",
+        "start_date",
+        "end_date",
+        "image_url",
+        "category\n            )",
+        "name",
+        "address",
+        "city\n            )",
+        "stage_name",
+        "profile_image_url\n            )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/bookings/index.tsx",
+      "lineNumber": 172,
+      "query": ".from('bookings')\n          .select('status, payment_status, total_amount')",
+      "table": "bookings",
+      "columns": [
+        "status",
+        "payment_status",
+        "total_amount"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/bookings/index.tsx",
+      "lineNumber": 181,
+      "query": ".from('bookings')\n        .select(`\n          venue_id,\n          venues!venue_id (\n            id,\n            name,\n            city,\n            image_url\n          )\n        `)",
+      "table": "bookings",
+      "columns": [
+        "venue_id",
+        "name",
+        "city",
+        "image_url\n          )"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/bookings/$id.tsx",
+      "lineNumber": 17,
+      "query": ".from('bookings')\n      .select(`\n        *,\n        event:events(*),\n        venue:venues(*),\n        user:auth.users(*)\n      `)",
+      "table": "bookings",
+      "columns": [
+        "*"
+      ],
+      "joins": [
+        "event:events",
+        "venue:venues",
+        "user:auth"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/bookings/$id.tsx",
+      "lineNumber": 50,
+      "query": ".from('bookings')\n          .update({ status: 'cancelled', updated_at: new Date().toISOString() })",
+      "table": "bookings",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/bookings/$id.tsx",
+      "lineNumber": 57,
+      "query": ".from('bookings')\n          .update({ status: 'confirmed', updated_at: new Date().toISOString() })",
+      "table": "bookings",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book-it/index.tsx",
+      "lineNumber": 15,
+      "query": ".from('venues')\n        .select('*')",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book-it/index.tsx",
+      "lineNumber": 21,
+      "query": ".from('events')\n        .select(`\n          *,\n          venue:venues(name, address)\n        `)",
+      "table": "events",
+      "columns": [
+        "*",
+        "address)"
+      ],
+      "joins": [
+        "venue:venues"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book-it/index.tsx",
+      "lineNumber": 31,
+      "query": ".from('performers')\n        .select('*')",
+      "table": "performers",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book-it/index.tsx",
+      "lineNumber": 42,
+      "query": ".from('events')\n        .select(`\n          *,\n          venue:venues(name, address)\n        `)",
+      "table": "events",
+      "columns": [
+        "*",
+        "address)"
+      ],
+      "joins": [
+        "venue:venues"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book-it/venues/index.tsx",
+      "lineNumber": 14,
+      "query": ".from('venues')\n      .select(`\n        *\n      `)",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book-it/venues/$id/index.tsx",
+      "lineNumber": 16,
+      "query": ".from('venues')\n        .select('*')",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book-it/venues/$id/index.tsx",
+      "lineNumber": 21,
+      "query": ".from('events')\n        .select(`\n          *,\n          venue:venues(name)\n        `)",
+      "table": "events",
+      "columns": [
+        "*"
+      ],
+      "joins": [
+        "venue:venues"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book-it/venues/$id/index.tsx",
+      "lineNumber": 42,
+      "query": ".from('events')\n        .select(`\n          *,\n          venue:venues(name)\n        `)",
+      "table": "events",
+      "columns": [
+        "*"
+      ],
+      "joins": [
+        "venue:venues"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book-it/venues/$id/book/index.tsx",
+      "lineNumber": 13,
+      "query": ".from('venues')\n      .select('*')",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book-it/gigs/index.tsx",
+      "lineNumber": 14,
+      "query": ".from('performers')\n      .select('*')",
+      "table": "performers",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/success.tsx",
+      "lineNumber": 22,
+      "query": ".from('bookings')\n      .select(`\n        *,\n        event:events(*),\n        venue:venues(*)\n      `)",
+      "table": "bookings",
+      "columns": [
+        "*"
+      ],
+      "joins": [
+        "event:events",
+        "venue:venues"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/services.tsx",
+      "lineNumber": 25,
+      "query": ".from('booking_sessions')\n        .select('*')",
+      "table": "booking_sessions",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/services.tsx",
+      "lineNumber": 35,
+      "query": ".from('events')\n        .select('*')",
+      "table": "events",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/services.tsx",
+      "lineNumber": 45,
+      "query": ".from('venues')\n        .select('*')",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/services.tsx",
+      "lineNumber": 77,
+      "query": ".from('booking_sessions')\n        .insert({\n          currentStep: 3,\n          data: Object.fromEntries(formData),\n          expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()\n        })",
+      "table": "booking_sessions",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/services.tsx",
+      "lineNumber": 91,
+      "query": ".from('booking_sessions')\n        .update({\n          currentStep: 4,\n          data: Object.fromEntries(formData),\n          updated_at: new Date().toISOString()\n        })",
+      "table": "booking_sessions",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/review.tsx",
+      "lineNumber": 25,
+      "query": ".from('booking_sessions')\n        .select('*')",
+      "table": "booking_sessions",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/review.tsx",
+      "lineNumber": 35,
+      "query": ".from('events')\n        .select('*')",
+      "table": "events",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/review.tsx",
+      "lineNumber": 45,
+      "query": ".from('venues')\n        .select('*')",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/review.tsx",
+      "lineNumber": 77,
+      "query": ".from('booking_sessions')\n        .insert({\n          currentStep: 5,\n          data: Object.fromEntries(formData),\n          expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()\n        })",
+      "table": "booking_sessions",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/review.tsx",
+      "lineNumber": 91,
+      "query": ".from('booking_sessions')\n        .update({\n          currentStep: 6,\n          data: Object.fromEntries(formData),\n          updated_at: new Date().toISOString()\n        })",
+      "table": "booking_sessions",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/requirements.tsx",
+      "lineNumber": 25,
+      "query": ".from('booking_sessions')\n        .select('*')",
+      "table": "booking_sessions",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/requirements.tsx",
+      "lineNumber": 35,
+      "query": ".from('events')\n        .select('*')",
+      "table": "events",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/requirements.tsx",
+      "lineNumber": 45,
+      "query": ".from('venues')\n        .select('*')",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/requirements.tsx",
+      "lineNumber": 77,
+      "query": ".from('booking_sessions')\n        .insert({\n          currentStep: 2,\n          data: Object.fromEntries(formData),\n          expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()\n        })",
+      "table": "booking_sessions",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/requirements.tsx",
+      "lineNumber": 91,
+      "query": ".from('booking_sessions')\n        .update({\n          currentStep: 3,\n          data: Object.fromEntries(formData),\n          updated_at: new Date().toISOString()\n        })",
+      "table": "booking_sessions",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/payment.tsx",
+      "lineNumber": 25,
+      "query": ".from('booking_sessions')\n        .select('*')",
+      "table": "booking_sessions",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/payment.tsx",
+      "lineNumber": 35,
+      "query": ".from('events')\n        .select('*')",
+      "table": "events",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/payment.tsx",
+      "lineNumber": 45,
+      "query": ".from('venues')\n        .select('*')",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/payment.tsx",
+      "lineNumber": 77,
+      "query": ".from('booking_sessions')\n        .insert({\n          currentStep: 4,\n          data: Object.fromEntries(formData),\n          expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()\n        })",
+      "table": "booking_sessions",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/payment.tsx",
+      "lineNumber": 91,
+      "query": ".from('booking_sessions')\n        .update({\n          currentStep: 5,\n          data: Object.fromEntries(formData),\n          updated_at: new Date().toISOString()\n        })",
+      "table": "booking_sessions",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/layout.tsx",
+      "lineNumber": 20,
+      "query": ".from('booking_sessions')\n        .select('*')",
+      "table": "booking_sessions",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/event-details.tsx",
+      "lineNumber": 25,
+      "query": ".from('booking_sessions')\n        .select('*')",
+      "table": "booking_sessions",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/event-details.tsx",
+      "lineNumber": 35,
+      "query": ".from('events')\n        .select('*')",
+      "table": "events",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/event-details.tsx",
+      "lineNumber": 45,
+      "query": ".from('venues')\n        .select('*')",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/event-details.tsx",
+      "lineNumber": 77,
+      "query": ".from('booking_sessions')\n        .insert({\n          currentStep: 1,\n          data: Object.fromEntries(formData),\n          expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()\n        })",
+      "table": "booking_sessions",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/event-details.tsx",
+      "lineNumber": 91,
+      "query": ".from('booking_sessions')\n        .update({\n          currentStep: 2,\n          data: Object.fromEntries(formData),\n          updated_at: new Date().toISOString()\n        })",
+      "table": "booking_sessions",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/confirmation.tsx",
+      "lineNumber": 61,
+      "query": ".from('booking_sessions')\n        .select('*')",
+      "table": "booking_sessions",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/confirmation.tsx",
+      "lineNumber": 71,
+      "query": ".from('events')\n        .select('*')",
+      "table": "events",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/confirmation.tsx",
+      "lineNumber": 81,
+      "query": ".from('venues')\n        .select('*')",
+      "table": "venues",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/confirmation.tsx",
+      "lineNumber": 113,
+      "query": ".from('booking_sessions')\n        .insert({\n          currentStep: 6,\n          data: Object.fromEntries(formData),\n          expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()\n        })",
+      "table": "booking_sessions",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/book/confirmation.tsx",
+      "lineNumber": 127,
+      "query": ".from('booking_sessions')\n        .update({\n          currentStep: 7,\n          data: Object.fromEntries(formData),\n          updated_at: new Date().toISOString()\n        })",
+      "table": "booking_sessions",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/artists/index.tsx",
+      "lineNumber": 11,
+      "query": ".from('artists')\n      .select(`\n        *,\n        genres,\n        upcoming_events:events(count)\n      `)",
+      "table": "artists",
+      "columns": [
+        "*",
+        "genres"
+      ],
+      "joins": [
+        "upcoming_events:events"
+      ]
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/api/checkin.ts",
+      "lineNumber": 38,
+      "query": ".from('checkins')\n      .insert({\n        user_id: user.id,\n        venue_id: data.venue_id,\n        venue_name: data.venue_name,\n        event_id: data.event_id,\n        latitude: data.latitude,\n        longitude: data.longitude,\n        address: data.address,\n        note: data.note,\n        mood: data.mood,\n        privacy: data.privacy,\n      })",
+      "table": "checkins",
+      "columns": [],
+      "joins": []
+    },
+    {
+      "file": "/Users/johnshine/Dropbox/Fibonacco/goeventcity/Version2-GEC/when-the-fun/apps/web/app/routes/admin/accounts/index.tsx",
+      "lineNumber": 46,
+      "query": ".from('accounts')\n    .select('*', {\n      count: 'estimated',\n    })",
+      "table": "accounts",
+      "columns": [
+        "*"
+      ],
+      "joins": []
+    }
+  ]
+}
