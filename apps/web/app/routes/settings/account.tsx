@@ -4,7 +4,7 @@ import { useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/settings/account';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { getLogger } from '@kit/shared/logger';
-import { AccountSettings } from '~/components/magic-patterns/components/account/AccountSettings';
+import { AccountSettingsPage } from '~/components/magic-patterns/pages/settings/AccountSettingsPage';
 import { z } from 'zod';
 
 // Account preferences schema
@@ -315,7 +315,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 /**
  * Account settings and preferences
  */
-export default function AccountSettingsPage() {
+export default function AccountSettings() {
   const data = useLoaderData<typeof loader>();
-  return <AccountSettings {...data} />;
+  return <AccountSettingsPage {...data} />;
 }
