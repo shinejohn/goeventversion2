@@ -1,5 +1,4 @@
 import React from 'react';
-import { json } from 'react-router';
 import { useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/dashboard/organizer';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -14,7 +13,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ 
+      return { 
         events: [],
         venues: [],
         upcomingEvents: [],
@@ -24,7 +23,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           totalAttendees: 0,
           averageRating: 0
         }
-      });
+      };
     }
 
     // Check if user has organizer role
@@ -38,7 +37,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
 
     if (!hasRole) {
       // User doesn't have organizer role
-      return json({ 
+      return { 
         events: [],
         venues: [],
         upcomingEvents: [],
@@ -49,7 +48,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           averageRating: 0
         },
         needsRole: true
-      });
+      };
     }
 
     // Fetch events organized by the user
@@ -88,7 +87,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .order('start_datetime', { ascending: false });
 
     if (!events || events.length === 0) {
-      return json({ 
+      return { 
         events: [],
         venues: [],
         upcomingEvents: [],
@@ -98,7 +97,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           totalAttendees: 0,
           averageRating: 0
         }
-      });
+      };
     }
 
     // Get upcoming events
@@ -152,7 +151,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
       : 0;
 
-    return json({
+    return {
       events: events.map(e => ({
         id: e.id,
         title: e.title,
@@ -201,11 +200,11 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         totalAttendees,
         averageRating: Math.round(averageRating * 10) / 10
       }
-    });
+    };
 
   } catch (error) {
     logger.error({ error }, 'Error loading organizer dashboard');
-    return json({ 
+    return { 
       events: [],
       venues: [],
       upcomingEvents: [],
@@ -215,7 +214,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         totalAttendees: 0,
         averageRating: 0
       }
-    });
+    };
   }
 };
 
@@ -229,7 +228,7 @@ export async function action({ request }: Route.ActionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Unauthorized' }, { status: 401 });
+      throw new Response('Unauthorized', { status: 401 });
     }
 
     if (action === 'create-event') {
@@ -256,10 +255,10 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error creating event');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 400 });
       }
 
-      return json({ success: true, event: data });
+      return { success: true, event: data });
     }
 
     if (action === 'update-event') {
@@ -279,10 +278,10 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error updating event');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 400 });
       }
 
-      return json({ success: true });
+      return { success: true });
     }
 
     if (action === 'cancel-event') {
@@ -296,19 +295,19 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error cancelling event');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 400 });
       }
 
       // TODO: Notify attendees and process refunds
 
-      return json({ success: true });
+      return { success: true });
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    throw new Response('Invalid action', { status: 400 });
 
   } catch (error) {
     logger.error({ error }, 'Error processing organizer action');
-    return json({ success: false, error: 'Server error' }, { status: 500 });
+    throw new Response('Server error', { status: 500 });
   }
 }
 

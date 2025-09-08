@@ -1,5 +1,4 @@
 import React from 'react';
-import { json } from 'react-router';
 import { useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/dashboard/performer/bookings';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -14,7 +13,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ 
+      return { 
         bookings: [],
         upcomingShows: [],
         analytics: {
@@ -23,7 +22,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           averageRating: 0,
           completedShows: 0
         }
-      });
+      };
     }
 
     // Check if user is a performer
@@ -36,7 +35,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .single();
 
     if (!performerRole) {
-      return json({ 
+      return { 
         bookings: [],
         upcomingShows: [],
         analytics: {
@@ -46,7 +45,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           completedShows: 0
         },
         needsRole: true
-      });
+      };
     }
 
     // Get performer profile
@@ -57,7 +56,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .single();
 
     if (!performer) {
-      return json({ 
+      return { 
         bookings: [],
         upcomingShows: [],
         analytics: {
@@ -67,7 +66,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           completedShows: 0
         },
         needsProfile: true
-      });
+      };
     }
 
     // Fetch performer's bookings/events
@@ -102,7 +101,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .order('start_datetime', { ascending: false });
 
     if (!bookings) {
-      return json({ 
+      return { 
         bookings: [],
         upcomingShows: [],
         analytics: {
@@ -111,7 +110,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           averageRating: 0,
           completedShows: 0
         }
-      });
+      };
     }
 
     // Get upcoming shows
@@ -155,7 +154,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       capacity: b.capacity
     }));
 
-    return json({
+    return {
       bookings: transformedBookings,
       upcomingShows: upcomingShows.map(s => ({
         id: s.id,
@@ -178,11 +177,11 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         averageRating: Math.round(averageRating * 10) / 10,
         completedShows: completedShows.length
       }
-    });
+    };
 
   } catch (error) {
     logger.error({ error }, 'Error loading performer bookings');
-    return json({ 
+    return { 
       bookings: [],
       upcomingShows: [],
       analytics: {
@@ -191,7 +190,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         averageRating: 0,
         completedShows: 0
       }
-    });
+    };
   }
 };
 
@@ -205,7 +204,7 @@ export async function action({ request }: Route.ActionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Unauthorized' }, { status: 401 });
+      throw new Response('Unauthorized', { status: 401 });
     }
 
     // Get performer profile
@@ -216,7 +215,7 @@ export async function action({ request }: Route.ActionArgs) {
       .single();
 
     if (!performer) {
-      return json({ success: false, error: 'Performer profile not found' }, { status: 404 });
+      throw new Response('Performer profile not found', { status: 404 });
     }
 
     if (action === 'accept-booking') {
@@ -234,12 +233,12 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error accepting booking');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 400 });
       }
 
       // TODO: Notify organizer
 
-      return json({ success: true, message: 'Booking accepted' });
+      return { success: true, message: 'Booking accepted' };
     }
 
     if (action === 'decline-booking') {
@@ -260,12 +259,12 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error declining booking');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 400 });
       }
 
       // TODO: Notify organizer
 
-      return json({ success: true, message: 'Booking declined' });
+      return { success: true, message: 'Booking declined' };
     }
 
     if (action === 'update-availability') {
@@ -286,17 +285,17 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error updating availability');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 400 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    throw new Response('Invalid action', { status: 400 });
 
   } catch (error) {
     logger.error({ error }, 'Error processing performer action');
-    return json({ success: false, error: 'Server error' }, { status: 500 });
+    throw new Response('Server error', { status: 500 });
   }
 }
 

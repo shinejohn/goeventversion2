@@ -1,5 +1,4 @@
 import React from 'react';
-import { json } from 'react-router';
 import { useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/dashboard/fan';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -14,13 +13,13 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ 
+      return { 
         upcomingEvents: [],
         followedArtists: [],
         likedVenues: [],
         recentBookings: [],
         recommendations: []
-      });
+      };
     }
 
     // Fetch upcoming events from user's bookings
@@ -148,7 +147,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       .order('start_datetime', { ascending: true })
       .limit(6);
 
-    return json({ 
+    return { 
       upcomingEvents: bookings?.map(b => ({
         id: b.event.id,
         title: b.event.title,
@@ -197,18 +196,18 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         event: post.event,
         venue: post.venue
       })) || []
-    });
+    };
 
   } catch (error) {
     logger.error({ error }, 'Error loading fan dashboard');
-    return json({ 
+    return { 
       upcomingEvents: [],
       followedArtists: [],
       likedVenues: [],
       recentBookings: [],
       recommendations: [],
       socialFeed: []
-    });
+    };
   }
 };
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { json } from 'react-router';
 import { useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/dashboard/performer/portfolio';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -14,7 +13,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ 
+      return { 
         profile: null,
         portfolio: [],
         stats: {
@@ -23,7 +22,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           totalEvents: 0,
           averageRating: 0
         }
-      });
+      };
     }
 
     // Get performer profile
@@ -54,7 +53,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .single();
 
     if (!performer) {
-      return json({ 
+      return { 
         profile: null,
         portfolio: [],
         stats: {
@@ -64,7 +63,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           averageRating: 0
         },
         needsProfile: true
-      });
+      };
     }
 
     // Get portfolio items (photos, videos, audio samples)
@@ -152,15 +151,15 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       averageRating: performer.rating || 0
     };
 
-    return json({
+    return {
       profile,
       portfolio,
       stats
-    });
+    };
 
   } catch (error) {
     logger.error({ error }, 'Error loading performer portfolio');
-    return json({ 
+    return { 
       profile: null,
       portfolio: [],
       stats: {
@@ -169,7 +168,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         totalEvents: 0,
         averageRating: 0
       }
-    });
+    };
   }
 };
 
@@ -183,7 +182,7 @@ export async function action({ request }: Route.ActionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Unauthorized' }, { status: 401 });
+      throw new Response('Unauthorized', { status: 401 });
     }
 
     // Get performer profile
@@ -194,7 +193,7 @@ export async function action({ request }: Route.ActionArgs) {
       .single();
 
     if (!performer) {
-      return json({ success: false, error: 'Performer profile not found' }, { status: 404 });
+      throw new Response('Performer profile not found', { status: 404 });
     }
 
     if (action === 'update-profile') {
@@ -219,10 +218,10 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error updating performer profile');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 400 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'add-portfolio-item') {
@@ -246,10 +245,10 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error adding portfolio item');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 400 });
       }
 
-      return json({ success: true, item: data });
+      return { success: true, item: data };
     }
 
     if (action === 'remove-portfolio-item') {
@@ -263,10 +262,10 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error removing portfolio item');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 400 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'reorder-portfolio') {
@@ -285,17 +284,17 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error reordering portfolio');
-        return json({ success: false, error: error.message });
+        throw new Response(error.message, { status: 400 });
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    throw new Response('Invalid action', { status: 400 });
 
   } catch (error) {
     logger.error({ error }, 'Error processing portfolio action');
-    return json({ success: false, error: 'Server error' }, { status: 500 });
+    throw new Response('Server error', { status: 500 });
   }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { json } from 'react-router';
+
 import { useLoaderData } from 'react-router';
 import type { Route } from '~/types/app/routes/dashboard/venue-owner';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
@@ -14,7 +14,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ 
+      return { 
         venues: [],
         bookingRequests: [],
         upcomingEvents: [],
@@ -25,7 +25,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           occupancyRate: 0
         },
         recentActivity: []
-      });
+      };
     }
 
     // Check if user has venue_manager role
@@ -39,7 +39,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
 
     if (!hasRole) {
       // User doesn't have venue_manager role
-      return json({ 
+      return { 
         venues: [],
         bookingRequests: [],
         upcomingEvents: [],
@@ -51,7 +51,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         },
         recentActivity: [],
         needsRole: true
-      });
+      };
     }
 
     // Fetch venues owned by the user
@@ -78,7 +78,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .eq('status', 'active');
 
     if (!venues || venues.length === 0) {
-      return json({ 
+      return { 
         venues: [],
         bookingRequests: [],
         upcomingEvents: [],
@@ -89,7 +89,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           occupancyRate: 0
         },
         recentActivity: []
-      });
+      };
     }
 
     const venueIds = venues.map(v => v.id);
@@ -246,7 +246,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 10);
 
-    return json({
+    return {
       venues: venues.map(v => ({
         id: v.id,
         name: v.name,
@@ -293,11 +293,11 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         occupancyRate: Math.round(occupancyRate)
       },
       recentActivity
-    });
+    };
 
   } catch (error) {
     logger.error({ error }, 'Error loading venue owner dashboard');
-    return json({ 
+    return { 
       venues: [],
       bookingRequests: [],
       upcomingEvents: [],
@@ -308,7 +308,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         occupancyRate: 0
       },
       recentActivity: []
-    });
+    };
   }
 };
 
@@ -322,7 +322,7 @@ export async function action({ request }: Route.ActionArgs) {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      return json({ success: false, error: 'Unauthorized' }, { status: 401 });
+      return { success: false, error: 'Unauthorized' }, { status: 401 };
     }
 
     if (action === 'accept-booking') {
@@ -338,12 +338,12 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error accepting booking');
-        return json({ success: false, error: error.message });
+        return { success: false, error: error.message };
       }
 
       // TODO: Send notification to organizer
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'decline-booking') {
@@ -361,12 +361,12 @@ export async function action({ request }: Route.ActionArgs) {
 
       if (error) {
         logger.error({ error }, 'Error declining booking');
-        return json({ success: false, error: error.message });
+        return { success: false, error: error.message };
       }
 
       // TODO: Send notification to organizer
 
-      return json({ success: true });
+      return { success: true };
     }
 
     if (action === 'update-availability') {
@@ -387,7 +387,7 @@ export async function action({ request }: Route.ActionArgs) {
 
         if (error) {
           logger.error({ error }, 'Error updating availability');
-          return json({ success: false, error: error.message });
+          return { success: false, error: error.message };
         }
       } else {
         const { error } = await client
@@ -398,18 +398,18 @@ export async function action({ request }: Route.ActionArgs) {
 
         if (error) {
           logger.error({ error }, 'Error updating availability');
-          return json({ success: false, error: error.message });
+          return { success: false, error: error.message };
         }
       }
 
-      return json({ success: true });
+      return { success: true };
     }
 
-    return json({ success: false, error: 'Invalid action' }, { status: 400 });
+    return { success: false, error: 'Invalid action' }, { status: 400 };
 
   } catch (error) {
     logger.error({ error }, 'Error processing venue owner action');
-    return json({ success: false, error: 'Server error' }, { status: 500 });
+    return { success: false, error: 'Server error' }, { status: 500 };
   }
 }
 
