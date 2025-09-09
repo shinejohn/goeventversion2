@@ -1,4 +1,4 @@
-import type { Route } from './+types/calendars/$slug';
+import type { Route } from './+types/$slug';
 // json helper removed - using plain objects for React Router 7
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 

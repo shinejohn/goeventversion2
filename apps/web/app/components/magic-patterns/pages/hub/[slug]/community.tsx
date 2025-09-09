@@ -10,12 +10,10 @@ interface HubCommunityPageProps {
 }
 
 export default function HubCommunityPage({ hub, members = [], activities = [] }: HubCommunityPageProps) {
-  const {
-    slug
-  } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
-  const [hubData, setHubData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hubData, setHubData] = useState<any>(hub);
   const [threads, setThreads] = useState<any[]>([]);
   const [filteredThreads, setFilteredThreads] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -27,11 +25,29 @@ export default function HubCommunityPage({ hub, members = [], activities = [] }:
     dateRange: '',
     sortBy: 'recent' // 'recent', 'popular', 'unanswered'
   });
-  // Fetch hub data and threads
+
+  // Use props data if available, otherwise use mock data
   useEffect(() => {
-    // Simulate API fetch
-    setTimeout(() => {
-      // Mock hub data
+    if (hub) {
+      setHubData(hub);
+      // Transform activities into thread format for display
+      const activityThreads = activities.map((activity, index) => ({
+        id: activity.id || `activity-${index}`,
+        title: activity.title || 'Community Activity',
+        type: activity.type || 'Discussion',
+        content: activity.content || activity.description || '',
+        author: activity.author || 'Community Member',
+        timestamp: activity.created_at || new Date().toISOString(),
+        replies: activity.replies || 0,
+        likes: activity.likes || 0,
+        views: activity.views || 0,
+        tags: activity.tags || [],
+        isUnanswered: activity.replies === 0
+      }));
+      setThreads(activityThreads);
+      setFilteredThreads(activityThreads);
+    } else {
+      // Fallback to mock data for demo
       const mockHubData = {
         id: slug,
         name: slug === 'jazz-lovers' ? 'Jazz Lovers Collective' : 'Urban Gardeners Network',
@@ -42,14 +58,12 @@ export default function HubCommunityPage({ hub, members = [], activities = [] }:
         threadTypes: ['Discussion', 'Question', 'Announcement', 'Resource', 'Event'],
         popularTags: slug === 'jazz-lovers' ? ['Miles Davis', 'Saxophone', 'Improvisation', 'Jazz History', 'Music Theory', 'Bebop', 'Venues', 'Albums'] : ['Composting', 'Urban Farming', 'Seed Starting', 'Container Gardens', 'Herbs', 'Sustainable', 'Hydroponics']
       };
-      // Generate mock threads
       const mockThreads = generateMockThreads(mockHubData);
       setHubData(mockHubData);
       setThreads(mockThreads);
       setFilteredThreads(mockThreads);
-      setIsLoading(false);
-    }, 1000);
-  }, [slug]);
+    }
+  }, [slug, hub, activities]);
   // Filter threads based on search and filters
   useEffect(() => {
     if (!threads.length) return;

@@ -1,10 +1,16 @@
 import React from 'react';
 import { Search, MapPin, Users } from 'lucide-react';
 import { useNavigate } from 'react-router';
-const HubsDiscoveryPage = () => {
+
+interface HubsDiscoveryPageProps {
+  hubs: any[];
+}
+
+const HubsDiscoveryPage = ({ hubs }: HubsDiscoveryPageProps) => {
   const navigate = useNavigate();
-  // Mock communities data
-  const communities = [{
+  
+  // Use props data if available, fallback to mock data for demo purposes
+  const communities = hubs && hubs.length > 0 ? hubs : [{
     id: 'jazz-lovers',
     name: 'Jazz Lovers Collective',
     description: 'A community for jazz enthusiasts, musicians, and venue owners',

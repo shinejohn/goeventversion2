@@ -4,32 +4,53 @@ import { CalendarHeader } from '../components/calendar/CalendarHeader';
 import { ViewToggle } from '../components/calendar/ViewToggle';
 import { CalendarGrid } from '../components/calendar/CalendarGrid';
 import { EventList } from '../components/calendar/EventList';
-export const CalendarPage = () => {
-  const [viewMode, setViewMode] = useState<'month' | 'today' | '7days' | 'list'>('list');
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedCategory, setSelectedCategory] = useState('all');
+
+interface CalendarPageProps {
+  calendarItems?: any[];
+  dateRange?: {
+    start: string;
+    end: string;
+    current: string;
+  };
+  filters?: any;
+  metrics?: any;
+  user?: any;
+  error?: string;
+}
+
+export const CalendarPage = ({ 
+  calendarItems = [], 
+  dateRange, 
+  filters, 
+  metrics, 
+  user, 
+  error 
+}: CalendarPageProps) => {
+  const [viewMode, setViewMode] = useState<'month' | 'today' | '7days' | 'list'>(filters?.view || 'list');
+  const [selectedDate, setSelectedDate] = useState(
+    dateRange?.current ? new Date(dateRange.current) : new Date()
+  );
+  const [selectedCategory, setSelectedCategory] = useState(filters?.category || 'all');
   const [calendarDays, setCalendarDays] = useState([]);
-  const [events, setEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  // Fetch calendar data
+  const [events, setEvents] = useState(calendarItems);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Update events when props change
   useEffect(() => {
-    const fetchCalendarData = async () => {
-      setIsLoading(true);
-      try {
-        // API call would go here
-        await new Promise(resolve => setTimeout(resolve, 500));
-        // Empty calendar days array instead of mock data
-        setCalendarDays([]);
-        // Empty events array instead of mock data
-        setEvents([]);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Error fetching calendar data:', error);
-        setIsLoading(false);
-      }
-    };
-    fetchCalendarData();
-  }, [selectedDate]);
+    setEvents(calendarItems);
+  }, [calendarItems]);
+
+  // Handle error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900">Unable to load calendar</h2>
+          <p className="mt-2 text-gray-600">{error}</p>
+        </div>
+      </div>
+    );
+  }
   // Helper function to get weather icon
   const getWeatherIcon = (condition: string) => {
     switch (condition) {

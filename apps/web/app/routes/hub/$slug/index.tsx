@@ -1,7 +1,7 @@
 import React from 'react';
 import HubCommunityPage from '~/components/magic-patterns/pages/hub/[slug]/community';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from './+types/$slug';
+import type { Route } from '../+types/$slug';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
