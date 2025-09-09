@@ -46,17 +46,10 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     
     const client = getSupabaseServerClient(request);
     
-    // Build optimized query for venues with computed fields for UI
+    // Build query for venues - simplified to match homepage pattern
     let query = client
       .from('venues')
-      .select(`
-        *,
-        average_rating:rating,
-        total_reviews:review_count,
-        listed_date:created_at,
-        verified:is_verified,
-        images:gallery_images
-      `, { count: 'exact' });
+      .select('*', { count: 'exact' });
     
     // Apply search filters
     if (params.search) {
