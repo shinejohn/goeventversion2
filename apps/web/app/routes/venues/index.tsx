@@ -140,19 +140,18 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       };
     }
     
-    // Transform data for Magic Patterns component
+    // Transform data for Magic Patterns component - simplified to work with basic query
     const transformedVenues = (venues || []).map(venue => ({
       ...venue,
-      // Make sure UI gets the fields it expects
-      images: venue.images || venue.gallery_images || [],
+      // Map simplified query results to what VenuesPage expects
+      images: venue.gallery_images || [venue.image_url] || [],
+      image_url: venue.image_url || 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+      city: venue.city || venue.location || '',
+      venue_type: venue.venue_type || 'Venue',
+      rating: venue.rating || 0,
+      capacity: venue.capacity || 0,
       amenities: venue.amenities || [],
       unavailable_dates: [], // TODO: Add unavailable_dates field to venues table
-      image_url: venue.image_url || (venue.images || venue.gallery_images || [])[0] || 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205',
-      // These fields are computed via aliases in select statement
-      average_rating: venue.average_rating || venue.rating || 0,
-      total_reviews: venue.total_reviews || venue.review_count || 0,
-      listed_date: venue.listed_date || venue.created_at,
-      verified: venue.verified ?? venue.is_verified ?? true,
       distance: null, // Placeholder for distance calculation
       last_booked_days_ago: null // Placeholder for booking history
     }));
