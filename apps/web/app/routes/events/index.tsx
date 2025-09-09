@@ -153,11 +153,11 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       throw error;
     }
     
-    // Transform data for Magic Patterns component
+    // Transform data for Magic Patterns component - simplified to work with basic query
     const transformedEvents = (events || []).map(event => ({
       ...event,
       // UI expects these specific fields
-      date: event.date ? new Date(event.date).toLocaleDateString('en-US', {
+      date: event.start_date ? new Date(event.start_date).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric'
       }) : '',
@@ -165,11 +165,10 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         hour: 'numeric',
         minute: '2-digit'
       }) : '',
-      location_name: event.location_name?.name || event.venue?.name || 'TBA',
-      location: event.location?.city || event.venue?.city || '',
+      venue: event.venue?.name || 'TBA',
       price: event.price || (event.price_min ? `$${event.price_min}+` : 'Free'),
-      rawDate: event.rawDate ? new Date(event.rawDate) : new Date(),
-      image: event.image || event.image_url || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819'
+      rawDate: event.start_date ? new Date(event.start_date) : new Date(),
+      image: event.image || event.image_url || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
     }));
     
     // Calculate category distribution
