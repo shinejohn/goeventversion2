@@ -62,7 +62,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       .from('venues')
       .select(`
         *,
-        venueType:category,
+        venueType:venue_type,
         location:city,
         reviewCount:rating
       `)
