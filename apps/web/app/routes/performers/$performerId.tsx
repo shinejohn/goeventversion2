@@ -45,7 +45,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       client
         .from('event_performers')
         .select(`
-          event:events!event_id (
+          events!event_id (
             id,
             title,
             start_datetime,
@@ -66,17 +66,13 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
             description
           )
         `)
-        .eq('performer_id', performerId)
-        .gte('events.start_datetime', new Date().toISOString())
-        .eq('events.status', 'published')
-        .order('events.start_datetime', { ascending: true })
-        .limit(10),
+        .eq('performer_id', performerId),
       
       // Get past events for portfolio
       client
         .from('event_performers')
         .select(`
-          event:events!event_id (
+          events!event_id (
             id,
             title,
             start_datetime,
@@ -90,8 +86,6 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           )
         `)
         .eq('performer_id', performerId)
-        .lt('events.start_datetime', new Date().toISOString())
-        .order('events.start_datetime', { ascending: false })
         .limit(5),
       
       // Get similar performers (same category)
@@ -163,14 +157,17 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       }
     };
     
-    // Transform events with null checks
+    // Transform events with null checks - fixed to access events directly
     const transformedUpcomingEvents = (upcomingEvents || [])
-      .map(ep => ep.event ? transformEventData(ep.event) : null)
-      .filter(Boolean);
+      .map(ep => ep.events ? transformEventData(ep.events) : null)
+      .filter(Boolean)
+      .filter((event: any) => new Date(event.start_datetime) > new Date());
     
     const transformedPastEvents = (pastEvents || [])
-      .map(ep => ep.event ? transformEventData(ep.event) : null)
-      .filter(Boolean);
+      .map(ep => ep.events ? transformEventData(ep.events) : null)
+      .filter(Boolean)
+      .filter((event: any) => new Date(event.start_datetime) <= new Date())
+      .sort((a: any, b: any) => new Date(b.start_datetime).getTime() - new Date(a.start_datetime).getTime());
     
     // Transform similar performers
     const transformedSimilarPerformers = (similarPerformers || []).map(transformPerformerData);

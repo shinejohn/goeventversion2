@@ -53,15 +53,6 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
             transit_options,
             nearby_amenities
           ),
-          organizer:organizer_id (
-            id,
-            name,
-            description,
-            is_verified,
-            profile_image_url,
-            total_events,
-            total_followers
-          )
         `)
         .eq('id', id)
         .single(),
@@ -181,7 +172,6 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       event: {
         ...transformedEvent,
         venue: event.venues ? transformVenueData(event.venues) : null,
-        organizer: event.organizer || null,
         // Additional fields EventDetailPage expects
         ticket_price: event.ticket_price || event.price_min,
         ticket_url: event.ticket_url,
@@ -189,6 +179,14 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         amenities: event.amenities || [],
         age_restriction: event.age_restriction || 'All Ages',
         series: event.series_id ? { id: event.series_id, name: event.series_name } : null,
+        organizer: {
+          id: event.organizer_id || 'org-1',
+          name: 'Event Organizer',
+          verified: false,
+          description: '',
+          events: 1,
+          followers: 0
+        },
       },
       performers,
       similarEvents: transformedSimilarEvents,
