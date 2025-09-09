@@ -144,16 +144,21 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     const transformedVenues = (venues || []).map(venue => ({
       ...venue,
       // Map simplified query results to what VenuesPage expects
-      images: venue.gallery_images || [venue.image_url] || [],
+      images: venue.gallery_images || [venue.image_url] || ['https://images.unsplash.com/photo-1517457373958-b7bdd4587205?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'],
       image_url: venue.image_url || 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      city: venue.city || venue.location || '',
+      city: venue.city || venue.location || 'City',
       venue_type: venue.venue_type || 'Venue',
       rating: venue.rating || 0,
-      capacity: venue.capacity || 0,
+      capacity: venue.capacity || 100,
       amenities: venue.amenities || [],
       unavailable_dates: [], // TODO: Add unavailable_dates field to venues table
       distance: null, // Placeholder for distance calculation
-      last_booked_days_ago: null // Placeholder for booking history
+      last_booked_days_ago: null, // Placeholder for booking history
+      // Map fields that VenueCard expects
+      average_rating: venue.rating || 4.5,
+      total_reviews: venue.review_count || 0,
+      verified: venue.is_verified ?? true,
+      listed_date: venue.created_at || new Date().toISOString()
     }));
     
     // Calculate additional metrics
