@@ -42,10 +42,10 @@ export function transformVenueData(venue: Tables<'venues'>): VenueData {
     }
   }
   
-  // Handle amenities as JSON object
-  let amenities = {};
-  if (venue.amenities && typeof venue.amenities === 'object') {
-    amenities = venue.amenities;
+  // Handle amenities as array
+  let amenities: string[] = [];
+  if (Array.isArray(venue.amenities)) {
+    amenities = venue.amenities.filter(item => typeof item === 'string');
   }
   
   // Extract blackout dates if available

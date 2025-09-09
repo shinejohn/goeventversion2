@@ -150,7 +150,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       venue_type: venue.venue_type || 'Venue',
       rating: venue.rating || 0,
       capacity: venue.capacity || 100,
-      amenities: venue.amenities || [],
+      amenities: Array.isArray(venue.amenities) ? venue.amenities : [],
       unavailable_dates: [], // TODO: Add unavailable_dates field to venues table
       distance: null, // Placeholder for distance calculation
       last_booked_days_ago: null, // Placeholder for booking history
