@@ -60,12 +60,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     // Fetch featured venues - include all fields UI expects
     const { data: venues, error: venuesError } = await client
       .from('venues')
-      .select(`
-        *,
-        venueType:venue_type,
-        location:city,
-        reviewCount:rating
-      `)
+      .select('*')
       .limit(6)
       .order('rating', { ascending: false, nullsFirst: false });
     
