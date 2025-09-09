@@ -167,9 +167,9 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       
       // Capacity details
       capacity_details: {
-        standing: venue.capacity || 100,
-        seated: venue.seated_capacity || Math.floor(venue.capacity * 0.7),
-        cocktail: venue.cocktail_capacity || Math.floor(venue.capacity * 0.8),
+        standing: venue.max_capacity || venue.capacity || 100,
+        seated: venue.seated_capacity || Math.floor((venue.max_capacity || venue.capacity || 100) * 0.7),
+        cocktail: venue.cocktail_capacity || Math.floor((venue.max_capacity || venue.capacity || 100) * 0.8),
       }
     };
     

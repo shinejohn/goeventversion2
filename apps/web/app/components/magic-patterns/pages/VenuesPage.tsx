@@ -466,7 +466,7 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
                             Trending #{index + 1}
                           </div>
                           <div className="h-40 overflow-hidden">
-                            <img src={venue.images[0]} alt={venue.name} className="w-full h-full object-cover" />
+                            <img src={(Array.isArray(venue.images) && venue.images[0]) || venue.image_url || 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'} alt={venue.name} className="w-full h-full object-cover" />
                           </div>
                           <div className="p-4">
                             <h3 className="font-bold text-lg text-gray-900 line-clamp-1">
@@ -507,7 +507,7 @@ export const VenuesPage = ({ venues }: { venues?: VenueData[] }) => {
                             New Venue
                           </div>
                           <div className="h-40 overflow-hidden">
-                            <img src={venue.images[0]} alt={venue.name} className="w-full h-full object-cover" />
+                            <img src={(Array.isArray(venue.images) && venue.images[0]) || venue.image_url || 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'} alt={venue.name} className="w-full h-full object-cover" />
                           </div>
                           <div className="p-4">
                             <h3 className="font-bold text-lg text-gray-900 line-clamp-1">

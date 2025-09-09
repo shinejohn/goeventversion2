@@ -72,7 +72,7 @@ export function transformVenueData(venue: Tables<'venues'>): VenueData {
     community_id: null, // Not in the venues table
     account_id: venue.account_id,
     venue_type: venue.venue_type || 'indoor',
-    price_per_hour: venue.base_hourly_rate || null,
+    price_per_hour: venue.price_per_hour || venue.base_hourly_rate || null,
     distance: null, // Calculated separately if needed
     listed_date: venue.created_at || new Date().toISOString(),
     last_booked_days_ago: null, // Calculated separately if needed
@@ -147,8 +147,8 @@ export function transformEventData(event: Tables<'events'> & {
     id: event.id,
     name: event.title,
     description: event.description || '',
-    startDate: event.start_date,
-    endDate: event.end_date,
+    startDate: event.start_datetime || new Date().toISOString(),
+    endDate: event.end_datetime || event.start_datetime || new Date().toISOString(),
     location: {
       venueId: event.venue_id,
       venue: event.venues?.name || event.location_name || 'TBA',
@@ -170,9 +170,9 @@ export function transformEventData(event: Tables<'events'> & {
     tags,
     image: event.image_url || null,
     gallery,
-    price: event.base_price || 0,
+    price: event.ticket_price || event.price_min || 0,
     capacity: event.venues?.max_capacity || event.max_capacity || 0,
-    currentBookings: event.current_bookings || 0,
+    currentBookings: event.current_attendees || 0,
     status: event.status || 'draft',
     featured: event.is_featured || false,
   };
@@ -224,13 +224,13 @@ export function transformPerformerData(performer: Tables<'performers'>): Perform
   
   return {
     id: performer.id,
-    name: performer.stage_name || 'Unknown Performer',
+    name: performer.name || performer.stage_name || 'Unknown Performer',
     bio: performer.bio || '',
     genres: Array.isArray(performer.genres) ? performer.genres : [],
     instruments: Array.isArray(performer.instruments) ? performer.instruments : [],
     profileImage: performer.profile_image_url || null,
     coverImage: null, // Not in schema
-    rating: Number(performer.average_rating) || null,
+    rating: Number(performer.rating) || null,
     reviewCount: performer.total_performances || 0, // Using performances as proxy
     hourlyRate: Number(performer.base_rate) || null,
     location: {

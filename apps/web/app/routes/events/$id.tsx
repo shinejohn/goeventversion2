@@ -144,11 +144,11 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     
     // Calculate event metrics
     const eventMetrics = {
-      daysUntilEvent: Math.ceil((new Date(event.start_date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)),
-      duration: Math.ceil((new Date(event.end_date).getTime() - new Date(event.start_date).getTime()) / (1000 * 60 * 60)),
-      isUpcoming: new Date(event.start_date) > new Date(),
-      isPast: new Date(event.end_date) < new Date(),
-      isHappening: new Date() >= new Date(event.start_date) && new Date() <= new Date(event.end_date),
+      daysUntilEvent: Math.ceil((new Date(event.start_datetime).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)),
+      duration: Math.ceil((new Date(event.end_datetime || event.start_datetime).getTime() - new Date(event.start_datetime).getTime()) / (1000 * 60 * 60)),
+      isUpcoming: new Date(event.start_datetime) > new Date(),
+      isPast: new Date(event.end_datetime || event.start_datetime) < new Date(),
+      isHappening: new Date() >= new Date(event.start_datetime) && new Date() <= new Date(event.end_datetime || event.start_datetime),
       availableSpots: event.max_capacity ? event.max_capacity - (event.current_attendees || 0) : null,
     };
     
@@ -177,10 +177,10 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         ticket_url: event.ticket_url,
         highlights: event.highlights || [],
         amenities: event.amenities || [],
-        age_restriction: event.age_restriction || 'All Ages',
-        series: event.series_id ? { id: event.series_id, name: event.series_name } : null,
+        age_restriction: event.age_restrictions || 'All Ages',
+        series: event.series_id ? { id: event.series_id, name: 'Event Series' } : null,
         organizer: {
-          id: event.organizer_id || 'org-1',
+          id: event.account_id || 'org-1',
           name: 'Event Organizer',
           verified: false,
           description: '',
