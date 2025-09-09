@@ -60,8 +60,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
           .from('events')
           .select(`
             *,
-            venue:venues(name, address, city),
-            start_date:start_datetime
+            venues!venue_id(name, address, city)
           `, { count: 'exact' })
           .eq('status', 'published')
           .gte('start_datetime', new Date().toISOString());
@@ -153,11 +152,11 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       throw error;
     }
     
-    // Transform data for Magic Patterns component - simplified to work with basic query
+    // Transform data for Magic Patterns component
     const transformedEvents = (events || []).map(event => ({
       ...event,
       // UI expects these specific fields
-      date: event.start_date ? new Date(event.start_date).toLocaleDateString('en-US', {
+      date: event.start_datetime ? new Date(event.start_datetime).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric'
       }) : '',
@@ -165,10 +164,10 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         hour: 'numeric',
         minute: '2-digit'
       }) : '',
-      venue: event.venue?.name || 'TBA',
-      price: event.price || (event.price_min ? `$${event.price_min}+` : 'Free'),
-      rawDate: event.start_date ? new Date(event.start_date) : new Date(),
-      image: event.image || event.image_url || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+      venue: event.venues?.name || event.location_name || 'TBA',
+      price: event.is_free ? 'Free' : (event.ticket_price ? `$${event.ticket_price}` : (event.price_min ? `$${event.price_min}+` : 'Check')),
+      rawDate: event.start_datetime ? new Date(event.start_datetime) : new Date(),
+      image: event.image_url || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
     }));
     
     // Calculate category distribution
