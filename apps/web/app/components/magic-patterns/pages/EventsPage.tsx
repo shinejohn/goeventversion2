@@ -1,8 +1,6 @@
-import React, { useState, createElement } from 'react';
-import { ArrowRightIcon, CalendarIcon, MapPinIcon, MusicIcon, UtensilsIcon, PaletteIcon, UserIcon, HeartIcon, GlassWaterIcon, SunIcon, StarIcon, ClockIcon, ChevronRightIcon, ShareIcon, CheckIcon, SearchIcon } from 'lucide-react';
+import React from 'react';
+import { CalendarIcon, MapPinIcon, ClockIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
-import { LocationSelector } from '../components/ui/LocationSelector';
-import { SharePopup } from '../components/ui/SharePopup';
 
 interface EventsPageProps {
   events?: any[];
@@ -10,11 +8,6 @@ interface EventsPageProps {
 
 export const EventsPage = ({ events = [] }: EventsPageProps) => {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [calendarSuccess, setCalendarSuccess] = useState<string | null>(null);
-  const [shareSuccess, setShareSuccess] = useState<string | null>(null);
-  const [eventToShare, setEventToShare] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
   
   // Event categories for filtering
   const categories = [{
