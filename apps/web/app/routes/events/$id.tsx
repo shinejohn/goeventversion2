@@ -229,11 +229,15 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
 // Component using the Magic Patterns wrapper
 export default createMagicPatternsRoute({
   component: EventDetailPage,
-  transformData: (loaderData) => ({
-    event: loaderData.event,
-    relatedEvents: loaderData.similarEvents,
-    attendeeCount: loaderData.attendeeCount,
-  }),
+  transformData: (loaderData) => {
+    console.log('[EventDetailRoute] Loader data:', loaderData);
+    console.log('[EventDetailRoute] Event data:', loaderData.event);
+    return {
+      event: loaderData.event,
+      relatedEvents: loaderData.similarEvents,
+      attendeeCount: loaderData.attendeeCount,
+    };
+  },
 });
 
 // SEO meta tags 🎯

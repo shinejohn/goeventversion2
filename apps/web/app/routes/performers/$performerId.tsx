@@ -258,11 +258,6 @@ export default createMagicPatternsRoute({
   component: PerformerProfilePage,
   transformData: (loaderData) => ({
     performer: loaderData.performer,
-    upcomingEvents: loaderData.upcomingEvents,
-    pastEvents: loaderData.pastEvents,
-    reviews: loaderData.reviews,
-    similarPerformers: loaderData.similarPerformers,
-    metrics: loaderData.metrics,
   }),
 });
 

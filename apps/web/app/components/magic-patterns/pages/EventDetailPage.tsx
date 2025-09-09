@@ -42,9 +42,9 @@ const EventDetailPageInternal = ({ eventId = 'event-1', event: propEvent, relate
   // Transform database data to component format
   const eventData = {
     ...propEvent,
-    // Transform date fields
-    date: new Date(propEvent.start_date),
-    endDate: new Date(propEvent.end_date),
+    // Transform date fields - check if dates exist first
+    date: propEvent.start_date ? new Date(propEvent.start_date) : new Date(),
+    endDate: propEvent.end_date ? new Date(propEvent.end_date) : new Date(),
     
     // Ensure venue data structure
     venue: propEvent.venue || {

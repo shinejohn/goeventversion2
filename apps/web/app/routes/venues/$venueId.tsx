@@ -264,14 +264,13 @@ export const meta = ({ data }: Route.MetaArgs) => {
 // Component using the Magic Patterns wrapper
 export default createMagicPatternsRoute({
   component: VenueProfilePage,
-  transformData: (loaderData) => ({
-    venue: loaderData.venue,
-    upcomingEvents: loaderData.upcomingEvents,
-    pastEvents: loaderData.pastEvents,
-    reviews: loaderData.reviews,
-    similarVenues: loaderData.similarVenues,
-    metrics: loaderData.metrics,
-  }),
+  transformData: (loaderData) => {
+    console.log('[VenueDetailRoute] Loader data:', loaderData);
+    console.log('[VenueDetailRoute] Venue data:', loaderData.venue);
+    return {
+      venue: loaderData.venue,
+    };
+  },
 });
 
 // Cache headers 🚀

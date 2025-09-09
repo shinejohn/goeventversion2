@@ -18,8 +18,26 @@ export const VenueProfilePage = ({ venue }: VenueProfilePageProps) => {
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   
-  // Prepare images array
-  const images = venue.gallery_images || (venue.image_url ? [venue.image_url] : []);
+  // Check if venue exists or is invalid
+  if (!venue || !venue.id) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900">Venue not found</h2>
+          <p className="mt-2 text-gray-600">The venue you're looking for doesn't exist.</p>
+          <button
+            onClick={() => navigate('/venues')}
+            className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+          >
+            Browse Venues
+          </button>
+        </div>
+      </div>
+    );
+  }
+  
+  // Prepare images array - handle null venue
+  const images = venue?.gallery_images || (venue?.image_url ? [venue.image_url] : []);
   
   // Amenities mapping
   const amenityIcons: Record<string, React.ReactNode> = {
@@ -31,9 +49,9 @@ export const VenueProfilePage = ({ venue }: VenueProfilePageProps) => {
     'wheelchair-accessible': <AccessibilityIcon className="h-5 w-5" />,
   };
   
-  const amenitiesList = venue.amenities && Array.isArray(venue.amenities) 
+  const amenitiesList = venue?.amenities && Array.isArray(venue.amenities) 
     ? venue.amenities 
-    : Object.keys(venue.amenities || {}).filter(key => venue.amenities[key]);
+    : Object.keys(venue?.amenities || {}).filter(key => venue?.amenities[key]);
   
   return (
     <div className="min-h-screen bg-gray-50">

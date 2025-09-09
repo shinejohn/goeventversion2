@@ -21,11 +21,15 @@ export function createMagicPatternsRoute<T>({
   errorComponent: ErrorComponent,
 }: MagicPatternsRouteWrapperProps<T>) {
   return function MagicPatternsRoute() {
+    // Hooks must be called at the top level, not inside try-catch
+    const loaderData = useLoaderData();
+    
+    console.log('[MagicPatternsRoute] Raw loader data:', loaderData);
+    
     try {
-      const loaderData = useLoaderData();
-      
       // Transform data if transformer provided
       const props = transformData ? transformData(loaderData) : loaderData;
+      console.log('[MagicPatternsRoute] Transformed props:', props);
       
       // Render the Magic Patterns component with props
       return <Component {...props} />;
