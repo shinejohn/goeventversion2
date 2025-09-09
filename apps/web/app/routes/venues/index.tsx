@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Route } from './+types/index';
+import type { Route } from './+types';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { z } from 'zod';
 
