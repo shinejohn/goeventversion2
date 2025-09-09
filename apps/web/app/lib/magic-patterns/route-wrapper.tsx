@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoaderData } from 'react-router';
+import { useLoaderData } from '@react-router/react';
 import type { Route } from '@react-router/dev/routes';
 
 /**

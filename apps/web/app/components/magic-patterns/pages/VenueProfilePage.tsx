@@ -5,7 +5,7 @@ import {
   CarIcon, MicIcon, ProjectorIcon, UtensilsIcon, AccessibilityIcon,
   PhoneIcon, MailIcon, GlobeIcon, ArrowRightIcon
 } from 'lucide-react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from '@react-router/react';
 import { EntityImage } from '@kit/ui/makerkit/entity-image';
 
 interface VenueProfilePageProps {
