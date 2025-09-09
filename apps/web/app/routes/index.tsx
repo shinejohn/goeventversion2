@@ -5,6 +5,12 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { createMagicPatternsRoute } from '~/lib/magic-patterns/route-wrapper';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
+  // First log the environment variables being used
+  console.log('=== SUPABASE CONFIG DEBUG ===');
+  console.log('import.meta.env.VITE_SUPABASE_URL:', import.meta.env.VITE_SUPABASE_URL);
+  console.log('import.meta.env.VITE_SUPABASE_ANON_KEY exists:', !!import.meta.env.VITE_SUPABASE_ANON_KEY);
+  console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
+  
   const client = getSupabaseServerClient(request);
   
   // Log environment for debugging

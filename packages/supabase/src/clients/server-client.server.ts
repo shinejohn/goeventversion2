@@ -10,6 +10,10 @@ import { Database } from '../database.types';
 import { getSupabaseClientKeys } from '../get-supabase-client-keys';
 
 const keys = getSupabaseClientKeys();
+console.log('=== SERVER CLIENT INIT ===');
+console.log('Supabase URL being used:', keys.url);
+console.log('Has public key:', !!keys.publicKey);
+console.log('=== END SERVER CLIENT INIT ===');
 
 /**
  * @name getSupabaseServerClient
