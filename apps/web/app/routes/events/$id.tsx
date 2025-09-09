@@ -21,6 +21,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
   
   try {
     const { id } = params;
+    console.log('[LOADER DEBUG] events/$id starting, eventId:', id);
     logger.info({ loader: 'events/$id', eventId: id }, '🎯 Loading event details');
     
     const client = getSupabaseServerClient(request);
