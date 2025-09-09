@@ -59,13 +59,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       (async () => {
         let query = client
           .from('performers')
-          .select(`
-            *,
-            stage_name:name,
-            average_rating:rating,
-            total_reviews:rating,
-            is_verified:is_active
-          `, { count: 'exact' });
+          .select('*', { count: 'exact' });
         
         // Apply filters
         if (params.search) {
