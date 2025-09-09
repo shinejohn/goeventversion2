@@ -1,25 +1,14 @@
-[providers]
-node = "18"
+[phases.setup]
+nixPkgs = ["nodejs_20"]
 
-[variables]
-NIXPACKS_NO_CACHE = "1"
+[phases.install]
+cmds = ["corepack enable", "pnpm install --frozen-lockfile"]
 
-[build]
-cmd = "pnpm install && pnpm build"
-
-# Ensure VITE environment variables are available during build
-[build.env]
-NODE_ENV = "production"
-VITE_PRODUCT_NAME = "${VITE_PRODUCT_NAME}"
-VITE_SITE_TITLE = "${VITE_SITE_TITLE}"
-VITE_SITE_DESCRIPTION = "${VITE_SITE_DESCRIPTION}"
-VITE_SITE_URL = "${VITE_SITE_URL}"
-VITE_DEFAULT_LOCALE = "${VITE_DEFAULT_LOCALE}"
-VITE_DEFAULT_THEME_MODE = "${VITE_DEFAULT_THEME_MODE}"
-VITE_THEME_COLOR = "${VITE_THEME_COLOR}"
-VITE_THEME_COLOR_DARK = "${VITE_THEME_COLOR_DARK}"
-VITE_SUPABASE_URL = "${VITE_SUPABASE_URL}"
-VITE_SUPABASE_ANON_KEY = "${VITE_SUPABASE_ANON_KEY}"
+[phases.build]
+cmds = ["pnpm build"]
 
 [start]
 cmd = "pnpm start"
+
+[variables]
+NIXPACKS_NO_CACHE = "1"

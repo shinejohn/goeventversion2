@@ -11,20 +11,29 @@ export function getSupabaseClientKeys() {
   console.log('import.meta.env.VITE_SUPABASE_ANON_KEY:', import.meta.env.VITE_SUPABASE_ANON_KEY);
   console.log('All env vars:', Object.keys(import.meta.env).filter(k => k.includes('SUPABASE')));
   
-  const url = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co';
+  const url = import.meta.env.VITE_SUPABASE_URL;
   const publicKey = import.meta.env.VITE_SUPABASE_PUBLIC_KEY ??
-        import.meta.env.VITE_SUPABASE_ANON_KEY ??
-        'placeholder-key';
+        import.meta.env.VITE_SUPABASE_ANON_KEY;
   
   console.log('Final URL being used:', url);
-  console.log('Final publicKey being used:', publicKey.substring(0, 20) + '...');
-  console.log('Using fallback URL?', url === 'https://placeholder.supabase.co');
-  console.log('Using fallback key?', publicKey === 'placeholder-key');
+  console.log('Final publicKey being used:', publicKey ? publicKey.substring(0, 20) + '...' : 'NOT SET');
+  console.log('Has URL:', !!url);
+  console.log('Has publicKey:', !!publicKey);
   console.log('=== END getSupabaseClientKeys DEBUG ===');
   
+  if (!url || !publicKey) {
+    console.error('❌ Missing Supabase environment variables!');
+    console.error('URL:', url || 'NOT SET');
+    console.error('Public Key:', publicKey ? 'SET' : 'NOT SET');
+    throw new Error(
+      'Missing required Supabase environment variables. ' +
+      'Please ensure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set.'
+    );
+  }
+
   return z
     .object({
-      url: z.string().min(1),
+      url: z.string().url().min(1),
       publicKey: z.string().min(1),
     })
     .parse({

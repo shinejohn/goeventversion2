@@ -1,9 +1,8 @@
 [build]
 builder = "nixpacks"
-buildCommand = "pnpm install && chmod +x scripts/build-with-env.sh && ./scripts/build-with-env.sh"
+# Nixpacks will use nixpacks.toml for build commands
 
 [deploy]
-startCommand = "pnpm start"
 healthcheckPath = "/healthcheck"
 healthcheckTimeout = 300
 
