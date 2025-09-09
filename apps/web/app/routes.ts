@@ -72,7 +72,7 @@ const magicPatternsPublicLayout = layout('routes/layouts/magic-patterns-public.t
   
   // Public discovery pages
   route('venues', 'routes/venues/index.tsx'),
-  route('venues/:id', 'routes/venues/$id.tsx'),
+  route('venues/:venueId', 'routes/venues/$venueId.tsx'),
   route('venues/submit', 'routes/venues/submit.tsx'),
   route('venues/trending', 'routes/venues/trending.tsx'),
   route('venues/new', 'routes/venues/new.tsx'),
@@ -82,7 +82,7 @@ const magicPatternsPublicLayout = layout('routes/layouts/magic-patterns-public.t
   route('events/:id', 'routes/events/$id.tsx'),
   
   route('performers', 'routes/performers/index.tsx'),
-  route('performers/:id', 'routes/performers/$id.tsx'),
+  route('performers/:performerId', 'routes/performers/$performerId.tsx'),
   
   route('hubs', 'routes/hubs/index.tsx'),
   route('hub/:slug', 'routes/hub/$slug/index.tsx'),
