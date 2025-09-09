@@ -1,0 +1,25 @@
+# Simple nixpacks config - no Docker BS
+[phases.setup]
+# Just give us Node and pnpm
+nixPkgs = ["nodejs_22", "pnpm"]
+
+[phases.install]
+# Install dependencies
+cmds = ["pnpm install --frozen-lockfile"]
+
+[phases.build]
+# Build everything
+cmds = [
+    "echo '🔨 Building application...'",
+    "pnpm build",
+    "echo '✅ Build complete!'",
+    "ls -la apps/web/build/ || echo 'Warning: build directory not found'"
+]
+
+[start]
+# Start the server directly
+cmd = "cd apps/web && node build/server/index.js"
+
+[variables]
+# Ensure production mode
+NODE_ENV = "production"

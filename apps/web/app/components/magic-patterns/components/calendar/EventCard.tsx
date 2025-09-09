@@ -98,12 +98,14 @@ export const EventCard = ({
       type: 'text/calendar;charset=utf-8'
     });
     const url = URL.createObjectURL(blob);
-    const link = typeof document !== "undefined" && document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', `${event.title.replace(/\s+/g, '_')}.ics`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    if (typeof document !== "undefined") {
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${event.title.replace(/\s+/g, '_')}.ics`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
     // Show success message
     setCalendarSuccess(true);
     setTimeout(() => setCalendarSuccess(false), 2000);

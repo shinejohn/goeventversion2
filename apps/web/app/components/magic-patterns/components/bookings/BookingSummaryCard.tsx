@@ -7,7 +7,8 @@ type BookingSummaryCardProps = {
 export const BookingSummaryCard = ({
   booking
 }: BookingSummaryCardProps) => {
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string | undefined) => {
+    if (!dateString) return '';
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
       weekday: 'long',
@@ -16,7 +17,8 @@ export const BookingSummaryCard = ({
       year: 'numeric'
     });
   };
-  const formatTime = (timeString: string) => {
+  const formatTime = (timeString: string | undefined) => {
+    if (!timeString) return '';
     const [hour, minute] = timeString.split(':');
     const hourNum = parseInt(hour);
     return hourNum === 0 ? `12:${minute} AM` : hourNum < 12 ? `${hourNum}:${minute} AM` : hourNum === 12 ? `12:${minute} PM` : `${hourNum - 12}:${minute} PM`;

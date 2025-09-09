@@ -24,7 +24,7 @@ export const ReviewStep = ({
   let durationHours = endHour - startHour;
   if (durationHours <= 0) durationHours += 24; // Handle overnight events
   // Format date for display
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string | undefined) => {
     if (!dateString) return '';
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -35,7 +35,8 @@ export const ReviewStep = ({
     });
   };
   // Format time for display
-  const formatTime = (timeString: string) => {
+  const formatTime = (timeString: string | undefined) => {
+    if (!timeString) return '';
     const hour = parseInt(timeString.split(':')[0]);
     return hour === 0 ? '12:00 AM' : hour < 12 ? `${hour}:00 AM` : hour === 12 ? '12:00 PM' : `${hour - 12}:00 PM`;
   };
@@ -69,7 +70,7 @@ export const ReviewStep = ({
                 <div className="text-gray-900">
                   {formatDate(formData.primaryDate)}
                 </div>
-                {formData.alternativeDates.some(d => d) && <div className="text-xs text-gray-500 mt-1">
+                {formData.alternativeDates.some((d: any) => d) && <div className="text-xs text-gray-500 mt-1">
                     Alternative dates available if needed
                   </div>}
               </div>

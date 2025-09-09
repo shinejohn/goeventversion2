@@ -71,7 +71,7 @@ export const CalendarWizard = ({
     name: 'Monetization',
     icon: <DollarSignIcon className="h-5 w-5" />
   }];
-  const updateFormData = (section, data) => {
+  const updateFormData = (section: any, data: any) => {
     setFormData(prev => ({
       ...prev,
       [section]: data
@@ -144,7 +144,7 @@ export const CalendarWizard = ({
           <div className="sm:hidden">
             <p className="text-sm font-medium text-indigo-600">
               Step {currentStep} of {steps.length}:{' '}
-              {steps[currentStep - 1].name}
+              {steps[currentStep - 1]?.name}
             </p>
           </div>
         </div>

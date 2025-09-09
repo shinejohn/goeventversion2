@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 export const AdvancedFilters = () => {
-  const [priceRange, setPriceRange] = useState([0, 500]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   return <div className="bg-white p-4 rounded-lg shadow-md mt-4 border border-gray-200">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-4">
@@ -40,7 +40,7 @@ export const AdvancedFilters = () => {
               Price Range
             </h3>
             <div className="px-2">
-              <input type="range" min="0" max="500" value={priceRange[1]} onChange={e => setPriceRange([priceRange[0], parseInt(e.target.value)])} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" />
+              <input type="range" min="0" max="500" value={priceRange[1] ?? 500} onChange={e => setPriceRange([priceRange[0], parseInt(e.target.value)])} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" />
               <div className="flex justify-between mt-2 text-xs text-gray-500">
                 <span>${priceRange[0]}</span>
                 <span>${priceRange[1] === 500 ? '500+' : priceRange[1]}</span>

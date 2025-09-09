@@ -53,7 +53,7 @@ export const CalendarPreview = ({
           {formData.description || 'Calendar description will appear here...'}
         </p>
         {formData.tags && formData.tags.length > 0 && <div className="mt-3 flex flex-wrap gap-1">
-            {formData.tags.slice(0, 3).map((tag, index) => <span key={index} className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
+            {formData.tags.slice(0, 3).map((tag: any, index: number) => <span key={index} className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
                 {tag}
               </span>)}
             {formData.tags.length > 3 && <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">

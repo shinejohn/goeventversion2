@@ -17,7 +17,7 @@ export const BookingConfirmation = ({
   onBrowseVenues
 }: BookingConfirmationProps) => {
   // Format date for display
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string | undefined) => {
     if (!dateString) return 'Not specified';
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -28,7 +28,7 @@ export const BookingConfirmation = ({
     });
   };
   // Format time for display
-  const formatTime = (timeString: string) => {
+  const formatTime = (timeString: string | undefined) => {
     if (!timeString) return '';
     const hour = parseInt(timeString.split(':')[0]);
     return hour === 0 ? '12:00 AM' : hour < 12 ? `${hour}:00 AM` : hour === 12 ? '12:00 PM' : `${hour - 12}:00 PM`;
