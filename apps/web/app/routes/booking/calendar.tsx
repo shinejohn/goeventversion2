@@ -1,36 +1,55 @@
 import React from 'react';
-import type { Route } from '~/types/app/routes/booking/calendar';
-
+import type { Route } from './+types';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { CreateSharedCalendar } from '~/components/magic-patterns/components/profile/CreateSharedCalendar';
-import { PublicCalendar } from '~/components/magic-patterns/components/profile/PublicCalendar';
-import { SharedCalendars } from '~/components/magic-patterns/components/profile/SharedCalendars';
+import { getLogger } from '@kit/shared/logger';
 
-export const loader = async ({ request, params }: Route.LoaderArgs) => {
-  const client = getSupabaseServerClient(request);
-  
-  // TODO: Implement proper data loading for BookingCalendar
-  // Add authentication check if needed
-  // Load relevant data from Supabase
-  
-  return {
-    data: {
-      // Placeholder data structure
-      timestamp: new Date().toISOString()
-    }
-  };
-};
+// Magic Patterns imports
+import { CreateSharedCalendar } from '~/components/magic-patterns/components/profile/CreateSharedCalendar';
+import { createMagicPatternsRoute } from '~/lib/magic-patterns/route-wrapper';
 
 /**
- * Interactive booking calendar with availability
- * 
- * TODO: Implement full functionality for BookingCalendar
- * - Connect to Magic Patterns component
- * - Add proper data loading/mutations
- * - Implement authentication/authorization
- * - Add error handling and loading states
+ * Interactive booking calendar with availability - Dashboard page
+ * This is a dashboard route that shows within the sidebar navigation
  */
-export default function BookingCalendarPage() {
+
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const logger = await getLogger();
   
-  return <CreateSharedCalendar />;
-}
+  try {
+    logger.info({ page: 'booking-calendar' }, 'Loading booking calendar dashboard page');
+    
+    const client = getSupabaseServerClient(request);
+    
+    // TODO: Load calendar data, bookings, availability
+    // Add authentication check if needed
+    // Load user's calendar data from Supabase
+    
+    return {
+      calendarData: {
+        // Placeholder data structure
+        timestamp: new Date().toISOString(),
+        events: [],
+        availability: []
+      }
+    };
+  } catch (error) {
+    logger.error({ error, page: 'booking-calendar' }, 'Error loading booking calendar');
+    return {
+      calendarData: {
+        timestamp: new Date().toISOString(),
+        events: [],
+        availability: []
+      },
+      error: error instanceof Error ? error.message : 'Failed to load calendar'
+    };
+  }
+};
+
+// Use Magic Patterns route wrapper for consistent layout
+export default createMagicPatternsRoute({
+  component: CreateSharedCalendar,
+  transformData: (loaderData) => ({
+    ...loaderData.calendarData,
+    error: loaderData.error,
+  }),
+});

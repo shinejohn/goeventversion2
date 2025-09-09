@@ -13,7 +13,7 @@ import { EventHero } from '../components/events/EventHero';
 import { ContentTabs } from '../components/events/ContentTabs';
 import { VenueMap } from '../components/events/VenueMap';
 import { RelatedEvents } from '../components/events/RelatedEvents';
-import { useNavigate } from '@react-router/react';
+import { useNavigate } from 'react-router';
 
 const EventDetailPageInternal = ({ eventId = 'event-1', event: propEvent, relatedEvents: propRelatedEvents = [], attendeeCount: propAttendeeCount = 0 }: EventDetailPageProps) => {
   const [isSaved, setIsSaved] = useState(false);
