@@ -60,18 +60,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
           .from('events')
           .select(`
             *,
-            date:start_datetime,
-            start_date:start_datetime,
-            rawDate:start_datetime,
-            location_name:venues!venue_id(name),
-            location:venues!venue_id(city),
-            venue:venues!venue_id (
-              id,
-              name,
-              address,
-              city,
-              max_capacity
-            )
+            venue:venues(name, address, city),
+            start_date:start_datetime
           `, { count: 'exact' })
           .eq('status', 'published')
           .gte('start_datetime', new Date().toISOString());
