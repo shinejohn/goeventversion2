@@ -4,6 +4,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "prebuild": "echo '=== BUILD TIME ENV CHECK ===' && env | grep VITE_ || echo 'NO VITE VARS FOUND AT BUILD TIME!'",
     "build": "cross-env NODE_ENV=production react-router build",
     "dev": "react-router dev",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
