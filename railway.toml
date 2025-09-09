@@ -1,6 +1,7 @@
 [build]
 builder = "nixpacks"
-# Nixpacks will use nixpacks.toml for build commands
+nixpacksPlan = "nixpacks.toml"
+# Force nixpacks to use our configuration
 
 [deploy]
 healthcheckPath = "/healthcheck"
