@@ -1,80 +1,282 @@
 import React from 'react';
 import type { Route } from './+types/$venueId';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { notFound } from 'react-router';
 import { VenueProfilePage } from '../../components/magic-patterns/pages/VenueProfilePage';
 import { createMagicPatternsRoute } from '../../lib/magic-patterns/route-wrapper';
+import { transformVenueData, transformEventData } from '~/lib/magic-patterns/data-transformers';
 import { getLogger } from '@kit/shared/logger';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const logger = await getLogger();
+  const startTime = Date.now();
   const { venueId } = params;
   
-  logger.info({ venueId }, 'Loading venue profile');
-  
-  const client = getSupabaseServerClient(request);
-  
-  // Fetch venue details with related data
-  const { data: venue, error: venueError } = await client
-    .from('venues')
-    .select(`
-      *,
-      reviews:reviews(
-        id,
-        rating,
-        title,
-        content,
-        created_at,
-        reviewer:account_id(id, name, picture_url)
-      ),
-      events:events(
-        id,
-        title,
-        start_datetime,
-        image_url,
-        category,
-        price_min,
-        price_max
-      )
-    `)
-    .eq('id', venueId)
-    .single();
-  
-  if (venueError || !venue) {
-    logger.error({ error: venueError, venueId }, 'Venue not found');
-    throw notFound();
+  try {
+    logger.info({ loader: 'venues/$venueId', venueId }, '🏛️ Loading venue profile');
+    
+    const client = getSupabaseServerClient(request);
+    
+    // Get current user for personalization
+    const { data: { user } } = await client.auth.getUser();
+    
+    // Parallel data fetching for performance 🚀
+    const [venueQuery, upcomingEventsQuery, pastEventsQuery, similarVenuesQuery] = await Promise.all([
+      // Main venue data with comprehensive fields
+      client
+        .from('venues')
+        .select(`
+          *,
+          venue_reviews (
+            id,
+            rating,
+            title,
+            content,
+            created_at,
+            reviewer_name,
+            event_id,
+            is_verified
+          ),
+          bookings_count:bookings(count)
+        `)
+        .eq('id', venueId)
+        .single(),
+      
+      // Get upcoming events at this venue
+      client
+        .from('events')
+        .select(`
+          *,
+          performers:event_performers(
+            performer:performers!performer_id(
+              id,
+              stage_name,
+              name,
+              category,
+              profile_image_url
+            )
+          )
+        `)
+        .eq('venue_id', venueId)
+        .gte('start_datetime', new Date().toISOString())
+        .eq('status', 'published')
+        .order('start_datetime', { ascending: true })
+        .limit(10),
+      
+      // Get past events for venue portfolio
+      client
+        .from('events')
+        .select(`
+          id,
+          title,
+          start_datetime,
+          category,
+          image_url
+        `)
+        .eq('venue_id', venueId)
+        .lt('start_datetime', new Date().toISOString())
+        .order('start_datetime', { ascending: false })
+        .limit(5),
+      
+      // Get similar venues (same type/capacity range)
+      (async () => {
+        // First get the current venue's type and capacity
+        const { data: currentVenue } = await client
+          .from('venues')
+          .select('venue_type, capacity, city')
+          .eq('id', venueId)
+          .single();
+        
+        if (!currentVenue) return { data: [] };
+        
+        // Then find similar ones
+        return await client
+          .from('venues')
+          .select('*')
+          .neq('id', venueId)
+          .eq('venue_type', currentVenue.venue_type)
+          .gte('capacity', currentVenue.capacity * 0.5)
+          .lte('capacity', currentVenue.capacity * 1.5)
+          .order('rating', { ascending: false })
+          .limit(4);
+      })(),
+    ]);
+    
+    const { data: venue, error: venueError } = venueQuery;
+    const { data: upcomingEvents } = upcomingEventsQuery;
+    const { data: pastEvents } = pastEventsQuery;
+    const { data: similarVenues } = similarVenuesQuery;
+    
+    if (venueError || !venue) {
+      logger.warn({ error: venueError, venueId }, 'Venue not found');
+      // Return null venue data for UI to handle
+      return {
+        venue: null,
+        upcomingEvents: [],
+        pastEvents: [],
+        reviews: [],
+        similarVenues: [],
+        metrics: {
+          totalEvents: 0,
+          upcomingEvents: 0,
+          averageRating: 0,
+          totalReviews: 0,
+        },
+      };
+    }
+    
+    // Transform the venue data with all UI fields
+    const transformedVenue = {
+      ...transformVenueData(venue),
+      // Additional profile fields
+      full_description: venue.description || '',
+      gallery_images: venue.gallery_images || [],
+      floor_plans: venue.floor_plans || [],
+      virtual_tour_url: venue.virtual_tour_url || null,
+      rules_and_restrictions: venue.rules_and_restrictions || '',
+      
+      // Availability info
+      operating_hours: venue.operating_hours || {},
+      blackout_dates: venue.blackout_dates || [],
+      minimum_notice_hours: venue.minimum_notice_hours || 48,
+      
+      // Amenities detail
+      amenities_detail: {
+        included: venue.amenities || [],
+        available_for_rent: venue.rentable_amenities || [],
+        nearby: venue.nearby_amenities || []
+      },
+      
+      // Parking and transit
+      parking_info: venue.parking_info || {
+        type: 'street',
+        capacity: 0,
+        cost: 'Free',
+        distance: 'Adjacent'
+      },
+      transit_options: venue.transit_options || [],
+      
+      // Booking info
+      booking_info: {
+        base_hourly_rate: venue.base_hourly_rate || venue.price_per_hour,
+        minimum_hours: venue.minimum_booking_hours || 2,
+        deposit_required: venue.deposit_percentage || 25,
+        cancellation_policy: venue.cancellation_policy || 'Standard',
+        insurance_required: venue.insurance_required || false,
+        security_deposit: venue.security_deposit || 0,
+      },
+      
+      // Capacity details
+      capacity_details: {
+        standing: venue.capacity || 100,
+        seated: venue.seated_capacity || Math.floor(venue.capacity * 0.7),
+        cocktail: venue.cocktail_capacity || Math.floor(venue.capacity * 0.8),
+      }
+    };
+    
+    // Transform events
+    const transformedUpcomingEvents = (upcomingEvents || []).map(transformEventData);
+    const transformedPastEvents = (pastEvents || []).map(transformEventData);
+    
+    // Transform similar venues
+    const transformedSimilarVenues = (similarVenues || []).map(transformVenueData);
+    
+    // Process reviews
+    const reviews = venue.venue_reviews || [];
+    const averageRating = reviews.length > 0
+      ? reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length
+      : venue.rating || 0;
+    
+    // Calculate metrics
+    const venueMetrics = {
+      totalEvents: venue.total_events || 0,
+      upcomingEvents: transformedUpcomingEvents.length,
+      averageRating: averageRating,
+      totalReviews: reviews.length,
+      occupancyRate: venue.occupancy_rate || 0,
+      repeatBookingRate: venue.repeat_booking_rate || 0,
+    };
+    
+    const duration = Date.now() - startTime;
+    logger.info({ 
+      loader: 'venues/$venueId',
+      duration,
+      venueId,
+      upcomingEventsCount: transformedUpcomingEvents.length,
+      metrics: venueMetrics,
+    }, '🏛️ Venue profile loaded successfully');
+    
+    return {
+      venue: transformedVenue,
+      upcomingEvents: transformedUpcomingEvents,
+      pastEvents: transformedPastEvents,
+      reviews: reviews,
+      similarVenues: transformedSimilarVenues,
+      metrics: venueMetrics,
+    };
+    
+  } catch (error) {
+    logger.error({ 
+      error, 
+      loader: 'venues/$venueId',
+      venueId,
+      url: request.url 
+    }, 'Error loading venue profile');
+    
+    // Return empty data instead of throwing
+    return {
+      venue: null,
+      upcomingEvents: [],
+      pastEvents: [],
+      reviews: [],
+      similarVenues: [],
+      metrics: {
+        totalEvents: 0,
+        upcomingEvents: 0,
+        averageRating: 0,
+        totalReviews: 0,
+      },
+    };
   }
-  
-  // Calculate average rating
-  const ratings = venue.reviews?.map((r: any) => r.rating).filter(Boolean) || [];
-  const averageRating = ratings.length > 0 
-    ? ratings.reduce((a: number, b: number) => a + b, 0) / ratings.length 
-    : 0;
-  
-  // Transform venue data for the component
-  const venueData = {
-    ...venue,
-    average_rating: averageRating,
-    total_reviews: venue.reviews?.length || 0,
-    upcoming_events: venue.events?.filter((e: any) => 
-      new Date(e.start_datetime) > new Date()
-    ).slice(0, 6) || []
-  };
-  
-  logger.info({ venueId, reviewCount: venueData.total_reviews }, 'Venue profile loaded');
-  
-  return {
-    venue: venueData,
-    title: `${venue.name} - Venue Details`,
-    description: venue.description || `Book ${venue.name} for your next event`,
-  };
 };
 
 export const meta = ({ data }: Route.MetaArgs) => {
+  const venue = data?.venue;
+  
+  if (!venue) {
+    return [{ title: 'Venue Not Found | When The Fun' }];
+  }
+  
   return [
-    { title: data?.title || 'Venue Details' },
-    { name: 'description', content: data?.description || 'View venue details and book for your event' },
+    { title: `${venue.name} - ${venue.venue_type} | When The Fun` },
+    { 
+      name: 'description', 
+      content: venue.full_description || `Book ${venue.name} for your next event. ${venue.venue_type} venue with capacity for ${venue.capacity} guests.` 
+    },
+    { property: 'og:title', content: `${venue.name} | When The Fun` },
+    { property: 'og:description', content: venue.full_description || `${venue.venue_type} venue in ${venue.city}` },
+    { property: 'og:type', content: 'place' },
+    { property: 'og:image', content: venue.profile_image_url || '/default-venue.jpg' },
+    { property: 'place:location:latitude', content: venue.latitude?.toString() },
+    { property: 'place:location:longitude', content: venue.longitude?.toString() },
   ];
 };
 
-export default createMagicPatternsRoute(VenueProfilePage);
+// Component using the Magic Patterns wrapper
+export default createMagicPatternsRoute({
+  component: VenueProfilePage,
+  transformData: (loaderData) => ({
+    venue: loaderData.venue,
+    upcomingEvents: loaderData.upcomingEvents,
+    pastEvents: loaderData.pastEvents,
+    reviews: loaderData.reviews,
+    similarVenues: loaderData.similarVenues,
+    metrics: loaderData.metrics,
+  }),
+});
+
+// Cache headers 🚀
+export const headers = () => {
+  return {
+    'Cache-Control': 'public, max-age=300, s-maxage=3600', // 5 min client, 1 hour CDN
+  };
+};

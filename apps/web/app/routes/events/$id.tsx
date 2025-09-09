@@ -30,7 +30,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     
     // Parallel data fetching for performance 🚀
     const [eventQuery, performersQuery, similarEventsQuery, bookingsQuery] = await Promise.all([
-      // Main event data with venue info
+      // Main event data with venue info - comprehensive query for UI
       client
         .from('events')
         .select(`
@@ -46,7 +46,21 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
             max_capacity,
             amenities,
             profile_image_url,
-            base_hourly_rate
+            base_hourly_rate,
+            description,
+            is_verified,
+            parking_info,
+            transit_options,
+            nearby_amenities
+          ),
+          organizer:organizer_id (
+            id,
+            name,
+            description,
+            is_verified,
+            profile_image_url,
+            total_events,
+            total_followers
           )
         `)
         .eq('id', id)
@@ -59,11 +73,15 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           performer:performers!performer_id (
             id,
             stage_name,
+            name,
             category,
             bio,
             profile_image_url,
             genres,
-            base_rate
+            base_rate,
+            rating,
+            is_verified,
+            total_performances
           )
         `)
         .eq('event_id', id),
@@ -152,15 +170,31 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       metrics: eventMetrics,
     }, '🎊 Event details loaded successfully');
     
+    // Count attendees (bookings) for this event
+    const { count: attendeeCount } = await client
+      .from('bookings')
+      .select('*', { count: 'exact', head: true })
+      .eq('event_id', id)
+      .eq('status', 'confirmed');
+    
     return {
       event: {
         ...transformedEvent,
         venue: event.venues ? transformVenueData(event.venues) : null,
+        organizer: event.organizer || null,
+        // Additional fields EventDetailPage expects
+        ticket_price: event.ticket_price || event.price_min,
+        ticket_url: event.ticket_url,
+        highlights: event.highlights || [],
+        amenities: event.amenities || [],
+        age_restriction: event.age_restriction || 'All Ages',
+        series: event.series_id ? { id: event.series_id, name: event.series_name } : null,
       },
       performers,
       similarEvents: transformedSimilarEvents,
       userBooking,
       metrics: eventMetrics,
+      attendeeCount: attendeeCount || 0,
       user: user ? {
         id: user.id,
         email: user.email,
@@ -199,11 +233,8 @@ export default createMagicPatternsRoute({
   component: EventDetailPage,
   transformData: (loaderData) => ({
     event: loaderData.event,
-    performers: loaderData.performers,
-    similarEvents: loaderData.similarEvents,
-    userBooking: loaderData.userBooking,
-    metrics: loaderData.metrics,
-    user: loaderData.user,
+    relatedEvents: loaderData.similarEvents,
+    attendeeCount: loaderData.attendeeCount,
   }),
 });
 
