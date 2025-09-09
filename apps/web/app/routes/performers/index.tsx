@@ -53,6 +53,9 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     
     const client = getSupabaseServerClient(request);
     
+    // Calculate offset for pagination
+    const offset = (params.page - 1) * params.limit;
+    
     // Parallel data fetching for optimal performance 🚀
     const [performersQuery, genresQuery, topPerformers] = await Promise.all([
       // Main performers query
@@ -119,7 +122,6 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         }
         
         // Apply pagination
-        const offset = (params.page - 1) * params.limit;
         query = query.range(offset, offset + params.limit - 1);
         
         return await query;
@@ -152,6 +154,13 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       }, 'Failed to load performers');
       throw error;
     }
+    
+    logger.info({
+      loader: 'performers', 
+      performersCount: performers?.length || 0,
+      totalCount: count || 0,
+      firstPerformer: performers?.[0]
+    }, 'Performers query result')
     
     // Transform data for Magic Patterns component - simplified to work with basic query
     const transformedPerformers = (performers || []).map(performer => ({

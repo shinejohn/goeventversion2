@@ -52,6 +52,9 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     
     const client = getSupabaseServerClient(request);
     
+    // Calculate offset for pagination
+    const offset = (params.page - 1) * params.limit;
+    
     // Parallel data fetching for better performance 🚀
     const [eventsQuery, venuesQuery, categoryCounts] = await Promise.all([
       // Main events query with computed fields for UI
@@ -61,9 +64,10 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
           .select(`
             *,
             venues!venue_id(name, address, city)
-          `, { count: 'exact' })
-          .eq('status', 'published')
-          .gte('start_datetime', new Date().toISOString());
+          `, { count: 'exact' });
+          // Temporarily removed filters to debug
+          // .eq('status', 'published')
+          // .gte('start_datetime', new Date().toISOString());
         
         // Apply filters
         if (params.search) {
@@ -117,7 +121,6 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         }
         
         // Apply pagination
-        const offset = (params.page - 1) * params.limit;
         query = query.range(offset, offset + params.limit - 1);
         
         return await query;
@@ -151,6 +154,13 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       }, 'Failed to load events');
       throw error;
     }
+    
+    logger.info({
+      loader: 'events',
+      eventsCount: events?.length || 0,
+      totalCount: count || 0,
+      firstEvent: events?.[0]
+    }, 'Events query result')
     
     // Transform data for Magic Patterns component
     const transformedEvents = (events || []).map(event => ({
