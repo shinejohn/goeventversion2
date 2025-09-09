@@ -229,7 +229,6 @@ const bookingFlowLayout = layout('routes/layouts/booking-flow.tsx', [
   route('book-it/venues', 'routes/book-it/venues/index.tsx'),
   route('book-it/venues/:id', 'routes/book-it/venues/$id/index.tsx'),
   route('book-it/venues/:id/book', 'routes/book-it/venues/$id/book/index.tsx'),
-  route('venues/:id/book', 'routes/venues/$id/book.tsx'),
   
   // Booking flow steps
   route('book/event-details', 'routes/book/event-details.tsx'),
