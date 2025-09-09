@@ -16,7 +16,8 @@
       "Bash(pnpm --filter web typecheck)",
       "Bash(npx tsx:*)",
       "Bash(/dev/null)",
-      "Bash(npx supabase db push:*)"
+      "Bash(npx supabase db push:*)",
+      "Bash(ls:*)"
     ],
     "deny": []
   }

@@ -1,3 +1,21 @@
+# Ignore Docker files completely
 Dockerfile*
 docker-compose*
-.dockerignore
+.dockerignore*
+**/Dockerfile*
+**/docker-compose*
+**/.dockerignore*
+
+# Ignore generated files and caches
+.next/
+.turbo/
+dist/
+node_modules/
+.env*
+!.env.example
+
+# Ignore test and development files
+*.test.*
+*.spec.*
+playwright-report/
+test-results/

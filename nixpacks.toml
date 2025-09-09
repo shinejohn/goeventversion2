@@ -1,14 +1,31 @@
+# Force nixpacks to ignore any Docker files
+[providers]
+node = { version = "22" }
+
 [phases.setup]
-nixPkgs = ["nodejs_22"]
+nixPkgs = ["nodejs_22", "coreutils", "findutils"]
 
 [phases.install]
-cmds = ["npm install -g pnpm@latest", "pnpm install --frozen-lockfile"]
+# Install pnpm globally and then install dependencies
+cmds = [
+  "corepack enable",
+  "corepack prepare pnpm@10.15.0 --activate",
+  "pnpm --version",
+  "pnpm install --frozen-lockfile --prefer-offline"
+]
 
-[phases.build]
+[phases.build] 
+# Build the application
 cmds = ["pnpm build"]
 
 [start]
+# Start the production server
 cmd = "pnpm start"
 
 [variables]
+# Disable nixpacks cache to ensure fresh builds
 NIXPACKS_NO_CACHE = "1"
+# Ensure Node.js 22 is used
+NODE_VERSION = "22"
+# Use the specific pnpm version from package.json
+PNPM_VERSION = "10.15.0"
