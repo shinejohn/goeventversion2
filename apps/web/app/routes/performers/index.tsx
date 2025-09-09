@@ -152,8 +152,15 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       throw error;
     }
     
-    // Transform data for Magic Patterns component
-    const transformedPerformers = transformPerformersList(performers || []);
+    // Transform data for Magic Patterns component - simplified to work with basic query
+    const transformedPerformers = (performers || []).map(performer => ({
+      ...performer,
+      // Ensure PerformersPage gets the fields it expects
+      stage_name: performer.name,
+      category: performer.category || 'Performer',
+      genres: performer.genres || [],
+      image: performer.image || performer.image_url || 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+    }));
     
     // Calculate genre distribution from all performers
     const genreStats: Record<string, number> = {};
