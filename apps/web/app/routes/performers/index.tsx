@@ -101,16 +101,17 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         // Apply sorting
         switch (params.sort) {
           case 'name':
-            query = query.order('stage_name', { ascending: true });
+            query = query.order('name', { ascending: true });
             break;
           case 'rating':
-            query = query.order('average_rating', { ascending: false, nullsFirst: false });
+            query = query.order('rating', { ascending: false, nullsFirst: false });
             break;
           case 'rate':
             query = query.order('base_rate', { ascending: true, nullsFirst: false });
             break;
           case 'performances':
-            query = query.order('total_performances', { ascending: false });
+            // No total_performances column in simplified query, use created_at as fallback
+            query = query.order('created_at', { ascending: false });
             break;
           case 'newest':
             query = query.order('created_at', { ascending: false });
