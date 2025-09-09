@@ -108,6 +108,11 @@ const magicPatternsPublicLayout = layout('routes/layouts/magic-patterns-public.t
   route('social/notifications', 'routes/social/notifications.tsx'),
   route('social/messages', 'routes/social/messages.tsx'),
   
+  // Debug routes (for production troubleshooting)
+  route('debug-production', 'routes/debug-production.tsx'),
+  route('test-db', 'routes/test-db.tsx'),
+  route('check-tables', 'routes/check-tables.tsx'),
+  
   // Test routes (development only)
   ...(process.env.NODE_ENV === 'development' ? [
     route('test-venues', 'routes/test-venues.tsx'),
