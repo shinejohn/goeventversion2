@@ -121,15 +121,9 @@ export const EventDataSchema = z.object({
 export type EventData = z.infer<typeof EventDataSchema>;
 
 export function transformEventData(event: Tables<'events'> & { 
-  venues?: { 
-    id: string; 
-    name: string; 
-    address: string; 
-    city: string; 
-    max_capacity: number; 
-  } | null 
+  venues?: Partial<Tables<'venues'>> | null 
 }): EventData {
-  // Extract gallery images
+  // Extract gallery images safely
   let gallery: string[] = [];
   if (event.gallery_images && typeof event.gallery_images === 'object') {
     if (Array.isArray(event.gallery_images)) {
@@ -137,10 +131,10 @@ export function transformEventData(event: Tables<'events'> & {
     }
   }
   
-  // Extract tags
+  // Extract tags safely
   let tags: string[] = [];
-  if (Array.isArray(event.tags)) {
-    tags = event.tags;
+  if (event.tags && Array.isArray(event.tags)) {
+    tags = event.tags.filter(tag => typeof tag === 'string');
   }
 
   return {
@@ -209,7 +203,7 @@ export const PerformerDataSchema = z.object({
 export type PerformerData = z.infer<typeof PerformerDataSchema>;
 
 export function transformPerformerData(performer: Tables<'performers'>): PerformerData {
-  // Extract location from the performer record
+  // Extract location from the performer record safely
   let city = performer.home_city || '';
   let state = '';
   let country = 'USA';
@@ -217,28 +211,45 @@ export function transformPerformerData(performer: Tables<'performers'>): Perform
   // Parse location if stored as "City, State" format
   if (performer.location && typeof performer.location === 'string') {
     const parts = performer.location.split(',').map(s => s.trim());
-    if (parts.length >= 1) city = parts[0];
-    if (parts.length >= 2) state = parts[1];
+    if (parts.length >= 1) city = parts[0] || '';
+    if (parts.length >= 2) state = parts[1] || '';
+  }
+  
+  // Extract genres safely
+  let genres: string[] = [];
+  if (performer.genres && Array.isArray(performer.genres)) {
+    genres = performer.genres.filter(g => typeof g === 'string');
+  }
+  
+  // Extract social links safely
+  let socialMedia = null;
+  if (performer.social_links && typeof performer.social_links === 'object' && !Array.isArray(performer.social_links)) {
+    socialMedia = {
+      instagram: performer.social_links.instagram || null,
+      facebook: performer.social_links.facebook || null,
+      twitter: performer.social_links.twitter || null,
+      youtube: performer.social_links.youtube || null,
+    };
   }
   
   return {
     id: performer.id,
     name: performer.name || performer.stage_name || 'Unknown Performer',
     bio: performer.bio || '',
-    genres: Array.isArray(performer.genres) ? performer.genres : [],
+    genres: genres,
     instruments: [], // Field doesn't exist in DB
     profileImage: performer.image || null, // DB has 'image' not 'profile_image_url'
     coverImage: null, // Not in schema
-    rating: Number(performer.rating) || null,
+    rating: performer.rating ? Number(performer.rating) : null,
     reviewCount: performer.total_reviews || 0,
-    hourlyRate: Number(performer.base_price) || null, // DB has 'base_price'
+    hourlyRate: performer.base_price ? Number(performer.base_price) : null,
     location: {
-      city: city,
-      state: state,
+      city: city || 'Unknown City',
+      state: state || '',
       country: country,
     },
     availability: [], // Would need to fetch from separate availability table
-    socialMedia: performer.social_links || null, // DB has 'social_links' not 'social_media'
+    socialMedia: socialMedia,
     verified: performer.verified || false,
   };
 }
@@ -280,23 +291,25 @@ export function transformBookingData(booking: Tables<'bookings'>): BookingData {
   };
 }
 
-// Batch transformers for lists
-export const transformVenuesList = (venues: Tables<'venues'>[]): VenueData[] => 
-  venues.filter(v => v && v.id).map(transformVenueData);
+// Batch transformers for lists with defensive null handling
+export const transformVenuesList = (venues: Tables<'venues'>[]): VenueData[] => {
+  if (!venues || !Array.isArray(venues)) return [];
+  return venues.filter(v => v && v.id).map(transformVenueData);
+};
 
 export const transformEventsList = (events: Array<Tables<'events'> & { 
-  venues?: { 
-    id: string; 
-    name: string; 
-    address: string; 
-    city: string; 
-    max_capacity: number; 
-  } | null 
-}>): EventData[] => 
-  events.filter(e => e && e.id).map(transformEventData);
+  venues?: Partial<Tables<'venues'>> | null 
+}>): EventData[] => {
+  if (!events || !Array.isArray(events)) return [];
+  return events.filter(e => e && e.id).map(transformEventData);
+};
 
-export const transformPerformersList = (performers: Tables<'performers'>[]): PerformerData[] => 
-  performers.filter(p => p && p.id).map(transformPerformerData);
+export const transformPerformersList = (performers: Tables<'performers'>[]): PerformerData[] => {
+  if (!performers || !Array.isArray(performers)) return [];
+  return performers.filter(p => p && p.id).map(transformPerformerData);
+};
 
-export const transformBookingsList = (bookings: Tables<'bookings'>[]): BookingData[] => 
-  bookings.filter(b => b && b.id).map(transformBookingData);
+export const transformBookingsList = (bookings: Tables<'bookings'>[]): BookingData[] => {
+  if (!bookings || !Array.isArray(bookings)) return [];
+  return bookings.filter(b => b && b.id).map(transformBookingData);
+};
