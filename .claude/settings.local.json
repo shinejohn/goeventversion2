@@ -17,7 +17,11 @@
       "Bash(npx tsx:*)",
       "Bash(/dev/null)",
       "Bash(npx supabase db push:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(npm install:*)",
+      "Bash(pnpm add:*)",
+      "WebFetch(domain:goeventversion2-production.up.railway.app)",
+      "Bash(pnpm build:*)"
     ],
     "deny": []
   }

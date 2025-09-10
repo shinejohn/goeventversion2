@@ -27,16 +27,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         .select(`
           *,
           bookings_count:bookings(count),
-          performer_reviews (
-            id,
-            rating,
-            title,
-            content,
-            created_at,
-            reviewer_name,
-            event_id,
-            is_verified
-          )
+          reviews
         `)
         .eq('id', performerId)
         .single(),
@@ -58,7 +49,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
               name,
               city,
               state,
-              profile_image_url
+              image_url
             ),
             ticket_price,
             price_min,
@@ -138,22 +129,22 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       ...transformPerformerData(performer),
       // Additional profile fields
       biography: performer.bio || '',
-      social_media: performer.social_media || {},
-      media_gallery: performer.media_gallery || [],
-      technical_requirements: performer.technical_requirements || '',
-      availability: performer.availability || {},
+      social_media: performer.social_links || {},
+      media_gallery: [], // Field doesn't exist yet
+      technical_requirements: '', // Field doesn't exist yet
+      availability: {}, // Field doesn't exist yet
       booking_info: {
-        base_rate: performer.base_rate,
-        min_booking_hours: performer.min_booking_hours || 1,
-        max_travel_distance: performer.max_travel_distance || 100,
-        setup_time_required: performer.setup_time_required || 30,
-        equipment_provided: performer.equipment_provided || false,
-        insurance_coverage: performer.insurance_coverage || false,
+        base_rate: performer.base_price || 0,
+        min_booking_hours: 1, // Field doesn't exist yet
+        max_travel_distance: 100, // Field doesn't exist yet
+        setup_time_required: 30, // Field doesn't exist yet
+        equipment_provided: false, // Field doesn't exist yet
+        insurance_coverage: false, // Field doesn't exist yet
       },
       stats: {
-        total_performances: performer.total_performances || 0,
-        years_experience: performer.years_experience || 0,
-        repeat_booking_rate: performer.repeat_booking_rate || 0,
+        total_performances: performer.shows_played || 0,
+        years_experience: performer.years_active || 0,
+        repeat_booking_rate: 0, // Field doesn't exist yet
       }
     };
     
@@ -172,20 +163,18 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     // Transform similar performers
     const transformedSimilarPerformers = (similarPerformers || []).map(transformPerformerData);
     
-    // Process reviews
-    const reviews = performer.performer_reviews || [];
-    const averageRating = reviews.length > 0
-      ? reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length
-      : performer.rating || 0;
+    // Process reviews - reviews field is JSON in performers table
+    const reviews = performer.reviews || [];
+    const averageRating = performer.rating || 0;
     
     // Calculate metrics
     const performerMetrics = {
-      totalPerformances: performer.total_performances || 0,
+      totalPerformances: performer.shows_played || 0,
       upcomingEvents: transformedUpcomingEvents.length,
       averageRating: averageRating,
-      totalReviews: reviews.length,
-      monthlyBookings: performer.monthly_bookings || 0,
-      responseTime: performer.average_response_time || '24 hours',
+      totalReviews: Array.isArray(reviews) ? reviews.length : 0,
+      monthlyBookings: 0, // Field doesn't exist yet
+      responseTime: performer.responseTime || '24 hours',
     };
     
     const duration = Date.now() - startTime;
@@ -249,7 +238,7 @@ export const meta = ({ data }: Route.MetaArgs) => {
     { property: 'og:title', content: `${performerName} | When The Fun` },
     { property: 'og:description', content: performer.biography || `Professional ${performer.category}` },
     { property: 'og:type', content: 'profile' },
-    { property: 'og:image', content: performer.profile_image_url || '/default-performer.jpg' },
+    { property: 'og:image', content: performer.image || '/default-performer.jpg' },
   ];
 };
 

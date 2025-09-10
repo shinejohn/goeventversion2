@@ -108,6 +108,13 @@ const magicPatternsPublicLayout = layout('routes/layouts/magic-patterns-public.t
   route('social/notifications', 'routes/social/notifications.tsx'),
   route('social/messages', 'routes/social/messages.tsx'),
   
+  // BookIt functionality (moved from booking flow to get standard header/footer)
+  route('book-it', 'routes/book-it/index.tsx'),
+  route('book-it/gigs', 'routes/book-it/gigs/index.tsx'),
+  route('book-it/venues', 'routes/book-it/venues/index.tsx'),
+  route('book-it/venues/:id', 'routes/book-it/venues/$id/index.tsx'),
+  route('book-it/venues/:id/book', 'routes/book-it/venues/$id/book/index.tsx'),
+  
   // Debug routes (for production troubleshooting)
   route('debug-production', 'routes/debug-production.tsx'),
   route('test-db', 'routes/test-db.tsx'),
@@ -220,15 +227,10 @@ const magicPatternsAdminLayout = layout('routes/layouts/magic-patterns-admin.tsx
   route('admin/venue-management', 'routes/admin/venue-management.tsx'),
 ]);
 
-// Booking flow with its own layout (wizard-style)
+// Booking flow with its own layout (wizard-style) - only actual booking wizard steps
 const bookingFlowLayout = layout('routes/layouts/booking-flow.tsx', [
   route('book', 'routes/book.tsx'),
   route('book/performer', 'routes/book/performer.tsx'),
-  route('book-it', 'routes/book-it/index.tsx'),
-  route('book-it/gigs', 'routes/book-it/gigs/index.tsx'),
-  route('book-it/venues', 'routes/book-it/venues/index.tsx'),
-  route('book-it/venues/:id', 'routes/book-it/venues/$id/index.tsx'),
-  route('book-it/venues/:id/book', 'routes/book-it/venues/$id/book/index.tsx'),
   
   // Booking flow steps
   route('book/event-details', 'routes/book/event-details.tsx'),

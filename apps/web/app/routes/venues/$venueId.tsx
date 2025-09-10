@@ -52,7 +52,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
               stage_name,
               name,
               category,
-              profile_image_url
+              image_url
             )
           )
         `)
@@ -82,7 +82,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         // First get the current venue's type and capacity
         const { data: currentVenue } = await client
           .from('venues')
-          .select('venue_type, capacity, city')
+          .select('venue_type, max_capacity, city')
           .eq('id', venueId)
           .single();
         
@@ -94,9 +94,9 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           .select('*')
           .neq('id', venueId)
           .eq('venue_type', currentVenue.venue_type)
-          .gte('capacity', currentVenue.capacity * 0.5)
-          .lte('capacity', currentVenue.capacity * 1.5)
-          .order('rating', { ascending: false })
+          .gte('max_capacity', (currentVenue.max_capacity || 100) * 0.5)
+          .lte('max_capacity', (currentVenue.max_capacity || 100) * 1.5)
+          .order('rating', { ascending: false, nullsLast: true })
           .limit(4);
       })(),
     ]);
@@ -130,46 +130,46 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       // Additional profile fields
       full_description: venue.description || '',
       gallery_images: venue.gallery_images || [],
-      floor_plans: venue.floor_plans || [],
-      virtual_tour_url: venue.virtual_tour_url || null,
-      rules_and_restrictions: venue.rules_and_restrictions || '',
+      floor_plans: [], // Field doesn't exist yet
+      virtual_tour_url: null, // Field doesn't exist yet
+      rules_and_restrictions: '', // Field doesn't exist yet
       
       // Availability info
       operating_hours: venue.operating_hours || {},
-      blackout_dates: venue.blackout_dates || [],
-      minimum_notice_hours: venue.minimum_notice_hours || 48,
+      blackout_dates: [], // Field doesn't exist yet
+      minimum_notice_hours: 48, // Field doesn't exist yet
       
       // Amenities detail
       amenities_detail: {
         included: venue.amenities || [],
-        available_for_rent: venue.rentable_amenities || [],
-        nearby: venue.nearby_amenities || []
+        available_for_rent: [], // Field doesn't exist yet
+        nearby: [] // Field doesn't exist yet
       },
       
-      // Parking and transit
-      parking_info: venue.parking_info || {
+      // Parking and transit - using defaults since fields don't exist yet
+      parking_info: {
         type: 'street',
         capacity: 0,
         cost: 'Free',
         distance: 'Adjacent'
       },
-      transit_options: venue.transit_options || [],
+      transit_options: [],
       
       // Booking info
       booking_info: {
-        base_hourly_rate: venue.base_hourly_rate || venue.price_per_hour,
-        minimum_hours: venue.minimum_booking_hours || 2,
-        deposit_required: venue.deposit_percentage || 25,
-        cancellation_policy: venue.cancellation_policy || 'Standard',
-        insurance_required: venue.insurance_required || false,
-        security_deposit: venue.security_deposit || 0,
+        base_hourly_rate: venue.pricePerHour || 100,
+        minimum_hours: 2,
+        deposit_required: 25,
+        cancellation_policy: 'Standard',
+        insurance_required: false,
+        security_deposit: 0,
       },
       
       // Capacity details
       capacity_details: {
-        standing: venue.max_capacity || venue.capacity || 100,
-        seated: venue.seated_capacity || Math.floor((venue.max_capacity || venue.capacity || 100) * 0.7),
-        cocktail: venue.cocktail_capacity || Math.floor((venue.max_capacity || venue.capacity || 100) * 0.8),
+        standing: venue.max_capacity || 100,
+        seated: Math.floor((venue.max_capacity || 100) * 0.7),
+        cocktail: Math.floor((venue.max_capacity || 100) * 0.8),
       }
     };
     
@@ -192,8 +192,8 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       upcomingEvents: transformedUpcomingEvents.length,
       averageRating: averageRating,
       totalReviews: reviews.length,
-      occupancyRate: venue.occupancy_rate || 0,
-      repeatBookingRate: venue.repeat_booking_rate || 0,
+      occupancyRate: 0, // Field doesn't exist yet
+      repeatBookingRate: 0, // Field doesn't exist yet
     };
     
     const duration = Date.now() - startTime;
@@ -255,9 +255,7 @@ export const meta = ({ data }: Route.MetaArgs) => {
     { property: 'og:title', content: `${venue.name} | When The Fun` },
     { property: 'og:description', content: venue.full_description || `${venue.venue_type} venue in ${venue.city}` },
     { property: 'og:type', content: 'place' },
-    { property: 'og:image', content: venue.profile_image_url || '/default-venue.jpg' },
-    { property: 'place:location:latitude', content: venue.latitude?.toString() },
-    { property: 'place:location:longitude', content: venue.longitude?.toString() },
+    { property: 'og:image', content: venue.image_url || '/default-venue.jpg' },
   ];
 };
 

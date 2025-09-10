@@ -42,17 +42,12 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
             address,
             city,
             state,
-            latitude,
-            longitude,
             max_capacity,
             amenities,
-            profile_image_url,
-            base_hourly_rate,
+            image_url,
+            pricePerHour,
             description,
-            is_verified,
-            parking_info,
-            transit_options,
-            nearby_amenities
+            is_verified
           ),
         `)
         .eq('id', id)
@@ -66,14 +61,9 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
             id,
             stage_name,
             name,
-            category,
             bio,
-            profile_image_url,
-            genres,
-            base_rate,
-            rating,
-            is_verified,
-            total_performances
+            image_url,
+            rating
           )
         `)
         .eq('event_id', id),

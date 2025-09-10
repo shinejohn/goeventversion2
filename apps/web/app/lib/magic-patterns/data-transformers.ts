@@ -72,7 +72,7 @@ export function transformVenueData(venue: Tables<'venues'>): VenueData {
     community_id: null, // Not in the venues table
     account_id: venue.account_id,
     venue_type: venue.venue_type || 'indoor',
-    price_per_hour: venue.price_per_hour || venue.base_hourly_rate || null,
+    price_per_hour: venue.pricePerHour || null,
     distance: null, // Calculated separately if needed
     listed_date: venue.created_at || new Date().toISOString(),
     last_booked_days_ago: null, // Calculated separately if needed
@@ -156,10 +156,7 @@ export function transformEventData(event: Tables<'events'> & {
       city: event.venues?.city || event.city || '',
       state: event.state || null,
       postalCode: event.postal_code || null,
-      coordinates: (event.latitude && event.longitude) ? {
-        lat: Number(event.latitude),
-        lng: Number(event.longitude),
-      } : null,
+      coordinates: null, // latitude/longitude fields don't exist yet
     },
     organizer: {
       id: event.account_id,
@@ -212,14 +209,16 @@ export const PerformerDataSchema = z.object({
 export type PerformerData = z.infer<typeof PerformerDataSchema>;
 
 export function transformPerformerData(performer: Tables<'performers'>): PerformerData {
-  // Extract location from the performer record - needs to be parsed
-  let city = '';
+  // Extract location from the performer record
+  let city = performer.home_city || '';
   let state = '';
   let country = 'USA';
   
-  // If location is stored as a string like "City, State" parse it
-  if (performer.stage_name) { // Using stage_name since we don't have location fields in schema
-    // For now, we'll use empty location data - this should be updated based on actual data structure
+  // Parse location if stored as "City, State" format
+  if (performer.location && typeof performer.location === 'string') {
+    const parts = performer.location.split(',').map(s => s.trim());
+    if (parts.length >= 1) city = parts[0];
+    if (parts.length >= 2) state = parts[1];
   }
   
   return {
@@ -227,20 +226,20 @@ export function transformPerformerData(performer: Tables<'performers'>): Perform
     name: performer.name || performer.stage_name || 'Unknown Performer',
     bio: performer.bio || '',
     genres: Array.isArray(performer.genres) ? performer.genres : [],
-    instruments: Array.isArray(performer.instruments) ? performer.instruments : [],
-    profileImage: performer.profile_image_url || null,
+    instruments: [], // Field doesn't exist in DB
+    profileImage: performer.image || null, // DB has 'image' not 'profile_image_url'
     coverImage: null, // Not in schema
     rating: Number(performer.rating) || null,
-    reviewCount: performer.total_performances || 0, // Using performances as proxy
-    hourlyRate: Number(performer.base_rate) || null,
+    reviewCount: performer.total_reviews || 0,
+    hourlyRate: Number(performer.base_price) || null, // DB has 'base_price'
     location: {
       city: city,
       state: state,
       country: country,
     },
     availability: [], // Would need to fetch from separate availability table
-    socialMedia: performer.social_media || null,
-    verified: performer.is_verified || false,
+    socialMedia: performer.social_links || null, // DB has 'social_links' not 'social_media'
+    verified: performer.verified || false,
   };
 }
 
