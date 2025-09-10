@@ -34,52 +34,20 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       // Main event data with venue info - comprehensive query for UI
       client
         .from('events')
-        .select(`
-          *,
-          venues!venue_id (
-            id,
-            name,
-            address,
-            city,
-            state,
-            max_capacity,
-            amenities,
-            image_url,
-            pricePerHour,
-            description,
-            is_verified
-          ),
-        `)
+        .select('*, venues!venue_id(*)')
         .eq('id', id)
         .single(),
       
       // Get performers for this event
       client
         .from('event_performers')
-        .select(`
-          performer:performers!performer_id (
-            id,
-            stage_name,
-            name,
-            bio,
-            image,
-            rating
-          )
-        `)
+        .select('*, performer:performers!performer_id(*)')
         .eq('event_id', id),
       
       // Get similar events (same category, nearby dates)
       client
         .from('events')
-        .select(`
-          *,
-          venues!venue_id (
-            id,
-            name,
-            city,
-            image_url
-          )
-        `)
+        .select('*, venues!venue_id(*)')
         .eq('status', 'published')
         .neq('id', id)
         .limit(4),

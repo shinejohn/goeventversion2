@@ -61,10 +61,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       (async () => {
         let query = client
           .from('events')
-          .select(`
-            *,
-            venues!venue_id(name, address, city)
-          `, { count: 'exact' });
+          .select('*, venues!venue_id(*)', { count: 'exact' });
           // Temporarily removed filters to debug
           // .eq('status', 'published')
           // .gte('start_datetime', new Date().toISOString());
