@@ -77,7 +77,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
             id,
             name,
             city,
-            profile_image_url
+            image_url
           )
         `)
         .eq('status', 'published')
