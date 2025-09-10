@@ -24,11 +24,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       // Main performer data with comprehensive fields
       client
         .from('performers')
-        .select(`
-          *,
-          bookings_count:bookings(count),
-          reviews
-        `)
+        .select('*')
         .eq('id', performerId)
         .single(),
       

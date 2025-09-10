@@ -24,20 +24,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       // Main venue data with comprehensive fields
       client
         .from('venues')
-        .select(`
-          *,
-          venue_reviews (
-            id,
-            rating,
-            title,
-            content,
-            created_at,
-            reviewer_name,
-            event_id,
-            is_verified
-          ),
-          bookings_count:bookings(count)
-        `)
+        .select('*')
         .eq('id', venueId)
         .single(),
       

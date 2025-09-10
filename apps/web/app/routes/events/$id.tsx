@@ -62,7 +62,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
             stage_name,
             name,
             bio,
-            image_url,
+            image,
             rating
           )
         `)
