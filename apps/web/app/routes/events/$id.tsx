@@ -194,8 +194,8 @@ export default createMagicPatternsRoute({
     console.log('[EventDetailRoute] Event data:', loaderData.event);
     return {
       event: loaderData.event,
-      relatedEvents: loaderData.similarEvents,
-      attendeeCount: loaderData.attendeeCount,
+      // relatedEvents: loaderData.similarEvents,
+      // attendeeCount: loaderData.attendeeCount,
     };
   },
 });
