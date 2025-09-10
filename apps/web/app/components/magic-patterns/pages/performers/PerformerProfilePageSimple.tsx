@@ -185,6 +185,4 @@ export const PerformerProfilePageSimple = ({
       </div>
     </div>
   );
-}
-
-export default PerformerProfilePageSimple;
+};

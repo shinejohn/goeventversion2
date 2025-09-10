@@ -451,8 +451,7 @@ export const HomePage = ({ events = [], venues = [], performers = [] }: HomePage
                   <div className="flex items-center justify-between">
                     <div className="flex items-center text-sm text-gray-600">
                       <CalendarIcon className="h-4 w-4 mr-1" />
-                      Next show: {performer.upcomingShow.date.split('-')[2]}/
-                      {performer.upcomingShow.date.split('-')[1]}
+                      Next show: {performer.upcomingShow?.date ? new Date(performer.upcomingShow.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'TBA'}
                     </div>
                     <div className="flex items-center">
                       <StarIcon className="h-4 w-4 text-yellow-500 mr-1" />
