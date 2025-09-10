@@ -129,6 +129,25 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     
     return {
       event: transformedEvent,
+      // event: {
+      //   ...transformedEvent,
+      //   venue: event.venues ? transformVenueData(event.venues) : null,
+      //   // Additional fields EventDetailPage expects
+      //   ticket_price: event.ticket_price || event.price_min,
+      //   ticket_url: event.ticket_url,
+      //   highlights: event.highlights || [],
+      //   amenities: event.amenities || [],
+      //   age_restriction: event.age_restrictions || 'All Ages',
+      //   series: event.series_id ? { id: event.series_id, name: 'Event Series' } : null,
+      //   organizer: {
+      //     id: event.account_id || 'org-1',
+      //     name: 'Event Organizer',
+      //     verified: false,
+      //     description: '',
+      //     events: 1,
+      //     followers: 0
+      //   },
+      // },
       performers,
       similarEvents: transformedSimilarEvents,
       userBooking,
