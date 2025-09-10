@@ -87,28 +87,29 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     }
     
     // Transform the performer data with all UI fields
-    const transformedPerformer = {
-      ...transformPerformerData(performer),
-      // Additional profile fields
-      biography: performer.bio || '',
-      social_media: performer.social_links || {},
-      media_gallery: [], // Field doesn't exist yet
-      technical_requirements: '', // Field doesn't exist yet
-      availability: {}, // Field doesn't exist yet
-      booking_info: {
-        base_rate: performer.base_price || 0,
-        min_booking_hours: 1, // Field doesn't exist yet
-        max_travel_distance: 100, // Field doesn't exist yet
-        setup_time_required: 30, // Field doesn't exist yet
-        equipment_provided: false, // Field doesn't exist yet
-        insurance_coverage: false, // Field doesn't exist yet
-      },
-      stats: {
-        total_performances: performer.shows_played || 0,
-        years_experience: performer.years_active || 0,
-        repeat_booking_rate: 0, // Field doesn't exist yet
-      }
-    };
+    const transformedPerformer = transformPerformerData(performer);
+    // const transformedPerformer = {
+    //   ...transformPerformerData(performer),
+    //   // Additional profile fields
+    //   biography: performer.bio || '',
+    //   social_media: performer.social_links || {},
+    //   media_gallery: [], // Field doesn't exist yet
+    //   technical_requirements: '', // Field doesn't exist yet
+    //   availability: {}, // Field doesn't exist yet
+    //   booking_info: {
+    //     base_rate: performer.base_price || 0,
+    //     min_booking_hours: 1, // Field doesn't exist yet
+    //     max_travel_distance: 100, // Field doesn't exist yet
+    //     setup_time_required: 30, // Field doesn't exist yet
+    //     equipment_provided: false, // Field doesn't exist yet
+    //     insurance_coverage: false, // Field doesn't exist yet
+    //   },
+    //   stats: {
+    //     total_performances: performer.shows_played || 0,
+    //     years_experience: performer.years_active || 0,
+    //     repeat_booking_rate: 0, // Field doesn't exist yet
+    //   }
+    // };
     
     // Transform events with null checks - fixed to access events directly
     const transformedUpcomingEvents = (upcomingEvents || [])
