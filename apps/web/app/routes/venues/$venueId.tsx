@@ -31,18 +31,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       // Get upcoming events at this venue
       client
         .from('events')
-        .select(`
-          *,
-          performers:event_performers(
-            performer:performers!performer_id(
-              id,
-              stage_name,
-              name,
-              category,
-              image_url
-            )
-          )
-        `)
+        .select('*')
         .eq('venue_id', venueId)
         .gte('start_datetime', new Date().toISOString())
         .eq('status', 'published')
@@ -52,13 +41,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       // Get past events for venue portfolio
       client
         .from('events')
-        .select(`
-          id,
-          title,
-          start_datetime,
-          category,
-          image_url
-        `)
+        .select('*')
         .eq('venue_id', venueId)
         .lt('start_datetime', new Date().toISOString())
         .order('start_datetime', { ascending: false })
@@ -167,11 +150,9 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     // Transform similar venues
     const transformedSimilarVenues = (similarVenues || []).map(transformVenueData);
     
-    // Process reviews
-    const reviews = venue.venue_reviews || [];
-    const averageRating = reviews.length > 0
-      ? reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length
-      : venue.rating || 0;
+    // Process reviews - venue_reviews doesn't exist as a field
+    const reviews = []; // Would need separate reviews table
+    const averageRating = venue.rating || 0;
     
     // Calculate metrics
     const venueMetrics = {

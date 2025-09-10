@@ -31,47 +31,13 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       // Get upcoming events for this performer
       client
         .from('event_performers')
-        .select(`
-          events!event_id (
-            id,
-            title,
-            start_datetime,
-            end_datetime,
-            category,
-            image_url,
-            venue_id,
-            venues!venue_id (
-              id,
-              name,
-              city,
-              state,
-              image_url
-            ),
-            ticket_price,
-            price_min,
-            status,
-            description
-          )
-        `)
+        .select('*, events!event_id(*, venues!venue_id(*))')
         .eq('performer_id', performerId),
       
       // Get past events for portfolio
       client
         .from('event_performers')
-        .select(`
-          events!event_id (
-            id,
-            title,
-            start_datetime,
-            category,
-            image_url,
-            venue_id,
-            venues!venue_id (
-              name,
-              city
-            )
-          )
-        `)
+        .select('*, events!event_id(*, venues!venue_id(*))')
         .eq('performer_id', performerId)
         .limit(5),
       
