@@ -7,7 +7,7 @@ interface PerformerProfilePageProps {
   upcomingEvents?: any[];
 }
 
-export const PerformerProfilePage = ({
+export const PerformerProfilePageSimple = ({
   performer,
   upcomingEvents = []
 }: PerformerProfilePageProps) => {
@@ -186,3 +186,5 @@ export const PerformerProfilePage = ({
     </div>
   );
 }
+
+export default PerformerProfilePageSimple;

@@ -2,7 +2,7 @@ import React from 'react';
 import type { Route } from './+types/$performerId';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { PerformerProfilePage } from '../../components/magic-patterns/pages/PerformerProfilePage';
-import { createMagicPatternsRoute } from '../../lib/magic-patterns/route-wrapper';
+import { createMagicPatternsRoute } from '~/lib/magic-patterns/route-wrapper';
 import { transformPerformerData, transformEventData } from '~/lib/magic-patterns/data-transformers';
 import { getLogger } from '@kit/shared/logger';
 
@@ -115,13 +115,13 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const transformedUpcomingEvents = (upcomingEvents || [])
       .map(ep => ep.events ? transformEventData(ep.events) : null)
       .filter(Boolean)
-      .filter((event: any) => new Date(event.start_datetime) > new Date());
+      .filter((event: any) => new Date(event.startDate) > new Date());
     
     const transformedPastEvents = (pastEvents || [])
       .map(ep => ep.events ? transformEventData(ep.events) : null)
       .filter(Boolean)
-      .filter((event: any) => new Date(event.start_datetime) <= new Date())
-      .sort((a: any, b: any) => new Date(b.start_datetime).getTime() - new Date(a.start_datetime).getTime());
+      .filter((event: any) => new Date(event.startDate) <= new Date())
+      .sort((a: any, b: any) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
     
     // Transform similar performers
     const transformedSimilarPerformers = (similarPerformers || []).map(transformPerformerData);

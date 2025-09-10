@@ -539,4 +539,5 @@ const GroupsPage = () => {
       </div>
     </div>;
 };
+export { GroupsPage };
 export default GroupsPage;

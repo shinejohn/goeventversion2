@@ -2,7 +2,7 @@ import React from 'react';
 import type { Route } from './+types/$venueId';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { VenueProfilePage } from '../../components/magic-patterns/pages/VenueProfilePage';
-import { createMagicPatternsRoute } from '../../lib/magic-patterns/route-wrapper';
+import { createMagicPatternsRoute } from '~/lib/magic-patterns/route-wrapper';
 import { transformVenueData, transformEventData } from '~/lib/magic-patterns/data-transformers';
 import { getLogger } from '@kit/shared/logger';
 
@@ -43,8 +43,8 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         .from('events')
         .select('*')
         .eq('venue_id', venueId)
-        .lt('start_datetime', new Date().toISOString())
-        .order('start_datetime', { ascending: false })
+        .lt('start_date', new Date().toISOString())
+        .order('start_date', { ascending: false })
         .limit(5),
       
       // Get similar venues (same type/capacity range)

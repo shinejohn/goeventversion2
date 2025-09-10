@@ -443,4 +443,5 @@ const FriendsPage = () => {
       </div>
     </div>;
 };
+export { FriendsPage };
 export default FriendsPage;

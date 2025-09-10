@@ -5,7 +5,7 @@ import { CalendarTabs } from '../../components/calendar/CalendarTabs';
 import { CalendarSidebar } from '../../components/calendar/CalendarSidebar';
 import { CalendarEngagementBar } from '../../components/calendar/CalendarEngagementBar';
 import { EventCard } from '../../components/calendar/EventCard';
-export default function CalendarDetailPage() {
+export function CalendarSlugPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('calendar');
   const [viewMode, setViewMode] = useState<'month' | 'week' | 'list' | 'map'>('list');
@@ -692,3 +692,5 @@ export default function CalendarDetailPage() {
       </div>
     </div>;
 }
+
+export default CalendarSlugPage;

@@ -1,10 +1,10 @@
 import React from 'react';
-import { useLoaderData } from 'react-router';
 import type { Route } from '@react-router/dev/routes';
 
 /**
  * Magic Patterns Route Wrapper
  * Provides consistent error handling and data loading for Magic Patterns components
+ * Uses SSR-safe patterns with props.loaderData instead of useLoaderData hook
  */
 
 interface MagicPatternsRouteWrapperProps<T> {
@@ -20,19 +20,19 @@ export function createMagicPatternsRoute<T>({
   loadingComponent: LoadingComponent,
   errorComponent: ErrorComponent,
 }: MagicPatternsRouteWrapperProps<T>) {
-  return function MagicPatternsRoute() {
-    // Hooks must be called at the top level, not inside try-catch
-    const loaderData = useLoaderData();
+  return function MagicPatternsRoute(props: Route.ComponentProps) {
+    // Use SSR-safe props.loaderData instead of useLoaderData hook
+    const loaderData = props.loaderData;
     
     console.log('[MagicPatternsRoute] Raw loader data:', loaderData);
     
     try {
       // Transform data if transformer provided
-      const props = transformData ? transformData(loaderData) : loaderData;
-      console.log('[MagicPatternsRoute] Transformed props:', props);
+      const transformedProps = transformData ? transformData(loaderData) : loaderData;
+      console.log('[MagicPatternsRoute] Transformed props:', transformedProps);
       
       // Render the Magic Patterns component with props
-      return <Component {...props} />;
+      return <Component {...transformedProps} />;
     } catch (error) {
       console.error('Error in Magic Patterns route:', error);
       
