@@ -42,18 +42,31 @@ const EventDetailPageInternal = ({ eventId = 'event-1', event: propEvent, relate
   // Transform database data to component format
   const eventData = {
     ...propEvent,
-    // Transform date fields - check if dates exist first
-    date: propEvent.start_date ? new Date(propEvent.start_date) : new Date(),
-    endDate: propEvent.end_date ? new Date(propEvent.end_date) : new Date(),
+    // Use transformed data structure from data transformer
+    title: propEvent.name || propEvent.title || 'Event',
+    date: propEvent.startDate ? new Date(propEvent.startDate) : new Date(),
+    endDate: propEvent.endDate ? new Date(propEvent.endDate) : new Date(),
     
-    // Ensure venue data structure
-    venue: propEvent.venue || {
+    // Ensure venue data structure from transformed data
+    venue: propEvent.location ? {
+      id: propEvent.location.venueId,
+      name: propEvent.location.venue,
+      address: propEvent.location.address,
+      verified: false,
+      latitude: propEvent.location.coordinates?.lat,
+      longitude: propEvent.location.coordinates?.lng,
+      description: '',
+      amenities: propEvent.amenities || [],
+      parking: [],
+      transit: [],
+      nearbyAmenities: []
+    } : {
       id: propEvent.venue_id,
       name: propEvent.location_name || 'Venue',
       address: propEvent.location_address || '',
       verified: false,
-      latitude: propEvent.location?.coordinates?.latitude,
-      longitude: propEvent.location?.coordinates?.longitude,
+      latitude: null,
+      longitude: null,
       description: '',
       amenities: propEvent.amenities || [],
       parking: [],
@@ -61,23 +74,23 @@ const EventDetailPageInternal = ({ eventId = 'event-1', event: propEvent, relate
       nearbyAmenities: []
     },
     
-    // Build price structure from database
+    // Build price structure from transformed data
     price: {
-      isFree: propEvent.is_free || false,
-      tiers: propEvent.ticket_price ? [{
+      isFree: propEvent.price === 0,
+      tiers: propEvent.price > 0 ? [{
         name: 'General Admission',
-        price: propEvent.ticket_price,
+        price: propEvent.price,
         description: 'Standard entry'
       }] : []
     },
     
     // Build ticket info
     ticketInfo: {
-      required: !propEvent.is_free,
+      required: propEvent.price > 0,
       available: propEvent.status === 'published',
       status: propEvent.status === 'published' ? 'on_sale' : 'not_available',
-      salesStart: new Date(propEvent.start_date),
-      salesEnd: new Date(propEvent.end_date),
+      salesStart: propEvent.startDate ? new Date(propEvent.startDate) : new Date(),
+      salesEnd: propEvent.endDate ? new Date(propEvent.endDate) : new Date(),
       url: propEvent.ticket_url || null,
       provider: 'Event Organizer',
       limits: {
@@ -97,9 +110,9 @@ const EventDetailPageInternal = ({ eventId = 'event-1', event: propEvent, relate
     
     // Event details
     description: propEvent.description || '',
-    image: propEvent.image_url || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80',
+    image: propEvent.image || propEvent.image_url || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80',
     ageRestriction: propEvent.age_restriction || 'All Ages',
-    duration: calculateDuration(propEvent.start_date, propEvent.end_date),
+    duration: calculateDuration(propEvent.startDate, propEvent.endDate),
     categories: propEvent.category ? [propEvent.category] : [],
     primaryCategory: propEvent.category || 'Event',
     highlights: propEvent.highlights || [],
@@ -592,13 +605,11 @@ interface EventDetailPageProps {
 
 export const EventDetailPage = ({ eventId, event, relatedEvents, attendeeCount }: EventDetailPageProps) => {
   return (
-    <ClientOnly>
-      <EventDetailPageInternal 
-        eventId={eventId}
-        event={event}
-        relatedEvents={relatedEvents}
-        attendeeCount={attendeeCount}
-      />
-    </ClientOnly>
+    <EventDetailPageInternal 
+      eventId={eventId}
+      event={event}
+      relatedEvents={relatedEvents}
+      attendeeCount={attendeeCount}
+    />
   );
 };

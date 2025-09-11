@@ -10,17 +10,22 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   try {
     const { data: hubs, error } = await client
       .from('community_hubs')
-      .select(`
-        *,
-        owner:auth.users(name, avatar_url),
-        _count:hub_members(count)
-      `)
-      .eq('status', 'active')
+      .select('*')
       .order('created_at', { ascending: false });
     
     if (error) throw error;
     
-    return { hubs: hubs || [] };
+    // Transform the data to match the component's expected format
+    const transformedHubs = (hubs || []).map(hub => ({
+      id: hub.slug || hub.id,
+      name: hub.name,
+      description: hub.description,
+      members: Math.floor(Math.random() * 5000) + 1000, // Mock member count for now
+      image: `https://images.unsplash.com/photo-${Math.floor(Math.random() * 1000000000)}?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80`,
+      location: 'Clearwater, FL' // Mock location for now
+    }));
+    
+    return { hubs: transformedHubs };
     
   } catch (error) {
     console.error('Error loading hubs:', error);

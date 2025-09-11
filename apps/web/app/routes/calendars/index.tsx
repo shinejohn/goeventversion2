@@ -44,12 +44,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     
     const client = getSupabaseServerClient(request);
     
-    // Get current user
+    // Get current user (optional for public calendar view)
     const { data: { user } } = await client.auth.getUser();
-    
-    if (!user) {
-      throw new Error('User not authenticated');
-    }
     
     // Calculate date range based on view
     const viewDate = params.date ? new Date(params.date) : new Date();
@@ -76,8 +72,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
           .order('start_date', { ascending: true })
         : Promise.resolve({ data: [] }),
       
-      // Get user's bookings
-      (params.filter === 'all' || params.filter === 'bookings') ?
+      // Get user's bookings (only if user is authenticated)
+      (user && (params.filter === 'all' || params.filter === 'bookings')) ?
         client
           .from('bookings')
           .select(`
@@ -105,8 +101,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
           .order('event_date', { ascending: true })
         : Promise.resolve({ data: [] }),
       
-      // Get user's performances (if they're a performer)
-      (params.filter === 'all' || params.filter === 'performances') ?
+      // Get user's performances (only if user is authenticated and is a performer)
+      (user && (params.filter === 'all' || params.filter === 'performances')) ?
         client
           .from('bookings')
           .select(`
@@ -259,10 +255,10 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       },
       filters: params,
       metrics: calendarMetrics,
-      user: {
+      user: user ? {
         id: user.id,
         email: user.email,
-      },
+      } : null,
     };
     
   } catch (error) {

@@ -571,9 +571,5 @@ const PerformerDiscoveryPageInternal = () => {
 };
 
 export const PerformerDiscoveryPage = () => {
-  return (
-    <ClientOnly>
-      <PerformerDiscoveryPageInternal />
-    </ClientOnly>
-  );
+  return <PerformerDiscoveryPageInternal />;
 };

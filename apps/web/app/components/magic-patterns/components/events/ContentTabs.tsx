@@ -36,19 +36,19 @@ export const ContentTabs = ({
       case 'overview':
         return <div className="prose max-w-none">
             <div dangerouslySetInnerHTML={{
-            __html: eventData.description
+            __html: eventData?.description || 'No description available'
           }} />
             <h3>Event Highlights</h3>
             <ul>
-              {eventData.highlights.map((highlight: string, index: number) => <li key={index}>{highlight}</li>)}
+              {(eventData?.highlights || []).map((highlight: string, index: number) => <li key={index}>{highlight}</li>)}
             </ul>
             <h3>What to Bring</h3>
             <ul>
-              {eventData.whatToBring.map((item: string, index: number) => <li key={index}>{item}</li>)}
+              {(eventData?.whatToBring || []).map((item: string, index: number) => <li key={index}>{item}</li>)}
             </ul>
             <h3>Accessibility</h3>
             <ul>
-              {eventData.accessibility.map((item: any, index: number) => <li key={index}>
+              {(eventData?.accessibility || []).map((item: any, index: number) => <li key={index}>
                   <strong>{item.type}: </strong>
                   {item.details}
                 </li>)}
@@ -56,10 +56,10 @@ export const ContentTabs = ({
           </div>;
       case 'lineup':
         return <div>
-            {eventData.lineup.map((day: any, index: number) => <div key={index} className="mb-8">
+            {(eventData?.lineup || []).map((day: any, index: number) => <div key={index} className="mb-8">
                 <h3 className="text-lg font-bold mb-4">{day.day}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {day.acts.map((act: any, actIndex: number) => <div key={actIndex} className="border border-gray-200 rounded-lg p-4">
+                  {(day.acts || []).map((act: any, actIndex: number) => <div key={actIndex} className="border border-gray-200 rounded-lg p-4">
                       <div className="h-32 mb-4 rounded-md overflow-hidden">
                         <img src={act.image} alt={act.name} className="w-full h-full object-cover" />
                       </div>
@@ -75,12 +75,12 @@ export const ContentTabs = ({
       case 'venue':
         return <div>
             <h3 className="text-lg font-bold mb-4">About the Venue</h3>
-            <p className="text-gray-600 mb-6">{eventData.venue.description}</p>
+            <p className="text-gray-600 mb-6">{eventData?.venue?.description || 'No venue description available'}</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <h4 className="font-medium mb-2">Amenities</h4>
                 <ul className="space-y-2">
-                  {eventData.venue.amenities.map((amenity: string, index: number) => <li key={index} className="flex items-center text-gray-600">
+                  {(eventData?.venue?.amenities || []).map((amenity: string, index: number) => <li key={index} className="flex items-center text-gray-600">
                         <span className="mr-2">•</span>
                         {amenity}
                       </li>)}
@@ -89,7 +89,7 @@ export const ContentTabs = ({
               <div>
                 <h4 className="font-medium mb-2">Nearby</h4>
                 <ul className="space-y-2">
-                  {eventData.venue.nearbyAmenities.map((item: any, index: number) => <li key={index} className="flex items-center text-gray-600">
+                  {(eventData?.venue?.nearbyAmenities || []).map((item: any, index: number) => <li key={index} className="flex items-center text-gray-600">
                         <span className="mr-2">•</span>
                         {item.name} ({item.distance})
                       </li>)}
@@ -103,20 +103,20 @@ export const ContentTabs = ({
               <div className="flex items-center">
                 <StarIcon className="h-6 w-6 text-yellow-400 fill-current" />
                 <span className="ml-2 text-2xl font-bold">
-                  {eventData.reviews.average}
+                  {eventData?.reviews?.average || 0}
                 </span>
               </div>
               <span className="mx-2 text-gray-500">•</span>
               <span className="text-gray-600">
-                {eventData.reviews.count} reviews
+                {eventData?.reviews?.count || 0} reviews
               </span>
             </div>
             <div className="space-y-6">
-              {eventData.reviews.items.map((review: any, index: number) => <div key={index} className="border-b border-gray-200 pb-6">
+              {(eventData?.reviews?.items || []).map((review: any, index: number) => <div key={index} className="border-b border-gray-200 pb-6">
                   <div className="flex items-center mb-2">
-                    <img src={review.user.image} alt={review.user.name} className="h-10 w-10 rounded-full mr-3" />
+                    <img src={review.user?.image} alt={review.user?.name} className="h-10 w-10 rounded-full mr-3" />
                     <div>
-                      <div className="font-medium">{review.user.name}</div>
+                      <div className="font-medium">{review.user?.name || 'Anonymous'}</div>
                       <div className="text-sm text-gray-500">
                         {new Date(review.date).toLocaleDateString()}
                       </div>
@@ -134,7 +134,7 @@ export const ContentTabs = ({
       case 'discussion':
         return <div>
             <div className="space-y-6">
-              {eventData.questions.map((qa: any, index: number) => <div key={index} className="border-b border-gray-200 pb-6">
+              {(eventData?.questions || []).map((qa: any, index: number) => <div key={index} className="border-b border-gray-200 pb-6">
                   <h4 className="font-medium mb-2">{qa.question}</h4>
                   <p className="text-gray-600 mb-2">{qa.answer}</p>
                   <div className="text-sm text-gray-500">

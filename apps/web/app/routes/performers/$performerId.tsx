@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Route } from './+types/$performerId';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { PerformerProfilePage } from '../../components/magic-patterns/pages/PerformerProfilePage';
+import { PerformerProfilePageSimple } from '../../components/magic-patterns/pages/performers/PerformerProfilePageSimple';
 import { createMagicPatternsRoute } from '~/lib/magic-patterns/route-wrapper';
 import { transformPerformerData, transformEventData } from '~/lib/magic-patterns/data-transformers';
 import { getLogger } from '@kit/shared/logger';
@@ -207,7 +207,7 @@ export const meta = ({ data }: Route.MetaArgs) => {
 
 // Component using the Magic Patterns wrapper
 export default createMagicPatternsRoute({
-  component: PerformerProfilePage,
+  component: PerformerProfilePageSimple,
   transformData: (loaderData) => ({
     performer: loaderData.performer,
   }),

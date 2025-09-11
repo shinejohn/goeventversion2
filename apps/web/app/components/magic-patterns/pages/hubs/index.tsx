@@ -9,36 +9,8 @@ interface HubsDiscoveryPageProps {
 const HubsDiscoveryPage = ({ hubs }: HubsDiscoveryPageProps) => {
   const navigate = useNavigate();
   
-  // Use props data if available, fallback to mock data for demo purposes
-  const communities = hubs && hubs.length > 0 ? hubs : [{
-    id: 'jazz-lovers',
-    name: 'Jazz Lovers Collective',
-    description: 'A community for jazz enthusiasts, musicians, and venue owners',
-    members: 3427,
-    image: 'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    location: 'Clearwater, FL'
-  }, {
-    id: 'urban-gardeners',
-    name: 'Urban Gardeners Network',
-    description: 'Growing community through urban agriculture and sustainable practices',
-    members: 2156,
-    image: 'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    location: 'Tampa, FL'
-  }, {
-    id: 'beach-volleyball',
-    name: 'Beach Volleyball League',
-    description: 'Casual and competitive beach volleyball games and tournaments',
-    members: 1845,
-    image: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    location: 'Clearwater, FL'
-  }, {
-    id: 'tech-innovators',
-    name: 'Tech Innovators Hub',
-    description: 'Connecting local tech talent, startups, and established companies',
-    members: 2967,
-    image: 'https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    location: 'St. Petersburg, FL'
-  }];
+  // Use the hubs data from the database
+  const communities = hubs || [];
   const handleCommunityClick = communityId => {
     navigate(`/c/${communityId}`);
   };

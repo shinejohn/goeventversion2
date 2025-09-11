@@ -39,9 +39,9 @@ export const PerformerProfilePageSimple = ({
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section with Cover Photo */}
       <div className="relative h-80 md:h-96 bg-gradient-to-br from-purple-600 to-indigo-600">
-        {performer.image && (
+        {(performer.coverImage || performer.image) && (
           <img 
-            src={performer.image} 
+            src={performer.coverImage || performer.image} 
             alt={`${performer.name} cover`} 
             className="w-full h-full object-cover opacity-30" 
           />
@@ -58,7 +58,7 @@ export const PerformerProfilePageSimple = ({
               <div className="relative">
                 <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden ring-4 ring-white shadow-xl">
                   <img 
-                    src={performer.image || 'https://via.placeholder.com/150'} 
+                    src={performer.profileImage || performer.image || 'https://via.placeholder.com/150'} 
                     alt={performer.name} 
                     className="w-full h-full object-cover" 
                   />
@@ -73,24 +73,27 @@ export const PerformerProfilePageSimple = ({
                       {performer.name}
                     </h1>
                     <div className="mt-2 flex flex-wrap items-center gap-4 text-gray-600">
-                      {performer.genre && (
+                      {performer.genres && performer.genres.length > 0 && (
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
-                          {performer.genre}
+                          {performer.genres[0]}
                         </span>
                       )}
                       {performer.location && (
                         <span className="flex items-center">
                           <MapPinIcon className="h-4 w-4 mr-1" />
-                          {performer.location}
+                          {typeof performer.location === 'string' 
+                            ? performer.location 
+                            : `${performer.location.city}, ${performer.location.state}`
+                          }
                         </span>
                       )}
-                      {performer.rating > 0 && (
+                      {performer.rating && performer.rating > 0 && (
                         <span className="flex items-center">
                           <StarIcon className="h-4 w-4 mr-1 text-yellow-500 fill-current" />
                           <span>{performer.rating}</span>
-                          {performer.totalReviews > 0 && (
+                          {performer.reviewCount > 0 && (
                             <span className="text-gray-500 ml-1">
-                              ({performer.totalReviews} reviews)
+                              ({performer.reviewCount} reviews)
                             </span>
                           )}
                         </span>

@@ -108,6 +108,10 @@ const magicPatternsPublicLayout = layout('routes/layouts/magic-patterns-public.t
   route('social/notifications', 'routes/social/notifications.tsx'),
   route('social/messages', 'routes/social/messages.tsx'),
   
+  // User functionality
+  route('my-tickets', 'routes/my-tickets.tsx'),
+  route('saved-items', 'routes/saved-items.tsx'),
+  
   // BookIt functionality (moved from booking flow to get standard header/footer)
   route('book-it', 'routes/book-it/index.tsx'),
   route('book-it/gigs', 'routes/book-it/gigs/index.tsx'),
@@ -217,6 +221,13 @@ const magicPatternsDashboardLayout = layout('routes/layouts/magic-patterns-dashb
   // Messages & Notifications
   route('messages', 'routes/messages/index.tsx'),
   route('notifications', 'routes/notifications/index.tsx'),
+  
+  // Management Dashboards
+  route('management/performer', 'routes/management/performer/index.tsx'),
+  route('management/venue', 'routes/management/venue/index.tsx'),
+  route('management/organizer', 'routes/management/organizer/index.tsx'),
+  route('management/sponsor', 'routes/management/sponsor/index.tsx'),
+  route('management/influencer', 'routes/management/influencer/index.tsx'),
 ]);
 
 // Magic Patterns Admin Layout
