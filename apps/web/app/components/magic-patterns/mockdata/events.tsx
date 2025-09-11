@@ -1,4 +1,5 @@
-export const mockEvents = [
+// MOCKDATA COMMENTED OUT - Using real database data instead
+/* export const mockEvents = [
   {
     id: 'event-1',
     slug: 'clearwater-jazz-holiday-2024',
@@ -125,4 +126,4 @@ export const mockEvents = [
     ticketPrice: 0,
     ticketsAvailable: true
   }
-];
+]; */

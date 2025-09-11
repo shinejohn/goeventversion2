@@ -1,5 +1,6 @@
 import React from 'react';
-export const mockPerformers = [{
+// MOCKDATA COMMENTED OUT - Using real database data instead
+/* export const mockPerformers = [{
   id: 'performer-1',
   name: 'The Sunset Vibes',
   profileImage: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
@@ -974,4 +975,4 @@ export const mockPerformers = [{
     venue: 'State Theatre',
     ticketsAvailable: true
   }]
-}];
+}]; */

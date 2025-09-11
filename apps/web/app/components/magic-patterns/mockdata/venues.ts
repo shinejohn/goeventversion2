@@ -1,5 +1,6 @@
+// MOCKDATA COMMENTED OUT - Using real database data instead
 // Mock venues data - static fallback
-export const mockVenues = [{
+/* export const mockVenues = [{
   id: 'venue-1',
   name: 'The Grand Hall (LIVE DATA TEST)',
   description: 'A spectacular venue perfect for large events and performances',
@@ -86,4 +87,4 @@ export const mockVenues = [{
   listed_date: '2023-08-01',
   last_booked_days_ago: 1,
   unavailable_dates: []
-}];
+}]; */

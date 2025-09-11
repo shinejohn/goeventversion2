@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { SearchIcon, FilterIcon, GridIcon, ListIcon, CalendarIcon, XIcon, ChevronDownIcon, MapPinIcon, TrendingUpIcon, UsersIcon, MusicIcon, StarIcon, HeartIcon, PlayIcon, CheckCircleIcon, SparklesIcon } from 'lucide-react';
 import { ClientOnly } from '@kit/ui/client-only';
-import { mockPerformers } from '../../mockdata/performers';
+// import { mockPerformers } from '../../mockdata/performers'; // MOCKDATA COMMENTED OUT
 import { FilterSidebar } from '../../components/performers/FilterSidebar';
 import { PerformerGrid } from '../../components/performers/PerformerGrid';
 import { PerformerList } from '../../components/performers/PerformerList';
@@ -17,8 +17,8 @@ const PerformerDiscoveryPageInternal = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [showRecentSearches, setShowRecentSearches] = useState(false);
-  const [performers, setPerformers] = useState(mockPerformers);
-  const [filteredPerformers, setFilteredPerformers] = useState(mockPerformers);
+  const [performers, setPerformers] = useState([]);
+  const [filteredPerformers, setFilteredPerformers] = useState([]);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [selectedAvailability, setSelectedAvailability] = useState<string | null>(null);
@@ -37,7 +37,7 @@ const PerformerDiscoveryPageInternal = () => {
         setRecentSearches(newRecentSearches);
       }
       // Filter performers based on search query
-      const filtered = mockPerformers.filter(performer => performer.name.toLowerCase().includes(searchQuery.toLowerCase()) || performer.genres.some(genre => genre.toLowerCase().includes(searchQuery.toLowerCase())));
+      const filtered = performers.filter(performer => performer.name.toLowerCase().includes(searchQuery.toLowerCase()) || performer.genres.some(genre => genre.toLowerCase().includes(searchQuery.toLowerCase())));
       setFilteredPerformers(filtered);
     } else {
       setFilteredPerformers(performers);
@@ -52,7 +52,7 @@ const PerformerDiscoveryPageInternal = () => {
     setSelectedExperienceLevel(experienceLevel);
     setSelectedSpecialFeatures(specialFeatures);
     setDistance(distanceValue);
-    let filtered = [...mockPerformers];
+    let filtered = [...performers];
     // Apply genre filter
     if (genres.length > 0) {
       filtered = filtered.filter(performer => performer.genres.some(genre => genres.includes(genre)));
@@ -144,7 +144,7 @@ const PerformerDiscoveryPageInternal = () => {
     setFilteredPerformers(filtered);
   };
   // Sort performers
-  const sortPerformers = (performersToSort: typeof mockPerformers, sortOption: SortOption) => {
+  const sortPerformers = (performersToSort: any[], sortOption: SortOption) => {
     let sorted = [...performersToSort];
     switch (sortOption) {
       case 'trending':
@@ -192,7 +192,7 @@ const PerformerDiscoveryPageInternal = () => {
     setSelectedSpecialFeatures([]);
     setDistance(50);
     setSearchQuery('');
-    setFilteredPerformers(sortPerformers(mockPerformers, sortBy));
+    setFilteredPerformers(sortPerformers(performers, sortBy));
   };
   // Count active filters
   const getActiveFilterCount = () => {
@@ -226,7 +226,7 @@ const PerformerDiscoveryPageInternal = () => {
   }, []);
   // Initial sort
   useEffect(() => {
-    setFilteredPerformers(sortPerformers(mockPerformers, sortBy));
+    setFilteredPerformers(sortPerformers(performers, sortBy));
   }, []);
   return <div className="min-h-screen bg-white">
       {/* Header Section */}
@@ -263,7 +263,7 @@ const PerformerDiscoveryPageInternal = () => {
                   {recentSearches.map((search, index) => <button key={index} className="block w-full px-4 py-2 text-gray-700 hover:bg-gray-100 text-left" onClick={() => {
                 setSearchQuery(search);
                 setShowRecentSearches(false);
-                const filtered = mockPerformers.filter(performer => performer.name.toLowerCase().includes(search.toLowerCase()) || performer.genres.some(genre => genre.toLowerCase().includes(search.toLowerCase())));
+                const filtered = performers.filter(performer => performer.name.toLowerCase().includes(search.toLowerCase()) || performer.genres.some(genre => genre.toLowerCase().includes(search.toLowerCase())));
                 setFilteredPerformers(filtered);
               }}>
                       <SearchIcon className="h-4 w-4 inline mr-2 text-gray-400" />
@@ -287,7 +287,7 @@ const PerformerDiscoveryPageInternal = () => {
             <div className="flex items-center">
               <MusicIcon className="h-5 w-5 mr-2" />
               <span className="font-medium">
-                {mockPerformers.length} Performers Active
+                {performers.length} Performers Active
               </span>
             </div>
             <div className="flex items-center">
@@ -563,7 +563,7 @@ const PerformerDiscoveryPageInternal = () => {
                 {viewMode === 'calendar' && <PerformerCalendar performers={filteredPerformers} onPerformerClick={performerId => navigate(`/performers/${performerId}`)} />}
               </>}
             {/* Discovery Sections (only show when no search/filters active) */}
-            {searchQuery === '' && getActiveFilterCount() === 0 && <DiscoverySections performers={mockPerformers} onPerformerClick={performerId => navigate(`/performers/${performerId}`)} />}
+            {searchQuery === '' && getActiveFilterCount() === 0 && <DiscoverySections performers={performers} onPerformerClick={performerId => navigate(`/performers/${performerId}`)} />}
           </div>
         </div>
       </div>
