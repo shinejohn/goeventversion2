@@ -8,6 +8,7 @@ import { PerformerGrid } from '../../components/performers/PerformerGrid';
 import { PerformerList } from '../../components/performers/PerformerList';
 import { PerformerCalendar } from '../../components/performers/PerformerCalendar';
 import { DiscoverySections } from '../../components/performers/DiscoverySections';
+import { PerformerCard } from '../../components/ui/EnhancedCard';
 type ViewMode = 'grid' | 'list' | 'calendar';
 type SortOption = 'trending' | 'popular' | 'newest' | 'upcoming' | 'reviews' | 'alphabetical';
 const PerformerDiscoveryPageInternal = () => {

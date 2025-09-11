@@ -6,6 +6,7 @@ import { VenueCard } from '../components/venue-marketplace/VenueCard';
 import { VenueListItem } from '../components/venue-marketplace/VenueListItem';
 import { VenueMap } from '../components/venue-marketplace/VenueMap';
 import { EntityImage } from '@kit/ui/makerkit/entity-image';
+import { VenueCard as EnhancedVenueCard } from '../components/ui/EnhancedCard';
 
 type ViewMode = 'grid' | 'list' | 'map';
 type SortOption = 'recommended' | 'popular' | 'newest' | 'price_low' | 'price_high' | 'distance' | 'rating' | 'capacity';

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { ShoppingCartIcon, FilterIcon, StarIcon, TruckIcon, ShieldCheckIcon, HeadphonesIcon, XIcon, CheckIcon, ArrowRightIcon, TagIcon, GridIcon, ListIcon } from 'lucide-react';
+import { ShopCard } from '../components/ui/EnhancedCard';
 
 interface Product {
   id: string;

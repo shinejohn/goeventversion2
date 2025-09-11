@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { PlusIcon, SearchIcon, FilterIcon, GridIcon, ListIcon, CalendarIcon, UsersIcon, EyeIcon, StarIcon, TrendingUpIcon, ClockIcon, HeartIcon, ShareIcon } from 'lucide-react';
 import { CalendarCard } from '../../components/calendar/CalendarCard';
+import { CalendarCard as EnhancedCalendarCard } from '../../components/ui/EnhancedCard';
 
 interface Calendar {
   id: string;

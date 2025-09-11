@@ -19,6 +19,7 @@ import {
 import { useNavigate } from 'react-router';
 import { LocationSelector } from '../components/ui/LocationSelector';
 import { SharePopup } from '../components/ui/SharePopup';
+import { EventCard } from '../components/ui/EnhancedCard';
 
 interface EventsPageProps {
   events?: any[];
@@ -266,30 +267,39 @@ export const EventsPage = ({ events = [] }: EventsPageProps) => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {featuredEvents.map(event => (
-                <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate(`/events/${event.id}`)}>
+                <EventCard key={event.id} onClick={() => navigate(`/events/${event.id}`)}>
                   <div className="h-48 overflow-hidden relative">
-                    <img src={event.image} alt={event.title} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
-                    <div className="absolute top-2 right-2">
-                      <span className="px-2 py-1 bg-black/30 backdrop-blur-sm text-white text-xs rounded-full">
+                    <img 
+                      src={event.image} 
+                      alt={event.title} 
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                    <div className="absolute top-3 right-3">
+                      <span className="px-3 py-1 bg-indigo-600/90 backdrop-blur-sm text-white text-xs font-semibold rounded-full shadow-lg">
                         {event.category}
                       </span>
                     </div>
+                    <div className="absolute bottom-3 left-3 right-3">
+                      <h3 className="font-bold text-lg text-white mb-1 drop-shadow-lg">
+                        {event.title}
+                      </h3>
+                    </div>
                   </div>
-                  <div className="p-4">
-                    <h3 className="font-bold text-lg text-gray-900 mb-1">{event.title}</h3>
-                    <div className="flex items-center text-sm text-gray-600 mb-1">
-                      <CalendarIcon className="h-4 w-4 mr-1 flex-shrink-0" />
-                      {event.date}
+                  <div className="p-5">
+                    <div className="flex items-center text-sm text-gray-600 mb-2">
+                      <CalendarIcon className="h-4 w-4 mr-2 flex-shrink-0 text-indigo-500" />
+                      <span className="font-medium">{event.date}</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center text-sm text-gray-600">
-                        <MapPinIcon className="h-4 w-4 mr-1 flex-shrink-0" />
-                        {event.venue}
+                        <MapPinIcon className="h-4 w-4 mr-2 flex-shrink-0 text-indigo-500" />
+                        <span className="font-medium">{event.venue}</span>
                       </div>
-                      <span className="text-sm font-medium">{event.price}</span>
+                      <span className="text-lg font-bold text-indigo-600">{event.price}</span>
                     </div>
                   </div>
-                </div>
+                </EventCard>
               ))}
             </div>
           </div>
