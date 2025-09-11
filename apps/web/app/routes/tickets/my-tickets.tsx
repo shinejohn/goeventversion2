@@ -1,20 +1,20 @@
 import React from 'react';
-import { TicketDetailPage } from '~/components/magic-patterns/pages/tickets/TicketDetailPage';
+import { TicketsPage } from '~/components/magic-patterns/pages/profile/TicketsPage';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from './+types/$id';
+import type { Route } from './+types/my-tickets';
 
-export const loader = async ({ request, params }: Route.LoaderArgs) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
   
   try {
     // Get current user
     const { data: { user } } = await client.auth.getUser();
     if (!user) {
-      return { ticket: null, user: null };
+      return { tickets: [], user: null };
     }
 
-    // Fetch ticket details
-    const { data: ticket, error } = await client
+    // Fetch user's tickets
+    const { data: tickets, error } = await client
       .from('tickets')
       .select(`
         *,
@@ -28,17 +28,16 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
           venue:venues(name, address, city, state)
         )
       `)
-      .eq('id', params.id)
       .eq('user_id', user.id)
-      .single();
+      .order('created_at', { ascending: false });
 
-    if (error || !ticket) {
-      console.error('Error fetching ticket:', error);
-      return { ticket: null, user };
+    if (error) {
+      console.error('Error fetching user tickets:', error);
+      return { tickets: [], user };
     }
 
-    // Transform ticket for UI
-    const transformedTicket = {
+    // Transform tickets for UI
+    const transformedTickets = tickets?.map(ticket => ({
       id: ticket.id,
       eventName: ticket.event?.title || 'Event Not Found',
       eventDate: ticket.event?.start_datetime ? new Date(ticket.event.start_datetime) : null,
@@ -53,20 +52,19 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       status: ticket.status,
       qrCode: `TICKET-${ticket.id}`,
       image: ticket.event?.image_url,
-      description: ticket.event?.description,
-      attendeeInfo: ticket.attendee_info
-    };
+      description: ticket.event?.description
+    })) || [];
 
     return {
-      title: 'Ticket Detail - GoEventCity',
-      ticket: transformedTicket,
+      title: 'My Tickets - GoEventCity',
+      tickets: transformedTickets,
       user
     };
   } catch (error) {
-    console.error('Ticket detail loader error:', error);
+    console.error('My tickets loader error:', error);
     return {
-      title: 'Ticket Detail - GoEventCity',
-      ticket: null,
+      title: 'My Tickets - GoEventCity',
+      tickets: [],
       user: null
     };
   }
@@ -75,18 +73,17 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
 export const meta = ({ data }: Route.MetaArgs) => {
   return [
     {
-      title: data?.title || 'GoEventCity',
+      title: data?.title || 'My Tickets - GoEventCity',
     },
     {
       name: 'description',
-      content: 'Discover amazing events and experiences in your city',
+      content: 'View and manage your event tickets',
     },
   ];
 };
 
-// SSR-safe pattern using props.loaderData
-export default function TicketDetailRoute(props: Route.ComponentProps) {
+export default function MyTicketsRoute(props: Route.ComponentProps) {
   const data = props.loaderData;
   
-  return <TicketDetailPage ticket={data.ticket} user={data.user} />;
+  return <TicketsPage tickets={data.tickets} user={data.user} />;
 }

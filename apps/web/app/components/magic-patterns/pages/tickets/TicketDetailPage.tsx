@@ -50,7 +50,12 @@ const generateQRCodeDataURL = (data: string) => {
     return 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="250" height="250"%3E%3Crect width="250" height="250" fill="%23f3f4f6"/%3E%3Ctext x="125" y="125" text-anchor="middle" font-family="Arial" font-size="14" fill="%236b7280"%3ETicket QR%3C/text%3E%3C/svg%3E';
   }
 };
-export const TicketDetailPage = () => {
+interface TicketDetailPageProps {
+  ticket?: any;
+  user?: any;
+}
+
+export const TicketDetailPage = ({ ticket, user }: TicketDetailPageProps) => {
   const navigate = useNavigate();
   const [isQrEnlarged, setIsQrEnlarged] = useState(false);
   const [brightness, setBrightness] = useState(100);

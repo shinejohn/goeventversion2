@@ -1,7 +1,12 @@
 import React, { useState, createElement } from 'react';
 import { TicketIcon, CalendarIcon, MapPinIcon, ClockIcon, ShareIcon, DownloadIcon, ChevronRightIcon, StarIcon, ArrowRightIcon, UserIcon, XIcon, CheckIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
-export const TicketsPage = () => {
+interface TicketsPageProps {
+  tickets?: any[];
+  user?: any;
+}
+
+export const TicketsPage = ({ tickets: propTickets, user }: TicketsPageProps) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('upcoming');
   const [filter, setFilter] = useState('all');
@@ -11,8 +16,12 @@ export const TicketsPage = () => {
   const [transferSuccess, setTransferSuccess] = useState(false);
   const [calendarSuccess, setCalendarSuccess] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
-  // Mock ticket data
-  const tickets = {
+  // Use real ticket data or fallback to mock data
+  const tickets = propTickets ? {
+    upcoming: propTickets.filter(t => t.status === 'active' && new Date(t.eventDate) > new Date()),
+    past: propTickets.filter(t => t.status === 'active' && new Date(t.eventDate) <= new Date()),
+    transferred: propTickets.filter(t => t.status === 'transferred')
+  } : {
     upcoming: [{
       id: 'ticket-1',
       eventName: 'Clearwater Jazz Holiday',

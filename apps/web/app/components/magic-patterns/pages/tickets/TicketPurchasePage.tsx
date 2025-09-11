@@ -2,14 +2,39 @@ import React, { useEffect, useState, Children } from 'react';
 import { TicketIcon, CalendarIcon, MapPinIcon, ClockIcon, ChevronLeftIcon, InfoIcon, UserIcon, CreditCardIcon, CheckIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { TicketPurchaseConfirmation } from '../../components/tickets/TicketPurchaseConfirmation';
-export const TicketPurchasePage = () => {
+interface TicketPurchasePageProps {
+  event?: any;
+}
+
+export const TicketPurchasePage = ({ event }: TicketPurchasePageProps) => {
   const navigate = useNavigate();
   const [selectedTicketType, setSelectedTicketType] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Mock login state
-  // Mock event data
-  const eventData = {
+  
+  // Use real event data or fallback
+  const eventData = event ? {
+    id: event.id,
+    name: event.title,
+    date: new Date(event.start_datetime),
+    time: new Date(event.start_datetime).toLocaleTimeString('en-US', { 
+      hour: 'numeric', 
+      minute: '2-digit',
+      hour12: true 
+    }),
+    endTime: new Date(event.end_datetime).toLocaleTimeString('en-US', { 
+      hour: 'numeric', 
+      minute: '2-digit',
+      hour12: true 
+    }),
+    venue: {
+      name: event.venue?.name || 'TBA',
+      address: event.venue ? `${event.venue.address}, ${event.venue.city}, ${event.venue.state}` : 'TBA'
+    },
+    image: event.image_url || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80',
+    description: event.description
+  } : {
     id: 'event-1',
     name: 'Clearwater Jazz Holiday',
     date: new Date('2024-10-15T17:00:00'),
