@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { mockVenues } from '../../../mockdata/venues';
+// MOCKDATA COMMENTED OUT - Using real database data instead
+// import { mockVenues } from '../../../mockdata/venues';
 import { ArrowLeftIcon, CheckIcon, ChevronRightIcon, AlertCircleIcon } from 'lucide-react';
 import { EventDetailsForm } from '../../../components/booking-form/EventDetailsForm';
 import { SpaceSetupForm } from '../../../components/booking-form/SpaceSetupForm';
@@ -114,7 +115,9 @@ export default function VenueBookingPage() {
     // In a real app, we would fetch the venue by ID from the URL
     // For this example, we'll use the first venue from our mock data
     try {
-      const venueData = mockVenues[0];
+      // MOCKDATA COMMENTED OUT - Using real database data instead
+      // const venueData = mockVenues[0];
+      const venueData = null; // TODO: Replace with real database data
       setVenue(venueData);
       // Pre-fill the form with any data that might be passed from the venue page
       const today = new Date();

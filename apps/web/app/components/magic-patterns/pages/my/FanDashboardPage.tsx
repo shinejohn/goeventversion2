@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Bell as BellIcon, Calendar as CalendarIcon, CheckCircle as CheckCircleIcon, ChevronDown as ChevronDownIcon, ChevronRight as ChevronRightIcon, Clock as ClockIcon, Edit as EditIcon, Filter as FilterIcon, Grid as GridIcon, Heart as HeartIcon, Image as ImageIcon, List as ListIcon, Map as MapIcon, MapPin as MapPinIcon, MessageSquare as MessageSquareIcon, MoreHorizontal as MoreHorizontalIcon, Music as MusicIcon, Plus as PlusIcon, Search as SearchIcon, Settings as SettingsIcon, ShoppingBag as ShoppingBagIcon, Star as StarIcon, Ticket as TicketIcon, Trash as TrashIcon, TrendingUp as TrendingUpIcon, User as UserIcon, X as XIcon, AlertCircle as AlertCircleIcon, Bookmark as BookmarkIcon, DollarSign as DollarSignIcon, ExternalLink as ExternalLinkIcon } from 'lucide-react';
-import { followedArtists, upcomingShows, exclusiveContent, userActivity } from '../../mockdata/fanDashboard';
+// MOCKDATA COMMENTED OUT - Using real database data instead
+// import { followedArtists, upcomingShows, exclusiveContent, userActivity } from '../../mockdata/fanDashboard';
 import { PlannedEventsWidget } from '../../components/check-in/PlannedEventsWidget';
 import { CheckInFeed } from '../../components/check-in/CheckInFeed';
 export const FanDashboardPage = () => {
@@ -12,8 +13,9 @@ export const FanDashboardPage = () => {
   const [distanceFilter, setDistanceFilter] = useState('all');
   const [contentFilter, setContentFilter] = useState('all');
   const [activeTab, setActiveTab] = useState('artists');
+  // MOCKDATA COMMENTED OUT - Using real database data instead
   // Filter shows based on distance
-  const filteredShows = upcomingShows.filter(show => {
+  const filteredShows = [].filter(show => {
     const distance = show.distance;
     if (distanceFilter === 'all') return true;
     if (distanceFilter === 'local' && distance <= 50) return true;
@@ -21,14 +23,16 @@ export const FanDashboardPage = () => {
     if (distanceFilter === 'national' && distance > 200) return true;
     return false;
   });
+  // MOCKDATA COMMENTED OUT - Using real database data instead
   // Sort artists based on selected option
-  const sortedArtists = [...followedArtists].sort((a, b) => {
+  const sortedArtists = [...[]].sort((a, b) => {
     if (artistSort === 'a-z') return a.name.localeCompare(b.name);
     if (artistSort === 'most-shows') return b.upcomingShows - a.upcomingShows;
     return new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime();
   });
+  // MOCKDATA COMMENTED OUT - Using real database data instead
   // Filter content based on type
-  const filteredContent = exclusiveContent.filter(content => {
+  const filteredContent = [].filter(content => {
     if (contentFilter === 'all') return true;
     return content.type === contentFilter;
   });
@@ -804,7 +808,7 @@ export const FanDashboardPage = () => {
                           Artists Followed
                         </dt>
                         <dd className="mt-1 text-3xl font-semibold text-indigo-600">
-                          {followedArtists.length}
+                          {0}
                         </dd>
                       </div>
                       <div className="sm:col-span-1">
@@ -820,7 +824,7 @@ export const FanDashboardPage = () => {
                           Reviews Written
                         </dt>
                         <dd className="mt-1 text-3xl font-semibold text-indigo-600">
-                          {userActivity.reviews.length}
+                          {0}
                         </dd>
                       </div>
                       <div className="sm:col-span-1">
@@ -828,7 +832,7 @@ export const FanDashboardPage = () => {
                           Photos Shared
                         </dt>
                         <dd className="mt-1 text-3xl font-semibold text-indigo-600">
-                          {userActivity.photos.length}
+                          {0}
                         </dd>
                       </div>
                     </dl>

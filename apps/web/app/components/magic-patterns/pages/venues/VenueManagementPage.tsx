@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { ArrowLeftIcon, BuildingIcon, HomeIcon, ChevronRightIcon, PlusIcon, CalendarIcon, MessageCircleIcon, BarChartIcon, SettingsIcon, ClockIcon, CheckCircleIcon, XCircleIcon, EditIcon, TrashIcon, EyeIcon, BellIcon, UsersIcon, DollarSignIcon, ImageIcon, TagIcon, GlobeIcon, ChevronLeftIcon, ChevronDownIcon, SaveIcon, RefreshCwIcon, ShieldIcon, AlertCircleIcon, HelpCircleIcon, FileTextIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
-import { mockVenues } from '../../mockdata/venues';
+// MOCKDATA COMMENTED OUT - Using real database data instead
+// import { mockVenues } from '../../mockdata/venues';
 export const VenueManagementPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('venues');

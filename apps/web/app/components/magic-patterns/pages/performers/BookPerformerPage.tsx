@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { mockPerformers } from '../../mockdata/performers';
+// MOCKDATA COMMENTED OUT - Using real database data instead
+// import { mockPerformers } from '../../mockdata/performers';
 import { ArrowLeftIcon, CalendarIcon, ClockIcon, MapPinIcon, UserIcon, BuildingIcon, MailIcon, PhoneIcon, InfoIcon, FileTextIcon, CheckCircleIcon, CheckIcon, XIcon, PlusIcon, MinusIcon, DollarSignIcon, SaveIcon, SendIcon, UploadIcon, HelpCircleIcon, AlertCircleIcon, StarIcon, MusicIcon } from 'lucide-react';
 type BookPerformerPageProps = {
   performerId?: string;

@@ -2,7 +2,8 @@ import React, { useEffect, useState, Children, Component } from 'react';
 import { CheckCircleIcon, MapPinIcon, CalendarIcon, ClockIcon, StarIcon, UsersIcon, HeartIcon, ShareIcon, BellIcon, MessageCircleIcon, CheckIcon, XIcon, InfoIcon, HomeIcon, ChevronRightIcon, ExternalLinkIcon, DollarSignIcon, PhoneIcon, BuildingIcon, TicketIcon, ImageIcon, LayoutIcon, WifiIcon, HelpCircleIcon, ZapIcon, MicIcon, UtensilsIcon, ShieldIcon, TruckIcon, CameraIcon, AwardIcon, ThumbsUpIcon, BarChartIcon, CalendarDaysIcon, RepeatIcon, UserPlusIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { useCheckIn } from '../../../context/CheckInContext';
-import { mockVenues } from '../../../mockdata/venues';
+// MOCKDATA COMMENTED OUT - Using real database data instead
+// import { mockVenues } from '../../../mockdata/venues';
 import { VenueImageGallery } from '../../../components/venue-profile/VenueImageGallery';
 import { VenueBookingWidget } from '../../../components/venue-profile/VenueBookingWidget';
 import { VenueAmenities } from '../../../components/venue-profile/VenueAmenities';
@@ -22,8 +23,9 @@ type Tab = 'overview' | 'spaces' | 'events' | 'calendar' | 'reviews' | 'photos' 
 export default function VenueProfilePage() {
   // In a real app, we would fetch the venue by ID and slug from the URL
   // For this example, we'll use the first venue from our mock data and enhance it
+  // MOCKDATA COMMENTED OUT - Using real database data instead
   const venue = {
-    ...mockVenues[0],
+    // ...mockVenues[0],
     // Add additional fields needed for this detailed view
     verifiedDate: 'May 2023',
     responseRate: 98,

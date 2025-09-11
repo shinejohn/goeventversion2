@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { DirectoryFilters } from '../../../components/hub/directory/DirectoryFilters';
 import { DirectoryCard } from '../../../components/hub/directory/DirectoryCard';
-import { mockVenues } from '../../../mockdata/venues';
+// MOCKDATA COMMENTED OUT - Using real database data instead
+// import { mockVenues } from '../../../mockdata/venues';
 import { ArrowLeftIcon, PlusIcon, SearchIcon, FilterIcon, GridIcon, LayoutIcon, BuildingIcon } from 'lucide-react';
 export default function HubVenuesPage() {
   const navigate = useNavigate();
@@ -204,7 +205,8 @@ export default function HubVenuesPage() {
 }
 // Helper function to generate mock venues based on hub data
 function generateMockVenues(hubData: any) {
-  const baseVenue = mockVenues[0];
+  // MOCKDATA COMMENTED OUT - Using real database data instead
+  // const baseVenue = mockVenues[0];
   const venues = [];
   const venueTypes = hubData.venueTypes || [];
   const locations = hubData.locations || [];

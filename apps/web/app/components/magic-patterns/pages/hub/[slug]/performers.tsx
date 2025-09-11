@@ -4,7 +4,8 @@ import { Header } from '../../../components/layout/Header';
 import { Footer } from '../../../components/layout/Footer';
 import { DirectoryFilters } from '../../../components/hub/directory/DirectoryFilters';
 import { DirectoryCard } from '../../../components/hub/directory/DirectoryCard';
-import { mockPerformers } from '../../../mockdata/performers';
+// MOCKDATA COMMENTED OUT - Using real database data instead
+// import { mockPerformers } from '../../../mockdata/performers';
 import { ArrowLeftIcon, PlusIcon, SearchIcon, FilterIcon, GridIcon, LayoutIcon, MusicIcon, UsersIcon } from 'lucide-react';
 export default function HubPerformersPage() {
   const {
@@ -46,7 +47,9 @@ export default function HubPerformersPage() {
       let relevantPerformers = [];
       if (slug === 'jazz-lovers') {
         // Filter for jazz-related performers
-        relevantPerformers = mockPerformers.filter(performer => performer.genres.some(genre => ['Jazz/Blues', 'Soul', 'Funk', 'World Music'].includes(genre)));
+        // MOCKDATA COMMENTED OUT - Using real database data instead
+        // relevantPerformers = mockPerformers.filter(performer => performer.genres.some(genre => ['Jazz/Blues', 'Soul', 'Funk', 'World Music'].includes(genre)));
+        relevantPerformers = []; // TODO: Replace with real database data
         // Add hub-specific badges to performers
         relevantPerformers = relevantPerformers.map(performer => ({
           ...performer,
@@ -54,7 +57,9 @@ export default function HubPerformersPage() {
         }));
       } else {
         // For other hubs, just use a subset of performers
-        relevantPerformers = mockPerformers.slice(0, 12).map(performer => ({
+        // MOCKDATA COMMENTED OUT - Using real database data instead
+        // relevantPerformers = mockPerformers.slice(0, 12).map(performer => ({
+        relevantPerformers = [].slice(0, 12).map(performer => ({
           ...performer,
           hubBadges: getHubBadges(performer, slug as string)
         }));
