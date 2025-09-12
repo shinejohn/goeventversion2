@@ -169,7 +169,7 @@ export const PerformersPage = ({ performers = [] }: PerformersPageProps) => {
           your audience
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <button className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-md shadow-sm" onClick={() => navigate('/performers/join')}>
+          <button className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-md shadow-sm" onClick={() => navigate('/auth/sign-up?account_type=performer')}>
             Create Performer Profile
           </button>
           <button className="px-8 py-3 bg-white hover:bg-gray-50 text-gray-800 font-medium rounded-md shadow-sm border border-gray-300" onClick={() => navigate('/book/performer')}>
