@@ -174,8 +174,10 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     }
     
     // Transform data for Magic Patterns component
-    const transformedEvents = (events || []).map(event => ({
+    const transformedEvents = (events || []).map((event, index) => ({
       ...event,
+      // Ensure every event has a proper ID
+      id: event.id || `event-${index + 1}`,
       // UI expects these specific fields
       date: event.start_datetime ? new Date(event.start_datetime).toLocaleDateString('en-US', {
         month: 'short',
@@ -193,7 +195,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     
     // Debug: Log the first few transformed events to see their structure
     if (transformedEvents && transformedEvents.length > 0) {
-      console.log('🔍 DEBUG: First 3 transformed events:');
+      console.log('🔍 DEBUG: First 3 transformed events with IDs:');
       transformedEvents.slice(0, 3).forEach((event, index) => {
         console.log(`Transformed Event ${index + 1}:`, {
           id: event.id,
