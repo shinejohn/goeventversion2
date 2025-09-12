@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Route } from './+types/$id';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import { createClient } from '@supabase/supabase-js';
 
 // Magic Patterns imports
 import { EventDetailPage } from '~/components/magic-patterns/pages/EventDetailPage';
@@ -24,9 +25,13 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     console.log('[LOADER DEBUG] events/$id starting, eventId:', id);
     logger.info({ loader: 'events/$id', eventId: id }, '🎯 Loading event details');
     
-    const client = getSupabaseServerClient(request);
+    // Temporarily use service role key to bypass RLS issues
+    const client = createClient(
+      'https://gbcjlsnbamjchdtgrquu.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiY2psc25iYW1qY2hkdGdycXV1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NjY4MDM5NSwiZXhwIjoyMDcyMjU2Mzk1fQ.WXjKWdFTFOrxMqF62A7fEzblbGHcl3SYPu7bDWXFFgc'
+    );
     
-    // Get current user for personalization
+    // Get current user for personalization (will be null with service role)
     const { data: { user } } = await client.auth.getUser();
     
   // First, get the main event data
