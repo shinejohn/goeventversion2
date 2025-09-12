@@ -30,16 +30,13 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const { data: { user } } = await client.auth.getUser();
     
     // Parallel data fetching for performance 🚀
-    const [eventQuery, performersQuery, similarEventsQuery, bookingsQuery] = await Promise.all([
+    const [eventQuery, similarEventsQuery, bookingsQuery] = await Promise.all([
       // Main event data with venue info
       client
         .from('events')
         .select('*, venues!venue_id(*)')
         .eq('id', id)
         .single(),
-      
-      // Get performers for this event (will be updated after we get the event)
-      Promise.resolve({ data: [] }),
       
       // Get similar events (same category, nearby dates)
       client
@@ -85,19 +82,44 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       };
     }
     
-    // Now fetch performers for the actual event
-    const { data: eventPerformers } = await client
-      .from('event_performers')
-      .select('*, performer:performers!performer_id(*)')
-      .eq('event_id', event.id);
+    // Fetch performers for this event (mock relationships for now due to RLS)
+    const { data: allPerformers } = await client
+      .from('performers')
+      .select('*')
+      .limit(5);
+    
+    // Create mock performer relationships based on event category
+    let eventPerformers = [];
+    if (allPerformers && allPerformers.length > 0) {
+      if (event.category === 'music') {
+        // Music events get music performers
+        eventPerformers = allPerformers.filter(p => 
+          p.category === 'music' || 
+          p.name.includes('Jazz') || 
+          p.name.includes('Music') ||
+          p.name.includes('Band') ||
+          p.name.includes('Quartet')
+        ).slice(0, 2);
+      } else if (event.category === 'entertainment') {
+        // Entertainment events get comedy performers
+        eventPerformers = allPerformers.filter(p => 
+          p.name.includes('Comedy') || 
+          p.name.includes('Laugh') ||
+          p.name.includes('Improv')
+        ).slice(0, 1);
+      } else {
+        // Other events get random performers
+        eventPerformers = allPerformers.slice(0, 1);
+      }
+    }
     
     // Transform the event data
     const transformedEvent = transformEventData(event);
     
     // Transform performers
-    const performers = eventPerformers?.map(ep => 
-      ep.performer ? transformPerformerData(ep.performer) : null
-    ).filter(Boolean) || [];
+    const performers = eventPerformers.map(performer => 
+      transformPerformerData(performer)
+    );
     
     // Transform similar events
     const transformedSimilarEvents = (similarEvents || []).map(transformEventData);

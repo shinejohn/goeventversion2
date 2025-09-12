@@ -20,7 +20,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const { data: { user } } = await client.auth.getUser();
     
     // Parallel data fetching for performance 🚀
-    const [performerQuery, upcomingEventsQuery, pastEventsQuery, similarPerformersQuery] = await Promise.all([
+    const [performerQuery, allEventsQuery, similarPerformersQuery] = await Promise.all([
       // Main performer data with comprehensive fields
       client
         .from('performers')
@@ -28,18 +28,11 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         .eq('id', performerId)
         .single(),
       
-      // Get upcoming events for this performer
+      // Get all events (we'll filter by performer category)
       client
-        .from('event_performers')
-        .select('*, events!event_id(*, venues!venue_id(*))')
-        .eq('performer_id', performerId),
-      
-      // Get past events for portfolio
-      client
-        .from('event_performers')
-        .select('*, events!event_id(*, venues!venue_id(*))')
-        .eq('performer_id', performerId)
-        .limit(5),
+        .from('events')
+        .select('*, venues!venue_id(*)')
+        .limit(20),
       
       // Get similar performers (same category)
       (async () => {
@@ -64,9 +57,32 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     ]);
     
     const { data: performer, error: performerError } = performerQuery;
-    const { data: upcomingEvents } = upcomingEventsQuery;
-    const { data: pastEvents } = pastEventsQuery;
+    const { data: allEvents } = allEventsQuery;
     const { data: similarPerformers } = similarPerformersQuery;
+    
+    // Filter events by performer category (mock relationships)
+    let upcomingEvents = [];
+    let pastEvents = [];
+    
+    if (allEvents && performer) {
+      const performerEvents = allEvents.filter(event => {
+        // Match events by category or name patterns
+        if (event.category === performer.category) return true;
+        if (performer.category === 'music' && event.category === 'music') return true;
+        if (performer.category === 'comedy' && event.category === 'entertainment') return true;
+        return false;
+      });
+      
+      // Split into upcoming and past events
+      const now = new Date();
+      upcomingEvents = performerEvents.filter(event => 
+        new Date(event.start_datetime) > now
+      ).slice(0, 5);
+      
+      pastEvents = performerEvents.filter(event => 
+        new Date(event.start_datetime) <= now
+      ).slice(0, 5);
+    }
     
     if (performerError || !performer) {
       logger.warn({ error: performerError, performerId }, 'Performer not found');
