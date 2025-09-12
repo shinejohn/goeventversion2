@@ -62,9 +62,6 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         let query = client
           .from('events')
           .select('*, venues!venue_id(*)', { count: 'exact' });
-          // Temporarily removed filters to debug
-          // .eq('status', 'published')
-          // .gte('start_datetime', new Date().toISOString());
         
         // Apply filters
         if (params.search) {
@@ -174,10 +171,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     }
     
     // Transform data for Magic Patterns component
-    const transformedEvents = (events || []).map((event, index) => ({
+    const transformedEvents = (events || []).map(event => ({
       ...event,
-      // Ensure every event has a proper ID
-      id: event.id || `event-${index + 1}`,
       // UI expects these specific fields
       date: event.start_datetime ? new Date(event.start_datetime).toLocaleDateString('en-US', {
         month: 'short',
