@@ -29,39 +29,31 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     // Get current user for personalization
     const { data: { user } } = await client.auth.getUser();
     
-    // Parallel data fetching for performance 🚀
-    const [eventQuery, similarEventsQuery, bookingsQuery] = await Promise.all([
-      // Main event data with venue info
-      client
-        .from('events')
-        .select('*, venues!venue_id(*)')
-        .eq('id', id)
-        .single(),
-      
-      // Get similar events (same category, nearby dates)
-      client
-        .from('events')
-        .select('*, venues!venue_id(*)')
-        .neq('id', id)
-        .limit(4),
-      
-      // Check if user has already booked this event
-      user ? client
-        .from('bookings')
-        .select('id, status')
-        .eq('event_id', id)
-        .eq('account_id', user.id)
-        .maybeSingle()
-        : Promise.resolve({ data: null }),
-    ]);
+    // First, get the main event data
+    console.log('[EVENT LOADER DEBUG] Starting event query for ID:', id);
     
-    const { data: event, error: eventError } = eventQuery;
-    const { data: similarEvents } = similarEventsQuery;
-    const { data: userBooking } = bookingsQuery;
+    const { data: event, error: eventError } = await client
+      .from('events')
+      .select('*')
+      .eq('id', id)
+      .single();
     
-    // Debug logging
     console.log('[EVENT LOADER DEBUG] Event query result:', { event, eventError });
-    logger.info({ eventId: id, event, eventError }, 'Event query result');
+    
+    // Get similar events (simplified query)
+    const { data: similarEvents } = await client
+      .from('events')
+      .select('id, title, start_datetime, end_datetime, image_url, category, location_name')
+      .neq('id', id)
+      .limit(4);
+    
+    // Check if user has already booked this event
+    const { data: userBooking } = user ? await client
+      .from('bookings')
+      .select('id, status')
+      .eq('event_id', id)
+      .eq('account_id', user.id)
+      .maybeSingle() : { data: null };
     
     if (eventError || !event) {
       logger.warn({ error: eventError, eventId: id }, 'Event not found');
@@ -85,6 +77,23 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         } : null,
       };
     }
+    
+    // Get venue data for this event
+    let venue = null;
+    if (event.venue_id) {
+      const { data: venueData } = await client
+        .from('venues')
+        .select('*')
+        .eq('id', event.venue_id)
+        .single();
+      venue = venueData;
+    }
+    
+    // Add venue data to event
+    const eventWithVenue = {
+      ...event,
+      venue: venue
+    };
     
     // Fetch performers for this event (mock relationships for now due to RLS)
     const { data: allPerformers } = await client
@@ -118,7 +127,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     }
     
     // Transform the event data
-    const transformedEvent = transformEventData(event);
+    const transformedEvent = transformEventData(eventWithVenue);
     
     // Transform performers
     const performers = eventPerformers.map(performer => 
