@@ -105,35 +105,21 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       venue: venue
     };
     
-    // Fetch performers for this event (mock relationships for now due to RLS)
-    const { data: allPerformers } = await client
-      .from('performers')
-      .select('*')
-      .limit(5);
+    // Fetch performers for this event using real relationships
+    const { data: eventPerformersData } = await client
+      .from('event_performers')
+      .select(`
+        *,
+        performer:performers(*)
+      `)
+      .eq('event_id', id);
     
-    // Create mock performer relationships based on event category
+    // Extract performers from the relationships
     let eventPerformers = [];
-    if (allPerformers && allPerformers.length > 0) {
-      if (event.category === 'music') {
-        // Music events get music performers
-        eventPerformers = allPerformers.filter(p => 
-          p.category === 'music' || 
-          p.name.includes('Jazz') || 
-          p.name.includes('Music') ||
-          p.name.includes('Band') ||
-          p.name.includes('Quartet')
-        ).slice(0, 2);
-      } else if (event.category === 'entertainment') {
-        // Entertainment events get comedy performers
-        eventPerformers = allPerformers.filter(p => 
-          p.name.includes('Comedy') || 
-          p.name.includes('Laugh') ||
-          p.name.includes('Improv')
-        ).slice(0, 1);
-      } else {
-        // Other events get random performers
-        eventPerformers = allPerformers.slice(0, 1);
-      }
+    if (eventPerformersData && eventPerformersData.length > 0) {
+      eventPerformers = eventPerformersData
+        .map(ep => ep.performer)
+        .filter(performer => performer); // Remove any null performers
     }
     
     // Transform the event data
