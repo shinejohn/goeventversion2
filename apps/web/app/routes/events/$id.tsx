@@ -29,41 +29,54 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     // Get current user for personalization
     const { data: { user } } = await client.auth.getUser();
     
+    // Handle fallback IDs (event-1, event-2, etc.) by mapping to actual events
+    let actualEventId = id;
+    let eventIndex = null;
+    
+    if (id.startsWith('event-')) {
+      eventIndex = parseInt(id.replace('event-', '')) - 1;
+      console.log('[LOADER DEBUG] Fallback ID detected, eventIndex:', eventIndex);
+    }
+    
     // Parallel data fetching for performance 🚀
     const [eventQuery, performersQuery, similarEventsQuery, bookingsQuery] = await Promise.all([
-      // Main event data with venue info - comprehensive query for UI
-      client
-        .from('events')
-        .select('*, venues!venue_id(*)')
-        .eq('id', id)
-        .single(),
+      // Main event data with venue info - handle fallback IDs
+      eventIndex !== null 
+        ? client
+            .from('events')
+            .select('*, venues!venue_id(*)')
+            .eq('status', 'published')
+            .order('created_at', { ascending: false })
+            .range(eventIndex, eventIndex)
+            .single()
+        : client
+            .from('events')
+            .select('*, venues!venue_id(*)')
+            .eq('id', id)
+            .single(),
       
-      // Get performers for this event
-      client
-        .from('event_performers')
-        .select('*, performer:performers!performer_id(*)')
-        .eq('event_id', id),
+      // Get performers for this event (will be updated after we get the event)
+      Promise.resolve({ data: [] }),
       
       // Get similar events (same category, nearby dates)
       client
         .from('events')
         .select('*, venues!venue_id(*)')
         .eq('status', 'published')
-        .neq('id', id)
+        .neq('id', actualEventId)
         .limit(4),
       
       // Check if user has already booked this event
       user ? client
         .from('bookings')
         .select('id, status')
-        .eq('event_id', id)
+        .eq('event_id', actualEventId)
         .eq('account_id', user.id)
         .maybeSingle()
         : Promise.resolve({ data: null }),
     ]);
     
     const { data: event, error: eventError } = eventQuery;
-    const { data: eventPerformers } = performersQuery;
     const { data: similarEvents } = similarEventsQuery;
     const { data: userBooking } = bookingsQuery;
     
@@ -89,6 +102,15 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         } : null,
       };
     }
+    
+    // Update actualEventId with the real event ID
+    actualEventId = event.id;
+    
+    // Now fetch performers for the actual event
+    const { data: eventPerformers } = await client
+      .from('event_performers')
+      .select('*, performer:performers!performer_id(*)')
+      .eq('event_id', actualEventId);
     
     // Transform the event data
     const transformedEvent = transformEventData(event);
@@ -124,7 +146,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const { count: attendeeCount } = await client
       .from('bookings')
       .select('*', { count: 'exact', head: true })
-      .eq('event_id', id)
+      .eq('event_id', actualEventId)
       .eq('status', 'confirmed');
     
     return {
