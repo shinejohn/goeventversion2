@@ -59,6 +59,10 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const { data: similarEvents } = similarEventsQuery;
     const { data: userBooking } = bookingsQuery;
     
+    // Debug logging
+    console.log('[EVENT LOADER DEBUG] Event query result:', { event, eventError });
+    logger.info({ eventId: id, event, eventError }, 'Event query result');
+    
     if (eventError || !event) {
       logger.warn({ error: eventError, eventId: id }, 'Event not found');
       // Return null event data instead of throwing error
