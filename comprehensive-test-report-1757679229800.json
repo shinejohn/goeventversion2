@@ -1,0 +1,261 @@
+{
+  "timestamp": "2025-09-12T12:13:30.953Z",
+  "baseUrl": "https://goeventversion2-production.up.railway.app",
+  "totalTests": 18,
+  "passed": 0,
+  "failed": 18,
+  "results": [
+    {
+      "name": "Homepage",
+      "url": "https://goeventversion2-production.up.railway.app/",
+      "status": "error",
+      "loadTime": 1910,
+      "issues": [
+        "Test error: page.waitForTimeout is not a function"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Events Report",
+      "url": "https://goeventversion2-production.up.railway.app/events",
+      "status": "error",
+      "loadTime": 1281,
+      "issues": [
+        "Test error: page.waitForTimeout is not a function"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Performers Report",
+      "url": "https://goeventversion2-production.up.railway.app/performers",
+      "status": "error",
+      "loadTime": 767,
+      "issues": [
+        "Test error: page.waitForTimeout is not a function"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Venues Report",
+      "url": "https://goeventversion2-production.up.railway.app/venues",
+      "status": "error",
+      "loadTime": 1203,
+      "issues": [
+        "Test error: page.waitForTimeout is not a function"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Calendars Report",
+      "url": "https://goeventversion2-production.up.railway.app/calendars",
+      "status": "error",
+      "loadTime": 800,
+      "issues": [
+        "Test error: page.waitForTimeout is not a function"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Tickets Report",
+      "url": "https://goeventversion2-production.up.railway.app/tickets",
+      "status": "error",
+      "loadTime": 947,
+      "issues": [
+        "Test error: page.waitForTimeout is not a function"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "My Tickets",
+      "url": "https://goeventversion2-production.up.railway.app/tickets/my-tickets",
+      "status": "error",
+      "loadTime": 795,
+      "issues": [
+        "Test error: page.waitForTimeout is not a function"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Performer Management",
+      "url": "https://goeventversion2-production.up.railway.app/management/performer",
+      "status": "error",
+      "loadTime": 1207,
+      "issues": [
+        "Test error: page.waitForTimeout is not a function"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Venue Management",
+      "url": "https://goeventversion2-production.up.railway.app/management/venue",
+      "status": "error",
+      "loadTime": 889,
+      "issues": [
+        "Test error: page.waitForTimeout is not a function"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Influencer Management",
+      "url": "https://goeventversion2-production.up.railway.app/management/influencer",
+      "status": "error",
+      "loadTime": 1068,
+      "issues": [
+        "Test error: page.waitForTimeout is not a function"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Event Detail 1",
+      "url": "https://goeventversion2-production.up.railway.app/events/1",
+      "status": "error",
+      "loadTime": 1100,
+      "issues": [
+        "Test error: page.waitForTimeout is not a function"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Performer Detail 1",
+      "url": "https://goeventversion2-production.up.railway.app/performers/1",
+      "status": "error",
+      "loadTime": 946,
+      "issues": [
+        "Test error: page.waitForTimeout is not a function"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Venue Detail 1",
+      "url": "https://goeventversion2-production.up.railway.app/venues/1",
+      "status": "error",
+      "loadTime": 1057,
+      "issues": [
+        "Test error: page.waitForTimeout is not a function"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Ticket Purchase 1",
+      "url": "https://goeventversion2-production.up.railway.app/tickets/purchase/1",
+      "status": "error",
+      "loadTime": 665,
+      "issues": [
+        "HTTP 500"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Community Hub Jazz",
+      "url": "https://goeventversion2-production.up.railway.app/c/jazz-lovers",
+      "status": "error",
+      "loadTime": 661,
+      "issues": [
+        "HTTP 500"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Community Hub Rock",
+      "url": "https://goeventversion2-production.up.railway.app/c/rock-music",
+      "status": "error",
+      "loadTime": 650,
+      "issues": [
+        "HTTP 500"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Calendar Detail Jazz",
+      "url": "https://goeventversion2-production.up.railway.app/calendars/jazz-events",
+      "status": "error",
+      "loadTime": 665,
+      "issues": [
+        "HTTP 500"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    },
+    {
+      "name": "Shop/Marketplace",
+      "url": "https://goeventversion2-production.up.railway.app/shop",
+      "status": "error",
+      "loadTime": 1044,
+      "issues": [
+        "Test error: page.waitForTimeout is not a function"
+      ],
+      "links": [],
+      "buttons": [],
+      "forms": [],
+      "navigation": [],
+      "errors": []
+    }
+  ]
+}

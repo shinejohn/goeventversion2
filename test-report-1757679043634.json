@@ -1,0 +1,405 @@
+{
+  "timestamp": "2025-09-12T12:10:12.891Z",
+  "baseUrl": "https://goeventversion2-production.up.railway.app",
+  "totalPages": 28,
+  "passed": 0,
+  "failed": 28,
+  "errors": [],
+  "results": [
+    {
+      "name": "Homepage",
+      "path": "/",
+      "url": "https://goeventversion2-production.up.railway.app/",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 1691,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/__1757679015134.png"
+    },
+    {
+      "name": "Events Report",
+      "path": "/events",
+      "url": "https://goeventversion2-production.up.railway.app/events",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 1149,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_events_1757679016438.png"
+    },
+    {
+      "name": "Performers Report",
+      "path": "/performers",
+      "url": "https://goeventversion2-production.up.railway.app/performers",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 1112,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_performers_1757679018070.png"
+    },
+    {
+      "name": "Venues Report",
+      "path": "/venues",
+      "url": "https://goeventversion2-production.up.railway.app/venues",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 892,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_venues_1757679019113.png"
+    },
+    {
+      "name": "Calendars Report",
+      "path": "/calendars",
+      "url": "https://goeventversion2-production.up.railway.app/calendars",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 766,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_calendars_1757679020415.png"
+    },
+    {
+      "name": "Shop/Marketplace",
+      "path": "/shop",
+      "url": "https://goeventversion2-production.up.railway.app/shop",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 969,
+      "hasContent": null,
+      "hasData": false,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected",
+        "No images found"
+      ],
+      "screenshot": "screenshots/_shop_1757679021444.png"
+    },
+    {
+      "name": "Tickets Report",
+      "path": "/tickets",
+      "url": "https://goeventversion2-production.up.railway.app/tickets",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 957,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_tickets_1757679022446.png"
+    },
+    {
+      "name": "Community Hub - Jazz Lovers",
+      "path": "/c/jazz-lovers",
+      "url": "https://goeventversion2-production.up.railway.app/c/jazz-lovers",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 841,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Community Hub - Rock Music",
+      "path": "/c/rock-music",
+      "url": "https://goeventversion2-production.up.railway.app/c/rock-music",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 708,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Community Hub - Art Gallery",
+      "path": "/c/art-gallery",
+      "url": "https://goeventversion2-production.up.railway.app/c/art-gallery",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 1368,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Calendar Marketplace",
+      "path": "/calendars/marketplace",
+      "url": "https://goeventversion2-production.up.railway.app/calendars/marketplace",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 715,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_calendars_marketplace_1757679026163.png"
+    },
+    {
+      "name": "Calendar Detail - Jazz Events",
+      "path": "/calendars/jazz-events",
+      "url": "https://goeventversion2-production.up.railway.app/calendars/jazz-events",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 648,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Calendar Detail - Rock Concerts",
+      "path": "/calendars/rock-concerts",
+      "url": "https://goeventversion2-production.up.railway.app/calendars/rock-concerts",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 1105,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Event Detail - ID 1",
+      "path": "/events/1",
+      "url": "https://goeventversion2-production.up.railway.app/events/1",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 1194,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_events_1_1757679029188.png"
+    },
+    {
+      "name": "Event Detail - ID 2",
+      "path": "/events/2",
+      "url": "https://goeventversion2-production.up.railway.app/events/2",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 1201,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_events_2_1757679030439.png"
+    },
+    {
+      "name": "Event Detail - ID 3",
+      "path": "/events/3",
+      "url": "https://goeventversion2-production.up.railway.app/events/3",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 957,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_events_3_1757679031455.png"
+    },
+    {
+      "name": "Performer Detail - ID 1",
+      "path": "/performers/1",
+      "url": "https://goeventversion2-production.up.railway.app/performers/1",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 944,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_performers_1_1757679032459.png"
+    },
+    {
+      "name": "Performer Detail - ID 2",
+      "path": "/performers/2",
+      "url": "https://goeventversion2-production.up.railway.app/performers/2",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 940,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_performers_2_1757679033460.png"
+    },
+    {
+      "name": "Performer Detail - ID 3",
+      "path": "/performers/3",
+      "url": "https://goeventversion2-production.up.railway.app/performers/3",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 945,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_performers_3_1757679034460.png"
+    },
+    {
+      "name": "Venue Detail - ID 1",
+      "path": "/venues/1",
+      "url": "https://goeventversion2-production.up.railway.app/venues/1",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 950,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_venues_1_1757679035461.png"
+    },
+    {
+      "name": "Venue Detail - ID 2",
+      "path": "/venues/2",
+      "url": "https://goeventversion2-production.up.railway.app/venues/2",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 869,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_venues_2_1757679036382.png"
+    },
+    {
+      "name": "Venue Detail - ID 3",
+      "path": "/venues/3",
+      "url": "https://goeventversion2-production.up.railway.app/venues/3",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 1027,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_venues_3_1757679037464.png"
+    },
+    {
+      "name": "My Tickets",
+      "path": "/tickets/my-tickets",
+      "url": "https://goeventversion2-production.up.railway.app/tickets/my-tickets",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 832,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_tickets_my-tickets_1757679038355.png"
+    },
+    {
+      "name": "Ticket Purchase - Event 1",
+      "path": "/tickets/purchase/1",
+      "url": "https://goeventversion2-production.up.railway.app/tickets/purchase/1",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 623,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Ticket Purchase - Event 2",
+      "path": "/tickets/purchase/2",
+      "url": "https://goeventversion2-production.up.railway.app/tickets/purchase/2",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 1106,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Performer Management",
+      "path": "/management/performer",
+      "url": "https://goeventversion2-production.up.railway.app/management/performer",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 1151,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_management_performer_1757679041287.png"
+    },
+    {
+      "name": "Venue Management",
+      "path": "/management/venue",
+      "url": "https://goeventversion2-production.up.railway.app/management/venue",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 970,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_management_venue_1757679042331.png"
+    },
+    {
+      "name": "Influencer Management",
+      "path": "/management/influencer",
+      "url": "https://goeventversion2-production.up.railway.app/management/influencer",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 1070,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_management_influencer_1757679043473.png"
+    }
+  ]
+}

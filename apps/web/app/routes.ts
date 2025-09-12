@@ -95,6 +95,7 @@ const magicPatternsPublicLayout = layout('routes/layouts/magic-patterns-public.t
   route('calendars/:slug', 'routes/calendars/$slug.tsx'),
   
   route('gear', 'routes/gear/index.tsx'),
+  route('shop', 'routes/shop/index.tsx'),
   
   route('tickets', 'routes/tickets/index.tsx'),
   route('tickets/marketplace', 'routes/tickets/marketplace/index.tsx'),

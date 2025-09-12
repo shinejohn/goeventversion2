@@ -334,10 +334,10 @@ export const EventsPage = ({ events = [] }: EventsPageProps) => {
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {day.events.map((event: any) => (
-                    <div 
+                    <EventCard 
                       key={event.id} 
-                      className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer" 
                       onClick={() => navigate(`/events/${event.id}`)}
+                      className="cursor-pointer"
                     >
                       <div className="h-40 overflow-hidden relative">
                         <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
@@ -394,7 +394,7 @@ export const EventsPage = ({ events = [] }: EventsPageProps) => {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </EventCard>
                   ))}
                 </div>
               </div>

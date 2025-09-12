@@ -1,0 +1,405 @@
+{
+  "timestamp": "2025-09-12T12:09:30.985Z",
+  "baseUrl": "https://goeventversion2-production.up.railway.app",
+  "totalPages": 28,
+  "passed": 0,
+  "failed": 28,
+  "errors": [],
+  "results": [
+    {
+      "name": "Homepage",
+      "path": "/",
+      "url": "https://goeventversion2-production.up.railway.app/",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 1892,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Events Report",
+      "path": "/events",
+      "url": "https://goeventversion2-production.up.railway.app/events",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 944,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Performers Report",
+      "path": "/performers",
+      "url": "https://goeventversion2-production.up.railway.app/performers",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 1148,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Venues Report",
+      "path": "/venues",
+      "url": "https://goeventversion2-production.up.railway.app/venues",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 1242,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Calendars Report",
+      "path": "/calendars",
+      "url": "https://goeventversion2-production.up.railway.app/calendars",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 754,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Shop/Marketplace",
+      "path": "/shop",
+      "url": "https://goeventversion2-production.up.railway.app/shop",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 846,
+      "hasContent": null,
+      "hasData": false,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected",
+        "No images found"
+      ],
+      "screenshot": "screenshots/_shop_1757678978358.png"
+    },
+    {
+      "name": "Tickets Report",
+      "path": "/tickets",
+      "url": "https://goeventversion2-production.up.railway.app/tickets",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 1114,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Community Hub - Jazz Lovers",
+      "path": "/c/jazz-lovers",
+      "url": "https://goeventversion2-production.up.railway.app/c/jazz-lovers",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 678,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Community Hub - Rock Music",
+      "path": "/c/rock-music",
+      "url": "https://goeventversion2-production.up.railway.app/c/rock-music",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 1119,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Community Hub - Art Gallery",
+      "path": "/c/art-gallery",
+      "url": "https://goeventversion2-production.up.railway.app/c/art-gallery",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 1047,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Calendar Marketplace",
+      "path": "/calendars/marketplace",
+      "url": "https://goeventversion2-production.up.railway.app/calendars/marketplace",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 701,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Calendar Detail - Jazz Events",
+      "path": "/calendars/jazz-events",
+      "url": "https://goeventversion2-production.up.railway.app/calendars/jazz-events",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 655,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Calendar Detail - Rock Concerts",
+      "path": "/calendars/rock-concerts",
+      "url": "https://goeventversion2-production.up.railway.app/calendars/rock-concerts",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 625,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Event Detail - ID 1",
+      "path": "/events/1",
+      "url": "https://goeventversion2-production.up.railway.app/events/1",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 1175,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Event Detail - ID 2",
+      "path": "/events/2",
+      "url": "https://goeventversion2-production.up.railway.app/events/2",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 841,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Event Detail - ID 3",
+      "path": "/events/3",
+      "url": "https://goeventversion2-production.up.railway.app/events/3",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 1157,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Performer Detail - ID 1",
+      "path": "/performers/1",
+      "url": "https://goeventversion2-production.up.railway.app/performers/1",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 841,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Performer Detail - ID 2",
+      "path": "/performers/2",
+      "url": "https://goeventversion2-production.up.railway.app/performers/2",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 1161,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Performer Detail - ID 3",
+      "path": "/performers/3",
+      "url": "https://goeventversion2-production.up.railway.app/performers/3",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 836,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Venue Detail - ID 1",
+      "path": "/venues/1",
+      "url": "https://goeventversion2-production.up.railway.app/venues/1",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 1104,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Venue Detail - ID 2",
+      "path": "/venues/2",
+      "url": "https://goeventversion2-production.up.railway.app/venues/2",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 890,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Venue Detail - ID 3",
+      "path": "/venues/3",
+      "url": "https://goeventversion2-production.up.railway.app/venues/3",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 845,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "My Tickets",
+      "path": "/tickets/my-tickets",
+      "url": "https://goeventversion2-production.up.railway.app/tickets/my-tickets",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 828,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Ticket Purchase - Event 1",
+      "path": "/tickets/purchase/1",
+      "url": "https://goeventversion2-production.up.railway.app/tickets/purchase/1",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 639,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Ticket Purchase - Event 2",
+      "path": "/tickets/purchase/2",
+      "url": "https://goeventversion2-production.up.railway.app/tickets/purchase/2",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 853,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Performer Management",
+      "path": "/management/performer",
+      "url": "https://goeventversion2-production.up.railway.app/management/performer",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 829,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Venue Management",
+      "path": "/management/venue",
+      "url": "https://goeventversion2-production.up.railway.app/management/venue",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 1157,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    },
+    {
+      "name": "Influencer Management",
+      "path": "/management/influencer",
+      "url": "https://goeventversion2-production.up.railway.app/management/influencer",
+      "status": "error",
+      "statusCode": 200,
+      "loadTime": 755,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "Cannot read properties of undefined (reading 'hasMainContent')",
+      "issues": [
+        "Navigation error: Cannot read properties of undefined (reading 'hasMainContent')"
+      ]
+    }
+  ]
+}
