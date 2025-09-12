@@ -222,19 +222,15 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
   }
 };
 
-// Component using the Magic Patterns wrapper
-export default createMagicPatternsRoute({
-  component: EventDetailPage,
-  transformData: (loaderData) => {
-    console.log('[EventDetailRoute] Loader data:', loaderData);
-    console.log('[EventDetailRoute] Event data:', loaderData.event);
-    return {
-      event: loaderData.event,
-      // relatedEvents: loaderData.similarEvents,
-      // attendeeCount: loaderData.attendeeCount,
-    };
-  },
-});
+// Simple component for testing
+export default function EventDetailRoute() {
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-bold">Event Detail Route Working!</h1>
+      <p>This confirms the main event detail route is working.</p>
+    </div>
+  );
+}
 
 // SEO meta tags 🎯
 export const meta = ({ data }: Route.MetaArgs) => {
