@@ -29,16 +29,26 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     // Get current user for personalization
     const { data: { user } } = await client.auth.getUser();
     
-    // First, get the main event data
-    console.log('[EVENT LOADER DEBUG] Starting event query for ID:', id);
-    
-    const { data: event, error: eventError } = await client
+  // First, get the main event data
+  console.log('[EVENT LOADER DEBUG] Starting event query for ID:', id);
+  
+  const { data: event, error: eventError } = await client
+    .from('events')
+    .select('*')
+    .eq('id', id)
+    .single();
+  
+  console.log('[EVENT LOADER DEBUG] Event query result:', { event, eventError });
+  
+  // If no event found, try to find any event to test the query
+  if (!event) {
+    console.log('[EVENT LOADER DEBUG] No event found, testing with any event...');
+    const { data: anyEvent } = await client
       .from('events')
-      .select('*')
-      .eq('id', id)
-      .single();
-    
-    console.log('[EVENT LOADER DEBUG] Event query result:', { event, eventError });
+      .select('id, title')
+      .limit(1);
+    console.log('[EVENT LOADER DEBUG] Any event found:', anyEvent);
+  }
     
     // Get similar events (simplified query)
     const { data: similarEvents } = await client
@@ -222,14 +232,28 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
   }
 };
 
-// Simple component for testing
+// Restore the proper EventDetailPage component
 export default function EventDetailRoute() {
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold">Event Detail Route Working!</h1>
-      <p>This confirms the main event detail route is working.</p>
-    </div>
-  );
+  const data = useLoaderData<typeof loader>();
+  
+  if (!data.event) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Event Not Found</h1>
+          <p className="text-gray-600 mb-8">The event you're looking for doesn't exist or has been removed.</p>
+          <Link 
+            to="/events" 
+            className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors"
+          >
+            Browse All Events
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return <EventDetailPage {...data} />;
 }
 
 // SEO meta tags 🎯
