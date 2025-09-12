@@ -45,7 +45,6 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         ? client
             .from('events')
             .select('*, venues!venue_id(*)')
-            .eq('status', 'published')
             .order('created_at', { ascending: false })
             .range(eventIndex, eventIndex)
             .single()
@@ -62,7 +61,6 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       client
         .from('events')
         .select('*, venues!venue_id(*)')
-        .eq('status', 'published')
         .neq('id', actualEventId)
         .limit(4),
       
