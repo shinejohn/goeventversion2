@@ -41,133 +41,15 @@ export const CalendarsReportPage = () => {
     const loadCalendars = async () => {
       setIsLoading(true);
       try {
-        // TODO: Replace with real API call
-        // For now, using sample data
-        const sampleCalendars: Calendar[] = [
-          {
-            id: '1',
-            name: 'Jazz Nights Tampa',
-            description: 'The best jazz events in Tampa Bay area. Curated by local jazz enthusiasts.',
-            slug: 'jazz-nights-tampa',
-            creator: {
-              name: 'Sarah Johnson',
-              avatar_url: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=150&q=80'
-            },
-            event_count: 24,
-            subscriber_count: 156,
-            view_count: 892,
-            is_public: true,
-            color: '#8B5CF6',
-            image_url: 'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
-            created_at: '2024-01-15T10:00:00Z',
-            categories: ['Music', 'Jazz', 'Live Events'],
-            is_featured: true,
-            is_verified: true
-          },
-          {
-            id: '2',
-            name: 'Foodie Adventures',
-            description: 'Discover the best food events, tastings, and culinary experiences in the city.',
-            slug: 'foodie-adventures',
-            creator: {
-              name: 'Mike Chen',
-              avatar_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=150&q=80'
-            },
-            event_count: 18,
-            subscriber_count: 234,
-            view_count: 1205,
-            is_public: true,
-            color: '#F59E0B',
-            image_url: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
-            created_at: '2024-02-03T14:30:00Z',
-            categories: ['Food', 'Culinary', 'Tastings'],
-            is_featured: false,
-            is_verified: true
-          },
-          {
-            id: '3',
-            name: 'Tech Meetups Tampa',
-            description: 'Stay updated with the latest tech events, meetups, and conferences in Tampa Bay.',
-            slug: 'tech-meetups-tampa',
-            creator: {
-              name: 'Alex Rodriguez',
-              avatar_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=150&q=80'
-            },
-            event_count: 31,
-            subscriber_count: 189,
-            view_count: 756,
-            is_public: true,
-            color: '#3B82F6',
-            image_url: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
-            created_at: '2024-01-28T09:15:00Z',
-            categories: ['Technology', 'Networking', 'Conferences'],
-            is_featured: true,
-            is_verified: false
-          },
-          {
-            id: '4',
-            name: 'Art Gallery Openings',
-            description: 'Exclusive access to art gallery openings, exhibitions, and cultural events.',
-            slug: 'art-gallery-openings',
-            creator: {
-              name: 'Emma Wilson',
-              avatar_url: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=150&q=80'
-            },
-            event_count: 12,
-            subscriber_count: 98,
-            view_count: 423,
-            is_public: true,
-            color: '#EC4899',
-            image_url: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
-            created_at: '2024-02-10T16:45:00Z',
-            categories: ['Art', 'Culture', 'Exhibitions'],
-            is_featured: false,
-            is_verified: true
-          },
-          {
-            id: '5',
-            name: 'Fitness & Wellness',
-            description: 'Join our community for fitness classes, wellness workshops, and health events.',
-            slug: 'fitness-wellness',
-            creator: {
-              name: 'David Kim',
-              avatar_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=150&q=80'
-            },
-            event_count: 45,
-            subscriber_count: 312,
-            view_count: 1456,
-            is_public: true,
-            color: '#10B981',
-            image_url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
-            created_at: '2024-01-05T08:00:00Z',
-            categories: ['Fitness', 'Wellness', 'Health'],
-            is_featured: true,
-            is_verified: true
-          },
-          {
-            id: '6',
-            name: 'Local Business Events',
-            description: 'Networking events, business workshops, and entrepreneurial meetups.',
-            slug: 'local-business-events',
-            creator: {
-              name: 'Lisa Martinez',
-              avatar_url: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=150&q=80'
-            },
-            event_count: 22,
-            subscriber_count: 167,
-            view_count: 634,
-            is_public: true,
-            color: '#F97316',
-            image_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
-            created_at: '2024-02-01T11:20:00Z',
-            categories: ['Business', 'Networking', 'Entrepreneurship'],
-            is_featured: false,
-            is_verified: false
-          }
-        ];
-
-        setCalendars(sampleCalendars);
-        setFilteredCalendars(sampleCalendars);
+        // Use real data from props instead of sample data
+        if (calendars && calendars.length > 0) {
+          setCalendars(calendars);
+          setFilteredCalendars(calendars);
+        } else {
+          // If no calendars provided, show empty state
+          setCalendars([]);
+          setFilteredCalendars([]);
+        }
       } catch (error) {
         console.error('Error loading calendars:', error);
       } finally {
@@ -176,7 +58,7 @@ export const CalendarsReportPage = () => {
     };
 
     loadCalendars();
-  }, []);
+  }, [calendars]);
 
   // Filter and sort calendars
   useEffect(() => {

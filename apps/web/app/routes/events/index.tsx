@@ -159,6 +159,20 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       firstEvent: events?.[0]
     }, 'Events query result')
     
+    // Debug: Log the first few events to see their structure
+    if (events && events.length > 0) {
+      console.log('🔍 DEBUG: First 3 events from database:');
+      events.slice(0, 3).forEach((event, index) => {
+        console.log(`Event ${index + 1}:`, {
+          id: event.id,
+          title: event.title,
+          name: event.name,
+          start_datetime: event.start_datetime,
+          category: event.category
+        });
+      });
+    }
+    
     // Transform data for Magic Patterns component
     const transformedEvents = (events || []).map(event => ({
       ...event,
@@ -176,6 +190,22 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       rawDate: event.start_datetime ? new Date(event.start_datetime) : new Date(),
       image: event.image_url || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
     }));
+    
+    // Debug: Log the first few transformed events to see their structure
+    if (transformedEvents && transformedEvents.length > 0) {
+      console.log('🔍 DEBUG: First 3 transformed events:');
+      transformedEvents.slice(0, 3).forEach((event, index) => {
+        console.log(`Transformed Event ${index + 1}:`, {
+          id: event.id,
+          title: event.title,
+          name: event.name,
+          date: event.date,
+          time: event.time,
+          venue: event.venue,
+          price: event.price
+        });
+      });
+    }
     
     // Calculate category distribution
     const categoryStats = categoryData?.reduce((acc, event) => {
