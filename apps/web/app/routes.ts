@@ -80,7 +80,6 @@ const magicPatternsPublicLayout = layout('routes/layouts/magic-patterns-public.t
   
   route('events', 'routes/events/index.tsx'),
   route('events/:id', 'routes/events/$id.tsx'),
-  route('events/simple/:id', 'routes/events/simple-$id.tsx'),
   
   route('performers', 'routes/performers/index.tsx'),
   route('performers/:performerId', 'routes/performers/$performerId.tsx'),
