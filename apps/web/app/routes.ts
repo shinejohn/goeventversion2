@@ -102,6 +102,9 @@ const magicPatternsPublicLayout = layout('routes/layouts/magic-patterns-public.t
   route('tickets/marketplace', 'routes/tickets/marketplace/index.tsx'),
   
   // Community
+  route('communities', 'routes/communities/index.tsx'),
+  route('communities/create', 'routes/communities/create.tsx'),
+  route('communities/:slug', 'routes/communities/$slug.tsx'),
   route('c/:communitySlug', 'routes/c.$communitySlug.tsx'),
   
   // Social features

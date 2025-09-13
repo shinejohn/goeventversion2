@@ -313,3 +313,38 @@ export const transformBookingsList = (bookings: Tables<'bookings'>[]): BookingDa
   if (!bookings || !Array.isArray(bookings)) return [];
   return bookings.filter(b => b && b.id).map(transformBookingData);
 };
+
+// Community data transformer
+export const transformCommunityData = (community: Tables<'community_hubs'>): {
+  id: string;
+  name: string;
+  description: string;
+  slug: string;
+  category: string;
+  location: string;
+  memberCount: number;
+  eventCount: number;
+  isActive: boolean;
+  image?: string;
+  website?: string;
+  socialMedia?: string;
+  tags?: string[];
+  createdAt: string;
+} => {
+  return {
+    id: community.id,
+    name: community.name || 'Unnamed Community',
+    description: community.description || 'No description available',
+    slug: community.slug || community.id,
+    category: community.category || 'General',
+    location: community.location || 'Location not specified',
+    memberCount: community.member_count || 0,
+    eventCount: community.event_count || 0,
+    isActive: community.is_active ?? true,
+    image: community.image_url || undefined,
+    website: community.website || undefined,
+    socialMedia: community.social_media || undefined,
+    tags: community.tags || [],
+    createdAt: community.created_at || new Date().toISOString()
+  };
+};
