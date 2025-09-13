@@ -134,7 +134,19 @@ async function analyzePage(page, pageInfo) {
       '.calendar-card',
       '.community-card',
       'article',
-      '.card'
+      '.card',
+      // Look for actual rendered content
+      'text="Jazz Night"',
+      'text="DJ Phoenix"',
+      'text="Sarah Chen"',
+      'text="Summer Music Festival"',
+      'text="Comedy Night"',
+      'text="Food & Wine"',
+      'text="Tech Conference"',
+      // Look for event card structure
+      '.relative.overflow-hidden.transition-all',
+      '.bg-white.rounded-lg',
+      '.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3'
     ];
     
     for (const selector of dataSelectors) {

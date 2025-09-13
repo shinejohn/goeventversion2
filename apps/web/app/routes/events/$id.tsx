@@ -123,7 +123,20 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     }
     
     // Transform the event data
+    console.log('🔍 DEBUG: Event data before transformation:', {
+      id: eventWithVenue.id,
+      title: eventWithVenue.title,
+      status: eventWithVenue.status,
+      hasVenue: !!eventWithVenue.venues
+    });
+    
     const transformedEvent = transformEventData(eventWithVenue);
+    
+    console.log('🔍 DEBUG: Event data after transformation:', {
+      id: transformedEvent.id,
+      name: transformedEvent.name,
+      status: transformedEvent.status
+    });
     
     // Transform performers
     const performers = eventPerformers.map(performer => 
@@ -239,7 +252,7 @@ export default function EventDetailRoute() {
     );
   }
 
-  return <EventDetailPage {...data} />;
+  return <EventDetailPage event={data.event} relatedEvents={data.similarEvents} attendeeCount={data.attendeeCount} />;
 }
 
 // SEO meta tags 🎯
