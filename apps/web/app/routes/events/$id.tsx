@@ -1,10 +1,10 @@
 import React from 'react';
+import { useLoaderData, Link } from 'react-router';
 import type { Route } from './+types/$id';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 // Magic Patterns imports
 import { EventDetailPage } from '~/components/magic-patterns/pages/EventDetailPage';
-import { createMagicPatternsRoute } from '~/lib/magic-patterns/route-wrapper';
 import { transformEventData, transformPerformerData, transformVenueData } from '~/lib/magic-patterns/data-transformers';
 import { getLogger } from '@kit/shared/logger';
 
@@ -115,7 +115,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .eq('event_id', id);
     
     // Extract performers from the relationships
-    let eventPerformers = [];
+    let eventPerformers: any[] = [];
     if (eventPerformersData && eventPerformersData.length > 0) {
       eventPerformers = eventPerformersData
         .map(ep => ep.performer)
@@ -169,7 +169,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     const { count: attendeeCount } = await client
       .from('bookings')
       .select('*', { count: 'exact', head: true })
-      .eq('event_id', actualEventId)
+      .eq('event_id', id)
       .eq('status', 'confirmed');
     
     return {
