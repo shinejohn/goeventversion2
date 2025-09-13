@@ -290,7 +290,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 export default createMagicPatternsRoute({
   component: EventsPage,
   transformData: (loaderData) => ({
-    events: loaderData.events,
+    events: loaderData.events || [],
     pagination: loaderData.pagination,
     filters: loaderData.filters,
     metrics: loaderData.metrics,

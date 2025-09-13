@@ -266,7 +266,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 export default createMagicPatternsRoute({
   component: PerformersPage,
   transformData: (loaderData) => ({
-    performers: loaderData.performers,
+    performers: loaderData.performers || [],
     pagination: loaderData.pagination,
     filters: loaderData.filters,
     metrics: loaderData.metrics,

@@ -222,7 +222,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 export default createMagicPatternsRoute({
   component: VenuesPage,
   transformData: (loaderData: any) => ({
-    venues: loaderData.venues,
+    venues: loaderData.venues || [],
     pagination: loaderData.pagination,
     filters: loaderData.filters,
     metrics: loaderData.metrics,

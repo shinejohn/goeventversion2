@@ -1,294 +1,353 @@
 const { createClient } = require('@supabase/supabase-js');
 
-// Use the correct Supabase URL and service role key
 const supabaseUrl = 'https://gbcjlsnbamjchdtgrquu.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiY2psc25iYW1qY2hkdGdycXV1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NjY4MDM5NSwiZXhwIjoyMDcyMjU2Mzk1fQ.WXjKWdFTFOrxMqF62A7fEzblbGHcl3SYPu7bDWXFFgc';
+const serviceKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiY2psc25iYW1qY2hkdGdycXV1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NjY4MDM5NSwiZXhwIjoyMDcyMjU2Mzk1fQ.WXjKWdFTFOrxMqF62A7fEzblbGHcl3SYPu7bDWXFFgc';
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+const client = createClient(supabaseUrl, serviceKey);
 
 async function fixDatabaseRelationships() {
-  console.log('🔧 Fixing database relationships and test data...\n');
+  console.log('🔧 Fixing database relationships with correct schema...');
   
-  try {
-    // First, let's check what data we have
-    console.log('📊 Checking current data...');
+  // Step 1: Fix event-venue relationships
+  console.log('\n1️⃣ Fixing event-venue relationships...');
+  await fixEventVenueRelationships();
+  
+  // Step 2: Fix event-performer relationships
+  console.log('\n2️⃣ Fixing event-performer relationships...');
+  await fixEventPerformerRelationships();
+  
+  // Step 3: Fix performer-account relationships
+  console.log('\n3️⃣ Fixing performer-account relationships...');
+  await fixPerformerAccountRelationships();
+  
+  // Step 4: Fix venue-account relationships
+  console.log('\n4️⃣ Fixing venue-account relationships...');
+  await fixVenueAccountRelationships();
+  
+  // Step 5: Fix community-event relationships
+  console.log('\n5️⃣ Fixing community-event relationships...');
+  await fixCommunityEventRelationships();
+  
+  // Step 6: Fix user-profile-account relationships
+  console.log('\n6️⃣ Fixing user-profile-account relationships...');
+  await fixUserProfileAccountRelationships();
+  
+  console.log('\n✅ Database relationships fixed!');
+}
+
+async function fixEventVenueRelationships() {
+  // Get events without venue_id
+  const { data: eventsWithoutVenue, error: eventsError } = await client
+    .from('events')
+    .select('id, title, category')
+    .is('venue_id', null);
+  
+  if (eventsError) {
+    console.log('  Error fetching events:', eventsError.message);
+    return;
+  }
+  
+  console.log(`  Found ${eventsWithoutVenue.length} events without venue_id`);
+  
+  if (eventsWithoutVenue.length === 0) {
+    console.log('  ✅ All events already have venue_id');
+    return;
+  }
+  
+  // Get available venues
+  const { data: venues, error: venuesError } = await client
+    .from('venues')
+    .select('id, name, venue_type');
+  
+  if (venuesError) {
+    console.log('  Error fetching venues:', venuesError.message);
+    return;
+  }
+  
+  console.log(`  Found ${venues.length} available venues`);
+  
+  // Assign venues to events
+  for (let i = 0; i < eventsWithoutVenue.length; i++) {
+    const event = eventsWithoutVenue[i];
+    const venue = venues[i % venues.length];
     
-    const { data: events } = await supabase
+    const { error: updateError } = await client
       .from('events')
-      .select('id, title, venue_id, organizer_id, community_id, status')
-      .limit(10);
+      .update({ venue_id: venue.id })
+      .eq('id', event.id);
     
-    const { data: venues } = await supabase
-      .from('venues')
-      .select('id, name, account_id')
-      .limit(10);
-    
-    const { data: performers } = await supabase
-      .from('performers')
-      .select('id, name, account_id, category')
-      .limit(10);
-    
-    const { data: accounts } = await supabase
-      .from('accounts')
-      .select('id, name, is_personal_account')
-      .limit(10);
-    
-    console.log(`✅ Found ${events?.length || 0} events`);
-    console.log(`✅ Found ${venues?.length || 0} venues`);
-    console.log(`✅ Found ${performers?.length || 0} performers`);
-    console.log(`✅ Found ${accounts?.length || 0} accounts`);
-    
-    // Check for relationship mismatches
-    console.log('\n🔍 RELATIONSHIP ANALYSIS:');
-    
-    // Check if events have valid venue_ids
-    const { data: eventsWithVenues } = await supabase
-      .from('events')
-      .select('id, title, venue_id')
-      .not('venue_id', 'is', null);
-    
-    const { data: allVenues } = await supabase
-      .from('venues')
-      .select('id');
-    
-    const venueIds = allVenues?.map(v => v.id) || [];
-    const invalidVenueRefs = eventsWithVenues?.filter(e => !venueIds.includes(e.venue_id)) || [];
-    
-    console.log(`📊 Events with venue references: ${eventsWithVenues?.length || 0}`);
-    console.log(`📊 Total venues available: ${venueIds.length}`);
-    console.log(`❌ Events with invalid venue references: ${invalidVenueRefs.length}`);
-    
-    if (invalidVenueRefs.length > 0) {
-      console.log('   Invalid venue references:');
-      invalidVenueRefs.forEach(event => {
-        console.log(`   - Event "${event.title}" references non-existent venue ${event.venue_id}`);
-      });
+    if (updateError) {
+      console.log(`  ❌ Error updating event ${event.title}:`, updateError.message);
+    } else {
+      console.log(`  ✅ Assigned venue ${venue.name} to event ${event.title}`);
     }
-    
-    // Fix invalid venue references
-    if (invalidVenueRefs.length > 0 && venueIds.length > 0) {
-      console.log('\n🔧 Fixing invalid venue references...');
-      for (const event of invalidVenueRefs) {
-        const randomVenueId = venueIds[Math.floor(Math.random() * venueIds.length)];
-        
-        const { error } = await supabase
-          .from('events')
-          .update({ venue_id: randomVenueId })
-          .eq('id', event.id);
-        
-        if (error) {
-          console.log(`⚠️  Failed to update event ${event.title}:`, error.message);
-        } else {
-          console.log(`✅ Updated event ${event.title} with venue ${randomVenueId}`);
-        }
-      }
-    }
-    
-    // Check if events have valid organizer_ids
-    const { data: eventsWithOrganizers } = await supabase
-      .from('events')
-      .select('id, title, organizer_id')
-      .not('organizer_id', 'is', null);
-    
-    const { data: allAccounts } = await supabase
-      .from('accounts')
-      .select('id');
-    
-    const accountIds = allAccounts?.map(a => a.id) || [];
-    const invalidOrganizerRefs = eventsWithOrganizers?.filter(e => !accountIds.includes(e.organizer_id)) || [];
-    
-    console.log(`📊 Events with organizer references: ${eventsWithOrganizers?.length || 0}`);
-    console.log(`📊 Total accounts available: ${accountIds.length}`);
-    console.log(`❌ Events with invalid organizer references: ${invalidOrganizerRefs.length}`);
-    
-    if (invalidOrganizerRefs.length > 0) {
-      console.log('   Invalid organizer references:');
-      invalidOrganizerRefs.forEach(event => {
-        console.log(`   - Event "${event.title}" references non-existent organizer ${event.organizer_id}`);
-      });
-    }
-    
-    // Fix invalid organizer references
-    if (invalidOrganizerRefs.length > 0 && accountIds.length > 0) {
-      console.log('\n🔧 Fixing invalid organizer references...');
-      for (const event of invalidOrganizerRefs) {
-        const randomAccountId = accountIds[Math.floor(Math.random() * accountIds.length)];
-        
-        const { error } = await supabase
-          .from('events')
-          .update({ organizer_id: randomAccountId })
-          .eq('id', event.id);
-        
-        if (error) {
-          console.log(`⚠️  Failed to update event ${event.title}:`, error.message);
-        } else {
-          console.log(`✅ Updated event ${event.title} with organizer ${randomAccountId}`);
-        }
-      }
-    }
-    
-    // Create event-performer relationships
-    await createEventPerformerRelationships();
-    
-    // Create tickets for events
-    await createTicketsForEvents();
-    
-    // Create sample bookings
-    await createSampleBookings();
-    
-    console.log('\n✅ Database relationships fixed!');
-    
-  } catch (error) {
-    console.error('❌ Fix failed:', error.message);
   }
 }
 
-async function createEventPerformerRelationships() {
-  console.log('\n🔗 Creating event-performer relationships...');
-  
-  const { data: events } = await supabase
+async function fixEventPerformerRelationships() {
+  // Get events without performers
+  const { data: events, error: eventsError } = await client
     .from('events')
-    .select('id, title, category')
-    .limit(10);
+    .select('id, title, category, event_performers(count)');
   
-  const { data: performers } = await supabase
+  if (eventsError) {
+    console.log('  Error fetching events:', eventsError.message);
+    return;
+  }
+  
+  const eventsWithoutPerformers = events.filter(event => 
+    !event.event_performers || event.event_performers.length === 0
+  );
+  
+  console.log(`  Found ${eventsWithoutPerformers.length} events without performers`);
+  
+  if (eventsWithoutPerformers.length === 0) {
+    console.log('  ✅ All events already have performers');
+    return;
+  }
+  
+  // Get performers
+  const { data: performers, error: performersError } = await client
     .from('performers')
-    .select('id, name, category')
-    .limit(10);
+    .select('id, stage_name, category');
   
-  if (!events || !performers) return;
+  if (performersError) {
+    console.log('  Error fetching performers:', performersError.message);
+    return;
+  }
   
-  for (const event of events) {
-    // Find performers that match the event category
-    const matchingPerformers = performers.filter(p => p.category === event.category);
+  console.log(`  Found ${performers.length} available performers`);
+  
+  // Create relationships
+  for (const event of eventsWithoutPerformers) {
+    let suitablePerformers = [];
     
-    if (matchingPerformers.length > 0) {
-      const performer = matchingPerformers[0]; // Take the first matching performer
-      
-      const { error } = await supabase
+    if (event.category === 'music') {
+      suitablePerformers = performers.filter(p => 
+        p.category === 'musician' || 
+        p.stage_name?.includes('Jazz') || 
+        p.stage_name?.includes('Music') ||
+        p.stage_name?.includes('Band') ||
+        p.stage_name?.includes('Quartet')
+      ).slice(0, 2);
+    } else if (event.category === 'entertainment') {
+      suitablePerformers = performers.filter(p => 
+        p.stage_name?.includes('Comedy') || 
+        p.stage_name?.includes('Laugh') ||
+        p.stage_name?.includes('Improv')
+      ).slice(0, 1);
+    } else {
+      suitablePerformers = performers.slice(0, 1);
+    }
+    
+    for (const performer of suitablePerformers) {
+      const { error: insertError } = await client
         .from('event_performers')
-        .upsert({
+        .insert({
           event_id: event.id,
           performer_id: performer.id,
-          role: 'headliner',
+          is_headliner: true,
+          performance_order: 1,
+          set_duration_minutes: 60,
+          compensation: 500.00,
           created_at: new Date().toISOString()
         });
       
-      if (error) {
-        console.log(`⚠️  Failed to create event-performer relationship for ${event.title}:`, error.message);
+      if (insertError) {
+        console.log(`  ❌ Error creating relationship for ${event.title}:`, insertError.message);
       } else {
-        console.log(`✅ Created relationship: ${event.title} -> ${performer.name}`);
+        console.log(`  ✅ Created relationship: ${event.title} -> ${performer.stage_name}`);
       }
     }
   }
 }
 
-async function createTicketsForEvents() {
-  console.log('\n🎫 Creating tickets for events...');
-  
-  const { data: events } = await supabase
-    .from('events')
-    .select('id, title, price_min, price_max')
-    .limit(10);
-  
-  if (!events) return;
-  
-  for (const event of events) {
-    const basePrice = event.price_min || event.price_max || 25.00;
-    
-    const tickets = [
-      {
-        event_id: event.id,
-        ticket_type: 'General Admission',
-        quantity: 100,
-        price_per_ticket: basePrice,
-        total_price: basePrice,
-        purchase_date: new Date().toISOString(),
-        delivery_method: 'digital',
-        status: 'available',
-        created_at: new Date().toISOString()
-      },
-      {
-        event_id: event.id,
-        ticket_type: 'VIP',
-        quantity: 20,
-        price_per_ticket: basePrice * 2,
-        total_price: basePrice * 2,
-        purchase_date: new Date().toISOString(),
-        delivery_method: 'digital',
-        status: 'available',
-        created_at: new Date().toISOString()
-      }
-    ];
-    
-    for (const ticket of tickets) {
-      const { error } = await supabase
-        .from('tickets')
-        .upsert(ticket);
-      
-      if (error) {
-        console.log(`⚠️  Failed to create ticket for ${event.title}:`, error.message);
-      } else {
-        console.log(`✅ Created ticket: ${ticket.ticket_type} for ${event.title}`);
-      }
-    }
-  }
-}
-
-async function createSampleBookings() {
-  console.log('\n📋 Creating sample bookings...');
-  
-  const { data: events } = await supabase
-    .from('events')
-    .select('id, title, venue_id, start_datetime')
-    .limit(5);
-  
-  const { data: performers } = await supabase
+async function fixPerformerAccountRelationships() {
+  // Get performers without account_id
+  const { data: performers, error: performersError } = await client
     .from('performers')
-    .select('id, name')
-    .limit(5);
+    .select('id, stage_name, account_id');
   
-  const { data: accounts } = await supabase
+  if (performersError) {
+    console.log('  Error fetching performers:', performersError.message);
+    return;
+  }
+  
+  const performersWithoutAccount = performers.filter(p => !p.account_id);
+  console.log(`  Found ${performersWithoutAccount.length} performers without account_id`);
+  
+  if (performersWithoutAccount.length === 0) {
+    console.log('  ✅ All performers already have account_id');
+    return;
+  }
+  
+  // Get accounts
+  const { data: accounts, error: accountsError } = await client
     .from('accounts')
-    .select('id')
-    .limit(1);
+    .select('id, name');
   
-  if (!events || !performers || !accounts) return;
+  if (accountsError) {
+    console.log('  Error fetching accounts:', accountsError.message);
+    return;
+  }
   
-  for (let i = 0; i < events.length; i++) {
-    const event = events[i];
-    const performer = performers[i % performers.length];
-    const account = accounts[0];
+  console.log(`  Found ${accounts.length} available accounts`);
+  
+  // Assign accounts to performers
+  for (let i = 0; i < performersWithoutAccount.length; i++) {
+    const performer = performersWithoutAccount[i];
+    const account = accounts[i % accounts.length];
     
-    const booking = {
-      event_id: event.id,
-      venue_id: event.venue_id,
-      performer_id: performer.id,
-      user_id: account.id,
-      booking_reference: `BK-${Date.now()}-${i}`,
-      event_name: event.title,
-      event_type: 'music',
-      event_date: event.start_datetime,
-      start_time: '20:00:00',
-      end_time: '23:00:00',
-      guest_count: 50,
-      contact_person_name: 'Event Organizer',
-      contact_person_email: 'organizer@example.com',
-      base_price: 1000.00,
-      total: 1000.00,
-      payment_status: 'paid',
-      booking_status: 'confirmed',
-      created_at: new Date().toISOString()
-    };
+    const { error: updateError } = await client
+      .from('performers')
+      .update({ account_id: account.id })
+      .eq('id', performer.id);
     
-    const { error } = await supabase
-      .from('bookings')
-      .upsert(booking);
-    
-    if (error) {
-      console.log(`⚠️  Failed to create booking for ${event.title}:`, error.message);
+    if (updateError) {
+      console.log(`  ❌ Error updating performer ${performer.stage_name}:`, updateError.message);
     } else {
-      console.log(`✅ Created booking: ${booking.booking_reference} for ${event.title}`);
+      console.log(`  ✅ Assigned account ${account.name} to performer ${performer.stage_name}`);
+    }
+  }
+}
+
+async function fixVenueAccountRelationships() {
+  // Get venues without account_id
+  const { data: venues, error: venuesError } = await client
+    .from('venues')
+    .select('id, name, account_id');
+  
+  if (venuesError) {
+    console.log('  Error fetching venues:', venuesError.message);
+    return;
+  }
+  
+  const venuesWithoutAccount = venues.filter(v => !v.account_id);
+  console.log(`  Found ${venuesWithoutAccount.length} venues without account_id`);
+  
+  if (venuesWithoutAccount.length === 0) {
+    console.log('  ✅ All venues already have account_id');
+    return;
+  }
+  
+  // Get accounts
+  const { data: accounts, error: accountsError } = await client
+    .from('accounts')
+    .select('id, name');
+  
+  if (accountsError) {
+    console.log('  Error fetching accounts:', accountsError.message);
+    return;
+  }
+  
+  console.log(`  Found ${accounts.length} available accounts`);
+  
+  // Assign accounts to venues
+  for (let i = 0; i < venuesWithoutAccount.length; i++) {
+    const venue = venuesWithoutAccount[i];
+    const account = accounts[i % accounts.length];
+    
+    const { error: updateError } = await client
+      .from('venues')
+      .update({ account_id: account.id })
+      .eq('id', venue.id);
+    
+    if (updateError) {
+      console.log(`  ❌ Error updating venue ${venue.name}:`, updateError.message);
+    } else {
+      console.log(`  ✅ Assigned account ${account.name} to venue ${venue.name}`);
+    }
+  }
+}
+
+async function fixCommunityEventRelationships() {
+  // Get events without community_id
+  const { data: events, error: eventsError } = await client
+    .from('events')
+    .select('id, title, community_id');
+  
+  if (eventsError) {
+    console.log('  Error fetching events:', eventsError.message);
+    return;
+  }
+  
+  const eventsWithoutCommunity = events.filter(e => !e.community_id);
+  console.log(`  Found ${eventsWithoutCommunity.length} events without community_id`);
+  
+  if (eventsWithoutCommunity.length === 0) {
+    console.log('  ✅ All events already have community_id');
+    return;
+  }
+  
+  // Get communities
+  const { data: communities, error: communitiesError } = await client
+    .from('community_hubs')
+    .select('id, name');
+  
+  if (communitiesError) {
+    console.log('  Error fetching communities:', communitiesError.message);
+    return;
+  }
+  
+  console.log(`  Found ${communities.length} available communities`);
+  
+  // Assign communities to events
+  for (let i = 0; i < eventsWithoutCommunity.length; i++) {
+    const event = eventsWithoutCommunity[i];
+    const community = communities[i % communities.length];
+    
+    const { error: updateError } = await client
+      .from('events')
+      .update({ community_id: community.id })
+      .eq('id', event.id);
+    
+    if (updateError) {
+      console.log(`  ❌ Error updating event ${event.title}:`, updateError.message);
+    } else {
+      console.log(`  ✅ Assigned community ${community.name} to event ${event.title}`);
+    }
+  }
+}
+
+async function fixUserProfileAccountRelationships() {
+  // Get user profiles without account_id
+  const { data: profiles, error: profilesError } = await client
+    .from('user_profiles')
+    .select('id, display_name, home_community_id');
+  
+  if (profilesError) {
+    console.log('  Error fetching user profiles:', profilesError.message);
+    return;
+  }
+  
+  console.log(`  Found ${profiles.length} user profiles`);
+  
+  // Get accounts
+  const { data: accounts, error: accountsError } = await client
+    .from('accounts')
+    .select('id, name');
+  
+  if (accountsError) {
+    console.log('  Error fetching accounts:', accountsError.message);
+    return;
+  }
+  
+  console.log(`  Found ${accounts.length} available accounts`);
+  
+  // Assign accounts to user profiles
+  for (let i = 0; i < profiles.length; i++) {
+    const profile = profiles[i];
+    const account = accounts[i % accounts.length];
+    
+    const { error: updateError } = await client
+      .from('user_profiles')
+      .update({ account_id: account.id })
+      .eq('id', profile.id);
+    
+    if (updateError) {
+      console.log(`  ❌ Error updating profile ${profile.display_name}:`, updateError.message);
+    } else {
+      console.log(`  ✅ Assigned account ${account.name} to profile ${profile.display_name}`);
     }
   }
 }
