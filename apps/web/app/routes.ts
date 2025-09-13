@@ -266,7 +266,7 @@ const checkoutFlowLayout = layout('routes/layouts/checkout-flow.tsx', [
 ]);
 
 // Catch-all for 404
-const catchAllRoute = route('*', 'routes/$.tsx');
+const catchAllRoute = route('*', 'routes/404.tsx');
 
 export default [
   ...systemRoutes,
