@@ -3,9 +3,7 @@ import { useLoaderData, Link } from 'react-router';
 import type { Route } from './+types/$id';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
-// Magic Patterns imports
-import { EventDetailPage } from '~/components/magic-patterns/pages/EventDetailPage';
-import { transformEventData, transformPerformerData, transformVenueData } from '~/lib/magic-patterns/data-transformers';
+// Simple imports for now
 import { getLogger } from '@kit/shared/logger';
 
 /**
@@ -122,29 +120,48 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         .filter(performer => performer); // Remove any null performers
     }
     
-    // Transform the event data
-    console.log('🔍 DEBUG: Event data before transformation:', {
+    // Simple event data structure for now
+    console.log('🔍 DEBUG: Event data:', {
       id: eventWithVenue.id,
       title: eventWithVenue.title,
       status: eventWithVenue.status,
       hasVenue: !!eventWithVenue.venues
     });
     
-    const transformedEvent = transformEventData(eventWithVenue);
+    const eventData = {
+      id: eventWithVenue.id,
+      title: eventWithVenue.title,
+      description: eventWithVenue.description || '',
+      startDate: eventWithVenue.start_datetime,
+      endDate: eventWithVenue.end_datetime,
+      category: eventWithVenue.category || 'other',
+      status: eventWithVenue.status || 'draft',
+      image: eventWithVenue.image_url,
+      price: eventWithVenue.ticket_price || eventWithVenue.price_min || 0,
+      capacity: eventWithVenue.max_capacity || 0,
+      venue: eventWithVenue.venues ? {
+        id: eventWithVenue.venues.id,
+        name: eventWithVenue.venues.name,
+        address: eventWithVenue.venues.address,
+        city: eventWithVenue.venues.city
+      } : null
+    };
     
-    console.log('🔍 DEBUG: Event data after transformation:', {
-      id: transformedEvent.id,
-      name: transformedEvent.name,
-      status: transformedEvent.status
-    });
+    // Simple performers data
+    const performers = eventPerformers.map(performer => ({
+      id: performer.id,
+      stage_name: performer.stage_name,
+      genre: performer.genre,
+      bio: performer.bio
+    }));
     
-    // Transform performers
-    const performers = eventPerformers.map(performer => 
-      transformPerformerData(performer)
-    );
-    
-    // Transform similar events
-    const transformedSimilarEvents = (similarEvents || []).map(transformEventData);
+    // Simple similar events
+    const similarEventsData = (similarEvents || []).map(event => ({
+      id: event.id,
+      title: event.title,
+      startDate: event.start_datetime,
+      image: event.image_url
+    }));
     
     // Calculate event metrics
     const eventMetrics = {
@@ -173,28 +190,9 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       .eq('status', 'confirmed');
     
     return {
-      event: transformedEvent,
-      // event: {
-      //   ...transformedEvent,
-      //   venue: event.venues ? transformVenueData(event.venues) : null,
-      //   // Additional fields EventDetailPage expects
-      //   ticket_price: event.ticket_price || event.price_min,
-      //   ticket_url: event.ticket_url,
-      //   highlights: event.highlights || [],
-      //   amenities: event.amenities || [],
-      //   age_restriction: event.age_restrictions || 'All Ages',
-      //   series: event.series_id ? { id: event.series_id, name: 'Event Series' } : null,
-      //   organizer: {
-      //     id: event.account_id || 'org-1',
-      //     name: 'Event Organizer',
-      //     verified: false,
-      //     description: '',
-      //     events: 1,
-      //     followers: 0
-      //   },
-      // },
+      event: eventData,
       performers,
-      similarEvents: transformedSimilarEvents,
+      similarEvents: similarEventsData,
       userBooking,
       metrics: eventMetrics,
       attendeeCount: attendeeCount || 0,
@@ -252,7 +250,62 @@ export default function EventDetailRoute() {
     );
   }
 
-  return <EventDetailPage event={data.event} relatedEvents={data.similarEvents} attendeeCount={data.attendeeCount} />;
+  return (
+    <div className="min-h-screen bg-white">
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">{data.event.title}</h1>
+        <p className="text-gray-600 mb-6">{data.event.description}</p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h2 className="text-xl font-semibold mb-4">Event Details</h2>
+            <div className="space-y-2">
+              <p><strong>Date:</strong> {new Date(data.event.startDate).toLocaleDateString()}</p>
+              <p><strong>Category:</strong> {data.event.category}</p>
+              <p><strong>Price:</strong> ${data.event.price}</p>
+              <p><strong>Capacity:</strong> {data.event.capacity}</p>
+              {data.event.venue && (
+                <div>
+                  <p><strong>Venue:</strong> {data.event.venue.name}</p>
+                  <p><strong>Address:</strong> {data.event.venue.address}</p>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          <div>
+            <h2 className="text-xl font-semibold mb-4">Performers</h2>
+            {data.performers.length > 0 ? (
+              <div className="space-y-2">
+                {data.performers.map(performer => (
+                  <div key={performer.id} className="border p-3 rounded">
+                    <p><strong>{performer.stage_name}</strong></p>
+                    <p className="text-sm text-gray-600">{performer.genre}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500">No performers listed</p>
+            )}
+          </div>
+        </div>
+        
+        {data.similarEvents.length > 0 && (
+          <div className="mt-8">
+            <h2 className="text-xl font-semibold mb-4">Similar Events</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {data.similarEvents.map(event => (
+                <div key={event.id} className="border p-4 rounded">
+                  <h3 className="font-semibold">{event.title}</h3>
+                  <p className="text-sm text-gray-600">{new Date(event.startDate).toLocaleDateString()}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 // SEO meta tags 🎯
