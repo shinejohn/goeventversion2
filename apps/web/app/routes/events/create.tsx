@@ -6,6 +6,12 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   try {
     const client = getSupabaseServerClient(request);
     
+    // Check if user is authenticated
+    const { data: { user }, error: userError } = await client.auth.getUser();
+    if (!user || userError) {
+      return redirect('/auth/sign-in?redirectTo=/events/create');
+    }
+    
     // Load venues for venue selection
     const { data: venues, error: venuesError } = await client
       .from('venues')
