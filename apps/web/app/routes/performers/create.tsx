@@ -1,18 +1,6 @@
 import type { Route } from './+types/create';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { redirect } from 'react-router';
-import { useState } from 'react';
-import { Button } from '@kit/ui/button';
-import { Input } from '@kit/ui/input';
-import { Label } from '@kit/ui/label';
-import { Textarea } from '@kit/ui/textarea';
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from '@kit/ui/select';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
@@ -78,7 +66,6 @@ export const action = async ({ request }: Route.LoaderArgs) => {
 };
 
 export default function CreatePerformerPage({ actionData }: Route.ComponentProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const error = actionData?.error;
   
   return (
@@ -93,102 +80,125 @@ export default function CreatePerformerPage({ actionData }: Route.ComponentProps
       
       <form method="post" className="space-y-6">
         <div>
-          <Label htmlFor="name">Performer Name *</Label>
-          <Input 
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            Performer Name *
+          </label>
+          <input
+            type="text"
             id="name"
-            name="name" 
-            required 
+            name="name"
+            required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="Enter performer name"
           />
         </div>
         
         <div>
-          <Label htmlFor="bio">Biography</Label>
-          <Textarea 
+          <label htmlFor="bio" className="block text-sm font-medium text-gray-700 mb-1">
+            Biography
+          </label>
+          <textarea
             id="bio"
-            name="bio" 
+            name="bio"
             rows={4}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="Tell us about the performer"
           />
         </div>
         
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="genre">Genre *</Label>
-            <Select name="genre" required>
-              <SelectTrigger id="genre">
-                <SelectValue placeholder="Select genre" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="rock">Rock</SelectItem>
-                <SelectItem value="pop">Pop</SelectItem>
-                <SelectItem value="jazz">Jazz</SelectItem>
-                <SelectItem value="classical">Classical</SelectItem>
-                <SelectItem value="electronic">Electronic</SelectItem>
-                <SelectItem value="hip-hop">Hip Hop</SelectItem>
-                <SelectItem value="country">Country</SelectItem>
-                <SelectItem value="folk">Folk</SelectItem>
-                <SelectItem value="comedy">Comedy</SelectItem>
-                <SelectItem value="theater">Theater</SelectItem>
-                <SelectItem value="dance">Dance</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
+            <label htmlFor="genre" className="block text-sm font-medium text-gray-700 mb-1">
+              Genre *
+            </label>
+            <select
+              id="genre"
+              name="genre"
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              <option value="">Select genre</option>
+              <option value="rock">Rock</option>
+              <option value="pop">Pop</option>
+              <option value="jazz">Jazz</option>
+              <option value="classical">Classical</option>
+              <option value="electronic">Electronic</option>
+              <option value="hip-hop">Hip Hop</option>
+              <option value="country">Country</option>
+              <option value="folk">Folk</option>
+              <option value="comedy">Comedy</option>
+              <option value="theater">Theater</option>
+              <option value="dance">Dance</option>
+              <option value="other">Other</option>
+            </select>
           </div>
           
           <div>
-            <Label htmlFor="location">Location</Label>
-            <Input 
+            <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
+              Location
+            </label>
+            <input
+              type="text"
               id="location"
-              name="location" 
+              name="location"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="City, State"
             />
           </div>
         </div>
         
         <div>
-          <Label htmlFor="price">Price Range</Label>
-          <Input 
+          <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
+            Price Range
+          </label>
+          <input
+            type="text"
             id="price"
-            name="price" 
+            name="price"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="e.g., $50-$200"
           />
         </div>
         
         <div>
-          <Label htmlFor="nextPerformance">Next Performance Date</Label>
-          <Input 
-            id="nextPerformance"
-            name="nextPerformance" 
+          <label htmlFor="nextPerformance" className="block text-sm font-medium text-gray-700 mb-1">
+            Next Performance Date
+          </label>
+          <input
             type="datetime-local"
+            id="nextPerformance"
+            name="nextPerformance"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
         
         <div>
-          <Label htmlFor="image">Image URL</Label>
-          <Input 
+          <label htmlFor="image" className="block text-sm font-medium text-gray-700 mb-1">
+            Image URL
+          </label>
+          <input
+            type="url"
             id="image"
-            name="image" 
-            type="url" 
+            name="image"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="https://example.com/performer-image.jpg"
           />
         </div>
         
         <div className="flex gap-4">
-          <Button 
+          <button
             type="submit"
-            disabled={isSubmitting}
-            onClick={() => setIsSubmitting(true)}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500"
           >
-            {isSubmitting ? 'Creating...' : 'Create Performer'}
-          </Button>
-          <Button 
-            type="button" 
-            variant="outline"
+            Create Performer
+          </button>
+          <button
+            type="button"
             onClick={() => window.history.back()}
+            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
           >
             Cancel
-          </Button>
+          </button>
         </div>
       </form>
     </div>

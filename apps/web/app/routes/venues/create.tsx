@@ -1,18 +1,6 @@
 import type { Route } from './+types/create';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { redirect } from 'react-router';
-import { useState } from 'react';
-import { Button } from '@kit/ui/button';
-import { Input } from '@kit/ui/input';
-import { Label } from '@kit/ui/label';
-import { Textarea } from '@kit/ui/textarea';
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from '@kit/ui/select';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
@@ -84,7 +72,6 @@ export const action = async ({ request }: Route.LoaderArgs) => {
 };
 
 export default function CreateVenuePage({ actionData }: Route.ComponentProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const error = actionData?.error;
   
   return (
@@ -99,64 +86,81 @@ export default function CreateVenuePage({ actionData }: Route.ComponentProps) {
       
       <form method="post" className="space-y-6">
         <div>
-          <Label htmlFor="name">Venue Name *</Label>
-          <Input 
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            Venue Name *
+          </label>
+          <input
+            type="text"
             id="name"
-            name="name" 
-            required 
+            name="name"
+            required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="Enter venue name"
           />
         </div>
         
         <div>
-          <Label htmlFor="description">Description</Label>
-          <Textarea 
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+            Description
+          </label>
+          <textarea
             id="description"
-            name="description" 
+            name="description"
             rows={4}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="Describe the venue"
           />
         </div>
         
         <div>
-          <Label htmlFor="address">Address *</Label>
-          <Input 
+          <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
+            Address *
+          </label>
+          <input
+            type="text"
             id="address"
-            name="address" 
-            required 
+            name="address"
+            required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="Enter full address"
           />
         </div>
         
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="venueType">Type *</Label>
-            <Select name="venueType" required>
-              <SelectTrigger id="venueType">
-                <SelectValue placeholder="Select type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="theater">Theater</SelectItem>
-                <SelectItem value="stadium">Stadium</SelectItem>
-                <SelectItem value="arena">Arena</SelectItem>
-                <SelectItem value="club">Club</SelectItem>
-                <SelectItem value="outdoor">Outdoor</SelectItem>
-                <SelectItem value="convention_center">Convention Center</SelectItem>
-                <SelectItem value="restaurant">Restaurant</SelectItem>
-                <SelectItem value="bar">Bar</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
+            <label htmlFor="venueType" className="block text-sm font-medium text-gray-700 mb-1">
+              Type *
+            </label>
+            <select
+              id="venueType"
+              name="venueType"
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              <option value="">Select type</option>
+              <option value="theater">Theater</option>
+              <option value="stadium">Stadium</option>
+              <option value="arena">Arena</option>
+              <option value="club">Club</option>
+              <option value="outdoor">Outdoor</option>
+              <option value="convention_center">Convention Center</option>
+              <option value="restaurant">Restaurant</option>
+              <option value="bar">Bar</option>
+              <option value="other">Other</option>
+            </select>
           </div>
           
           <div>
-            <Label htmlFor="capacity">Capacity *</Label>
-            <Input 
+            <label htmlFor="capacity" className="block text-sm font-medium text-gray-700 mb-1">
+              Capacity *
+            </label>
+            <input
+              type="number"
               id="capacity"
-              name="capacity" 
-              type="number" 
-              min="1" 
+              name="capacity"
+              min="1"
               required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="100"
             />
           </div>
@@ -164,77 +168,91 @@ export default function CreateVenuePage({ actionData }: Route.ComponentProps) {
         
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="lat">Latitude</Label>
-            <Input 
+            <label htmlFor="lat" className="block text-sm font-medium text-gray-700 mb-1">
+              Latitude
+            </label>
+            <input
+              type="number"
               id="lat"
-              name="lat" 
-              type="number" 
+              name="lat"
               step="0.000001"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="40.7128"
             />
           </div>
           
           <div>
-            <Label htmlFor="lng">Longitude</Label>
-            <Input 
+            <label htmlFor="lng" className="block text-sm font-medium text-gray-700 mb-1">
+              Longitude
+            </label>
+            <input
+              type="number"
               id="lng"
-              name="lng" 
-              type="number" 
+              name="lng"
               step="0.000001"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="-74.0060"
             />
           </div>
         </div>
         
         <div>
-          <Label htmlFor="priceLevel">Price Level (1-4)</Label>
-          <Select name="priceLevel">
-            <SelectTrigger id="priceLevel">
-              <SelectValue placeholder="Select price level" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="1">$ - Budget</SelectItem>
-              <SelectItem value="2">$$ - Moderate</SelectItem>
-              <SelectItem value="3">$$$ - Premium</SelectItem>
-              <SelectItem value="4">$$$$ - Luxury</SelectItem>
-            </SelectContent>
-          </Select>
+          <label htmlFor="priceLevel" className="block text-sm font-medium text-gray-700 mb-1">
+            Price Level (1-4)
+          </label>
+          <select
+            id="priceLevel"
+            name="priceLevel"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option value="">Select price level</option>
+            <option value="1">$ - Budget</option>
+            <option value="2">$$ - Moderate</option>
+            <option value="3">$$$ - Premium</option>
+            <option value="4">$$$$ - Luxury</option>
+          </select>
         </div>
         
         <div>
-          <Label htmlFor="amenities">Amenities (comma-separated)</Label>
-          <Input 
+          <label htmlFor="amenities" className="block text-sm font-medium text-gray-700 mb-1">
+            Amenities (comma-separated)
+          </label>
+          <input
+            type="text"
             id="amenities"
-            name="amenities" 
+            name="amenities"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="Parking, WiFi, Accessible, Bar"
           />
         </div>
         
         <div>
-          <Label htmlFor="image">Image URL</Label>
-          <Input 
+          <label htmlFor="image" className="block text-sm font-medium text-gray-700 mb-1">
+            Image URL
+          </label>
+          <input
+            type="url"
             id="image"
-            name="image" 
-            type="url" 
+            name="image"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="https://example.com/venue-image.jpg"
           />
         </div>
         
         <div className="flex gap-4">
-          <Button 
+          <button
             type="submit"
-            disabled={isSubmitting}
-            onClick={() => setIsSubmitting(true)}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500"
           >
-            {isSubmitting ? 'Creating...' : 'Create Venue'}
-          </Button>
-          <Button 
-            type="button" 
-            variant="outline"
+            Create Venue
+          </button>
+          <button
+            type="button"
             onClick={() => window.history.back()}
+            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
           >
             Cancel
-          </Button>
+          </button>
         </div>
       </form>
     </div>

@@ -1,19 +1,6 @@
 import type { Route } from './+types/create';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { redirect } from 'react-router';
-import { useState } from 'react';
-import { toast } from '@kit/ui/sonner';
-import { Button } from '@kit/ui/button';
-import { Input } from '@kit/ui/input';
-import { Label } from '@kit/ui/label';
-import { Textarea } from '@kit/ui/textarea';
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from '@kit/ui/select';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
@@ -80,7 +67,6 @@ export const action = async ({ request }: Route.LoaderArgs) => {
 };
 
 export default function CreateEventPage({ loaderData, actionData }: Route.ComponentProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const { venues } = loaderData;
   const error = actionData?.error;
   
@@ -96,132 +82,159 @@ export default function CreateEventPage({ loaderData, actionData }: Route.Compon
       
       <form method="post" className="space-y-6">
         <div>
-          <Label htmlFor="title">Event Title *</Label>
-          <Input 
+          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+            Event Title *
+          </label>
+          <input
+            type="text"
             id="title"
-            name="title" 
-            required 
+            name="title"
+            required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="Enter event title"
           />
         </div>
         
         <div>
-          <Label htmlFor="description">Description</Label>
-          <Textarea 
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+            Description
+          </label>
+          <textarea
             id="description"
-            name="description" 
+            name="description"
             rows={4}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="Describe your event"
           />
         </div>
         
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="category">Category *</Label>
-            <Select name="category" required>
-              <SelectTrigger id="category">
-                <SelectValue placeholder="Select category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="concert">Concert</SelectItem>
-                <SelectItem value="sports">Sports</SelectItem>
-                <SelectItem value="theater">Theater</SelectItem>
-                <SelectItem value="conference">Conference</SelectItem>
-                <SelectItem value="festival">Festival</SelectItem>
-                <SelectItem value="exhibition">Exhibition</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
+            <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+              Category *
+            </label>
+            <select
+              id="category"
+              name="category"
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              <option value="">Select category</option>
+              <option value="concert">Concert</option>
+              <option value="sports">Sports</option>
+              <option value="theater">Theater</option>
+              <option value="conference">Conference</option>
+              <option value="festival">Festival</option>
+              <option value="exhibition">Exhibition</option>
+              <option value="other">Other</option>
+            </select>
           </div>
           
           <div>
-            <Label htmlFor="venue_id">Venue *</Label>
-            <Select name="venue_id" required>
-              <SelectTrigger id="venue_id">
-                <SelectValue placeholder="Select venue" />
-              </SelectTrigger>
-              <SelectContent>
-                {venues.map((venue) => (
-                  <SelectItem key={venue.id} value={venue.id}>
-                    {venue.name} - {venue.address}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <label htmlFor="venue_id" className="block text-sm font-medium text-gray-700 mb-1">
+              Venue *
+            </label>
+            <select
+              id="venue_id"
+              name="venue_id"
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              <option value="">Select venue</option>
+              {venues.map((venue) => (
+                <option key={venue.id} value={venue.id}>
+                  {venue.name} - {venue.address}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="start_datetime">Start Date & Time *</Label>
-            <Input 
+            <label htmlFor="start_datetime" className="block text-sm font-medium text-gray-700 mb-1">
+              Start Date & Time *
+            </label>
+            <input
+              type="datetime-local"
               id="start_datetime"
-              name="start_datetime" 
-              type="datetime-local" 
-              required 
+              name="start_datetime"
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             />
           </div>
           
           <div>
-            <Label htmlFor="end_datetime">End Date & Time</Label>
-            <Input 
+            <label htmlFor="end_datetime" className="block text-sm font-medium text-gray-700 mb-1">
+              End Date & Time
+            </label>
+            <input
+              type="datetime-local"
               id="end_datetime"
-              name="end_datetime" 
-              type="datetime-local" 
+              name="end_datetime"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             />
           </div>
         </div>
         
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="price">Price ($)</Label>
-            <Input 
+            <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
+              Price ($)
+            </label>
+            <input
+              type="number"
               id="price"
-              name="price" 
-              type="number" 
-              step="0.01" 
-              min="0" 
+              name="price"
+              step="0.01"
+              min="0"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="0.00"
             />
           </div>
           
           <div>
-            <Label htmlFor="capacity">Capacity</Label>
-            <Input 
+            <label htmlFor="capacity" className="block text-sm font-medium text-gray-700 mb-1">
+              Capacity
+            </label>
+            <input
+              type="number"
               id="capacity"
-              name="capacity" 
-              type="number" 
-              min="1" 
+              name="capacity"
+              min="1"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="100"
             />
           </div>
         </div>
         
         <div>
-          <Label htmlFor="image_url">Image URL</Label>
-          <Input 
+          <label htmlFor="image_url" className="block text-sm font-medium text-gray-700 mb-1">
+            Image URL
+          </label>
+          <input
+            type="url"
             id="image_url"
-            name="image_url" 
-            type="url" 
+            name="image_url"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             placeholder="https://example.com/image.jpg"
           />
         </div>
         
         <div className="flex gap-4">
-          <Button 
+          <button
             type="submit"
-            disabled={isSubmitting}
-            onClick={() => setIsSubmitting(true)}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500"
           >
-            {isSubmitting ? 'Creating...' : 'Create Event'}
-          </Button>
-          <Button 
-            type="button" 
-            variant="outline"
+            Create Event
+          </button>
+          <button
+            type="button"
             onClick={() => window.history.back()}
+            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
           >
             Cancel
-          </Button>
+          </button>
         </div>
       </form>
     </div>
