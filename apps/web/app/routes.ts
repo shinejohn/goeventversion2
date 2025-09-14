@@ -214,7 +214,6 @@ const magicPatternsDashboardLayout = layout('routes/layouts/magic-patterns-dashb
   route('booking/manage', 'routes/booking/manage.tsx'),
   
   // Event management (within dashboard)
-  route('events/create', 'routes/events/create.tsx'),
   route('events/manage/:id', 'routes/events/manage/$id.tsx'),
   
   // Venue management (within dashboard)
@@ -225,8 +224,7 @@ const magicPatternsDashboardLayout = layout('routes/layouts/magic-patterns-dashb
   route('hub/create', 'routes/hub/create.tsx'),
   route('hub/:slug/analytics', 'routes/hub/$slug/analytics.tsx'),
   
-  // Calendar creation (within dashboard)
-  route('calendars/create', 'routes/calendars/create.tsx'),
+  // Calendar management (within dashboard)
   
   // Messages & Notifications
   route('messages', 'routes/messages/index.tsx'),

@@ -246,13 +246,12 @@ export default function CreateVenuePage({ actionData }: Route.ComponentProps) {
           >
             Create Venue
           </button>
-          <button
-            type="button"
-            onClick={() => window.history.back()}
-            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+          <a
+            href="/venues"
+            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 inline-block text-center"
           >
             Cancel
-          </button>
+          </a>
         </div>
       </form>
     </div>

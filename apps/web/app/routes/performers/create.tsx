@@ -192,13 +192,12 @@ export default function CreatePerformerPage({ actionData }: Route.ComponentProps
           >
             Create Performer
           </button>
-          <button
-            type="button"
-            onClick={() => window.history.back()}
-            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+          <a
+            href="/performers"
+            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 inline-block text-center"
           >
             Cancel
-          </button>
+          </a>
         </div>
       </form>
     </div>
