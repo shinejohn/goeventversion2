@@ -13,6 +13,18 @@ const calendarSchema = z.object({
   one_time_price: z.number().optional()
 });
 
+export async function loader({ request }: { request: Request }) {
+  const client = getSupabaseServerClient(request);
+  
+  // Check if user is authenticated
+  const { data: { user }, error: userError } = await client.auth.getUser();
+  if (!user || userError) {
+    return redirect('/auth/sign-in?redirectTo=/calendars/create');
+  }
+  
+  return { user };
+}
+
 export async function action({ request }: { request: Request }) {
   const client = getSupabaseServerClient(request);
   const formData = await request.formData();

@@ -14,6 +14,18 @@ import {
   SelectValue 
 } from '@kit/ui/select';
 
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const client = getSupabaseServerClient(request);
+  
+  // Check if user is authenticated
+  const { data: { user }, error: userError } = await client.auth.getUser();
+  if (!user || userError) {
+    return redirect('/auth/sign-in?redirectTo=/performers/create');
+  }
+  
+  return { user };
+};
+
 export const action = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
   const formData = await request.formData();
