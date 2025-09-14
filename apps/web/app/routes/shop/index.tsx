@@ -43,6 +43,18 @@ export async function loader(args: Route.LoaderArgs) {
   }
 }
 
+export const meta = ({ data }: Route.MetaArgs) => {
+  return [
+    {
+      title: 'Event Equipment & Gear Shop | GoEventCity',
+    },
+    {
+      name: 'description',
+      content: 'Everything you need to make your events unforgettable. Audio equipment, lighting, stage gear, instruments, and more.',
+    },
+  ];
+};
+
 export default function ShopRoute({ loaderData }: Route.ComponentProps) {
   const { products } = loaderData;
   

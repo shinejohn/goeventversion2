@@ -75,6 +75,19 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
   }
 };
 
+export const meta = ({ data }: Route.MetaArgs) => {
+  const community = data?.community;
+  return [
+    {
+      title: community ? `${community.name} - Community | GoEventCity` : 'Community | GoEventCity',
+    },
+    {
+      name: 'description',
+      content: community ? community.description || 'Join this amazing community' : 'Discover amazing communities',
+    },
+  ];
+};
+
 export default function CommunityDetailPage({ loaderData }: Route.ComponentProps) {
   const { community, error } = loaderData;
   

@@ -81,6 +81,18 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   }
 };
 
+export const meta = ({ data }: Route.MetaArgs) => {
+  return [
+    {
+      title: 'Community Hubs - Discover & Join Communities | GoEventCity',
+    },
+    {
+      name: 'description',
+      content: 'Discover and join community hubs that share your interests. Connect with like-minded people and find amazing events in your area.',
+    },
+  ];
+};
+
 export default createMagicPatternsRoute({
   component: CommunitiesReportPage,
   transformData: (loaderData) => ({

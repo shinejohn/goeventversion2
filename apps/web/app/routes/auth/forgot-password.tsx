@@ -16,6 +16,18 @@ export const action = async ({ request }: Route.ActionArgs) => {
   return { success: true };
 };
 
+export const meta = ({ data }: Route.MetaArgs) => {
+  return [
+    {
+      title: 'Forgot Password - Reset Your Account | GoEventCity',
+    },
+    {
+      name: 'description',
+      content: 'Reset your password to regain access to your GoEventCity account. Enter your email address and we\'ll send you a reset link.',
+    },
+  ];
+};
+
 /**
  * Password recovery workflow
  */

@@ -86,6 +86,19 @@ export async function loader({ params }: Route.LoaderArgs) {
   }
 }
 
+export const meta = ({ data }: Route.MetaArgs) => {
+  const calendar = data?.calendar;
+  return [
+    {
+      title: calendar ? `${calendar.name} - Calendar | GoEventCity` : 'Calendar | GoEventCity',
+    },
+    {
+      name: 'description',
+      content: calendar ? calendar.description || 'A curated calendar of events' : 'Discover amazing events and calendars',
+    },
+  ];
+};
+
 export default function CalendarPage({ loaderData }: Route.ComponentProps) {
   const { calendar } = loaderData;
 
