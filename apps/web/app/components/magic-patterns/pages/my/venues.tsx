@@ -16,8 +16,8 @@ const mockFavoriteVenues = [].slice(0, 6).map(venue => ({
 // Mock visit history
 const mockVisitHistory = [{
   id: 'visit-1',
-  venueId: { id: 'venue-1', name: 'Sample Venue' } // MOCKDATA COMMENTED OUT.id,
-  venueName: { id: 'venue-1', name: 'Sample Venue' } // MOCKDATA COMMENTED OUT.name,
+  venueId: 'venue-1', // MOCKDATA COMMENTED OUT.id,
+  venueName: 'Sample Venue', // MOCKDATA COMMENTED OUT.name,
   eventName: 'Summer Jazz Night',
   date: new Date(2024, 5, 2),
   hasPhotos: true,
@@ -27,8 +27,8 @@ const mockVisitHistory = [{
   ticketPrice: '$45'
 }, {
   id: 'visit-2',
-  venueId: { id: 'venue-3', name: 'Sample Venue 3' } // MOCKDATA COMMENTED OUT.id,
-  venueName: { id: 'venue-3', name: 'Sample Venue 3' } // MOCKDATA COMMENTED OUT.name,
+  venueId: 'venue-3', // MOCKDATA COMMENTED OUT.id,
+  venueName: 'Sample Venue 3', // MOCKDATA COMMENTED OUT.name,
   eventName: 'Corporate Innovation Summit',
   date: new Date(2024, 4, 15),
   hasPhotos: true,
@@ -38,8 +38,8 @@ const mockVisitHistory = [{
   ticketPrice: '$250'
 }, {
   id: 'visit-3',
-  venueId: { id: 'venue-2', name: 'Sample Venue 2' } // MOCKDATA COMMENTED OUT.id,
-  venueName: { id: 'venue-2', name: 'Sample Venue 2' } // MOCKDATA COMMENTED OUT.name,
+  venueId: 'venue-2', // MOCKDATA COMMENTED OUT.id,
+  venueName: 'Sample Venue 2', // MOCKDATA COMMENTED OUT.name,
   eventName: 'Beach Wedding Reception',
   date: new Date(2024, 3, 28),
   hasPhotos: false,
@@ -49,8 +49,8 @@ const mockVisitHistory = [{
   ticketPrice: 'Free'
 }, {
   id: 'visit-4',
-  venueId: { id: 'venue-5', name: 'Sample Venue 5' } // MOCKDATA COMMENTED OUT.id,
-  venueName: { id: 'venue-5', name: 'Sample Venue 5' } // MOCKDATA COMMENTED OUT.name,
+  venueId: 'venue-5', // MOCKDATA COMMENTED OUT.id,
+  venueName: 'Sample Venue 5', // MOCKDATA COMMENTED OUT.name,
   eventName: 'Seafood Tasting Night',
   date: new Date(2024, 3, 10),
   hasPhotos: true,
@@ -60,8 +60,8 @@ const mockVisitHistory = [{
   ticketPrice: '$65'
 }, {
   id: 'visit-5',
-  venueId: { id: 'venue-4', name: 'Sample Venue 4' } // MOCKDATA COMMENTED OUT.id,
-  venueName: { id: 'venue-4', name: 'Sample Venue 4' } // MOCKDATA COMMENTED OUT.name,
+  venueId: 'venue-4', // MOCKDATA COMMENTED OUT.id,
+  venueName: 'Sample Venue 4', // MOCKDATA COMMENTED OUT.name,
   eventName: 'Art Exhibition Opening',
   date: new Date(2024, 2, 22),
   hasPhotos: true,
@@ -73,8 +73,8 @@ const mockVisitHistory = [{
 // Mock upcoming events at favorite venues
 const mockUpcomingEvents = [{
   id: 'event-1',
-  venueId: { id: 'venue-1', name: 'Sample Venue' } // MOCKDATA COMMENTED OUT.id,
-  venueName: { id: 'venue-1', name: 'Sample Venue' } // MOCKDATA COMMENTED OUT.name,
+  venueId: 'venue-1', // MOCKDATA COMMENTED OUT.id,
+  venueName: 'Sample Venue', // MOCKDATA COMMENTED OUT.name,
   eventName: 'Summer Gala Fundraiser',
   date: new Date(2024, 5, 18),
   time: '19:00-23:00',
@@ -85,8 +85,8 @@ const mockUpcomingEvents = [{
   friendsAttending: 3
 }, {
   id: 'event-2',
-  venueId: { id: 'venue-3', name: 'Sample Venue 3' } // MOCKDATA COMMENTED OUT.id,
-  venueName: { id: 'venue-3', name: 'Sample Venue 3' } // MOCKDATA COMMENTED OUT.name,
+  venueId: 'venue-3', // MOCKDATA COMMENTED OUT.id,
+  venueName: 'Sample Venue 3', // MOCKDATA COMMENTED OUT.name,
   eventName: 'Jazz Night with The Modern Quartet',
   date: new Date(2024, 5, 24),
   time: '20:00-22:30',
@@ -97,8 +97,8 @@ const mockUpcomingEvents = [{
   friendsAttending: 0
 }, {
   id: 'event-3',
-  venueId: { id: 'venue-2', name: 'Sample Venue 2' } // MOCKDATA COMMENTED OUT.id,
-  venueName: { id: 'venue-2', name: 'Sample Venue 2' } // MOCKDATA COMMENTED OUT.name,
+  venueId: 'venue-2', // MOCKDATA COMMENTED OUT.id,
+  venueName: 'Sample Venue 2', // MOCKDATA COMMENTED OUT.name,
   eventName: 'Sunset Wedding Showcase',
   date: new Date(2024, 5, 28),
   time: '17:00-20:00',
@@ -109,8 +109,8 @@ const mockUpcomingEvents = [{
   friendsAttending: 2
 }, {
   id: 'event-4',
-  venueId: { id: 'venue-5', name: 'Sample Venue 5' } // MOCKDATA COMMENTED OUT.id,
-  venueName: { id: 'venue-5', name: 'Sample Venue 5' } // MOCKDATA COMMENTED OUT.name,
+  venueId: 'venue-5', // MOCKDATA COMMENTED OUT.id,
+  venueName: 'Sample Venue 5', // MOCKDATA COMMENTED OUT.name,
   eventName: "Chef's Table Experience",
   date: new Date(2024, 6, 5),
   time: '18:30-21:30',
@@ -123,8 +123,8 @@ const mockUpcomingEvents = [{
 // Mock venue rewards and offers
 const mockRewards = [{
   id: 'reward-1',
-  venueId: { id: 'venue-1', name: 'Sample Venue' } // MOCKDATA COMMENTED OUT.id,
-  venueName: { id: 'venue-1', name: 'Sample Venue' } // MOCKDATA COMMENTED OUT.name,
+  venueId: 'venue-1', // MOCKDATA COMMENTED OUT.id,
+  venueName: 'Sample Venue', // MOCKDATA COMMENTED OUT.name,
   programName: 'Grand Ballroom VIP',
   status: 'Gold Member',
   points: 450,
@@ -134,8 +134,8 @@ const mockRewards = [{
   expiryDate: new Date(2024, 11, 31)
 }, {
   id: 'reward-2',
-  venueId: { id: 'venue-3', name: 'Sample Venue 3' } // MOCKDATA COMMENTED OUT.id,
-  venueName: { id: 'venue-3', name: 'Sample Venue 3' } // MOCKDATA COMMENTED OUT.name,
+  venueId: 'venue-3', // MOCKDATA COMMENTED OUT.id,
+  venueName: 'Sample Venue 3', // MOCKDATA COMMENTED OUT.name,
   programName: 'Historic Theatre Friends',
   status: 'Silver Member',
   points: 200,
@@ -145,8 +145,8 @@ const mockRewards = [{
   expiryDate: new Date(2024, 6, 30)
 }, {
   id: 'reward-3',
-  venueId: { id: 'venue-5', name: 'Sample Venue 5' } // MOCKDATA COMMENTED OUT.id,
-  venueName: { id: 'venue-5', name: 'Sample Venue 5' } // MOCKDATA COMMENTED OUT.name,
+  venueId: 'venue-5', // MOCKDATA COMMENTED OUT.id,
+  venueName: 'Sample Venue 5', // MOCKDATA COMMENTED OUT.name,
   programName: 'Seaside Dining Club',
   status: 'Bronze Member',
   points: 120,
