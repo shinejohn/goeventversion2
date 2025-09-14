@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
+import React from 'react';
+import { Link } from 'react-router';
 import { ShoppingCartIcon, FilterIcon, StarIcon, TruckIcon, ShieldCheckIcon, HeadphonesIcon, XIcon, CheckIcon, ArrowRightIcon, TagIcon, GridIcon, ListIcon } from 'lucide-react';
 import { ShopCard } from '../components/ui/EnhancedCard';
 
@@ -58,14 +58,11 @@ export const ShopPage = ({
   metrics,
   featuredDeals = []
 }: ShopPageProps) => {
-  const navigate = useNavigate();
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [showFilters, setShowFilters] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(filters.category || null);
-  const [priceRange, setPriceRange] = useState<[number, number]>([
-    filters.minPrice || 0,
-    filters.maxPrice || 10000
-  ]);
+  // Default values for SSR
+  const viewMode: 'grid' | 'list' = 'grid';
+  const showFilters = false;
+  const selectedCategory = filters.category || null;
+  const priceRange: [number, number] = [filters.minPrice || 0, filters.maxPrice || 10000];
   
   const categories = [
     { id: 'audio', name: 'Audio Equipment', icon: '🎵' },
@@ -108,10 +105,10 @@ export const ShopPage = ({
     
     if (viewMode === 'list') {
       return (
-        <div
+        <Link
           key={product.id}
+          to={`/shop/products/${product.id}`}
           className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer flex gap-4"
-          onClick={() => navigate(`/shop/products/${product.id}`)}
         >
           <div className="w-32 h-32 flex-shrink-0">
             <img
@@ -162,15 +159,15 @@ export const ShopPage = ({
               </div>
             </div>
           </div>
-        </div>
+        </Link>
       );
     }
     
     return (
-      <div
+      <Link
         key={product.id}
+        to={`/shop/products/${product.id}`}
         className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
-        onClick={() => navigate(`/shop/products/${product.id}`)}
       >
         <div className="relative h-48">
           <img
@@ -226,7 +223,7 @@ export const ShopPage = ({
             </div>
           )}
         </div>
-      </div>
+      </Link>
     );
   };
   
@@ -266,10 +263,10 @@ export const ShopPage = ({
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Featured Deals</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {featuredDeals.slice(0, 3).map((deal) => (
-              <div
+              <Link
                 key={deal.id}
+                to={`/shop/products/${deal.id}`}
                 className="bg-white border-2 border-red-500 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
-                onClick={() => navigate(`/shop/products/${deal.id}`)}
               >
                 <div className="relative h-48">
                   <img
@@ -295,7 +292,7 @@ export const ShopPage = ({
                     </button>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -305,18 +302,18 @@ export const ShopPage = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-gray-900">Shop by Category</h2>
-          <button 
-            onClick={() => setSelectedCategory(null)}
+          <Link 
+            to="/shop"
             className="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
           >
             View All
-          </button>
+          </Link>
         </div>
         <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-2">
           {categories.map((category) => (
-            <button
+            <Link
               key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
+              to={`/shop?category=${category.id}`}
               className={`flex flex-col items-center p-3 rounded-lg border transition-all ${
                 selectedCategory === category.id
                   ? 'border-indigo-600 bg-indigo-50'
@@ -325,7 +322,7 @@ export const ShopPage = ({
             >
               <span className="text-2xl mb-1">{category.icon}</span>
               <span className="text-xs text-center">{category.name}</span>
-            </button>
+            </Link>
           ))}
         </div>
       </div>
@@ -335,7 +332,6 @@ export const ShopPage = ({
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <button
-              onClick={() => setShowFilters(!showFilters)}
               className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
             >
               <FilterIcon className="w-4 h-4 mr-2" />
@@ -347,13 +343,11 @@ export const ShopPage = ({
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setViewMode('grid')}
               className={`p-2 rounded-md ${viewMode === 'grid' ? 'bg-gray-200' : 'hover:bg-gray-100'}`}
             >
               <GridIcon className="w-4 h-4" />
             </button>
             <button
-              onClick={() => setViewMode('list')}
               className={`p-2 rounded-md ${viewMode === 'list' ? 'bg-gray-200' : 'hover:bg-gray-100'}`}
             >
               <ListIcon className="w-4 h-4" />
@@ -383,17 +377,18 @@ export const ShopPage = ({
         {pagination && pagination.totalPages > 1 && (
           <div className="mt-8 flex justify-center">
             <nav className="flex items-center space-x-1">
-              <button
-                onClick={() => navigate(`/shop?page=${pagination.page - 1}`)}
-                disabled={pagination.page === 1}
-                className="px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              <Link
+                to={`/shop?page=${pagination.page - 1}`}
+                className={`px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 ${
+                  pagination.page === 1 ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''
+                }`}
               >
                 Previous
-              </button>
+              </Link>
               {[...Array(pagination.totalPages)].map((_, i) => (
-                <button
+                <Link
                   key={i + 1}
-                  onClick={() => navigate(`/shop?page=${i + 1}`)}
+                  to={`/shop?page=${i + 1}`}
                   className={`px-4 py-2 text-sm font-medium rounded-md ${
                     pagination.page === i + 1
                       ? 'bg-indigo-600 text-white'
@@ -401,15 +396,16 @@ export const ShopPage = ({
                   }`}
                 >
                   {i + 1}
-                </button>
+                </Link>
               ))}
-              <button
-                onClick={() => navigate(`/shop?page=${pagination.page + 1}`)}
-                disabled={!pagination.hasMore}
-                className="px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              <Link
+                to={`/shop?page=${pagination.page + 1}`}
+                className={`px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 ${
+                  !pagination.hasMore ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''
+                }`}
               >
                 Next
-              </button>
+              </Link>
             </nav>
           </div>
         )}
