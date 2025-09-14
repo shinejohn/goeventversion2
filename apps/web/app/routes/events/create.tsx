@@ -3,15 +3,25 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { redirect } from 'react-router';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
-  const client = getSupabaseServerClient(request);
-  
-  // Load venues for venue selection
-  const { data: venues } = await client
-    .from('venues')
-    .select('id, name, address')
-    .order('name');
-  
-  return { venues: venues || [] };
+  try {
+    const client = getSupabaseServerClient(request);
+    
+    // Load venues for venue selection
+    const { data: venues, error: venuesError } = await client
+      .from('venues')
+      .select('id, name, address')
+      .order('name');
+    
+    if (venuesError) {
+      console.error('Error loading venues:', venuesError);
+      return { venues: [], error: 'Failed to load venues' };
+    }
+    
+    return { venues: venues || [] };
+  } catch (error) {
+    console.error('Loader error:', error);
+    return { venues: [], error: 'Failed to load page data' };
+  }
 };
 
 export const action = async ({ request }: Route.LoaderArgs) => {
@@ -67,8 +77,8 @@ export const action = async ({ request }: Route.LoaderArgs) => {
 };
 
 export default function CreateEventPage({ loaderData, actionData }: Route.ComponentProps) {
-  const { venues } = loaderData;
-  const error = actionData?.error;
+  const { venues, error: loaderError } = loaderData;
+  const error = actionData?.error || loaderError;
   
   return (
     <div className="max-w-2xl mx-auto p-8">
