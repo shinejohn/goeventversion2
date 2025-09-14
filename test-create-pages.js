@@ -7,13 +7,13 @@ const CREATE_PAGES = [
   {
     url: '/events/create',
     name: 'Create Event',
-    expectedElements: ['form', 'input[name="title"]', 'input[name="description"]', 'input[name="startDate"]'],
+    expectedElements: ['form', 'input[name="title"]', 'textarea[name="description"]', 'input[name="start_datetime"]'],
     requiredAuth: true
   },
   {
     url: '/performers/create', 
     name: 'Create Performer Profile',
-    expectedElements: ['form', 'input[name="name"]', 'input[name="bio"]', 'select[name="genre"]'],
+    expectedElements: ['form', 'input[name="name"]', 'textarea[name="bio"]', 'select[name="genre"]'],
     requiredAuth: true
   },
   {
@@ -60,17 +60,40 @@ async function testCreatePage(browser, page, createPage) {
       };
     }
     
-    // Check for error pages
-    const errorIndicators = ['Ouch! :|', 'Page Not Found', '404', '500', 'Error'];
+    // Check for actual error pages (not just the word "Error" in Shadcn components)
+    const errorIndicators = ['Ouch! :|', 'Page Not Found', '404'];
     const pageContent = await page.content();
-    const hasError = errorIndicators.some(indicator => pageContent.includes(indicator));
     
-    if (hasError) {
-      console.log(`   ❌ ERROR: Page shows error indicators`);
+    // Check for 500 errors only in specific contexts (not in JavaScript or CSS)
+    const has500Error = pageContent.includes('500') && 
+      (pageContent.includes('Internal Server Error') || 
+       pageContent.includes('Something went wrong') ||
+       pageContent.includes('500 Error'));
+    
+    const foundErrors = errorIndicators.filter(indicator => pageContent.includes(indicator));
+    if (has500Error) foundErrors.push('500');
+    
+    // Also check for specific error patterns that indicate real problems
+    const hasRealError = pageContent.includes('Error') && 
+      (pageContent.includes('Something went wrong') || 
+       pageContent.includes('Failed to load') ||
+       pageContent.includes('Internal Server Error'));
+    
+    if (foundErrors.length > 0) {
+      console.log(`   ❌ ERROR: Found error indicators: ${foundErrors.join(', ')}`);
       return {
         success: false,
         status: 'error',
-        message: 'Page shows error indicators'
+        message: `Page shows error indicators: ${foundErrors.join(', ')}`
+      };
+    }
+    
+    if (hasRealError) {
+      console.log(`   ❌ ERROR: Page shows real error patterns`);
+      return {
+        success: false,
+        status: 'error',
+        message: 'Page shows real error patterns'
       };
     }
     
