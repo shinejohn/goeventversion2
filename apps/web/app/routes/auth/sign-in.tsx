@@ -177,8 +177,8 @@ export default function SignInPage(props: Route.ComponentProps) {
       </div>
       
       {/* Right Side - Login Form */}
-      <div className="w-full md:w-1/2 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
-        <div className="max-w-md w-full space-y-8">
+      <div className="w-full md:w-1/2 flex items-center justify-center px-6 sm:px-8 lg:px-12 py-12">
+        <div className="max-w-xl w-full space-y-8">
           <div className="text-center">
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
               Welcome Back
