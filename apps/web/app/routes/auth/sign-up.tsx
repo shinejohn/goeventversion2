@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, redirect } from 'react-router';
+import { Link, redirect, useActionData } from 'react-router';
 
 import { SignUpMethodsContainer } from '@kit/auth/sign-up';
 import { requireUser } from '@kit/supabase/require-user';
@@ -86,6 +86,8 @@ export const action = async ({ request }: Route.ActionArgs) => {
   }
   
   try {
+    console.log('🔍 Attempting to create user with role:', { email, name, userType });
+    
     const user = await createUserWithRole(request, {
       email,
       password,
@@ -93,9 +95,14 @@ export const action = async ({ request }: Route.ActionArgs) => {
       userType,
     });
     
+    console.log('✅ User created successfully:', user);
+    
     // Redirect to home page after successful registration
     return redirect(pathsConfig.app.home);
   } catch (error) {
+    console.error('❌ User creation failed:', error);
+    
+    // Return the error message to be displayed to the user
     return { 
       success: false, 
       error: error instanceof Error ? error.message : 'Registration failed' 
@@ -105,6 +112,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 export default function SignUpPage(props: Route.ComponentProps) {
   const { inviteToken } = props.loaderData;
+  const actionData = useActionData<typeof action>();
   const [accountType, setAccountType] = useState<'fan' | 'venue_manager' | 'performer'>('fan');
   const [formData, setFormData] = useState({
     name: '',
@@ -172,9 +180,25 @@ export default function SignUpPage(props: Route.ComponentProps) {
             </button>
           </div>
           
-          {/* Custom Sign-up Form */}
-          <form method="post" onSubmit={handleSubmit} className="w-full space-y-4">
-            <input type="hidden" name="userType" value={accountType} />
+              {/* Error Message Display */}
+              {actionData?.error && (
+                <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-4">
+                  <div className="flex">
+                    <div className="ml-3">
+                      <h3 className="text-sm font-medium text-red-800">
+                        Registration Failed
+                      </h3>
+                      <div className="mt-2 text-sm text-red-700">
+                        {actionData.error}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Custom Sign-up Form */}
+              <form method="post" onSubmit={handleSubmit} className="w-full space-y-4">
+                <input type="hidden" name="userType" value={accountType} />
             
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
