@@ -112,7 +112,7 @@ export const ShopPage = ({
         >
           <div className="w-32 h-32 flex-shrink-0">
             <img
-              src={product.images[0]}
+              src={product.image}
               alt={product.name}
               className="w-full h-full object-cover rounded-md"
             />
@@ -171,7 +171,7 @@ export const ShopPage = ({
       >
         <div className="relative h-48">
           <img
-            src={product.images[0]}
+            src={product.image}
             alt={product.name}
             className="w-full h-full object-cover"
           />
