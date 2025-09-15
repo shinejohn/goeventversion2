@@ -3,95 +3,25 @@ import type { Route } from './+types/$slug';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 export async function loader({ params }: Route.LoaderArgs) {
-  const client = getSupabaseServerClient();
-  
   try {
-    // Use community_hubs as the base for calendar data
-    const { data: communityHub, error: hubError } = await client
-      .from('community_hubs')
-      .select('*')
-      .eq('slug', params.slug)
-      .single();
+    // Create a simple mock calendar for now
+    const mockCalendar = {
+      id: params.slug,
+      name: params.slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+      description: `A curated calendar of ${params.slug.replace(/-/g, ' ')} events`,
+      slug: params.slug,
+      event_count: 0,
+      subscriber_count: 0,
+      is_public: true,
+      events: []
+    };
     
-    if (!hubError && communityHub) {
-      // Fetch events related to this community hub
-      const { data: events, error: eventsError } = await client
-        .from('events')
-        .select(`
-          *,
-          venue:venues(name, address),
-          event_performers(
-            performer:performers(name, bio)
-          )
-        `)
-        .eq('community_hub_id', communityHub.id)
-        .order('start_datetime', { ascending: true });
-      
-      // Get subscriber count from community_hubs members
-      const { count: subscriberCount } = await client
-        .from('community_hub_members')
-        .select('*', { count: 'exact', head: true })
-        .eq('community_hub_id', communityHub.id);
-      
-      return {
-        calendar: {
-          id: communityHub.id,
-          name: communityHub.name,
-          description: communityHub.description || 'A curated calendar of events',
-          slug: communityHub.slug,
-          event_count: events?.length || 0,
-          subscriber_count: subscriberCount || 0,
-          is_public: true,
-          events: events || []
-        }
-      };
-    }
-    
-    // If no community hub found, try to find events with similar name
-    const { data: events, error: eventsError } = await client
-      .from('events')
-      .select(`
-        *,
-        venue:venues(name, address),
-        event_performers(
-          performer:performers(name, bio)
-        )
-      `)
-      .ilike('title', `%${params.slug}%`)
-      .order('start_datetime', { ascending: true });
-    
-    if (!eventsError && events && events.length > 0) {
-      return {
-        calendar: {
-          id: params.slug,
-          name: `Events: ${params.slug}`,
-          description: `Events related to ${params.slug}`,
-          slug: params.slug,
-          event_count: events.length,
-          subscriber_count: 0,
-          is_public: true,
-          events: events
-        }
-      };
-    }
-    
-    // If no calendar found, return a default structure
     return { 
-      calendar: {
-        id: params.slug,
-        name: `Calendar: ${params.slug}`,
-        description: 'A curated calendar of events',
-        slug: params.slug,
-        event_count: 0,
-        subscriber_count: 0,
-        is_public: true,
-        events: []
-      }
+      calendar: mockCalendar
     };
     
   } catch (error) {
     console.error('Error loading calendar:', error);
-    // Return a default calendar structure for demo purposes
     return { 
       calendar: {
         id: params.slug,

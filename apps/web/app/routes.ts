@@ -108,7 +108,7 @@ const magicPatternsPublicLayout = layout('routes/layouts/magic-patterns-public.t
   route('communities', 'routes/communities/index.tsx'),
   route('communities/create', 'routes/communities/create.tsx'),
   route('communities/:slug', 'routes/communities/$slug.tsx'),
-  route('c/:communitySlug', 'routes/c.$communitySlug.tsx'),
+  route('c/:slug', 'routes/communities/c-$slug.tsx'),
   
   // Social features
   route('social', 'routes/social/index.tsx'),

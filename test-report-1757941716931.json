@@ -1,0 +1,402 @@
+{
+  "timestamp": "2025-09-15T13:08:08.771Z",
+  "baseUrl": "http://localhost:5174",
+  "totalPages": 28,
+  "passed": 0,
+  "failed": 28,
+  "errors": [],
+  "results": [
+    {
+      "name": "Homepage",
+      "path": "/",
+      "url": "http://localhost:5174/",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 1679,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/__1757941691506.png"
+    },
+    {
+      "name": "Events Report",
+      "path": "/events",
+      "url": "http://localhost:5174/events",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 1099,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_events_1757941692747.png"
+    },
+    {
+      "name": "Performers Report",
+      "path": "/performers",
+      "url": "http://localhost:5174/performers",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 1261,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_performers_1757941694394.png"
+    },
+    {
+      "name": "Venues Report",
+      "path": "/venues",
+      "url": "http://localhost:5174/venues",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 1143,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_venues_1757941695664.png"
+    },
+    {
+      "name": "Calendars Report",
+      "path": "/calendars",
+      "url": "http://localhost:5174/calendars",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 818,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_calendars_1757941696809.png"
+    },
+    {
+      "name": "Shop/Marketplace",
+      "path": "/shop",
+      "url": "http://localhost:5174/shop",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 939,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_shop_1757941697814.png"
+    },
+    {
+      "name": "Tickets Report",
+      "path": "/tickets",
+      "url": "http://localhost:5174/tickets",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 862,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_tickets_1757941698811.png"
+    },
+    {
+      "name": "Community Hub - Jazz Lovers",
+      "path": "/c/jazz-lovers",
+      "url": "http://localhost:5174/c/jazz-lovers",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 591,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Community Hub - Rock Music",
+      "path": "/c/rock-music",
+      "url": "http://localhost:5174/c/rock-music",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 600,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Community Hub - Art Gallery",
+      "path": "/c/art-gallery",
+      "url": "http://localhost:5174/c/art-gallery",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 591,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Calendar Marketplace",
+      "path": "/calendars/marketplace",
+      "url": "http://localhost:5174/calendars/marketplace",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 667,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_calendars_marketplace_1757941701364.png"
+    },
+    {
+      "name": "Calendar Detail - Jazz Events",
+      "path": "/calendars/jazz-events",
+      "url": "http://localhost:5174/calendars/jazz-events",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 591,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Calendar Detail - Rock Concerts",
+      "path": "/calendars/rock-concerts",
+      "url": "http://localhost:5174/calendars/rock-concerts",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 591,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Event Detail - ID 1",
+      "path": "/events/1",
+      "url": "http://localhost:5174/events/1",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 1201,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_events_1_1757941703815.png"
+    },
+    {
+      "name": "Event Detail - ID 2",
+      "path": "/events/2",
+      "url": "http://localhost:5174/events/2",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 939,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_events_2_1757941704817.png"
+    },
+    {
+      "name": "Event Detail - ID 3",
+      "path": "/events/3",
+      "url": "http://localhost:5174/events/3",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 943,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_events_3_1757941705820.png"
+    },
+    {
+      "name": "Performer Detail - ID 1",
+      "path": "/performers/1",
+      "url": "http://localhost:5174/performers/1",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 946,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_performers_1_1757941706819.png"
+    },
+    {
+      "name": "Performer Detail - ID 2",
+      "path": "/performers/2",
+      "url": "http://localhost:5174/performers/2",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 949,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_performers_2_1757941707820.png"
+    },
+    {
+      "name": "Performer Detail - ID 3",
+      "path": "/performers/3",
+      "url": "http://localhost:5174/performers/3",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 945,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_performers_3_1757941708824.png"
+    },
+    {
+      "name": "Venue Detail - ID 1",
+      "path": "/venues/1",
+      "url": "http://localhost:5174/venues/1",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 942,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_venues_1_1757941709823.png"
+    },
+    {
+      "name": "Venue Detail - ID 2",
+      "path": "/venues/2",
+      "url": "http://localhost:5174/venues/2",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 942,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_venues_2_1757941710826.png"
+    },
+    {
+      "name": "Venue Detail - ID 3",
+      "path": "/venues/3",
+      "url": "http://localhost:5174/venues/3",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 940,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_venues_3_1757941711827.png"
+    },
+    {
+      "name": "My Tickets",
+      "path": "/tickets/my-tickets",
+      "url": "http://localhost:5174/tickets/my-tickets",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 753,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_tickets_my-tickets_1757941712638.png"
+    },
+    {
+      "name": "Ticket Purchase - Event 1",
+      "path": "/tickets/purchase/1",
+      "url": "http://localhost:5174/tickets/purchase/1",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 588,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Ticket Purchase - Event 2",
+      "path": "/tickets/purchase/2",
+      "url": "http://localhost:5174/tickets/purchase/2",
+      "status": "error",
+      "statusCode": 500,
+      "loadTime": 592,
+      "hasContent": false,
+      "hasData": false,
+      "errorMessage": "HTTP 500",
+      "issues": [
+        "HTTP Error: 500"
+      ]
+    },
+    {
+      "name": "Performer Management",
+      "path": "/management/performer",
+      "url": "http://localhost:5174/management/performer",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 957,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_management_performer_1757941714830.png"
+    },
+    {
+      "name": "Venue Management",
+      "path": "/management/venue",
+      "url": "http://localhost:5174/management/venue",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 934,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_management_venue_1757941715833.png"
+    },
+    {
+      "name": "Influencer Management",
+      "path": "/management/influencer",
+      "url": "http://localhost:5174/management/influencer",
+      "status": "success",
+      "statusCode": 200,
+      "loadTime": 854,
+      "errorMessage": null,
+      "issues": [
+        "No main content detected",
+        "No data/cards detected"
+      ],
+      "screenshot": "screenshots/_management_influencer_1757941716765.png"
+    }
+  ]
+}

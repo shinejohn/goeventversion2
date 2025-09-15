@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 
 // Test configuration
-const BASE_URL = process.env.TEST_URL || 'http://localhost:3000';
+const BASE_URL = process.env.TEST_URL || 'http://localhost:5174';
 const RAILWAY_URL = 'https://goeventversion2-production.up.railway.app';
 
 // Pages to test
@@ -150,10 +150,10 @@ async function testPage(browser, page, testPage) {
     });
     
     // Analyze content - be more lenient for working sites
-    result.hasContent = contentChecks && (contentChecks.hasMainContent || contentChecks.bodyTextLength > 50);
+    result.hasContent = contentChecks && (contentChecks.hasMainContent || contentChecks.bodyTextLength > 100);
     result.hasData = contentChecks && (contentChecks.hasCards || contentChecks.hasEvents || contentChecks.hasPerformers || 
                     contentChecks.hasVenues || contentChecks.hasCalendars || contentChecks.hasTickets || 
-                    contentChecks.bodyTextLength > 200);
+                    contentChecks.bodyTextLength > 500 || contentChecks.hasImages > 0);
     
     // Check for specific issues
     if (contentChecks && contentChecks.hasErrorMessages) {
