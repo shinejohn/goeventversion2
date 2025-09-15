@@ -1,0 +1,390 @@
+{
+  "timestamp": "2025-09-15T13:28:36.870Z",
+  "baseUrl": "http://localhost:5174",
+  "tests": [
+    {
+      "name": "Homepage",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/",
+        "interactiveElements": {
+          "buttons": 80,
+          "workingButtons": 0,
+          "links": 0,
+          "workingLinks": 0,
+          "inputs": 3,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Homepage_1757942921830.png"
+      },
+      "timestamp": "2025-09-15T13:28:41.975Z"
+    },
+    {
+      "name": "Events Listing",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/events",
+        "interactiveElements": {
+          "buttons": 118,
+          "workingButtons": 0,
+          "links": 0,
+          "workingLinks": 0,
+          "inputs": 2,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Events_Listing_1757942925157.png"
+      },
+      "timestamp": "2025-09-15T13:28:45.739Z"
+    },
+    {
+      "name": "Venues Listing",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/venues",
+        "interactiveElements": {
+          "buttons": 158,
+          "workingButtons": 0,
+          "links": 0,
+          "workingLinks": 0,
+          "inputs": 34,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Venues_Listing_1757942928930.png"
+      },
+      "timestamp": "2025-09-15T13:28:49.310Z"
+    },
+    {
+      "name": "Performers Listing",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/performers",
+        "interactiveElements": {
+          "buttons": 55,
+          "workingButtons": 0,
+          "links": 0,
+          "workingLinks": 0,
+          "inputs": 2,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Performers_Listing_1757942932645.png"
+      },
+      "timestamp": "2025-09-15T13:28:52.749Z"
+    },
+    {
+      "name": "Communities Listing",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/communities",
+        "interactiveElements": {
+          "buttons": 62,
+          "workingButtons": 0,
+          "links": 13,
+          "workingLinks": 0,
+          "inputs": 3,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Communities_Listing_1757942935695.png"
+      },
+      "timestamp": "2025-09-15T13:28:55.785Z"
+    },
+    {
+      "name": "Calendars Listing",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/calendars",
+        "interactiveElements": {
+          "buttons": 63,
+          "workingButtons": 0,
+          "links": 0,
+          "workingLinks": 0,
+          "inputs": 1,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Calendars_Listing_1757942938601.png"
+      },
+      "timestamp": "2025-09-15T13:28:58.674Z"
+    },
+    {
+      "name": "Tickets Marketplace",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/tickets",
+        "interactiveElements": {
+          "buttons": 72,
+          "workingButtons": 0,
+          "links": 0,
+          "workingLinks": 0,
+          "inputs": 1,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Tickets_Marketplace_1757942941647.png"
+      },
+      "timestamp": "2025-09-15T13:29:01.764Z"
+    },
+    {
+      "name": "Shop",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/shop",
+        "interactiveElements": {
+          "buttons": 53,
+          "workingButtons": 0,
+          "links": 10,
+          "workingLinks": 0,
+          "inputs": 1,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Shop_1757942944695.png"
+      },
+      "timestamp": "2025-09-15T13:29:04.794Z"
+    },
+    {
+      "name": "Pricing",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/pricing",
+        "interactiveElements": {
+          "buttons": 50,
+          "workingButtons": 0,
+          "links": 0,
+          "workingLinks": 0,
+          "inputs": 1,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Pricing_1757942947737.png"
+      },
+      "timestamp": "2025-09-15T13:29:07.798Z"
+    },
+    {
+      "name": "About",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/about",
+        "interactiveElements": {
+          "buttons": 50,
+          "workingButtons": 0,
+          "links": 0,
+          "workingLinks": 0,
+          "inputs": 1,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/About_1757942950776.png"
+      },
+      "timestamp": "2025-09-15T13:29:10.856Z"
+    },
+    {
+      "name": "Contact",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/contact",
+        "interactiveElements": {
+          "buttons": 54,
+          "workingButtons": 0,
+          "links": 9,
+          "workingLinks": 0,
+          "inputs": 8,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Contact_1757942953801.png"
+      },
+      "timestamp": "2025-09-15T13:29:13.950Z"
+    },
+    {
+      "name": "FAQ",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/faq",
+        "interactiveElements": {
+          "buttons": 50,
+          "workingButtons": 0,
+          "links": 1,
+          "workingLinks": 0,
+          "inputs": 1,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/FAQ_1757942956696.png"
+      },
+      "timestamp": "2025-09-15T13:29:16.783Z"
+    },
+    {
+      "name": "Sign In",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/auth/sign-in",
+        "interactiveElements": {
+          "buttons": 3,
+          "workingButtons": 0,
+          "links": 5,
+          "workingLinks": 0,
+          "inputs": 0,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Sign_In_1757942959631.png"
+      },
+      "timestamp": "2025-09-15T13:29:19.716Z"
+    },
+    {
+      "name": "Sign Up",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/auth/sign-up",
+        "interactiveElements": {
+          "buttons": 5,
+          "workingButtons": 0,
+          "links": 5,
+          "workingLinks": 0,
+          "inputs": 0,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Sign_Up_1757942962667.png"
+      },
+      "timestamp": "2025-09-15T13:29:22.778Z"
+    },
+    {
+      "name": "Event Detail 1",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/events/1",
+        "interactiveElements": {
+          "buttons": 50,
+          "workingButtons": 0,
+          "links": 1,
+          "workingLinks": 0,
+          "inputs": 1,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Event_Detail_1_1757942966073.png"
+      },
+      "timestamp": "2025-09-15T13:29:26.173Z"
+    },
+    {
+      "name": "Venue Detail 1",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/venues/1",
+        "interactiveElements": {
+          "buttons": 51,
+          "workingButtons": 0,
+          "links": 0,
+          "workingLinks": 0,
+          "inputs": 1,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Venue_Detail_1_1757942969104.png"
+      },
+      "timestamp": "2025-09-15T13:29:29.186Z"
+    },
+    {
+      "name": "Performer Detail 1",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/performers/1",
+        "interactiveElements": {
+          "buttons": 51,
+          "workingButtons": 0,
+          "links": 0,
+          "workingLinks": 0,
+          "inputs": 1,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Performer_Detail_1_1757942972021.png"
+      },
+      "timestamp": "2025-09-15T13:29:32.106Z"
+    },
+    {
+      "name": "Community Detail (Jazz)",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/c/jazz-lovers",
+        "interactiveElements": {
+          "buttons": 55,
+          "workingButtons": 0,
+          "links": 0,
+          "workingLinks": 0,
+          "inputs": 1,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Community_Detail__Jazz__1757942974798.png"
+      },
+      "timestamp": "2025-09-15T13:29:34.892Z"
+    },
+    {
+      "name": "Community Detail (Rock)",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/c/rock-music",
+        "interactiveElements": {
+          "buttons": 55,
+          "workingButtons": 0,
+          "links": 0,
+          "workingLinks": 0,
+          "inputs": 1,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Community_Detail__Rock__1757942977848.png"
+      },
+      "timestamp": "2025-09-15T13:29:37.943Z"
+    },
+    {
+      "name": "Calendar Detail (Jazz)",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/calendars/jazz-events",
+        "interactiveElements": {
+          "buttons": 52,
+          "workingButtons": 0,
+          "links": 0,
+          "workingLinks": 0,
+          "inputs": 1,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Calendar_Detail__Jazz__1757942980775.png"
+      },
+      "timestamp": "2025-09-15T13:29:40.869Z"
+    },
+    {
+      "name": "Calendar Detail (Rock)",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "url": "http://localhost:5174/calendars/rock-concerts",
+        "interactiveElements": {
+          "buttons": 52,
+          "workingButtons": 0,
+          "links": 0,
+          "workingLinks": 0,
+          "inputs": 1,
+          "workingInputs": 0
+        },
+        "screenshot": "screenshots/Calendar_Detail__Rock__1757942983781.png"
+      },
+      "timestamp": "2025-09-15T13:29:43.868Z"
+    }
+  ],
+  "summary": {
+    "total": 21,
+    "passed": 21,
+    "failed": 0,
+    "errors": []
+  }
+}

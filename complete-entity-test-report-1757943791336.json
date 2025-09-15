@@ -1,0 +1,341 @@
+{
+  "timestamp": "2025-09-15T13:42:05.659Z",
+  "baseUrl": "http://localhost:5174",
+  "railwayUrl": "https://goeventversion2-production.up.railway.app",
+  "tests": [
+    {
+      "name": "Events Page Load: http://localhost:5174/events",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:08.662Z"
+    },
+    {
+      "name": "Event Detail Page Load: http://localhost:5174/events/7d53af64-45d6-406d-8fd5-f06335dd1c42",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:09.836Z"
+    },
+    {
+      "name": "Event Detail Page Load: http://localhost:5174/events/2f7a7d17-a7e1-449e-b71a-1c738d78cbb3",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:11.519Z"
+    },
+    {
+      "name": "Event Detail Page Load: http://localhost:5174/events/99726dc7-24e4-4223-87e9-6c69adcd9237",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:12.839Z"
+    },
+    {
+      "name": "Event Data Presentation: http://localhost:5174/events/2f7a7d17-a7e1-449e-b71a-1c738d78cbb3",
+      "status": "failed",
+      "details": {
+        "dataFound": {
+          "eventTitle": true,
+          "eventDescription": true,
+          "eventPrice": false,
+          "eventDate": true,
+          "similarEvents": true
+        },
+        "expectedData": {
+          "eventTitle": "Sarah Chen Violin Recital",
+          "eventDescription": "Classical violinist",
+          "eventPrice": "$35",
+          "eventDate": "2/20/2024",
+          "similarEvents": [
+            "Similar Events",
+            "Event 11",
+            "Summer Music Festival"
+          ]
+        }
+      },
+      "timestamp": "2025-09-15T13:42:13.559Z"
+    },
+    {
+      "name": "Event Card Click",
+      "status": "passed",
+      "details": {
+        "currentUrl": "http://localhost:5174/"
+      },
+      "timestamp": "2025-09-15T13:42:14.719Z"
+    },
+    {
+      "name": "Venues Page Load: http://localhost:5174/venues",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:15.936Z"
+    },
+    {
+      "name": "Venue Detail Page Load: http://localhost:5174/venues/e008685d-3298-4850-98ff-02bc24915800",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:17.345Z"
+    },
+    {
+      "name": "Venue Detail Page Load: http://localhost:5174/venues/91d4cdfa-b302-4a1c-bcb2-6a0b75306480",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:18.678Z"
+    },
+    {
+      "name": "Venue Detail Page Load: http://localhost:5174/venues/e1f8f93d-a530-4807-9b84-63d9c964b0b9",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:19.654Z"
+    },
+    {
+      "name": "Venue Detail Page Load: http://localhost:5174/venues/fb86d45c-24a7-48e3-872f-6dc3a21b2f38",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:20.850Z"
+    },
+    {
+      "name": "Venue Detail Page Load: http://localhost:5174/venues/19fba98b-e161-4937-b34a-988c7870b5ed",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:21.711Z"
+    },
+    {
+      "name": "Venue Data Presentation: http://localhost:5174/venues/e008685d-3298-4850-98ff-02bc24915800",
+      "status": "passed",
+      "details": {
+        "dataFound": {
+          "venueName": true,
+          "venueAddress": true,
+          "venueDescription": true,
+          "amenities": true
+        }
+      },
+      "timestamp": "2025-09-15T13:42:22.380Z"
+    },
+    {
+      "name": "Venue Card Click",
+      "status": "failed",
+      "details": {
+        "error": "Node is detached from document"
+      },
+      "timestamp": "2025-09-15T13:42:22.601Z"
+    },
+    {
+      "name": "Performers Page Load: http://localhost:5174/performers",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:23.455Z"
+    },
+    {
+      "name": "Performer Card Click",
+      "status": "passed",
+      "details": {
+        "currentUrl": "http://localhost:5174/"
+      },
+      "timestamp": "2025-09-15T13:42:23.746Z"
+    },
+    {
+      "name": "Communities Page Load: http://localhost:5174/communities",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:24.637Z"
+    },
+    {
+      "name": "Community Detail Page Load: http://localhost:5174/c/jazz-lovers",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:25.358Z"
+    },
+    {
+      "name": "Community Detail Page Load: http://localhost:5174/c/music-fans",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:26.497Z"
+    },
+    {
+      "name": "Community Detail Page Load: http://localhost:5174/c/comedy-enthusiasts",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:27.185Z"
+    },
+    {
+      "name": "Community Data Presentation: http://localhost:5174/c/jazz-lovers",
+      "status": "passed",
+      "details": {
+        "dataFound": {
+          "communityName": true,
+          "communityDescription": true,
+          "communityEvents": true
+        }
+      },
+      "timestamp": "2025-09-15T13:42:27.860Z"
+    },
+    {
+      "name": "Community Card Click",
+      "status": "passed",
+      "details": {
+        "currentUrl": "http://localhost:5174/"
+      },
+      "timestamp": "2025-09-15T13:42:29.019Z"
+    },
+    {
+      "name": "Calendars Page Load: http://localhost:5174/calendars",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:29.865Z"
+    },
+    {
+      "name": "Calendar Detail Page Load: http://localhost:5174/calendars/jazz-lovers",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:30.867Z"
+    },
+    {
+      "name": "Calendar Detail Page Load: http://localhost:5174/calendars/music-fans",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:31.659Z"
+    },
+    {
+      "name": "Calendar Detail Page Load: http://localhost:5174/calendars/comedy-enthusiasts",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:32.346Z"
+    },
+    {
+      "name": "Calendar Data Presentation: http://localhost:5174/calendars/jazz-lovers",
+      "status": "passed",
+      "details": {
+        "dataFound": {
+          "calendarName": true,
+          "calendarDescription": true,
+          "calendarEvents": true
+        }
+      },
+      "timestamp": "2025-09-15T13:42:33.484Z"
+    },
+    {
+      "name": "Calendar Card Click",
+      "status": "passed",
+      "details": {
+        "currentUrl": "http://localhost:5174/"
+      },
+      "timestamp": "2025-09-15T13:42:34.771Z"
+    },
+    {
+      "name": "Book It Page Load: http://localhost:5174/book-it",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:35.882Z"
+    },
+    {
+      "name": "Book It Venues Page Load: http://localhost:5174/book-it/venues",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:36.673Z"
+    },
+    {
+      "name": "Book It Gigs Page Load: http://localhost:5174/book-it/gigs",
+      "status": "passed",
+      "details": {
+        "status": 200
+      },
+      "timestamp": "2025-09-15T13:42:37.505Z"
+    },
+    {
+      "name": "Navigation Button Click: a[href=\"/events\"]",
+      "status": "failed",
+      "details": {
+        "error": "Waiting for selector `a[href=\"/events\"]` failed"
+      },
+      "timestamp": "2025-09-15T13:42:42.917Z"
+    },
+    {
+      "name": "Navigation Button Click: a[href=\"/venues\"]",
+      "status": "failed",
+      "details": {
+        "error": "Waiting for selector `a[href=\"/venues\"]` failed"
+      },
+      "timestamp": "2025-09-15T13:42:48.523Z"
+    },
+    {
+      "name": "Navigation Button Click: a[href=\"/communities\"]",
+      "status": "failed",
+      "details": {
+        "error": "Waiting for selector `a[href=\"/communities\"]` failed"
+      },
+      "timestamp": "2025-09-15T13:42:54.135Z"
+    },
+    {
+      "name": "Navigation Button Click: a[href=\"/calendars\"]",
+      "status": "failed",
+      "details": {
+        "error": "Waiting for selector `a[href=\"/calendars\"]` failed"
+      },
+      "timestamp": "2025-09-15T13:42:59.587Z"
+    },
+    {
+      "name": "Navigation Button Click: a[href=\"/performers\"]",
+      "status": "failed",
+      "details": {
+        "error": "Waiting for selector `a[href=\"/performers\"]` failed"
+      },
+      "timestamp": "2025-09-15T13:43:05.069Z"
+    },
+    {
+      "name": "Navigation Button Click: a[href=\"/book-it\"]",
+      "status": "failed",
+      "details": {
+        "error": "Waiting for selector `a[href=\"/book-it\"]` failed"
+      },
+      "timestamp": "2025-09-15T13:43:10.598Z"
+    }
+  ],
+  "summary": {
+    "total": 37,
+    "passed": 29,
+    "failed": 8,
+    "errors": [
+      "page.waitForTimeout is not a function"
+    ]
+  }
+}

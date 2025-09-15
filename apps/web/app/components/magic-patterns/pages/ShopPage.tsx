@@ -65,15 +65,15 @@ export const ShopPage = ({
   const priceRange: [number, number] = [filters.minPrice || 0, filters.maxPrice || 10000];
   
   const categories = [
-    { id: 'audio', name: 'Audio Equipment', icon: '🎵' },
-    { id: 'lighting', name: 'Lighting', icon: '💡' },
-    { id: 'stage', name: 'Stage Equipment', icon: '🎭' },
-    { id: 'instruments', name: 'Instruments', icon: '🎸' },
-    { id: 'dj-equipment', name: 'DJ Equipment', icon: '🎧' },
-    { id: 'merchandise', name: 'Merchandise', icon: '👕' },
+    { id: 't-shirts', name: 'T-Shirts', icon: '👕' },
+    { id: 'hoodies', name: 'Hoodies', icon: '🧥' },
+    { id: 'hats', name: 'Hats & Caps', icon: '🧢' },
     { id: 'accessories', name: 'Accessories', icon: '🎒' },
-    { id: 'decorations', name: 'Decorations', icon: '🎨' },
-    { id: 'safety', name: 'Safety Equipment', icon: '🦺' },
+    { id: 'stickers', name: 'Stickers', icon: '🏷️' },
+    { id: 'posters', name: 'Posters', icon: '🖼️' },
+    { id: 'mugs', name: 'Mugs & Drinkware', icon: '☕' },
+    { id: 'bags', name: 'Bags & Totes', icon: '👜' },
+    { id: 'pins', name: 'Pins & Badges', icon: '📌' },
   ];
   
   const renderRating = (rating: number | null, reviewCount: number) => {
@@ -230,27 +230,27 @@ export const ShopPage = ({
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold mb-4">Event Equipment & Gear Shop</h1>
-            <p className="text-xl mb-8">Everything you need to make your events unforgettable</p>
+        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <h1 className="text-4xl font-bold mb-4">GoEventCity Fan Shop</h1>
+              <p className="text-xl mb-8">Show your love for local events with our exclusive merchandise</p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
               <div className="flex items-center justify-center">
                 <TruckIcon className="w-6 h-6 mr-2" />
-                <span>Free Shipping $100+</span>
+                <span>Free Shipping $50+</span>
               </div>
               <div className="flex items-center justify-center">
                 <ShieldCheckIcon className="w-6 h-6 mr-2" />
-                <span>Quality Guaranteed</span>
+                <span>Premium Quality</span>
               </div>
               <div className="flex items-center justify-center">
                 <HeadphonesIcon className="w-6 h-6 mr-2" />
-                <span>Expert Support</span>
+                <span>Fan Support</span>
               </div>
               <div className="flex items-center justify-center">
                 <TagIcon className="w-6 h-6 mr-2" />
-                <span>Best Prices</span>
+                <span>Exclusive Designs</span>
               </div>
             </div>
           </div>

@@ -1,0 +1,1301 @@
+{
+  "timestamp": "2025-09-15T13:35:08.978Z",
+  "baseUrl": "http://localhost:5174",
+  "tests": [
+    {
+      "name": "Data Test - http://localhost:5174/",
+      "status": "passed",
+      "details": {
+        "hasEventCards": false,
+        "hasVenueCards": false,
+        "hasPerformerCards": false,
+        "hasCommunityCards": false,
+        "hasCalendarCards": false,
+        "hasTicketCards": false,
+        "hasShopItems": false,
+        "hasFormInputs": true,
+        "hasClickableButtons": true,
+        "hasLinks": false,
+        "hasImages": true,
+        "hasTextContent": true,
+        "hasEventTitles": true,
+        "hasVenueNames": true,
+        "hasPerformerNames": true,
+        "hasPricing": false,
+        "hasDates": false,
+        "hasLocations": true,
+        "hasErrorMessages": false,
+        "hasEmptyStates": false,
+        "hasLoadingStates": false,
+        "hasData": true,
+        "hasErrors": false,
+        "hasEmptyState": false
+      },
+      "timestamp": "2025-09-15T13:35:12.353Z"
+    },
+    {
+      "name": "Functionality Test - http://localhost:5174/",
+      "status": "warning",
+      "details": {
+        "forms": [],
+        "navigation": [
+          {
+            "buttonIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 5,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 6,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 7,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 8,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 9,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "links": [],
+        "hasFormIssues": false,
+        "hasNavIssues": true,
+        "hasLinkIssues": false
+      },
+      "timestamp": "2025-09-15T13:35:14.022Z"
+    },
+    {
+      "name": "Data Test - http://localhost:5174/events",
+      "status": "passed",
+      "details": {
+        "hasEventCards": false,
+        "hasVenueCards": false,
+        "hasPerformerCards": false,
+        "hasCommunityCards": false,
+        "hasCalendarCards": false,
+        "hasTicketCards": false,
+        "hasShopItems": false,
+        "hasFormInputs": true,
+        "hasClickableButtons": true,
+        "hasLinks": false,
+        "hasImages": true,
+        "hasTextContent": true,
+        "hasEventTitles": true,
+        "hasVenueNames": true,
+        "hasPerformerNames": true,
+        "hasPricing": true,
+        "hasDates": false,
+        "hasLocations": true,
+        "hasErrorMessages": false,
+        "hasEmptyStates": false,
+        "hasLoadingStates": false,
+        "hasData": true,
+        "hasErrors": false,
+        "hasEmptyState": false
+      },
+      "timestamp": "2025-09-15T13:35:15.590Z"
+    },
+    {
+      "name": "Functionality Test - http://localhost:5174/events",
+      "status": "warning",
+      "details": {
+        "forms": [],
+        "navigation": [
+          {
+            "buttonIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 5,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 6,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 7,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 8,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 9,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "links": [],
+        "hasFormIssues": false,
+        "hasNavIssues": true,
+        "hasLinkIssues": false
+      },
+      "timestamp": "2025-09-15T13:35:16.631Z"
+    },
+    {
+      "name": "Data Test - http://localhost:5174/venues",
+      "status": "passed",
+      "details": {
+        "hasEventCards": false,
+        "hasVenueCards": false,
+        "hasPerformerCards": false,
+        "hasCommunityCards": false,
+        "hasCalendarCards": false,
+        "hasTicketCards": false,
+        "hasShopItems": false,
+        "hasFormInputs": true,
+        "hasClickableButtons": true,
+        "hasLinks": false,
+        "hasImages": true,
+        "hasTextContent": true,
+        "hasEventTitles": true,
+        "hasVenueNames": true,
+        "hasPerformerNames": true,
+        "hasPricing": true,
+        "hasDates": false,
+        "hasLocations": true,
+        "hasErrorMessages": false,
+        "hasEmptyStates": false,
+        "hasLoadingStates": false,
+        "hasData": true,
+        "hasErrors": false,
+        "hasEmptyState": false
+      },
+      "timestamp": "2025-09-15T13:35:18.006Z"
+    },
+    {
+      "name": "Functionality Test - http://localhost:5174/venues",
+      "status": "warning",
+      "details": {
+        "forms": [],
+        "navigation": [
+          {
+            "buttonIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 5,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 6,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 7,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 8,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 9,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "links": [],
+        "hasFormIssues": false,
+        "hasNavIssues": true,
+        "hasLinkIssues": false
+      },
+      "timestamp": "2025-09-15T13:35:19.263Z"
+    },
+    {
+      "name": "Data Test - http://localhost:5174/performers",
+      "status": "passed",
+      "details": {
+        "hasEventCards": false,
+        "hasVenueCards": false,
+        "hasPerformerCards": false,
+        "hasCommunityCards": false,
+        "hasCalendarCards": false,
+        "hasTicketCards": false,
+        "hasShopItems": false,
+        "hasFormInputs": true,
+        "hasClickableButtons": true,
+        "hasLinks": false,
+        "hasImages": true,
+        "hasTextContent": true,
+        "hasEventTitles": true,
+        "hasVenueNames": true,
+        "hasPerformerNames": true,
+        "hasPricing": false,
+        "hasDates": false,
+        "hasLocations": true,
+        "hasErrorMessages": false,
+        "hasEmptyStates": false,
+        "hasLoadingStates": false,
+        "hasData": true,
+        "hasErrors": false,
+        "hasEmptyState": false
+      },
+      "timestamp": "2025-09-15T13:35:20.475Z"
+    },
+    {
+      "name": "Functionality Test - http://localhost:5174/performers",
+      "status": "warning",
+      "details": {
+        "forms": [],
+        "navigation": [
+          {
+            "buttonIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 5,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 6,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 7,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 8,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 9,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "links": [],
+        "hasFormIssues": false,
+        "hasNavIssues": true,
+        "hasLinkIssues": false
+      },
+      "timestamp": "2025-09-15T13:35:21.750Z"
+    },
+    {
+      "name": "Data Test - http://localhost:5174/communities",
+      "status": "passed",
+      "details": {
+        "hasEventCards": false,
+        "hasVenueCards": false,
+        "hasPerformerCards": false,
+        "hasCommunityCards": false,
+        "hasCalendarCards": false,
+        "hasTicketCards": false,
+        "hasShopItems": false,
+        "hasFormInputs": true,
+        "hasClickableButtons": true,
+        "hasLinks": true,
+        "hasImages": false,
+        "hasTextContent": true,
+        "hasEventTitles": true,
+        "hasVenueNames": true,
+        "hasPerformerNames": true,
+        "hasPricing": false,
+        "hasDates": false,
+        "hasLocations": true,
+        "hasErrorMessages": false,
+        "hasEmptyStates": false,
+        "hasLoadingStates": false,
+        "hasData": true,
+        "hasErrors": false,
+        "hasEmptyState": false
+      },
+      "timestamp": "2025-09-15T13:35:22.939Z"
+    },
+    {
+      "name": "Functionality Test - http://localhost:5174/communities",
+      "status": "warning",
+      "details": {
+        "forms": [],
+        "navigation": [
+          {
+            "buttonIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 5,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 6,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 7,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 8,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 9,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "links": [
+          {
+            "linkIndex": 0,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 3,
+            "error": "Node is detached from document"
+          },
+          {
+            "linkIndex": 4,
+            "error": "Node is detached from document"
+          },
+          {
+            "linkIndex": 5,
+            "error": "Node is detached from document"
+          },
+          {
+            "linkIndex": 6,
+            "error": "Node is detached from document"
+          },
+          {
+            "linkIndex": 7,
+            "error": "Node is detached from document"
+          },
+          {
+            "linkIndex": 8,
+            "error": "Node is detached from document"
+          },
+          {
+            "linkIndex": 9,
+            "error": "Node is detached from document"
+          }
+        ],
+        "hasFormIssues": false,
+        "hasNavIssues": true,
+        "hasLinkIssues": true
+      },
+      "timestamp": "2025-09-15T13:35:24.260Z"
+    },
+    {
+      "name": "Data Test - http://localhost:5174/calendars",
+      "status": "passed",
+      "details": {
+        "hasEventCards": false,
+        "hasVenueCards": false,
+        "hasPerformerCards": false,
+        "hasCommunityCards": false,
+        "hasCalendarCards": false,
+        "hasTicketCards": false,
+        "hasShopItems": false,
+        "hasFormInputs": true,
+        "hasClickableButtons": true,
+        "hasLinks": false,
+        "hasImages": false,
+        "hasTextContent": true,
+        "hasEventTitles": true,
+        "hasVenueNames": true,
+        "hasPerformerNames": true,
+        "hasPricing": false,
+        "hasDates": true,
+        "hasLocations": true,
+        "hasErrorMessages": false,
+        "hasEmptyStates": false,
+        "hasLoadingStates": false,
+        "hasData": true,
+        "hasErrors": false,
+        "hasEmptyState": false
+      },
+      "timestamp": "2025-09-15T13:35:25.482Z"
+    },
+    {
+      "name": "Functionality Test - http://localhost:5174/calendars",
+      "status": "warning",
+      "details": {
+        "forms": [],
+        "navigation": [
+          {
+            "buttonIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 3,
+            "error": "Node is either not clickable or not an Element"
+          },
+          {
+            "buttonIndex": 4,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 5,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 6,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 7,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 8,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 9,
+            "error": "Node is detached from document"
+          }
+        ],
+        "links": [
+          {
+            "linkIndex": 0,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "hasFormIssues": false,
+        "hasNavIssues": true,
+        "hasLinkIssues": true
+      },
+      "timestamp": "2025-09-15T13:35:26.863Z"
+    },
+    {
+      "name": "Data Test - http://localhost:5174/tickets",
+      "status": "passed",
+      "details": {
+        "hasEventCards": false,
+        "hasVenueCards": false,
+        "hasPerformerCards": false,
+        "hasCommunityCards": false,
+        "hasCalendarCards": false,
+        "hasTicketCards": false,
+        "hasShopItems": false,
+        "hasFormInputs": true,
+        "hasClickableButtons": true,
+        "hasLinks": false,
+        "hasImages": true,
+        "hasTextContent": true,
+        "hasEventTitles": true,
+        "hasVenueNames": true,
+        "hasPerformerNames": true,
+        "hasPricing": true,
+        "hasDates": false,
+        "hasLocations": true,
+        "hasErrorMessages": false,
+        "hasEmptyStates": false,
+        "hasLoadingStates": false,
+        "hasData": true,
+        "hasErrors": false,
+        "hasEmptyState": false
+      },
+      "timestamp": "2025-09-15T13:35:27.788Z"
+    },
+    {
+      "name": "Functionality Test - http://localhost:5174/tickets",
+      "status": "warning",
+      "details": {
+        "forms": [],
+        "navigation": [
+          {
+            "buttonIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 5,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 6,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 7,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 8,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 9,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "links": [],
+        "hasFormIssues": false,
+        "hasNavIssues": true,
+        "hasLinkIssues": false
+      },
+      "timestamp": "2025-09-15T13:35:29.182Z"
+    },
+    {
+      "name": "Data Test - http://localhost:5174/shop",
+      "status": "passed",
+      "details": {
+        "hasEventCards": false,
+        "hasVenueCards": false,
+        "hasPerformerCards": false,
+        "hasCommunityCards": false,
+        "hasCalendarCards": false,
+        "hasTicketCards": false,
+        "hasShopItems": false,
+        "hasFormInputs": true,
+        "hasClickableButtons": true,
+        "hasLinks": true,
+        "hasImages": false,
+        "hasTextContent": true,
+        "hasEventTitles": true,
+        "hasVenueNames": true,
+        "hasPerformerNames": true,
+        "hasPricing": true,
+        "hasDates": false,
+        "hasLocations": true,
+        "hasErrorMessages": false,
+        "hasEmptyStates": false,
+        "hasLoadingStates": false,
+        "hasData": true,
+        "hasErrors": false,
+        "hasEmptyState": false
+      },
+      "timestamp": "2025-09-15T13:35:30.575Z"
+    },
+    {
+      "name": "Functionality Test - http://localhost:5174/shop",
+      "status": "warning",
+      "details": {
+        "forms": [],
+        "navigation": [
+          {
+            "buttonIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 5,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 6,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 7,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 8,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 9,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "links": [
+          {
+            "linkIndex": 0,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 5,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 6,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 7,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 8,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 9,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "hasFormIssues": false,
+        "hasNavIssues": true,
+        "hasLinkIssues": true
+      },
+      "timestamp": "2025-09-15T13:35:32.054Z"
+    },
+    {
+      "name": "Data Test - http://localhost:5174/book-it",
+      "status": "passed",
+      "details": {
+        "hasEventCards": false,
+        "hasVenueCards": false,
+        "hasPerformerCards": false,
+        "hasCommunityCards": false,
+        "hasCalendarCards": false,
+        "hasTicketCards": false,
+        "hasShopItems": false,
+        "hasFormInputs": true,
+        "hasClickableButtons": true,
+        "hasLinks": false,
+        "hasImages": true,
+        "hasTextContent": true,
+        "hasEventTitles": true,
+        "hasVenueNames": true,
+        "hasPerformerNames": true,
+        "hasPricing": false,
+        "hasDates": false,
+        "hasLocations": true,
+        "hasErrorMessages": false,
+        "hasEmptyStates": false,
+        "hasLoadingStates": false,
+        "hasData": true,
+        "hasErrors": false,
+        "hasEmptyState": false
+      },
+      "timestamp": "2025-09-15T13:35:32.971Z"
+    },
+    {
+      "name": "Functionality Test - http://localhost:5174/book-it",
+      "status": "warning",
+      "details": {
+        "forms": [],
+        "navigation": [
+          {
+            "buttonIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 5,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 6,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 7,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 8,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 9,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "links": [],
+        "hasFormIssues": false,
+        "hasNavIssues": true,
+        "hasLinkIssues": false
+      },
+      "timestamp": "2025-09-15T13:35:34.204Z"
+    },
+    {
+      "name": "Data Test - http://localhost:5174/events/1",
+      "status": "failed",
+      "details": {
+        "hasEventCards": false,
+        "hasVenueCards": false,
+        "hasPerformerCards": false,
+        "hasCommunityCards": false,
+        "hasCalendarCards": false,
+        "hasTicketCards": false,
+        "hasShopItems": false,
+        "hasFormInputs": true,
+        "hasClickableButtons": true,
+        "hasLinks": true,
+        "hasImages": false,
+        "hasTextContent": true,
+        "hasEventTitles": true,
+        "hasVenueNames": true,
+        "hasPerformerNames": true,
+        "hasPricing": false,
+        "hasDates": false,
+        "hasLocations": true,
+        "hasErrorMessages": true,
+        "hasEmptyStates": false,
+        "hasLoadingStates": false,
+        "hasData": true,
+        "hasErrors": true,
+        "hasEmptyState": false,
+        "error": "Page contains error messages"
+      },
+      "timestamp": "2025-09-15T13:35:35.632Z"
+    },
+    {
+      "name": "Functionality Test - http://localhost:5174/events/1",
+      "status": "warning",
+      "details": {
+        "forms": [],
+        "navigation": [
+          {
+            "buttonIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 5,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 6,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 7,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 8,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 9,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "links": [
+          {
+            "linkIndex": 0,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "hasFormIssues": false,
+        "hasNavIssues": true,
+        "hasLinkIssues": true
+      },
+      "timestamp": "2025-09-15T13:35:36.453Z"
+    },
+    {
+      "name": "Data Test - http://localhost:5174/venues/1",
+      "status": "failed",
+      "details": {
+        "hasEventCards": false,
+        "hasVenueCards": false,
+        "hasPerformerCards": false,
+        "hasCommunityCards": false,
+        "hasCalendarCards": false,
+        "hasTicketCards": false,
+        "hasShopItems": false,
+        "hasFormInputs": true,
+        "hasClickableButtons": true,
+        "hasLinks": false,
+        "hasImages": false,
+        "hasTextContent": true,
+        "hasEventTitles": true,
+        "hasVenueNames": true,
+        "hasPerformerNames": true,
+        "hasPricing": false,
+        "hasDates": false,
+        "hasLocations": true,
+        "hasErrorMessages": true,
+        "hasEmptyStates": false,
+        "hasLoadingStates": false,
+        "hasData": true,
+        "hasErrors": true,
+        "hasEmptyState": false,
+        "error": "Page contains error messages"
+      },
+      "timestamp": "2025-09-15T13:35:37.919Z"
+    },
+    {
+      "name": "Functionality Test - http://localhost:5174/venues/1",
+      "status": "warning",
+      "details": {
+        "forms": [],
+        "navigation": [
+          {
+            "buttonIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 5,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 6,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 7,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 8,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 9,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "links": [],
+        "hasFormIssues": false,
+        "hasNavIssues": true,
+        "hasLinkIssues": false
+      },
+      "timestamp": "2025-09-15T13:35:39.170Z"
+    },
+    {
+      "name": "Data Test - http://localhost:5174/performers/1",
+      "status": "failed",
+      "details": {
+        "hasEventCards": false,
+        "hasVenueCards": false,
+        "hasPerformerCards": false,
+        "hasCommunityCards": false,
+        "hasCalendarCards": false,
+        "hasTicketCards": false,
+        "hasShopItems": false,
+        "hasFormInputs": true,
+        "hasClickableButtons": true,
+        "hasLinks": false,
+        "hasImages": false,
+        "hasTextContent": true,
+        "hasEventTitles": true,
+        "hasVenueNames": true,
+        "hasPerformerNames": true,
+        "hasPricing": false,
+        "hasDates": false,
+        "hasLocations": true,
+        "hasErrorMessages": true,
+        "hasEmptyStates": false,
+        "hasLoadingStates": false,
+        "hasData": true,
+        "hasErrors": true,
+        "hasEmptyState": false,
+        "error": "Page contains error messages"
+      },
+      "timestamp": "2025-09-15T13:35:40.269Z"
+    },
+    {
+      "name": "Functionality Test - http://localhost:5174/performers/1",
+      "status": "warning",
+      "details": {
+        "forms": [],
+        "navigation": [
+          {
+            "buttonIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 3,
+            "error": "Node is either not clickable or not an Element"
+          },
+          {
+            "buttonIndex": 4,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 5,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 6,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 7,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 8,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 9,
+            "error": "Node is detached from document"
+          }
+        ],
+        "links": [
+          {
+            "linkIndex": 0,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "hasFormIssues": false,
+        "hasNavIssues": true,
+        "hasLinkIssues": true
+      },
+      "timestamp": "2025-09-15T13:35:41.170Z"
+    },
+    {
+      "name": "Data Test - http://localhost:5174/c/jazz-lovers",
+      "status": "warning",
+      "details": {
+        "hasEventCards": false,
+        "hasVenueCards": false,
+        "hasPerformerCards": false,
+        "hasCommunityCards": false,
+        "hasCalendarCards": false,
+        "hasTicketCards": false,
+        "hasShopItems": false,
+        "hasFormInputs": true,
+        "hasClickableButtons": true,
+        "hasLinks": false,
+        "hasImages": false,
+        "hasTextContent": true,
+        "hasEventTitles": true,
+        "hasVenueNames": true,
+        "hasPerformerNames": true,
+        "hasPricing": false,
+        "hasDates": false,
+        "hasLocations": true,
+        "hasErrorMessages": false,
+        "hasEmptyStates": true,
+        "hasLoadingStates": false,
+        "hasData": true,
+        "hasErrors": false,
+        "hasEmptyState": true,
+        "warning": "Page shows empty state (may be expected)"
+      },
+      "timestamp": "2025-09-15T13:35:41.952Z"
+    },
+    {
+      "name": "Functionality Test - http://localhost:5174/c/jazz-lovers",
+      "status": "warning",
+      "details": {
+        "forms": [],
+        "navigation": [
+          {
+            "buttonIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 5,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 6,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 7,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 8,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 9,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "links": [],
+        "hasFormIssues": false,
+        "hasNavIssues": true,
+        "hasLinkIssues": false
+      },
+      "timestamp": "2025-09-15T13:35:43.220Z"
+    },
+    {
+      "name": "Data Test - http://localhost:5174/calendars/jazz-events",
+      "status": "warning",
+      "details": {
+        "hasEventCards": false,
+        "hasVenueCards": false,
+        "hasPerformerCards": false,
+        "hasCommunityCards": false,
+        "hasCalendarCards": false,
+        "hasTicketCards": false,
+        "hasShopItems": false,
+        "hasFormInputs": true,
+        "hasClickableButtons": true,
+        "hasLinks": false,
+        "hasImages": false,
+        "hasTextContent": true,
+        "hasEventTitles": true,
+        "hasVenueNames": true,
+        "hasPerformerNames": true,
+        "hasPricing": false,
+        "hasDates": false,
+        "hasLocations": true,
+        "hasErrorMessages": false,
+        "hasEmptyStates": true,
+        "hasLoadingStates": false,
+        "hasData": true,
+        "hasErrors": false,
+        "hasEmptyState": true,
+        "warning": "Page shows empty state (may be expected)"
+      },
+      "timestamp": "2025-09-15T13:35:43.987Z"
+    },
+    {
+      "name": "Functionality Test - http://localhost:5174/calendars/jazz-events",
+      "status": "warning",
+      "details": {
+        "forms": [],
+        "navigation": [
+          {
+            "buttonIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "buttonIndex": 4,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 5,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 6,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 7,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 8,
+            "error": "Node is detached from document"
+          },
+          {
+            "buttonIndex": 9,
+            "error": "Node is detached from document"
+          }
+        ],
+        "links": [
+          {
+            "linkIndex": 0,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 1,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 2,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 3,
+            "error": "page.waitForTimeout is not a function"
+          },
+          {
+            "linkIndex": 4,
+            "error": "page.waitForTimeout is not a function"
+          }
+        ],
+        "hasFormIssues": false,
+        "hasNavIssues": true,
+        "hasLinkIssues": true
+      },
+      "timestamp": "2025-09-15T13:35:45.186Z"
+    }
+  ],
+  "summary": {
+    "total": 28,
+    "passed": 9,
+    "failed": 3,
+    "errors": []
+  }
+}
