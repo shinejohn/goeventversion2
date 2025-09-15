@@ -261,6 +261,7 @@ const magicPatternsAdminLayout = layout('routes/layouts/magic-patterns-admin.tsx
 const bookingFlowLayout = layout('routes/layouts/booking-flow.tsx', [
   // Only specific wizard flows that need the booking layout
   // Most Book It routes are now in the public layout above
+  route('booking/wizard', 'routes/booking/wizard.tsx'),
 ]);
 
 // Checkout flow (separate from booking)

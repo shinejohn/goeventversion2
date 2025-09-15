@@ -1,0 +1,191 @@
+{
+  "timestamp": "2025-09-15T17:46:28.737Z",
+  "userTests": [
+    {
+      "user": "fan",
+      "tests": [
+        {
+          "user": "fan",
+          "action": "user_creation",
+          "status": "FAILED",
+          "errors": [
+            "User creation failed: Waiting for selector `input[name=\"name\"]` failed"
+          ]
+        },
+        {
+          "user": "fan",
+          "action": "authentication",
+          "status": "FAILED",
+          "errors": [
+            "Authentication test failed: Waiting for selector `input[name=\"email\"]` failed"
+          ]
+        },
+        {
+          "user": "fan",
+          "action": "user_specific_pages",
+          "status": "FAILED",
+          "errors": [
+            "User specific pages test failed: Waiting for selector `input[data-test=\"email-input\"]` failed"
+          ]
+        },
+        {
+          "user": "fan",
+          "action": "data_creation",
+          "status": "FAILED",
+          "errors": [
+            "Data creation test failed: Waiting for selector `input[data-test=\"email-input\"]` failed"
+          ]
+        },
+        {
+          "user": "fan",
+          "action": "permissions",
+          "status": "FAILED",
+          "errors": [
+            "Permissions test failed: Waiting for selector `input[data-test=\"email-input\"]` failed"
+          ]
+        }
+      ]
+    },
+    {
+      "user": "performer",
+      "tests": [
+        {
+          "user": "performer",
+          "action": "user_creation",
+          "status": "FAILED",
+          "errors": [
+            "User creation failed: Waiting for selector `input[name=\"name\"]` failed"
+          ]
+        },
+        {
+          "user": "performer",
+          "action": "authentication",
+          "status": "FAILED",
+          "errors": [
+            "Authentication test failed: Waiting for selector `input[name=\"email\"]` failed"
+          ]
+        },
+        {
+          "user": "performer",
+          "action": "user_specific_pages",
+          "status": "FAILED",
+          "errors": [
+            "User specific pages test failed: Waiting for selector `input[data-test=\"email-input\"]` failed"
+          ]
+        },
+        {
+          "user": "performer",
+          "action": "data_creation",
+          "status": "FAILED",
+          "errors": [
+            "Data creation test failed: Waiting for selector `input[data-test=\"email-input\"]` failed"
+          ]
+        },
+        {
+          "user": "performer",
+          "action": "permissions",
+          "status": "FAILED",
+          "errors": [
+            "Permissions test failed: Waiting for selector `input[data-test=\"email-input\"]` failed"
+          ]
+        }
+      ]
+    },
+    {
+      "user": "venue_owner",
+      "tests": [
+        {
+          "user": "venue_owner",
+          "action": "user_creation",
+          "status": "FAILED",
+          "errors": [
+            "User creation failed: Waiting for selector `input[name=\"name\"]` failed"
+          ]
+        },
+        {
+          "user": "venue_owner",
+          "action": "authentication",
+          "status": "FAILED",
+          "errors": [
+            "Authentication test failed: Waiting for selector `input[name=\"email\"]` failed"
+          ]
+        },
+        {
+          "user": "venue_owner",
+          "action": "user_specific_pages",
+          "status": "FAILED",
+          "errors": [
+            "User specific pages test failed: Waiting for selector `input[data-test=\"email-input\"]` failed"
+          ]
+        },
+        {
+          "user": "venue_owner",
+          "action": "data_creation",
+          "status": "FAILED",
+          "errors": [
+            "Data creation test failed: Waiting for selector `input[data-test=\"email-input\"]` failed"
+          ]
+        },
+        {
+          "user": "venue_owner",
+          "action": "permissions",
+          "status": "FAILED",
+          "errors": [
+            "Permissions test failed: Waiting for selector `input[data-test=\"email-input\"]` failed"
+          ]
+        }
+      ]
+    },
+    {
+      "user": "admin",
+      "tests": [
+        {
+          "user": "admin",
+          "action": "user_creation",
+          "status": "FAILED",
+          "errors": [
+            "User creation failed: Waiting for selector `input[name=\"name\"]` failed"
+          ]
+        },
+        {
+          "user": "admin",
+          "action": "authentication",
+          "status": "FAILED",
+          "errors": [
+            "Authentication test failed: Waiting for selector `input[name=\"email\"]` failed"
+          ]
+        },
+        {
+          "user": "admin",
+          "action": "user_specific_pages",
+          "status": "FAILED",
+          "errors": [
+            "User specific pages test failed: Waiting for selector `input[data-test=\"email-input\"]` failed"
+          ]
+        },
+        {
+          "user": "admin",
+          "action": "data_creation",
+          "status": "FAILED",
+          "errors": [
+            "Data creation test failed: Waiting for selector `input[data-test=\"email-input\"]` failed"
+          ]
+        },
+        {
+          "user": "admin",
+          "action": "permissions",
+          "status": "FAILED",
+          "errors": [
+            "Permissions test failed: Waiting for selector `input[data-test=\"email-input\"]` failed"
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total": 20,
+    "passed": 0,
+    "failed": 20,
+    "errors": []
+  }
+}

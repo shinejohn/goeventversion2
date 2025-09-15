@@ -1,0 +1,317 @@
+{
+  "timestamp": "2025-09-15T15:41:24.765Z",
+  "userTests": [
+    {
+      "user": "fan",
+      "tests": [
+        {
+          "user": "fan",
+          "action": "user_creation",
+          "status": "FAILED",
+          "errors": [
+            "Unexpected redirect after signup: http://localhost:5175/auth/sign-up"
+          ]
+        },
+        {
+          "user": "fan",
+          "action": "authentication",
+          "status": "FAILED",
+          "errors": [
+            "Authentication failed, redirected to: http://localhost:5175/auth/sign-in"
+          ]
+        },
+        {
+          "user": "fan",
+          "action": "user_specific_pages",
+          "status": "FAILED",
+          "errors": [
+            "User specific pages test failed: Assignment to constant variable."
+          ]
+        },
+        {
+          "user": "fan",
+          "action": "data_creation",
+          "status": "PASSED",
+          "errors": [],
+          "creationResults": [
+            {
+              "type": "event",
+              "status": "SKIPPED",
+              "message": "Fan cannot create events (expected)"
+            }
+          ]
+        },
+        {
+          "user": "fan",
+          "action": "permissions",
+          "status": "PASSED",
+          "errors": [],
+          "permissionResults": [
+            {
+              "area": "Admin Panel",
+              "url": "/admin",
+              "expected": false,
+              "actual": false,
+              "status": "PASSED"
+            },
+            {
+              "area": "Create Venue",
+              "url": "/venues/create",
+              "expected": false,
+              "actual": false,
+              "status": "PASSED"
+            },
+            {
+              "area": "Create Performer",
+              "url": "/performers/create",
+              "expected": false,
+              "actual": false,
+              "status": "PASSED"
+            },
+            {
+              "area": "Create Event",
+              "url": "/events/create",
+              "expected": false,
+              "actual": false,
+              "status": "PASSED"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "performer",
+      "tests": [
+        {
+          "user": "performer",
+          "action": "user_creation",
+          "status": "FAILED",
+          "errors": [
+            "Unexpected redirect after signup: http://localhost:5175/auth/sign-up"
+          ]
+        },
+        {
+          "user": "performer",
+          "action": "authentication",
+          "status": "FAILED",
+          "errors": [
+            "Authentication failed, redirected to: http://localhost:5175/auth/sign-in"
+          ]
+        },
+        {
+          "user": "performer",
+          "action": "user_specific_pages",
+          "status": "FAILED",
+          "errors": [
+            "User specific pages test failed: Assignment to constant variable."
+          ]
+        },
+        {
+          "user": "performer",
+          "action": "data_creation",
+          "status": "FAILED",
+          "errors": [],
+          "creationResults": [
+            {
+              "type": "performer_profile",
+              "status": "FAILED",
+              "error": "Waiting for selector `input[name=\"name\"]` failed"
+            }
+          ]
+        },
+        {
+          "user": "performer",
+          "action": "permissions",
+          "status": "FAILED",
+          "errors": [],
+          "permissionResults": [
+            {
+              "area": "Admin Panel",
+              "url": "/admin",
+              "expected": false,
+              "actual": false,
+              "status": "PASSED"
+            },
+            {
+              "area": "Create Venue",
+              "url": "/venues/create",
+              "expected": false,
+              "actual": false,
+              "status": "PASSED"
+            },
+            {
+              "area": "Create Performer",
+              "url": "/performers/create",
+              "expected": true,
+              "actual": false,
+              "status": "FAILED"
+            },
+            {
+              "area": "Create Event",
+              "url": "/events/create",
+              "expected": true,
+              "actual": false,
+              "status": "FAILED"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "venue_owner",
+      "tests": [
+        {
+          "user": "venue_owner",
+          "action": "user_creation",
+          "status": "FAILED",
+          "errors": [
+            "Unexpected redirect after signup: http://localhost:5175/auth/sign-up"
+          ]
+        },
+        {
+          "user": "venue_owner",
+          "action": "authentication",
+          "status": "FAILED",
+          "errors": [
+            "Authentication failed, redirected to: http://localhost:5175/auth/sign-in"
+          ]
+        },
+        {
+          "user": "venue_owner",
+          "action": "user_specific_pages",
+          "status": "FAILED",
+          "errors": [
+            "User specific pages test failed: Assignment to constant variable."
+          ]
+        },
+        {
+          "user": "venue_owner",
+          "action": "data_creation",
+          "status": "FAILED",
+          "errors": [],
+          "creationResults": [
+            {
+              "type": "venue",
+              "status": "FAILED",
+              "error": "Waiting for selector `input[name=\"name\"]` failed"
+            }
+          ]
+        },
+        {
+          "user": "venue_owner",
+          "action": "permissions",
+          "status": "FAILED",
+          "errors": [],
+          "permissionResults": [
+            {
+              "area": "Admin Panel",
+              "url": "/admin",
+              "expected": false,
+              "actual": false,
+              "status": "PASSED"
+            },
+            {
+              "area": "Create Venue",
+              "url": "/venues/create",
+              "expected": true,
+              "actual": false,
+              "status": "FAILED"
+            },
+            {
+              "area": "Create Performer",
+              "url": "/performers/create",
+              "expected": false,
+              "actual": false,
+              "status": "PASSED"
+            },
+            {
+              "area": "Create Event",
+              "url": "/events/create",
+              "expected": true,
+              "actual": false,
+              "status": "FAILED"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "admin",
+      "tests": [
+        {
+          "user": "admin",
+          "action": "user_creation",
+          "status": "FAILED",
+          "errors": [
+            "Unexpected redirect after signup: http://localhost:5175/auth/sign-up"
+          ]
+        },
+        {
+          "user": "admin",
+          "action": "authentication",
+          "status": "FAILED",
+          "errors": [
+            "Authentication failed, redirected to: http://localhost:5175/auth/sign-in"
+          ]
+        },
+        {
+          "user": "admin",
+          "action": "user_specific_pages",
+          "status": "FAILED",
+          "errors": [
+            "User specific pages test failed: Assignment to constant variable."
+          ]
+        },
+        {
+          "user": "admin",
+          "action": "data_creation",
+          "status": "PASSED",
+          "errors": [],
+          "creationResults": []
+        },
+        {
+          "user": "admin",
+          "action": "permissions",
+          "status": "FAILED",
+          "errors": [],
+          "permissionResults": [
+            {
+              "area": "Admin Panel",
+              "url": "/admin",
+              "expected": true,
+              "actual": false,
+              "status": "FAILED"
+            },
+            {
+              "area": "Create Venue",
+              "url": "/venues/create",
+              "expected": true,
+              "actual": false,
+              "status": "FAILED"
+            },
+            {
+              "area": "Create Performer",
+              "url": "/performers/create",
+              "expected": true,
+              "actual": false,
+              "status": "FAILED"
+            },
+            {
+              "area": "Create Event",
+              "url": "/events/create",
+              "expected": true,
+              "actual": false,
+              "status": "FAILED"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total": 20,
+    "passed": 3,
+    "failed": 17,
+    "errors": []
+  }
+}

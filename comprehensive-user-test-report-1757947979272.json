@@ -1,0 +1,191 @@
+{
+  "timestamp": "2025-09-15T14:52:35.525Z",
+  "userTests": [
+    {
+      "user": "fan",
+      "tests": [
+        {
+          "user": "fan",
+          "action": "user_creation",
+          "status": "FAILED",
+          "errors": [
+            "User creation failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "fan",
+          "action": "authentication",
+          "status": "FAILED",
+          "errors": [
+            "Authentication test failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "fan",
+          "action": "user_specific_pages",
+          "status": "FAILED",
+          "errors": [
+            "User specific pages test failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "fan",
+          "action": "data_creation",
+          "status": "FAILED",
+          "errors": [
+            "Data creation test failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "fan",
+          "action": "permissions",
+          "status": "FAILED",
+          "errors": [
+            "Permissions test failed: page.waitForTimeout is not a function"
+          ]
+        }
+      ]
+    },
+    {
+      "user": "performer",
+      "tests": [
+        {
+          "user": "performer",
+          "action": "user_creation",
+          "status": "FAILED",
+          "errors": [
+            "User creation failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "performer",
+          "action": "authentication",
+          "status": "FAILED",
+          "errors": [
+            "Authentication test failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "performer",
+          "action": "user_specific_pages",
+          "status": "FAILED",
+          "errors": [
+            "User specific pages test failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "performer",
+          "action": "data_creation",
+          "status": "FAILED",
+          "errors": [
+            "Data creation test failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "performer",
+          "action": "permissions",
+          "status": "FAILED",
+          "errors": [
+            "Permissions test failed: page.waitForTimeout is not a function"
+          ]
+        }
+      ]
+    },
+    {
+      "user": "venue_owner",
+      "tests": [
+        {
+          "user": "venue_owner",
+          "action": "user_creation",
+          "status": "FAILED",
+          "errors": [
+            "User creation failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "venue_owner",
+          "action": "authentication",
+          "status": "FAILED",
+          "errors": [
+            "Authentication test failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "venue_owner",
+          "action": "user_specific_pages",
+          "status": "FAILED",
+          "errors": [
+            "User specific pages test failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "venue_owner",
+          "action": "data_creation",
+          "status": "FAILED",
+          "errors": [
+            "Data creation test failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "venue_owner",
+          "action": "permissions",
+          "status": "FAILED",
+          "errors": [
+            "Permissions test failed: page.waitForTimeout is not a function"
+          ]
+        }
+      ]
+    },
+    {
+      "user": "admin",
+      "tests": [
+        {
+          "user": "admin",
+          "action": "user_creation",
+          "status": "FAILED",
+          "errors": [
+            "User creation failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "admin",
+          "action": "authentication",
+          "status": "FAILED",
+          "errors": [
+            "Authentication test failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "admin",
+          "action": "user_specific_pages",
+          "status": "FAILED",
+          "errors": [
+            "User specific pages test failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "admin",
+          "action": "data_creation",
+          "status": "FAILED",
+          "errors": [
+            "Data creation test failed: page.waitForTimeout is not a function"
+          ]
+        },
+        {
+          "user": "admin",
+          "action": "permissions",
+          "status": "FAILED",
+          "errors": [
+            "Permissions test failed: page.waitForTimeout is not a function"
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total": 20,
+    "passed": 0,
+    "failed": 20,
+    "errors": []
+  }
+}

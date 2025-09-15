@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-09-15T14:00:45.681Z",
+  "baseUrl": "http://localhost:5174",
+  "railwayUrl": "https://goeventversion2-production.up.railway.app",
+  "tests": [
+    {
+      "name": "Shop Page - Local Development",
+      "url": "http://localhost:5174/shop",
+      "status": "passed",
+      "details": {
+        "title": "GoEventCity Fan Shop | Merchandise & Apparel",
+        "isFanShop": true,
+        "heroTitle": "Ouch! :|",
+        "isFanMerchandise": false,
+        "categories": [],
+        "hasMerchandiseCategories": false,
+        "productCount": 0,
+        "productNames": [],
+        "hasMerchandiseProducts": false
+      }
+    },
+    {
+      "name": "Shop Page - Railway Production",
+      "url": "https://goeventversion2-production.up.railway.app/shop",
+      "status": "passed",
+      "details": {
+        "title": "GoEventCity Fan Shop | Merchandise & Apparel",
+        "isFanShop": true,
+        "heroTitle": "Ouch! :|",
+        "isFanMerchandise": false,
+        "categories": [],
+        "hasMerchandiseCategories": false,
+        "productCount": 0,
+        "productNames": [],
+        "hasMerchandiseProducts": false
+      }
+    }
+  ],
+  "summary": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "errors": []
+  }
+}
