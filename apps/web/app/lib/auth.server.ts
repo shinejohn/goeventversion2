@@ -1,4 +1,5 @@
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
+import { getSupabaseServerAdminClient } from '@kit/supabase/server-admin-client';
 import { redirect } from 'react-router';
 
 export type UserType = 'fan' | 'performer' | 'venue_manager' | 'influencer' | 'admin';
@@ -26,7 +27,7 @@ export async function createUserWithRole(
   request: Request,
   userData: CreateUserData
 ): Promise<AuthUser> {
-  const supabase = getSupabaseServerClient(request);
+  const supabase = getSupabaseServerAdminClient();
 
   // Create the user in Supabase Auth
   const { data: authData, error: authError } = await supabase.auth.signUp({
