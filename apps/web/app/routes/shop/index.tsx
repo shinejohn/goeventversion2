@@ -22,7 +22,18 @@ export async function loader(args: Route.LoaderArgs) {
         tags: ['cotton', 'unisex', 'classic'],
         slug: 'goeventcity-classic-tshirt',
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
+        features: ['100% Cotton', 'Machine Washable', 'Unisex Fit'],
+        isNew: true,
+        isSale: false,
+        isFeatured: true,
+        stockCount: 50,
+        brand: 'GoEventCity',
+        sku: 'GEC-TS-001',
+        currency: 'USD',
+        images: ['https://picsum.photos/seed/tshirt1/400/400'],
+        subcategory: 'T-Shirts',
+        compareAtPrice: null
       },
       {
         id: '2',
@@ -38,7 +49,18 @@ export async function loader(args: Route.LoaderArgs) {
         tags: ['warm', 'cozy', 'unisex'],
         slug: 'event-lover-hoodie',
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
+        features: ['Fleece Lined', 'Kangaroo Pocket', 'Drawstring Hood'],
+        isNew: false,
+        isSale: true,
+        isFeatured: true,
+        stockCount: 25,
+        brand: 'GoEventCity',
+        sku: 'GEC-HD-001',
+        currency: 'USD',
+        images: ['https://picsum.photos/seed/hoodie1/400/400'],
+        subcategory: 'Hoodies',
+        compareAtPrice: 59.99
       },
       {
         id: '3',
@@ -54,7 +76,18 @@ export async function loader(args: Route.LoaderArgs) {
         tags: ['adjustable', 'unisex', 'music'],
         slug: 'local-music-supporter-cap',
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
+        features: ['Adjustable Strap', 'Curved Brim', 'Embroidered Logo'],
+        isNew: false,
+        isSale: false,
+        isFeatured: false,
+        stockCount: 30,
+        brand: 'GoEventCity',
+        sku: 'GEC-CP-001',
+        currency: 'USD',
+        images: ['https://picsum.photos/seed/cap1/400/400'],
+        subcategory: 'Caps',
+        compareAtPrice: null
       },
       {
         id: '4',
@@ -70,7 +103,18 @@ export async function loader(args: Route.LoaderArgs) {
         tags: ['vinyl', 'weatherproof', 'variety'],
         slug: 'event-memories-sticker-pack',
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
+        features: ['Weatherproof Vinyl', '10 Different Designs', 'Easy Peel'],
+        isNew: true,
+        isSale: false,
+        isFeatured: false,
+        stockCount: 100,
+        brand: 'GoEventCity',
+        sku: 'GEC-ST-001',
+        currency: 'USD',
+        images: ['https://picsum.photos/seed/stickers1/400/400'],
+        subcategory: 'Stickers',
+        compareAtPrice: null
       },
       {
         id: '5',
@@ -86,7 +130,18 @@ export async function loader(args: Route.LoaderArgs) {
         tags: ['artwork', 'framed', 'collectible'],
         slug: 'concert-poster-collection',
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
+        features: ['High-Quality Print', '11x17 Size', 'Glossy Finish'],
+        isNew: false,
+        isSale: false,
+        isFeatured: true,
+        stockCount: 15,
+        brand: 'GoEventCity',
+        sku: 'GEC-PS-001',
+        currency: 'USD',
+        images: ['https://picsum.photos/seed/poster1/400/400'],
+        subcategory: 'Posters',
+        compareAtPrice: null
       },
       {
         id: '6',
@@ -102,7 +157,18 @@ export async function loader(args: Route.LoaderArgs) {
         tags: ['ceramic', 'dishwasher-safe', 'microwave-safe'],
         slug: 'event-enthusiast-mug',
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
+        features: ['Dishwasher Safe', 'Microwave Safe', '11oz Capacity'],
+        isNew: false,
+        isSale: false,
+        isFeatured: false,
+        stockCount: 40,
+        brand: 'GoEventCity',
+        sku: 'GEC-MG-001',
+        currency: 'USD',
+        images: ['https://picsum.photos/seed/mug1/400/400'],
+        subcategory: 'Mugs',
+        compareAtPrice: null
       }
     ];
 
