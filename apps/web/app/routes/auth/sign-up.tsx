@@ -10,7 +10,7 @@ import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import type { Route } from './+types/auth/sign-up';
 import { UserIcon, BuildingIcon, MusicIcon, CheckIcon, CalendarIcon, TicketIcon, UsersIcon } from 'lucide-react';
-import { redirect } from 'react-router';
+import { createUserWithRole, type UserType } from '~/lib/auth.server';
 
 // Inline Magic Patterns components
 const SocialLoginButtons = ({ signUp = false }: { signUp?: boolean }) => {
@@ -66,6 +66,8 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
   const repeatPassword = formData.get('repeatPassword') as string;
+  const name = formData.get('name') as string;
+  const userType = formData.get('userType') as UserType || 'fan';
   
   // Validate passwords match
   if (password !== repeatPassword) {
@@ -75,25 +77,24 @@ export const action = async ({ request }: Route.ActionArgs) => {
     };
   }
   
+  // Validate required fields
+  if (!email || !password || !name) {
+    return { 
+      success: false, 
+      error: 'All fields are required' 
+    };
+  }
+  
   try {
-    const supabase = getSupabaseServerClient(request);
-    const { data, error } = await supabase.auth.signUp({ 
-      email, 
-      password 
+    const user = await createUserWithRole(request, {
+      email,
+      password,
+      name,
+      userType,
     });
     
-    if (error) {
-      return { 
-        success: false, 
-        error: error.message 
-      };
-    }
-    
-    if (data.user) {
-      return redirect(pathsConfig.app.home);
-    }
-    
-    return { success: false, error: 'Registration failed' };
+    // Redirect to home page after successful registration
+    return redirect(pathsConfig.app.home);
   } catch (error) {
     return { 
       success: false, 
@@ -104,17 +105,36 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 export default function SignUpPage(props: Route.ComponentProps) {
   const { inviteToken } = props.loaderData;
-  const [accountType, setAccountType] = useState<'fan' | 'venue' | 'performer'>('fan');
+  const [accountType, setAccountType] = useState<'fan' | 'venue_manager' | 'performer'>('fan');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    repeatPassword: ''
+  });
 
   const signInPath =
     pathsConfig.auth.signIn +
     (inviteToken ? `?invite_token=${inviteToken}` : '');
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    form.submit();
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-white">
       {/* Left Side - Register Form */}
-      <div className="w-full md:w-1/2 flex items-center justify-center px-6 sm:px-8 lg:px-12 py-12">
-        <div className="max-w-xl w-full space-y-8">
+      <div className="w-full md:w-1/2 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
+        <div className="w-full max-w-2xl space-y-8">
           <div className="text-center">
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
               Create Your Account
@@ -136,8 +156,8 @@ export default function SignUpPage(props: Route.ComponentProps) {
             </button>
             <button 
               type="button" 
-              onClick={() => setAccountType('venue')} 
-              className={`flex flex-col items-center p-3 rounded-lg ${accountType === 'venue' ? 'bg-indigo-100 text-indigo-700 border-2 border-indigo-500' : 'bg-gray-100 text-gray-700 border-2 border-transparent'}`}
+              onClick={() => setAccountType('venue_manager')} 
+              className={`flex flex-col items-center p-3 rounded-lg ${accountType === 'venue_manager' ? 'bg-indigo-100 text-indigo-700 border-2 border-indigo-500' : 'bg-gray-100 text-gray-700 border-2 border-transparent'}`}
             >
               <BuildingIcon className="h-6 w-6 mb-1" />
               <span className="text-sm font-medium">Venue</span>
@@ -152,30 +172,81 @@ export default function SignUpPage(props: Route.ComponentProps) {
             </button>
           </div>
           
-          <SocialLoginButtons signUp={true} />
-          
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
-                  Or continue with existing auth
-                </span>
-              </div>
+          {/* Custom Sign-up Form */}
+          <form method="post" onSubmit={handleSubmit} className="w-full space-y-4">
+            <input type="hidden" name="userType" value={accountType} />
+            
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Enter your full name"
+              />
             </div>
-          </div>
 
-          {/* Use existing Supabase auth */}
-          <div className="mt-8">
-            <SignUpMethodsContainer
-              providers={authConfig.providers}
-              displayTermsCheckbox={authConfig.displayTermsCheckbox}
-              inviteToken={inviteToken}
-              paths={paths}
-            />
-          </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Enter your email"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Create a password"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="repeatPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                id="repeatPassword"
+                name="repeatPassword"
+                value={formData.repeatPassword}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Confirm your password"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Create Account
+            </button>
+          </form>
 
           <div className="flex items-center justify-center">
             <div className="text-sm">

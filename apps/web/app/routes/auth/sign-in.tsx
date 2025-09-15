@@ -9,6 +9,7 @@ import authConfig from '~/config/auth.config';
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import type { Route } from './+types/auth/sign-in';
+import { authenticateUser } from '~/lib/auth.server';
 
 // Inline Magic Patterns components
 const SocialLoginButtons = () => {
@@ -135,6 +136,13 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
   
+  if (!email || !password) {
+    return { 
+      success: false, 
+      error: 'Email and password are required' 
+    };
+  }
+  
   try {
     const supabase = getSupabaseServerClient(request);
     const { data, error } = await supabase.auth.signInWithPassword({ 
@@ -150,6 +158,15 @@ export const action = async ({ request }: Route.ActionArgs) => {
     }
     
     if (data.user) {
+      // Verify user has proper role setup
+      const user = await authenticateUser(request);
+      if (!user) {
+        return { 
+          success: false, 
+          error: 'User account not properly configured' 
+        };
+      }
+      
       return redirect(pathsConfig.app.home);
     }
     
@@ -164,9 +181,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 export default function SignInPage(props: Route.ComponentProps) {
   const { inviteToken, returnPath } = props.loaderData;
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
   const [isBusinessLogin, setIsBusinessLogin] = useState(false);
 
   const signUpPath =
@@ -181,12 +199,15 @@ export default function SignInPage(props: Route.ComponentProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({
-      email,
-      password,
-      rememberMe,
-      isBusinessLogin
-    });
+    const form = e.target as HTMLFormElement;
+    form.submit();
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
   };
 
   return (
@@ -208,29 +229,47 @@ export default function SignInPage(props: Route.ComponentProps) {
             </p>
           </div>
           
-          <SocialLoginButtons />
-          
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
-                  Or continue with existing auth
-                </span>
-              </div>
+          {/* Custom Sign-in Form */}
+          <form method="post" onSubmit={handleSubmit} className="w-full space-y-4">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Enter your email"
+              />
             </div>
-          </div>
 
-          {/* Use existing Supabase auth for now */}
-          <div className="mt-8">
-            <SignInMethodsContainer
-              inviteToken={inviteToken}
-              paths={paths}
-              providers={authConfig.providers}
-            />
-          </div>
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Enter your password"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Sign In
+            </button>
+          </form>
 
           <div className="flex items-center justify-between">
             <div className="text-sm">

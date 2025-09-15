@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 
-const BASE_URL_LOCAL = 'http://localhost:5175';
+const BASE_URL_LOCAL = 'https://goeventversion2-production.up.railway.app';
 const BASE_URL_RAILWAY = 'https://goeventversion2-production.up.railway.app';
 
 const testResults = {
@@ -46,25 +46,40 @@ async function createTestUser(browser, user) {
     // Go to signup page
     await page.goto(`${BASE_URL_LOCAL}/auth/sign-up`, { waitUntil: 'networkidle0', timeout: 30000 });
     
-    // Fill out signup form
-    await page.waitForSelector('input[data-test="email-input"]', { timeout: 10000 });
-    await page.type('input[data-test="email-input"]', user.email);
-    await page.type('input[data-test="password-input"]', user.password);
-    await page.type('input[data-test="repeat-password-input"]', user.password);
+    // Fill out signup form - using new SSR form fields
+    await page.waitForSelector('input[name="name"]', { timeout: 10000 });
+    await page.type('input[name="name"]', user.name);
+    await page.type('input[name="email"]', user.email);
+    await page.type('input[name="password"]', user.password);
+    await page.type('input[name="repeatPassword"]', user.password);
+    
+    // Select user type based on role
+    const userTypeMap = {
+      'fan': 'fan',
+      'performer': 'performer', 
+      'venue_owner': 'venue_manager',
+      'admin': 'admin'
+    };
+    
+    const userType = userTypeMap[user.role] || 'fan';
+    await page.evaluate((type) => {
+      const buttons = document.querySelectorAll('button[type="button"]');
+      for (const button of buttons) {
+        if (button.textContent.includes(type === 'venue_manager' ? 'Venue' : type.charAt(0).toUpperCase() + type.slice(1))) {
+          button.click();
+          break;
+        }
+      }
+    }, userType);
     
     // Submit form
-    await page.click('button[data-test="auth-submit-button"]');
+    await page.click('button[type="submit"]');
     
-    // Wait for client-side authentication to complete
-    // The Magic Patterns components use React Query mutations
+    // Wait for server-side authentication to complete
     await page.waitForFunction(() => {
       return window.location.href.includes('/home') || 
-             window.location.href.includes('/dashboard') ||
-             document.querySelector('[data-test="auth-submit-button"]')?.disabled === false;
-    }, { timeout: 10000 });
-    
-    // Additional wait for any redirects
-    await new Promise(resolve => setTimeout(resolve, 2000));
+             window.location.href.includes('/dashboard');
+    }, { timeout: 15000 });
     
     const currentUrl = page.url();
     if (currentUrl.includes('/home') || currentUrl.includes('/dashboard')) {
@@ -90,23 +105,19 @@ async function testUserAuthentication(browser, user) {
     // Go to login page
     await page.goto(`${BASE_URL_LOCAL}/auth/sign-in`, { waitUntil: 'networkidle0', timeout: 30000 });
     
-    // Fill out login form
-    await page.waitForSelector('input[data-test="email-input"]', { timeout: 10000 });
-    await page.type('input[data-test="email-input"]', user.email);
-    await page.type('input[data-test="password-input"]', user.password);
+    // Fill out login form - using new SSR form fields
+    await page.waitForSelector('input[name="email"]', { timeout: 10000 });
+    await page.type('input[name="email"]', user.email);
+    await page.type('input[name="password"]', user.password);
     
     // Submit form
-    await page.click('button[data-test="auth-submit-button"]');
+    await page.click('button[type="submit"]');
     
-    // Wait for client-side authentication to complete
+    // Wait for server-side authentication to complete
     await page.waitForFunction(() => {
       return window.location.href.includes('/home') || 
-             window.location.href.includes('/dashboard') ||
-             document.querySelector('[data-test="auth-submit-button"]')?.disabled === false;
-    }, { timeout: 10000 });
-    
-    // Additional wait for any redirects
-    await new Promise(resolve => setTimeout(resolve, 2000));
+             window.location.href.includes('/dashboard');
+    }, { timeout: 15000 });
     
     const currentUrl = page.url();
     if (currentUrl.includes('/home') || currentUrl.includes('/dashboard')) {
