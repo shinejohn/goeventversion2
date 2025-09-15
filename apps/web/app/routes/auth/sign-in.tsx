@@ -135,11 +135,31 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
   
-  // TODO: Implement authentication logic
-  // const supabase = getSupabaseServerClient(request);
-  // const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  
-  return { success: true };
+  try {
+    const supabase = getSupabaseServerClient(request);
+    const { data, error } = await supabase.auth.signInWithPassword({ 
+      email, 
+      password 
+    });
+    
+    if (error) {
+      return { 
+        success: false, 
+        error: error.message 
+      };
+    }
+    
+    if (data.user) {
+      return redirect(pathsConfig.app.home);
+    }
+    
+    return { success: false, error: 'Authentication failed' };
+  } catch (error) {
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Authentication failed' 
+    };
+  }
 };
 
 export default function SignInPage(props: Route.ComponentProps) {

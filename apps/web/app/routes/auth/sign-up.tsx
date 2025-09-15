@@ -65,12 +65,41 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const formData = await request.formData();
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
+  const repeatPassword = formData.get('repeatPassword') as string;
   
-  // TODO: Implement authentication logic
-  // const supabase = getSupabaseServerClient(request);
-  // const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  // Validate passwords match
+  if (password !== repeatPassword) {
+    return { 
+      success: false, 
+      error: 'Passwords do not match' 
+    };
+  }
   
-  return { success: true };
+  try {
+    const supabase = getSupabaseServerClient(request);
+    const { data, error } = await supabase.auth.signUp({ 
+      email, 
+      password 
+    });
+    
+    if (error) {
+      return { 
+        success: false, 
+        error: error.message 
+      };
+    }
+    
+    if (data.user) {
+      return redirect(pathsConfig.app.home);
+    }
+    
+    return { success: false, error: 'Registration failed' };
+  } catch (error) {
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Registration failed' 
+    };
+  }
 };
 
 export default function SignUpPage(props: Route.ComponentProps) {
