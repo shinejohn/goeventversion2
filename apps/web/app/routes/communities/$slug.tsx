@@ -35,9 +35,12 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
       .from('events')
       .select(`
         *,
-        venues(*)
+        venue:venues(name, address),
+        event_performers(
+          performer:performers(name, bio)
+        )
       `)
-      .eq('community_id', communityHub.id)
+      .eq('community_hub_id', communityHub.id)
       .order('start_datetime', { ascending: true });
     
     if (eventsError) {

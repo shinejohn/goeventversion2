@@ -6,50 +6,71 @@ export async function loader({ params }: Route.LoaderArgs) {
   const client = getSupabaseServerClient();
   
   try {
-    // Try to fetch from curated_calendars table first
-    const { data: curatedCalendar, error: curatedError } = await client
-      .from('curated_calendars')
+    // Use community_hubs as the base for calendar data
+    const { data: communityHub, error: hubError } = await client
+      .from('community_hubs')
       .select('*')
       .eq('slug', params.slug)
       .single();
     
-    if (!curatedError && curatedCalendar) {
-      // Fetch events for this calendar
-      const { data: calendarEvents, error: eventsError } = await client
-        .from('calendar_events')
+    if (!hubError && communityHub) {
+      // Fetch events related to this community hub
+      const { data: events, error: eventsError } = await client
+        .from('events')
         .select(`
           *,
-          event:events(*)
+          venue:venues(name, address),
+          event_performers(
+            performer:performers(name, bio)
+          )
         `)
-        .eq('calendar_id', curatedCalendar.id);
+        .eq('community_hub_id', communityHub.id)
+        .order('start_datetime', { ascending: true });
       
-      // Fetch subscriber count
+      // Get subscriber count from community_hubs members
       const { count: subscriberCount } = await client
-        .from('calendar_subscriptions')
+        .from('community_hub_members')
         .select('*', { count: 'exact', head: true })
-        .eq('calendar_id', curatedCalendar.id);
+        .eq('community_hub_id', communityHub.id);
       
       return {
         calendar: {
-          ...curatedCalendar,
+          id: communityHub.id,
+          name: communityHub.name,
+          description: communityHub.description || 'A curated calendar of events',
+          slug: communityHub.slug,
+          event_count: events?.length || 0,
           subscriber_count: subscriberCount || 0,
-          events: calendarEvents?.map(ce => ce.event).filter(e => e) || []
+          is_public: true,
+          events: events || []
         }
       };
     }
     
-    // Try calendars table as fallback
-    const { data: personalCalendar, error: personalError } = await client
-      .from('calendars')
-      .select('*')
-      .eq('slug', params.slug)
-      .single();
+    // If no community hub found, try to find events with similar name
+    const { data: events, error: eventsError } = await client
+      .from('events')
+      .select(`
+        *,
+        venue:venues(name, address),
+        event_performers(
+          performer:performers(name, bio)
+        )
+      `)
+      .ilike('title', `%${params.slug}%`)
+      .order('start_datetime', { ascending: true });
     
-    if (!personalError && personalCalendar) {
+    if (!eventsError && events && events.length > 0) {
       return {
         calendar: {
-          ...personalCalendar,
-          events: []
+          id: params.slug,
+          name: `Events: ${params.slug}`,
+          description: `Events related to ${params.slug}`,
+          slug: params.slug,
+          event_count: events.length,
+          subscriber_count: 0,
+          is_public: true,
+          events: events
         }
       };
     }
