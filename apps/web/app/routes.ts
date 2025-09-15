@@ -120,12 +120,24 @@ const magicPatternsPublicLayout = layout('routes/layouts/magic-patterns-public.t
   route('my-tickets', 'routes/my-tickets.tsx'),
   route('saved-items', 'routes/saved-items.tsx'),
   
-  // BookIt functionality (moved from booking flow to get standard header/footer)
+  // BookIt functionality (with standard header/footer)
   route('book-it', 'routes/book-it/index.tsx'),
   route('book-it/gigs', 'routes/book-it/gigs/index.tsx'),
   route('book-it/venues', 'routes/book-it/venues/index.tsx'),
   route('book-it/venues/:id', 'routes/book-it/venues/$id/index.tsx'),
   route('book-it/venues/:id/book', 'routes/book-it/venues/$id/book/index.tsx'),
+  
+  // Book It main pages (with standard header/footer)
+  route('book', 'routes/book.tsx'),
+  route('book/performer', 'routes/book/performer.tsx'),
+  route('book/event-details', 'routes/book/event-details.tsx'),
+  route('book/requirements', 'routes/book/requirements.tsx'),
+  route('book/services', 'routes/book/services.tsx'),
+  route('book/payment', 'routes/book/payment.tsx'),
+  route('book/review', 'routes/book/review.tsx'),
+  route('book/confirmation', 'routes/book/confirmation.tsx'),
+  route('book/success', 'routes/book/success.tsx'),
+  route('bookings/confirmation', 'routes/bookings/confirmation/index.tsx'),
   
   // Debug routes (for production troubleshooting)
   route('debug-production', 'routes/debug-production.tsx'),
@@ -245,20 +257,10 @@ const magicPatternsAdminLayout = layout('routes/layouts/magic-patterns-admin.tsx
   route('admin/venue-management', 'routes/admin/venue-management.tsx'),
 ]);
 
-// Booking flow with its own layout (wizard-style) - only actual booking wizard steps
+// Booking flow with its own layout (wizard-style) - only for specific wizard flows
 const bookingFlowLayout = layout('routes/layouts/booking-flow.tsx', [
-  route('book', 'routes/book.tsx'),
-  route('book/performer', 'routes/book/performer.tsx'),
-  
-  // Booking flow steps
-  route('book/event-details', 'routes/book/event-details.tsx'),
-  route('book/requirements', 'routes/book/requirements.tsx'),
-  route('book/services', 'routes/book/services.tsx'),
-  route('book/payment', 'routes/book/payment.tsx'),
-  route('book/review', 'routes/book/review.tsx'),
-  route('book/confirmation', 'routes/book/confirmation.tsx'),
-  route('book/success', 'routes/book/success.tsx'),
-  route('bookings/confirmation', 'routes/bookings/confirmation/index.tsx'),
+  // Only specific wizard flows that need the booking layout
+  // Most Book It routes are now in the public layout above
 ]);
 
 // Checkout flow (separate from booking)

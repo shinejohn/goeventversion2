@@ -1,0 +1,305 @@
+{
+  "timestamp": "2025-09-15T13:25:51.075Z",
+  "baseUrl": "http://localhost:5174",
+  "magicPatternsUrl": "https://project-common-application-components-and-pages-template-901.magicpatterns.app",
+  "railwayUrl": "https://goeventversion2-production.up.railway.app",
+  "tests": [
+    {
+      "name": "Homepage",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/"
+      },
+      "timestamp": "2025-09-15T13:25:54.408Z"
+    },
+    {
+      "name": "Events Listing",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/events"
+      },
+      "timestamp": "2025-09-15T13:25:55.832Z"
+    },
+    {
+      "name": "Venues Listing",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/venues"
+      },
+      "timestamp": "2025-09-15T13:25:58.250Z"
+    },
+    {
+      "name": "Performers Listing",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/performers"
+      },
+      "timestamp": "2025-09-15T13:25:59.251Z"
+    },
+    {
+      "name": "Communities Listing",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/communities"
+      },
+      "timestamp": "2025-09-15T13:26:00.252Z"
+    },
+    {
+      "name": "Calendars Listing",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/calendars"
+      },
+      "timestamp": "2025-09-15T13:26:01.062Z"
+    },
+    {
+      "name": "Tickets Marketplace",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/tickets"
+      },
+      "timestamp": "2025-09-15T13:26:01.866Z"
+    },
+    {
+      "name": "Shop",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/shop"
+      },
+      "timestamp": "2025-09-15T13:26:03.072Z"
+    },
+    {
+      "name": "Pricing",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/pricing"
+      },
+      "timestamp": "2025-09-15T13:26:03.767Z"
+    },
+    {
+      "name": "About",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/about"
+      },
+      "timestamp": "2025-09-15T13:26:04.896Z"
+    },
+    {
+      "name": "Contact",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/contact"
+      },
+      "timestamp": "2025-09-15T13:26:05.986Z"
+    },
+    {
+      "name": "FAQ",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/faq"
+      },
+      "timestamp": "2025-09-15T13:26:07.131Z"
+    },
+    {
+      "name": "Sign In",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/auth/sign-in"
+      },
+      "timestamp": "2025-09-15T13:26:07.842Z"
+    },
+    {
+      "name": "Sign Up",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/auth/sign-up"
+      },
+      "timestamp": "2025-09-15T13:26:09.252Z"
+    },
+    {
+      "name": "Forgot Password",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/auth/forgot-password"
+      },
+      "timestamp": "2025-09-15T13:26:10.262Z"
+    },
+    {
+      "name": "Event Detail 1",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/events/1"
+      },
+      "timestamp": "2025-09-15T13:26:11.872Z"
+    },
+    {
+      "name": "Event Detail 2",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/events/2"
+      },
+      "timestamp": "2025-09-15T13:26:12.927Z"
+    },
+    {
+      "name": "Venue Detail 1",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/venues/1"
+      },
+      "timestamp": "2025-09-15T13:26:14.261Z"
+    },
+    {
+      "name": "Performer Detail 1",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/performers/1"
+      },
+      "timestamp": "2025-09-15T13:26:15.280Z"
+    },
+    {
+      "name": "Community Detail (Jazz)",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/c/jazz-lovers"
+      },
+      "timestamp": "2025-09-15T13:26:16.279Z"
+    },
+    {
+      "name": "Community Detail (Rock)",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/c/rock-music"
+      },
+      "timestamp": "2025-09-15T13:26:17.281Z"
+    },
+    {
+      "name": "Calendar Detail (Jazz)",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/calendars/jazz-events"
+      },
+      "timestamp": "2025-09-15T13:26:18.282Z"
+    },
+    {
+      "name": "Calendar Detail (Rock)",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/calendars/rock-concerts"
+      },
+      "timestamp": "2025-09-15T13:26:19.283Z"
+    },
+    {
+      "name": "Create Event",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/events/create"
+      },
+      "timestamp": "2025-09-15T13:26:34.776Z"
+    },
+    {
+      "name": "Create Venue",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/venues/create"
+      },
+      "timestamp": "2025-09-15T13:26:35.778Z"
+    },
+    {
+      "name": "Create Performer",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/performers/create"
+      },
+      "timestamp": "2025-09-15T13:26:36.779Z"
+    },
+    {
+      "name": "Create Community",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/communities/create"
+      },
+      "timestamp": "2025-09-15T13:26:37.551Z"
+    },
+    {
+      "name": "Create Calendar",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/calendars/create"
+      },
+      "timestamp": "2025-09-15T13:26:38.718Z"
+    },
+    {
+      "name": "Book It",
+      "status": "failed",
+      "details": {
+        "error": "page.waitForTimeout is not a function",
+        "url": "http://localhost:5174/book-it"
+      },
+      "timestamp": "2025-09-15T13:26:39.782Z"
+    }
+  ],
+  "summary": {
+    "total": 29,
+    "passed": 0,
+    "failed": 29,
+    "errors": [
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function",
+      "page.waitForTimeout is not a function"
+    ]
+  }
+}
