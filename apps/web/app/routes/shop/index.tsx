@@ -116,11 +116,11 @@ export async function loader(args: Route.LoaderArgs) {
 export const meta = ({ data }: Route.MetaArgs) => {
   return [
     {
-      title: 'Event Equipment & Gear Shop | GoEventCity',
+      title: 'GoEventCity Fan Shop | Merchandise & Apparel',
     },
     {
       name: 'description',
-      content: 'Everything you need to make your events unforgettable. Audio equipment, lighting, stage gear, instruments, and more.',
+      content: 'Show your love for local events with our exclusive merchandise. T-shirts, hoodies, accessories, and more.',
     },
   ];
 };
