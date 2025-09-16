@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Children } from 'react';
 import { TicketIcon, CalendarIcon, MapPinIcon, ClockIcon, ChevronLeftIcon, InfoIcon, UserIcon, CreditCardIcon, CheckIcon } from 'lucide-react';
-import { useNavigate } from 'react-router';
+import { useNavigate, Form, useActionData } from 'react-router';
 import { TicketPurchaseConfirmation } from '../../components/tickets/TicketPurchaseConfirmation';
 interface TicketPurchasePageProps {
   event?: any;
@@ -8,10 +8,18 @@ interface TicketPurchasePageProps {
 
 export const TicketPurchasePage = ({ event }: TicketPurchasePageProps) => {
   const navigate = useNavigate();
+  const actionData = useActionData();
   const [selectedTicketType, setSelectedTicketType] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Mock login state
+
+  // Handle successful ticket purchase
+  useEffect(() => {
+    if (actionData?.success && actionData?.ticketId) {
+      setShowConfirmation(true);
+    }
+  }, [actionData]);
   
   // Use real event data or fallback
   const eventData = event ? {
@@ -103,7 +111,7 @@ export const TicketPurchasePage = ({ event }: TicketPurchasePageProps) => {
     if (!selectedTicket) return;
     if (!isLoggedIn) {
       // Redirect to login if not logged in
-      navigate('/login?redirect=/tickets/purchase');
+      navigate('/auth/sign-in?redirectTo=/tickets/purchase/' + eventData.id);
       return;
     }
     setShowConfirmation(true);
@@ -118,6 +126,27 @@ export const TicketPurchasePage = ({ event }: TicketPurchasePageProps) => {
           </button>
         </div>
       </div>
+
+      {/* Error Message */}
+      {actionData?.error && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="bg-red-50 border border-red-200 rounded-md p-4">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <XIcon className="h-5 w-5 text-red-400" />
+              </div>
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-red-800">
+                  Error
+                </h3>
+                <div className="mt-2 text-sm text-red-700">
+                  <p>{actionData.error}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main content */}
@@ -274,9 +303,18 @@ export const TicketPurchasePage = ({ event }: TicketPurchasePageProps) => {
                       <p>${calculateTotal().toFixed(2)}</p>
                     </div>
                   </div>
-                  <button onClick={handleContinueToPayment} className="w-full bg-indigo-600 text-white py-3 px-4 rounded-md font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                    Continue to Payment
-                  </button>
+                  <Form method="post">
+                    <input type="hidden" name="ticketType" value={selectedTicketType} />
+                    <input type="hidden" name="quantity" value={quantity} />
+                    <input type="hidden" name="price" value={selectedTicket.price} />
+                    <input type="hidden" name="attendees" value={JSON.stringify([])} />
+                    <button 
+                      type="submit"
+                      className="w-full bg-indigo-600 text-white py-3 px-4 rounded-md font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    >
+                      Continue to Payment
+                    </button>
+                  </Form>
                 </> : <div className="text-center py-8">
                   <TicketIcon className="h-12 w-12 text-gray-300 mx-auto mb-3" />
                   <p className="text-gray-500">

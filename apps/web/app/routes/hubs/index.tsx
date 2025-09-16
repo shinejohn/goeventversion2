@@ -10,19 +10,41 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   try {
     const { data: hubs, error } = await client
       .from('community_hubs')
-      .select('*')
+      .select(`
+        *,
+        creator:auth.users(id, email)
+      `)
+      .eq('status', 'active')
+      .order('is_featured', { ascending: false })
+      .order('members_count', { ascending: false })
       .order('created_at', { ascending: false });
     
     if (error) throw error;
     
     // Transform the data to match the component's expected format
     const transformedHubs = (hubs || []).map(hub => ({
-      id: hub.slug || hub.id,
+      id: hub.id,
+      slug: hub.slug,
       name: hub.name,
+      tagline: hub.tagline,
       description: hub.description,
-      members: Math.floor(Math.random() * 5000) + 1000, // Mock member count for now
-      image: `https://images.unsplash.com/photo-${Math.floor(Math.random() * 1000000000)}?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80`,
-      location: 'Clearwater, FL' // Mock location for now
+      banner_image: hub.banner_image,
+      logo: hub.logo,
+      creator_name: hub.creator_name,
+      creator_avatar: hub.creator_avatar,
+      creator_verified: hub.creator_verified,
+      categories: hub.categories || [],
+      tags: hub.tags || [],
+      members_count: hub.members_count || 0,
+      events_count: hub.events_count || 0,
+      posts_count: hub.posts_count || 0,
+      is_featured: hub.is_featured || false,
+      is_verified: hub.is_verified || false,
+      location: hub.location_city && hub.location_state 
+        ? `${hub.location_city}, ${hub.location_state}` 
+        : 'Clearwater, FL',
+      created_at: hub.created_at,
+      last_activity_at: hub.last_activity_at
     }));
     
     return { hubs: transformedHubs };

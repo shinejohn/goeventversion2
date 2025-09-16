@@ -10,6 +10,10 @@ overrides:
 importers:
 
   .:
+    dependencies:
+      '@supabase/supabase-js':
+        specifier: ^2.57.0
+        version: 2.57.0
     devDependencies:
       '@manypkg/cli':
         specifier: ^0.25.1

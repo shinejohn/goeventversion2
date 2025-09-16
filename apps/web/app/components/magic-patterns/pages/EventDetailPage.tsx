@@ -219,7 +219,7 @@ const EventDetailPageInternal = ({ eventId = 'event-1', event: propEvent, relate
     if (eventData.ticketInfo.url) {
       window.open(eventData.ticketInfo.url, '_blank');
     } else {
-      navigate(`/tickets/${eventData.id}`);
+      navigate(`/tickets/purchase/${eventData.id}`);
     }
   };
 

@@ -10,13 +10,13 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
   try {
     // Load hub/community data
     const { data: hub, error } = await client
-      .from('hubs')
+      .from('community_hubs')
       .select(`
         *,
-        hub_members(count),
-        events(count)
+        creator:auth.users(id, email)
       `)
       .eq('slug', hubSlug)
+      .eq('status', 'active')
       .single();
       
     if (error || !hub) {
@@ -36,24 +36,33 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
         id,
         user:auth.users(id, email),
         role,
-        joined_at
+        status,
+        joined_at,
+        last_active_at
       `)
       .eq('hub_id', hub.id)
+      .eq('status', 'active')
+      .order('joined_at', { ascending: false })
       .limit(20);
     
     // Load recent activities
     const { data: activities } = await client
       .from('hub_activities')
-      .select('*')
+      .select(`
+        *,
+        user:auth.users(id, email)
+      `)
       .eq('hub_id', hub.id)
+      .eq('is_approved', true)
       .order('created_at', { ascending: false })
       .limit(10);
     
     return {
       hub: {
         ...hub,
-        memberCount: hub.hub_members?.[0]?.count || 0,
-        eventCount: hub.events?.[0]?.count || 0
+        memberCount: hub.members_count || 0,
+        eventCount: hub.events_count || 0,
+        postCount: hub.posts_count || 0
       },
       members: members || [],
       activities: activities || []
