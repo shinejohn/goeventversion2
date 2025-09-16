@@ -338,7 +338,7 @@ export const ShopPage = ({
               Filters
             </button>
             <span className="text-sm text-gray-500">
-              {metrics?.totalProducts || 0} products
+              {products.length} products
             </span>
           </div>
           <div className="flex items-center gap-2">

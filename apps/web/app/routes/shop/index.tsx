@@ -6,7 +6,22 @@ export async function loader(args: Route.LoaderArgs) {
   const client = getSupabaseServerClient(args.request);
   
   try {
-    // For now, return mock merchandise data since products table may not exist
+    // Try to fetch real products from database first
+    const { data: dbProducts, error: dbError } = await client
+      .from('shop_products')
+      .select('*')
+      .eq('is_active', true)
+      .order('is_featured', { ascending: false })
+      .order('created_at', { ascending: false });
+    
+    if (!dbError && dbProducts && dbProducts.length > 0) {
+      console.log('✅ Loaded', dbProducts.length, 'products from database');
+      return { products: dbProducts };
+    }
+    
+    console.log('📝 Using mock data - database products not available:', dbError?.message);
+    
+    // Fallback to mock data if database is not available
     const mockProducts = [
       {
         id: '1',
@@ -172,6 +187,7 @@ export async function loader(args: Route.LoaderArgs) {
       }
     ];
 
+    console.log('✅ Loaded', mockProducts.length, 'mock products');
     return { products: mockProducts };
   } catch (error) {
     console.error('Shop loader error:', error);
