@@ -5,19 +5,18 @@ import type { Route } from '../+types/$slug';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
-  const hubSlug = params.slug;
+  const hubId = params.slug; // This is actually the hub ID, not slug
   
   try {
     // Load hub/community data
     const { data: hub, error } = await client
       .from('community_hubs')
       .select('*')
-      .eq('slug', hubSlug)
-      .eq('status', 'active')
+      .eq('id', hubId)
       .single();
       
     if (error || !hub) {
-      console.warn('Hub not found:', { error, hubSlug });
+      console.warn('Hub not found:', { error, hubId });
       // Return empty hub data instead of throwing error
       return {
         hub: null,

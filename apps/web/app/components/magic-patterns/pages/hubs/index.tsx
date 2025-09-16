@@ -16,8 +16,8 @@ const HubsDiscoveryPage = ({ hubs }: HubsDiscoveryPageProps) => {
   // Use the hubs data from the database
   const communities = hubs || [];
   
-  const handleCommunityClick = (communitySlug: string) => {
-    navigate(`/hub/${communitySlug}`);
+  const handleCommunityClick = (hubId: string) => {
+    navigate(`/hub/${hubId}`);
   };
 
   // Categories for filtering
@@ -159,7 +159,7 @@ const HubsDiscoveryPage = ({ hubs }: HubsDiscoveryPageProps) => {
                 <div 
                   key={community.id} 
                   className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group"
-                  onClick={() => handleCommunityClick(community.slug || community.id)}
+                  onClick={() => handleCommunityClick(community.id)}
                 >
                   {/* Community Image */}
                   <div className="h-48 bg-gradient-to-br from-indigo-500 to-purple-600 relative overflow-hidden">
@@ -266,7 +266,7 @@ const HubsDiscoveryPage = ({ hubs }: HubsDiscoveryPageProps) => {
                 <div 
                   key={community.id} 
                   className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer group"
-                  onClick={() => handleCommunityClick(community.slug || community.id)}
+                  onClick={() => handleCommunityClick(community.id)}
                 >
                   <div className="flex">
                     {/* Community Image */}
