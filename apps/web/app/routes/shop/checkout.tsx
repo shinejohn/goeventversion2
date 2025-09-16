@@ -1,381 +1,340 @@
 import React from 'react';
-import { redirect, useLoaderData } from 'react-router';
+import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import type { Route } from './+types/checkout';
 
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { getLogger } from '@kit/shared/logger';
-import { z } from 'zod';
-
-// Magic Patterns imports - using PaymentPage for checkout
-import { PaymentPage } from '~/components/magic-patterns/pages/PaymentPage';
-import { createMagicPatternsRoute } from '~/lib/magic-patterns/route-wrapper';
-
-// Validation schemas
-const ShippingAddressSchema = z.object({
-  firstName: z.string().min(1),
-  lastName: z.string().min(1),
-  email: z.string().email(),
-  phone: z.string().min(10),
-  address1: z.string().min(1),
-  address2: z.string().optional(),
-  city: z.string().min(1),
-  state: z.string().min(2).max(2),
-  zipCode: z.string().regex(/^\d{5}(-\d{4})?$/),
-  country: z.string().default('US'),
-});
-
-const PaymentMethodSchema = z.object({
-  type: z.enum(['card', 'paypal', 'applepay', 'googlepay']),
-  // Additional payment details handled by Stripe
-});
-
-export async function loader({ request }: Route.LoaderArgs) {
-  const logger = await getLogger();
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
   
   try {
+    // Get current user
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      // Redirect to login with return URL
-      const url = new URL(request.url);
-      return redirect(`/auth/login?redirectTo=${encodeURIComponent(url.pathname)}`);
+      return { cartItems: [], user: null, account: null };
     }
-
-    // Load cart items with full product details
-    const { data: cartItems } = await client
+    
+    // Load user account
+    const { data: account } = await client
+      .from('accounts')
+      .select('*')
+      .eq('id', user.id)
+      .single();
+    
+    // Load cart items
+    const { data: cartItems, error } = await client
       .from('cart_items')
       .select(`
-        id,
-        quantity,
-        price,
-        product:products!inner(
-          id,
-          name,
-          slug,
-          images,
-          category,
-          vendor_id,
-          shipping_weight,
-          shipping_class,
-          vendor:vendor_profiles!inner(
-            id,
-            business_name,
-            commission_rate
-          )
-        ),
-        variant:product_variants(
-          id,
-          name,
-          sku,
-          options
-        )
+        *,
+        product:shop_products(*)
       `)
-      .eq('user_id', user.id)
-      .order('added_at', { ascending: false });
-
-    if (!cartItems || cartItems.length === 0) {
-      // No items in cart, redirect back to shop
-      return redirect('/shop');
-    }
-
-    // Calculate totals using the marketplace calculation function
-    const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const taxRate = 0.0875; // 8.75% tax
+      .eq('user_id', user.id);
     
-    // Calculate shipping based on weight and shipping class
-    let shippingAmount = 0;
-    const totalWeight = cartItems.reduce((sum, item) => {
-      const weight = item.product.shipping_weight || 1; // Default 1 lb if not specified
-      return sum + (weight * item.quantity);
-    }, 0);
-
-    // Basic shipping calculation
-    if (totalWeight <= 5) {
-      shippingAmount = 9.99;
-    } else if (totalWeight <= 20) {
-      shippingAmount = 14.99;
-    } else {
-      shippingAmount = 19.99 + ((totalWeight - 20) * 0.5);
+    if (error) {
+      console.error('Error loading cart items:', error);
+      return { cartItems: [], user, account };
     }
-
-    // Apply marketplace fees
-    const marketplaceFee = subtotal * 0.05; // 5% buyer fee
-    const taxAmount = subtotal * taxRate;
-    const total = subtotal + taxAmount + shippingAmount + marketplaceFee;
-
-    // Get user's saved addresses
-    const { data: savedAddresses } = await client
-      .from('user_addresses')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('is_default', { ascending: false });
-
-    // Get user's saved payment methods (if implemented)
-    const { data: savedPaymentMethods } = await client
-      .from('user_payment_methods')
-      .select('*')
-      .eq('user_id', user.id)
-      .eq('is_active', true)
-      .order('is_default', { ascending: false });
-
-    // Transform cart items for the component
-    const transformedItems = cartItems.map(item => ({
-      id: item.id,
-      productId: item.product.id,
-      productName: item.product.name,
-      productSlug: item.product.slug,
-      image: item.product.images?.[0] || '',
-      variantName: item.variant?.name,
-      sku: item.variant?.sku || '',
-      quantity: item.quantity,
-      price: item.price,
-      subtotal: item.price * item.quantity,
-      vendorName: item.product.vendor?.business_name || 'Unknown Vendor',
-      vendorId: item.product.vendor_id,
-      shippingClass: item.product.shipping_class || 'standard'
-    }));
-
-    return {
-      items: transformedItems,
-      subtotal,
-      taxAmount,
-      shippingAmount,
-      marketplaceFee,
-      total,
-      savedAddresses: savedAddresses || [],
-      savedPaymentMethods: savedPaymentMethods || [],
-      userEmail: user.email || '',
-    };
-
+    
+    return { cartItems: cartItems || [], user, account };
   } catch (error) {
-    logger.error({ error }, 'Error loading checkout page');
-    return redirect('/shop/cart');
+    console.error('Checkout loader error:', error);
+    return { cartItems: [], user: null, account: null };
   }
-}
+};
 
-export async function action({ request }: Route.ActionArgs) {
-  const logger = await getLogger();
+export const action = async ({ request }: Route.ActionArgs) => {
   const client = getSupabaseServerClient(request);
   const formData = await request.formData();
-  const action = formData.get('_action');
   
   try {
     const { data: { user } } = await client.auth.getUser();
     
     if (!user) {
-      throw new Response('Please log in to continue', { status: 401 });
+      return { success: false, error: 'Please log in to complete checkout' };
     }
-
-    if (action === 'place-order') {
-      // Validate shipping address
-      const shippingData = {
-        firstName: formData.get('firstName'),
-        lastName: formData.get('lastName'),
-        email: formData.get('email'),
-        phone: formData.get('phone'),
-        address1: formData.get('address1'),
-        address2: formData.get('address2'),
-        city: formData.get('city'),
-        state: formData.get('state'),
-        zipCode: formData.get('zipCode'),
-        country: formData.get('country') || 'US',
-      };
-
-      const addressResult = ShippingAddressSchema.safeParse(shippingData);
-      if (!addressResult.success) {
-        throw new Response(JSON.stringify({ 
-          error: 'Invalid shipping address',
-          errors: addressResult.error.flatten() 
-        }), { 
-          status: 400,
-          headers: { 'Content-Type': 'application/json' }
-        });
-      }
-
-      const shippingAddress = addressResult.data;
-
-      // Get cart items again to ensure fresh data
-      const { data: cartItems } = await client
-        .from('cart_items')
-        .select(`
-          id,
-          quantity,
-          price,
-          product_id,
-          variant_id,
-          product:products!inner(
-            id,
-            name,
-            inventory_count,
-            track_inventory,
-            vendor_id,
-            vendor:vendor_profiles!inner(
-              commission_rate
-            )
-          )
-        `)
-        .eq('user_id', user.id);
-
-      if (!cartItems || cartItems.length === 0) {
-        throw new Response('Cart is empty', { status: 400 });
-      }
-
-      // Validate inventory again
-      for (const item of cartItems) {
-        if (item.product.track_inventory && item.product.inventory_count < item.quantity) {
-          throw new Response(`Not enough inventory for ${item.product.name}`, { status: 400 });
-        }
-      }
-
-      // Calculate totals
-      const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      const taxAmount = subtotal * 0.0875;
-      const marketplaceFee = subtotal * 0.05;
-      const shippingAmount = 15; // Simplified for now
-      const total = subtotal + taxAmount + shippingAmount + marketplaceFee;
-
-      // Calculate platform commission (10% of vendor sales)
-      const platformCommission = subtotal * 0.10;
-
-      // Create the order
-      const { data: order, error: orderError } = await client
-        .from('marketplace_orders')
-        .insert({
-          user_id: user.id,
-          email: shippingAddress.email,
-          phone: shippingAddress.phone,
-          status: 'pending',
-          subtotal,
-          tax_amount: taxAmount,
-          shipping_amount: shippingAmount,
-          marketplace_fee: marketplaceFee,
-          platform_commission: platformCommission,
-          total_amount: total,
-          billing_address: shippingAddress,
-          shipping_address: shippingAddress,
-          payment_method: formData.get('paymentMethod') || 'card',
-          payment_status: 'pending',
-          shipping_method: 'standard',
-          notes: formData.get('notes') as string || null,
-        })
-        .select()
-        .single();
-
-      if (orderError || !order) {
-        logger.error({ error: orderError }, 'Error creating order');
-        throw new Response('Failed to create order', { status: 500 });
-      }
-
-      // Create order items
-      const orderItems = cartItems.map(item => {
-        const vendorCommissionRate = item.product.vendor?.commission_rate || 10;
-        const itemSubtotal = item.price * item.quantity;
-        const platformCommissionAmount = itemSubtotal * (vendorCommissionRate / 100);
-        const vendorAmount = itemSubtotal - platformCommissionAmount;
-
-        return {
-          order_id: order.id,
-          vendor_id: item.product.vendor_id,
-          product_id: item.product_id,
-          variant_id: item.variant_id,
-          product_name: item.product.name,
-          quantity: item.quantity,
-          price: item.price,
-          subtotal: itemSubtotal,
-          vendor_commission: vendorAmount,
-          platform_commission: platformCommissionAmount,
-        };
-      });
-
-      const { error: itemsError } = await client
-        .from('order_items')
-        .insert(orderItems);
-
-      if (itemsError) {
-        logger.error({ error: itemsError }, 'Error creating order items');
-        // Should rollback order creation here
-        throw new Response('Failed to create order items', { status: 500 });
-      }
-
-      // Update inventory
-      for (const item of cartItems) {
-        if (item.product.track_inventory) {
-          const { error: inventoryError } = await client
-            .from('products')
-            .update({ 
-              inventory_count: item.product.inventory_count - item.quantity,
-              updated_at: new Date().toISOString()
-            })
-            .eq('id', item.product_id);
-
-          if (inventoryError) {
-            logger.error({ error: inventoryError }, 'Error updating inventory');
-          }
-        }
-      }
-
-      // Clear the cart
-      const { error: clearError } = await client
-        .from('cart_items')
-        .delete()
-        .eq('user_id', user.id);
-
-      if (clearError) {
-        logger.error({ error: clearError }, 'Error clearing cart');
-      }
-
-      // TODO: Process payment with Stripe
-      // For now, we'll simulate a successful payment
-      await client
-        .from('marketplace_orders')
-        .update({
-          payment_status: 'paid',
-          paid_at: new Date().toISOString()
-        })
-        .eq('id', order.id);
-
-      // Redirect to order confirmation page
-      return redirect(`/shop/order-confirmation/${order.order_number}`);
+    
+    // Get cart items
+    const { data: cartItems, error: cartError } = await client
+      .from('cart_items')
+      .select(`
+        *,
+        product:shop_products(*)
+      `)
+      .eq('user_id', user.id);
+    
+    if (cartError || !cartItems || cartItems.length === 0) {
+      return { success: false, error: 'No items in cart' };
     }
-
-    if (action === 'save-address') {
-      const addressData = {
-        firstName: formData.get('firstName'),
-        lastName: formData.get('lastName'),
-        address1: formData.get('address1'),
-        address2: formData.get('address2'),
-        city: formData.get('city'),
-        state: formData.get('state'),
-        zipCode: formData.get('zipCode'),
-        country: formData.get('country') || 'US',
-        isDefault: formData.get('isDefault') === 'true'
-      };
-
-      const { error } = await client
-        .from('user_addresses')
-        .insert({
-          user_id: user.id,
-          ...addressData
-        });
-
-      if (error) {
-        logger.error({ error }, 'Error saving address');
-        throw new Response('Failed to save address', { status: 500 });
-      }
-
-      return { success: true };
+    
+    // Calculate total
+    const total = cartItems.reduce((sum: number, item: any) => {
+      return sum + (item.product?.price || 0) * item.quantity;
+    }, 0);
+    
+    // Create order
+    const { data: order, error: orderError } = await client
+      .from('orders')
+      .insert({
+        user_id: user.id,
+        total_amount: total,
+        status: 'pending',
+        payment_status: 'pending'
+      })
+      .select()
+      .single();
+    
+    if (orderError) {
+      return { success: false, error: orderError.message };
     }
-
-    throw new Response('Invalid action', { status: 400 });
-
+    
+    // Create order items
+    const orderItems = cartItems.map((item: any) => ({
+      order_id: order.id,
+      product_id: item.product_id,
+      quantity: item.quantity,
+      price: item.product?.price || 0
+    }));
+    
+    const { error: itemsError } = await client
+      .from('order_items')
+      .insert(orderItems);
+    
+    if (itemsError) {
+      return { success: false, error: itemsError.message };
+    }
+    
+    // Clear cart
+    const { error: clearError } = await client
+      .from('cart_items')
+      .delete()
+      .eq('user_id', user.id);
+    
+    if (clearError) {
+      console.error('Error clearing cart:', clearError);
+    }
+    
+    // Update product stock
+    for (const item of cartItems) {
+      if (item.product?.stock_quantity !== null) {
+        await client
+          .from('shop_products')
+          .update({
+            stock_quantity: (item.product.stock_quantity || 0) - item.quantity
+          })
+          .eq('id', item.product_id);
+      }
+    }
+    
+    return { 
+      success: true, 
+      orderId: order.id,
+      message: 'Order placed successfully!' 
+    };
   } catch (error) {
-    logger.error({ error }, 'Error processing checkout');
-    throw new Response('Failed to process checkout', { status: 500 });
+    return { success: false, error: 'Failed to process order' };
   }
-}
+};
 
-export default createMagicPatternsRoute(PaymentPage, {
-  displayName: 'CheckoutPage',
-  pageType: 'commerce',
-});
+export default function CheckoutPage({ loaderData, actionData }: Route.ComponentProps) {
+  const total = loaderData.cartItems.reduce((sum: number, item: any) => {
+    return sum + (item.product?.price || 0) * item.quantity;
+  }, 0);
+  
+  if (actionData?.success) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white shadow rounded-lg p-8 text-center">
+            <div className="text-green-600 text-6xl mb-4">✓</div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">Order Placed Successfully!</h1>
+            <p className="text-gray-600 mb-6">
+              Your order #{actionData.orderId} has been received and is being processed.
+            </p>
+            <div className="space-x-4">
+              <a
+                href="/shop"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+              >
+                Continue Shopping
+              </a>
+              <a
+                href="/account/orders"
+                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              >
+                View Orders
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  if (!loaderData.user) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white shadow rounded-lg p-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">Please Log In</h1>
+            <p className="text-gray-600 mb-6">You need to be logged in to complete checkout.</p>
+            <a
+              href="/auth/sign-in"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+            >
+              Sign In
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  if (loaderData.cartItems.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white shadow rounded-lg p-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">Your cart is empty</h1>
+            <p className="text-gray-600 mb-6">Add some items to get started!</p>
+            <a
+              href="/shop"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+            >
+              Continue Shopping
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  return (
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Checkout</h1>
+          <p className="mt-2 text-gray-600">Complete your purchase</p>
+        </div>
+        
+        {actionData?.error && (
+          <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+            Error: {actionData.error}
+          </div>
+        )}
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div>
+            <div className="bg-white shadow rounded-lg">
+              <div className="px-4 py-5 sm:p-6">
+                <h2 className="text-lg font-medium text-gray-900 mb-4">Order Summary</h2>
+                <div className="space-y-4">
+                  {loaderData.cartItems.map((item: any) => (
+                    <div key={item.id} className="flex items-center space-x-4">
+                      <div className="flex-shrink-0 h-12 w-12">
+                        {item.product?.image_url ? (
+                          <img
+                            className="h-12 w-12 rounded-lg object-cover"
+                            src={item.product.image_url}
+                            alt={item.product.name}
+                          />
+                        ) : (
+                          <div className="h-12 w-12 rounded-lg bg-gray-200 flex items-center justify-center">
+                            <span className="text-gray-400">📦</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-sm font-medium text-gray-900">
+                          {item.product?.name || 'Unknown Product'}
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          Qty: {item.quantity} × ${item.product?.price || 0}
+                        </p>
+                      </div>
+                      <div className="text-sm font-medium text-gray-900">
+                        ${((item.product?.price || 0) * item.quantity).toFixed(2)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="border-t border-gray-200 mt-4 pt-4">
+                  <div className="flex justify-between text-base font-medium">
+                    <span className="text-gray-900">Total</span>
+                    <span className="text-gray-900">${total.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <div className="bg-white shadow rounded-lg">
+              <div className="px-4 py-5 sm:p-6">
+                <h2 className="text-lg font-medium text-gray-900 mb-4">Payment Information</h2>
+                <form method="post" className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      defaultValue={loaderData.user.email}
+                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      required
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Card Number
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="1234 5678 9012 3456"
+                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Expiry Date
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="MM/YY"
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        CVV
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="123"
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="pt-4">
+                    <button
+                      type="submit"
+                      className="w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                    >
+                      Complete Order
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

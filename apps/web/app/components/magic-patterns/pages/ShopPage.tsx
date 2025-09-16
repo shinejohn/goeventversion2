@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, Form } from 'react-router';
 import { ShoppingCartIcon, FilterIcon, StarIcon, TruckIcon, ShieldCheckIcon, HeadphonesIcon, XIcon, CheckIcon, ArrowRightIcon, TagIcon, GridIcon, ListIcon } from 'lucide-react';
 import { ShopCard } from '../components/ui/EnhancedCard';
 
@@ -222,8 +222,23 @@ export const ShopPage = ({
               </ul>
             </div>
           )}
+          <div className="mt-4">
+            <Form method="post" action="/shop/cart">
+              <input type="hidden" name="action" value="add" />
+              <input type="hidden" name="productId" value={product.id} />
+              <input type="hidden" name="quantity" value="1" />
+              <button
+                type="submit"
+                disabled={!product.inStock}
+                className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              >
+                <ShoppingCartIcon className="w-4 h-4 mr-2" />
+                {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+              </button>
+            </Form>
+          </div>
         </div>
-      </Link>
+      </div>
     );
   };
   
