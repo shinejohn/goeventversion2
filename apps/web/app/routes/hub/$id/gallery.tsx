@@ -1,47 +1,66 @@
 import React from 'react';
-import HubGalleryPage from '~/components/magic-patterns/pages/hub/[slug]/gallery';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '~/types/app/routes/hub/$slug/gallery/+types';
+import type { Route } from '../+types/$id';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
-  const hubSlug = params.slug;
+  const hubId = params.id;
   
   try {
-    // Get hub info
-    const { data: hub, error: hubError } = await client
-      .from('hubs')
+    const { data: hub, error } = await client
+      .from('community_hubs')
       .select('*')
-      .eq('slug', hubSlug)
+      .eq('id', hubId)
       .single();
-      
-    if (hubError || !hub) {
-      console.warn('Hub not found:', { error: hubError, hubSlug });
-      return { hub: null, gallery: [] };
+    
+    if (error) {
+      console.error('Error loading hub:', error);
+      return { hub: null };
     }
     
-    // Load gallery items
-    const { data: galleryItems } = await client
-      .from('hub_gallery')
-      .select('*')
-      .eq('hub_id', hub.id)
-      .eq('is_active', true)
-      .order('created_at', { ascending: false });
-    
-    return {
-      hub,
-      gallery: galleryItems || []
-    };
-    
+    return { hub };
   } catch (error) {
-    console.error('Hub gallery loader error:', error);
-    return { hub: null, gallery: [] };
+    console.error('Gallery loader error:', error);
+    return { hub: null };
   }
 };
 
 export default function HubGalleryRoute({ loaderData }: Route.ComponentProps) {
-  return <HubGalleryPage 
-    hub={loaderData.hub}
-    gallery={loaderData.gallery}
-  />;
+  return (
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">Hub Gallery</h1>
+        {loaderData.hub ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {loaderData.hub.banner_image && (
+              <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                <img 
+                  src={loaderData.hub.banner_image} 
+                  alt={loaderData.hub.name}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Banner Image</h3>
+                </div>
+              </div>
+            )}
+            {loaderData.hub.logo && (
+              <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                <img 
+                  src={loaderData.hub.logo} 
+                  alt={`${loaderData.hub.name} logo`}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Logo</h3>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <p className="text-gray-500">Hub not found</p>
+        )}
+      </div>
+    </div>
+  );
 }

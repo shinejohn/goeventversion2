@@ -1,11 +1,11 @@
 import React from 'react';
 import HubCommunityPage from '~/components/magic-patterns/pages/hub/[slug]/community';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import type { Route } from '../+types/$slug';
+import type { Route } from '../+types/$id';
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const client = getSupabaseServerClient(request);
-  const hubId = params.slug; // This is actually the hub ID, not slug
+  const hubId = params.id; // This is the hub ID
   
   try {
     // Load hub/community data
