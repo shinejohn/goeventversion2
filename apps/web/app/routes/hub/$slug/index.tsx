@@ -11,10 +11,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     // Load hub/community data
     const { data: hub, error } = await client
       .from('community_hubs')
-      .select(`
-        *,
-        creator:auth.users(id, email)
-      `)
+      .select('*')
       .eq('slug', hubSlug)
       .eq('status', 'active')
       .single();

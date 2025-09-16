@@ -8,7 +8,7 @@ export async function loader(args: Route.LoaderArgs) {
   try {
     // Try to fetch real products from database first
     const { data: dbProducts, error: dbError } = await client
-      .from('shop_products')
+      .from('products')
       .select('*')
       .eq('is_active', true)
       .order('is_featured', { ascending: false })
