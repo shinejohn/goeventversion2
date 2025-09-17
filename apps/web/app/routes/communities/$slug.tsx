@@ -18,12 +18,8 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
     
     // Try to fetch real community data from database first
     const { data: dbCommunity, error: dbError } = await client
-      .from('community_hubs')
-      .select(`
-        *,
-        members:hub_members(count),
-        activities:hub_activities(count)
-      `)
+      .from('communities')
+      .select('*')
       .eq('slug', params.slug)
       .single();
     
@@ -47,13 +43,12 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
       slug: params.slug,
       location: 'Various Locations',
       member_count: 3427,
-      events_count: 20,
-      posts_count: 156,
-      comments_count: 892,
-      banner_image: 'https://picsum.photos/seed/jazz-community/1200/400',
-      logo: 'https://picsum.photos/seed/jazz-logo/100/100',
-      website: null,
-      tags: ['jazz', 'music', 'community', 'events', 'local'],
+      event_count: 20,
+      image_url: 'https://picsum.photos/seed/jazz-community/1200/400',
+      cover_image_url: 'https://picsum.photos/seed/jazz-logo/100/100',
+      category: 'music',
+      is_public: true,
+      is_verified: false,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     };
