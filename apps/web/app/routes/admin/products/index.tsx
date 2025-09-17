@@ -1,6 +1,6 @@
 import React from 'react';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { getSuperAdminUser } from '@kit/admin/server';
+import { getSuperAdminUser } from '@kit/admin';
 import type { Route } from './+types/index';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
