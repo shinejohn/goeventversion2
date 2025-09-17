@@ -50,6 +50,9 @@ const magicPatternsPublicLayout = layout('routes/layouts/magic-patterns-public.t
   // Advertising
   route('advertise', 'routes/advertise/index.tsx'),
   route('advertise/packages', 'routes/advertise/packages/index.tsx'),
+  route('advertise/purchase', 'routes/advertise/purchase/index.tsx'),
+  route('advertise/contact', 'routes/advertise/contact/index.tsx'),
+  route('advertise/success', 'routes/advertise/success/index.tsx'),
   route('advertise/email-campaigns', 'routes/advertise/email-campaigns/index.tsx'),
   route('advertise/event-promotion', 'routes/advertise/event-promotion/index.tsx'),
   route('advertise/featured-listings', 'routes/advertise/featured-listings/index.tsx'),
