@@ -104,6 +104,8 @@ const magicPatternsPublicLayout = layout('routes/layouts/magic-patterns-public.t
   
   route('gear', 'routes/gear/index.tsx'),
   route('shop', 'routes/shop/index.tsx'),
+  route('shop/products/:productId', 'routes/shop/products/$productId.tsx'),
+  route('shop/become-vendor', 'routes/shop/become-vendor/index.tsx'),
   route('shop/cart', 'routes/shop/cart.tsx'),
   route('shop/checkout', 'routes/shop/checkout.tsx'),
   

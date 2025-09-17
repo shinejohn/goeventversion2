@@ -1,16 +1,16 @@
 import React from 'react';
-import { json, useSearchParams } from 'react-router';
-import type { LoaderFunctionArgs } from 'react-router';
+import { useSearchParams } from 'react-router';
+import type { Route } from './+types/route.ts';
 import { AdvertiseSuccessPage } from '~/components/magic-patterns/pages/advertise/AdvertiseSuccessPage';
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
   const plan = url.searchParams.get('plan') || 'professional';
   
-  return json({ 
+  return { 
     title: 'Purchase Successful - GoEventCity',
     selectedPlan: plan
-  });
+  };
 }
 
 export default function AdvertiseSuccessRoute() {

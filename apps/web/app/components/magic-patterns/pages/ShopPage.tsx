@@ -112,7 +112,7 @@ export const ShopPage = ({
         >
           <div className="w-32 h-32 flex-shrink-0">
             <img
-              src={product.image}
+              src={product.images[0] || 'https://picsum.photos/seed/product/400/400'}
               alt={product.name}
               className="w-full h-full object-cover rounded-md"
             />
@@ -171,7 +171,7 @@ export const ShopPage = ({
       >
         <div className="relative h-48">
           <img
-            src={product.image}
+            src={product.images[0] || 'https://picsum.photos/seed/product/400/400'}
             alt={product.name}
             className="w-full h-full object-cover"
           />
