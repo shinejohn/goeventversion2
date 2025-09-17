@@ -12,7 +12,7 @@ export const AdPackagesPage = () => {
     features: ['Event promotion for up to 3 events', 'Standard listing placement', 'Basic performance analytics', 'Community directory listing'],
     cta: 'Get Started',
     highlighted: false,
-    path: '/checkout/details?plan=basic-advertising'
+    path: '/advertise/purchase?plan=basic'
   }, {
     name: 'Professional',
     price: '$99',
@@ -21,7 +21,7 @@ export const AdPackagesPage = () => {
     features: ['Event promotion for up to 10 events', 'Featured listing placement', 'Advanced performance analytics', 'Email newsletter inclusion', 'Social media promotion', 'Priority support'],
     cta: 'Start Free Trial',
     highlighted: true,
-    path: '/checkout/details?plan=professional-advertising'
+    path: '/advertise/purchase?plan=professional'
   }, {
     name: 'Enterprise',
     price: '$249',
@@ -30,7 +30,7 @@ export const AdPackagesPage = () => {
     features: ['Unlimited event promotions', 'Premium listing placement', 'Comprehensive analytics dashboard', 'Dedicated email campaigns', 'Homepage showcase rotation', 'Dedicated account manager', 'Custom reporting'],
     cta: 'Purchase Now',
     highlighted: false,
-    path: '/checkout/details?plan=enterprise-advertising'
+    path: '/advertise/purchase?plan=enterprise'
   }];
   return <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -151,7 +151,7 @@ export const AdPackagesPage = () => {
             with our advertising solutions
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button className="px-8 py-3 bg-white text-orange-600 font-medium rounded-md shadow-sm hover:bg-orange-50" onClick={() => navigate('/checkout/details?plan=professional-advertising')}>
+            <button className="px-8 py-3 bg-white text-orange-600 font-medium rounded-md shadow-sm hover:bg-orange-50" onClick={() => navigate('/advertise/purchase?plan=professional')}>
               Get Started Now
             </button>
             <button className="px-8 py-3 bg-orange-700 text-white font-medium rounded-md shadow-sm border border-orange-500 hover:bg-orange-800" onClick={() => navigate('/advertise/contact')}>
