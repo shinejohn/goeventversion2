@@ -1,6 +1,6 @@
 import type { Route } from './+types/route.ts';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
-import { ShopPage } from '~/components/magic-patterns/pages/ShopPage';
+import { ShopPage } from '~/components/magic-patterns/pages/shop/ShopPage';
 
 export async function loader(args: Route.LoaderArgs) {
   const client = getSupabaseServerClient(args.request);

@@ -1,6 +1,6 @@
 import React from 'react';
-import { json, type LoaderFunctionArgs } from '@react-router/node';
-import { useSearchParams } from '@react-router/react';
+import { json, useSearchParams } from 'react-router';
+import type { LoaderFunctionArgs } from 'react-router';
 import { AdvertiseSuccessPage } from '~/components/magic-patterns/pages/advertise/AdvertiseSuccessPage';
 
 export async function loader({ request }: LoaderFunctionArgs) {
