@@ -151,3 +151,4 @@ export default function CommunityDetailPage({ loaderData }: Route.ComponentProps
   // Use the Magic Patterns HubCommunityPage component
   return <HubCommunityPage hub={hub} members={members} activities={activities} />;
 }
+# Force complete rebuild Wed Sep 17 06:57:37 EDT 2025
