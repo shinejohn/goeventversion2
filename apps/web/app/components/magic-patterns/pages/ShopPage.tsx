@@ -238,7 +238,7 @@ export const ShopPage = ({
             </Form>
           </div>
         </div>
-      </div>
+      </Link>
     );
   };
   
