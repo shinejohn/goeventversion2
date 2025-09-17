@@ -88,18 +88,21 @@ const magicPatternsPublicLayout = layout('routes/layouts/magic-patterns-public.t
   route('performers/:performerId', 'routes/performers/$performerId.tsx'),
   
   route('hubs', 'routes/hubs/index.tsx'),
-  route('hub/:slug', 'routes/hub/$slug/index.tsx'),
-  route('hub/:slug/events', 'routes/hub/$slug/events.tsx'),
-  route('hub/:slug/venues', 'routes/hub/$slug/venues.tsx'),
-  route('hub/:slug/gallery', 'routes/hub/$slug/gallery.tsx'),
+  route('hub/:id', 'routes/hub/$id/index.tsx'),
+  route('hub/:id/events', 'routes/hub/$id/events.tsx'),
+  route('hub/:id/venues', 'routes/hub/$id/venues.tsx'),
+  route('hub/:id/gallery', 'routes/hub/$id/gallery.tsx'),
   
   route('calendars', 'routes/calendars/index.tsx'),
   route('calendars/marketplace', 'routes/calendars/marketplace.tsx'),
   route('calendars/create', 'routes/calendars/create.tsx'),
+  route('calendars/:id', 'routes/calendars/$id.tsx'),
   route('calendars/:slug', 'routes/calendars/$slug.tsx'),
   
   route('gear', 'routes/gear/index.tsx'),
   route('shop', 'routes/shop/index.tsx'),
+  route('shop/cart', 'routes/shop/cart.tsx'),
+  route('shop/checkout', 'routes/shop/checkout.tsx'),
   
   route('tickets', 'routes/tickets/index.tsx'),
   route('tickets/marketplace', 'routes/tickets/marketplace/index.tsx'),
@@ -233,7 +236,7 @@ const magicPatternsDashboardLayout = layout('routes/layouts/magic-patterns-dashb
   // Hub management (within dashboard)
   route('hubs/create', 'routes/hubs/create.tsx'),
   route('hub/create', 'routes/hub/create.tsx'),
-  route('hub/:slug/analytics', 'routes/hub/$slug/analytics.tsx'),
+  route('hub/:id/analytics', 'routes/hub/$id/analytics.tsx'),
   
   // Calendar management (within dashboard)
   
@@ -255,6 +258,8 @@ const magicPatternsAdminLayout = layout('routes/layouts/magic-patterns-admin.tsx
   route('admin/accounts', 'routes/admin/accounts/index.tsx'),
   route('admin/accounts/:account', 'routes/admin/accounts/$account.tsx'),
   route('admin/venue-management', 'routes/admin/venue-management.tsx'),
+  route('admin/products', 'routes/admin/products/index.tsx'),
+  route('admin/products/new', 'routes/admin/products/new.tsx'),
 ]);
 
 // Booking flow with its own layout (wizard-style) - only for specific wizard flows
