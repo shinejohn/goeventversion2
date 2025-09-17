@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Form } from 'react-router';
+import { Link, Form, useNavigate } from 'react-router';
 import { ShoppingCartIcon, FilterIcon, StarIcon, TruckIcon, ShieldCheckIcon, HeadphonesIcon, XIcon, CheckIcon, ArrowRightIcon, TagIcon, GridIcon, ListIcon } from 'lucide-react';
 import { ShopCard } from '../components/ui/EnhancedCard';
 
@@ -58,6 +58,8 @@ export const ShopPage = ({
   metrics,
   featuredDeals = []
 }: ShopPageProps) => {
+  const navigate = useNavigate();
+  
   // Default values for SSR
   const viewMode: 'grid' | 'list' = 'grid';
   const showFilters = false;
@@ -424,6 +426,32 @@ export const ShopPage = ({
             </nav>
           </div>
         )}
+      </div>
+      
+      {/* CTA Section */}
+      <div className="bg-indigo-700 text-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold mb-4">
+            Are you an artist or vendor?
+          </h2>
+          <p className="text-xl mb-8 max-w-3xl mx-auto">
+            Sell your merchandise, art, or collectibles on our platform and reach thousands of local customers.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link 
+              to="/shop/become-vendor" 
+              className="px-8 py-3 bg-white text-indigo-700 font-medium rounded-md shadow-sm hover:bg-indigo-50 inline-block"
+            >
+              Become a Vendor
+            </Link>
+            <Link 
+              to="/shop/become-vendor" 
+              className="px-8 py-3 bg-indigo-600 text-white font-medium rounded-md shadow-sm border border-indigo-500 hover:bg-indigo-800 inline-block"
+            >
+              Learn More
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
