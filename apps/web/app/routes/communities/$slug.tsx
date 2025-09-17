@@ -3,6 +3,7 @@ import type { Route } from './+types/$slug';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { Link } from 'react-router';
 import { getLogger } from '@kit/shared/logger';
+import HubCommunityPage from '~/components/magic-patterns/pages/hub/[slug]/community';
 
 /**
  * Community Detail Route - View community hub details!
@@ -13,51 +14,124 @@ import { getLogger } from '@kit/shared/logger';
 
 export const loader = async ({ params }: Route.LoaderArgs) => {
   try {
-    // Create a simple mock community for now
-    const mockCommunity = {
-      id: 'mock-community-id',
+    const client = getSupabaseServerClient();
+    
+    // Try to fetch real community data from database first
+    const { data: dbCommunity, error: dbError } = await client
+      .from('community_hubs')
+      .select(`
+        *,
+        members:hub_members(count),
+        activities:hub_activities(count)
+      `)
+      .eq('slug', params.slug)
+      .single();
+    
+    if (!dbError && dbCommunity) {
+      console.log('✅ Loaded community from database:', dbCommunity.name);
+      return {
+        hub: dbCommunity,
+        members: [],
+        activities: [],
+        error: null
+      };
+    }
+    
+    console.log('📝 Using mock data - database community not available:', dbError?.message);
+    
+    // Fallback to mock data with Magic Patterns structure
+    const mockHub = {
+      id: 'mock-hub-id',
       name: params.slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
       description: `Welcome to the ${params.slug.replace(/-/g, ' ')} community! Join us for amazing events and connect with like-minded people.`,
       slug: params.slug,
       location: 'Various Locations',
-      memberCount: 0,
-      eventCount: 0,
-      upcomingEvents: 0,
+      member_count: 3427,
+      events_count: 20,
+      posts_count: 156,
+      comments_count: 892,
+      banner_image: 'https://picsum.photos/seed/jazz-community/1200/400',
+      logo: 'https://picsum.photos/seed/jazz-logo/100/100',
       website: null,
-      tags: ['community', 'events', 'local'],
-      events: []
+      tags: ['jazz', 'music', 'community', 'events', 'local'],
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     };
     
+    // Mock activities/threads for the community
+    const mockActivities = [
+      {
+        id: '1',
+        title: 'Looking for jam session partners in the Boston area',
+        type: 'Discussion',
+        content: 'Anyone interested in getting together for some jazz jams? I play saxophone and looking for other musicians.',
+        author: 'Dizzy Parker',
+        created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+        replies: 17,
+        likes: 23,
+        views: 144,
+        tags: ['jazz', 'jam session', 'boston', 'saxophone']
+      },
+      {
+        id: '2',
+        title: 'Getting gigs as a jazz musician in 2023',
+        type: 'Resource',
+        content: 'Tips and strategies for finding performance opportunities in the current music scene.',
+        author: 'John Coltrane Jr.',
+        created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+        replies: 8,
+        likes: 15,
+        views: 89,
+        tags: ['gigs', 'career', 'music business', 'networking']
+      },
+      {
+        id: '3',
+        title: 'Anyone going to the Downtown Jazz Festival next month?',
+        type: 'Event',
+        content: 'The festival is coming up and I\'m looking for people to go with. Should be an amazing lineup!',
+        author: 'Miles Davis Fan',
+        created_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+        replies: 12,
+        likes: 19,
+        views: 67,
+        tags: ['festival', 'downtown', 'jazz festival', 'events']
+      }
+    ];
+    
     return {
-      community: mockCommunity,
+      hub: mockHub,
+      members: [],
+      activities: mockActivities,
       error: null
     };
     
   } catch (error) {
     return {
-      community: null,
+      hub: null,
+      members: [],
+      activities: [],
       error: error instanceof Error ? error.message : 'Failed to load community'
     };
   }
 };
 
 export const meta = ({ data }: Route.MetaArgs) => {
-  const community = data?.community;
+  const hub = data?.hub;
   return [
     {
-      title: community ? `${community.name} - Community | GoEventCity` : 'Community | GoEventCity',
+      title: hub ? `${hub.name} - Community | GoEventCity` : 'Community | GoEventCity',
     },
     {
       name: 'description',
-      content: community ? community.description || 'Join this amazing community' : 'Discover amazing communities',
+      content: hub ? hub.description || 'Join this amazing community' : 'Discover amazing communities',
     },
   ];
 };
 
 export default function CommunityDetailPage({ loaderData }: Route.ComponentProps) {
-  const { community, error } = loaderData;
+  const { hub, members, activities, error } = loaderData;
   
-  if (error || !community) {
+  if (error || !hub) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
@@ -74,99 +148,6 @@ export default function CommunityDetailPage({ loaderData }: Route.ComponentProps
     );
   }
   
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        {/* Community Header */}
-        <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-            <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">
-                {community.name}
-              </h1>
-              <p className="text-xl text-gray-600 mb-4">
-                {community.description}
-              </p>
-              <div className="flex flex-wrap gap-4 text-sm text-gray-500">
-                <span>📍 {community.location}</span>
-                <span>📅 {community.eventCount} events</span>
-                <span>👥 {community.memberCount || 0} members</span>
-                {community.website && (
-                  <a 
-                    href={community.website} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-indigo-600 hover:text-indigo-800"
-                  >
-                    🌐 Website
-                  </a>
-                )}
-              </div>
-            </div>
-            <div className="mt-4 md:mt-0">
-              <button className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 mr-4">
-                Join Community
-              </button>
-              <button className="bg-gray-300 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-400">
-                Share
-              </button>
-            </div>
-          </div>
-          
-          {community.tags && community.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {community.tags.map((tag, index) => (
-                <span
-                  key={index}
-                  className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-        
-        {/* Events Section */}
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">
-              Upcoming Events ({community.upcomingEvents})
-            </h2>
-            <Link
-              to={`/communities/${community.slug}/events`}
-              className="text-indigo-600 hover:text-indigo-800 font-medium"
-            >
-              View All Events
-            </Link>
-          </div>
-          
-          {community.events && community.events.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {community.events.slice(0, 6).map((event) => (
-                <div key={event.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                  <h3 className="font-semibold text-gray-900 mb-2">{event.title}</h3>
-                  <p className="text-sm text-gray-600 mb-2">{event.description}</p>
-                  <div className="text-xs text-gray-500">
-                    <p>📅 {new Date(event.start_datetime).toLocaleDateString()}</p>
-                    <p>📍 {event.venue?.name || event.location_name}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-8">
-              <p className="text-gray-500">No events scheduled yet.</p>
-              <Link
-                to="/events/create"
-                className="text-indigo-600 hover:text-indigo-800 font-medium"
-              >
-                Create the first event
-              </Link>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+  // Use the Magic Patterns HubCommunityPage component
+  return <HubCommunityPage hub={hub} members={members} activities={activities} />;
 }
